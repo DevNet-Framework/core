@@ -1,0 +1,21 @@
+{
+    "name": "devnet/devnet",
+    "description": "The DevNet Framework Components",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mohammed Moussaoui",
+            "email": "m.moussaoui@outlook.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Artister\\DevNet\\" : "src/"
+        }
+    }
+}

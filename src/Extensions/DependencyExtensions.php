@@ -35,7 +35,11 @@ class DependencyExtensions
 {
     public static function addHttpContext(IServiceCollection $service)
     {
-        $service->addSingleton(HttpContext::class, fn() => HttpContextFactory::create());
+        $service->addSingleton(HttpContext::class, function($provider) : HttpContext {
+            $httpContext = HttpContextFactory::create();
+            $httpContext->addAttribute('Services', $provider);
+            return $httpContext;
+        });
     }
 
     public static function addAuthentication(IServiceCollection $service, Closure $configuration = null)
@@ -99,8 +103,8 @@ class DependencyExtensions
 
         self::addDbConnection($service, $entityOptions->Connection);
         
-        $service->addSingleton($entityContextType, function($Provider) use ($entityContextType) : EntityContext {
-            $dbConnection = $Provider->getService(DbConnection::class);
+        $service->addSingleton($entityContextType, function($provider) use ($entityContextType) : EntityContext {
+            $dbConnection = $provider->getService(DbConnection::class);
             return new $entityContextType($dbConnection);
         });
     }

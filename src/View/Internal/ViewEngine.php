@@ -15,13 +15,15 @@ use InvalidArgumentException;
 class ViewEngine
 {
     private ViewManager $Manager;
+    private array $ViewData;
     private string $LayoutName = '';
     private string $SectionName = '';
     private array $Sections = [];
 
-    public function __construct(ViewManager $manager)
+    public function __construct(ViewManager $manager, array $viewData = [])
     {
         $this->Manager = $manager;
+        $this->ViewData = $viewData;
     }
 
     public function __get(string $name)
@@ -87,7 +89,7 @@ class ViewEngine
         }
     }
 
-    public function renderView(string $viewName, $viewData = null) : string
+    public function renderView(string $viewName, ?object $model = null) : string
     {
         ob_start(); 
 

@@ -17,10 +17,13 @@ use Artister\DevNet\Mvc\Results\ViewResult;
 
 Abstract class Controller extends ControllerBase
 {
-    public function view(string $viewName, $viewData = null, int $statusCode = 200) : ViewResult
+    protected array $ViewData = [];
+
+    public function view(string $viewName, object $model = null) : ViewResult
     {
         $view = $this->ActionContext->HttpContext->Services->getService(ViewManager::class);
-        return new ViewResult($view($viewName, $viewData), $statusCode);
+        $view->setData($this->ViewData);
+        return new ViewResult($view($viewName, $model), 200);
     }
 
     public function content(string $content, int $status = 200) : ContentResult

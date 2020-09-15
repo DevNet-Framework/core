@@ -14,6 +14,7 @@ use Artister\DevNet\View\Internal\ViewContainer;
 class ViewManager
 {
     private string $Directory;
+    private array $ViewData = [];
     private ViewContainer $Container;
 
     public function __construct(string $Directory = null)
@@ -27,10 +28,14 @@ class ViewManager
         return $this->$Name;
     }
 
-    public function setDirectory($Directory)
+    public function setDirectory(string $directory)
     {
-        $Directory = trim($Directory, '/');
-        $this->Directory = $Directory;
+        $this->Directory = trim($directory, '/');
+    }
+
+    public function setData(array $viewData)
+    {
+        $this->ViewData = $viewData;
     }
 
     public function getPath(string $PathName) : string
@@ -51,14 +56,14 @@ class ViewManager
         $this->Container->addValue($Name, $Value);
     }
 
-    public function render(string $viewName, $viewData = null) : string
+    public function render(string $viewName, ?object $model = null) : string
     {
-        $engine = new ViewEngine($this);
-        return $engine->renderView($viewName, $viewData);
+        $engine = new ViewEngine($this, $this->ViewData);
+        return $engine->renderView($viewName, $model);
     }
 
-    public function __invoke(string $viewName, $viewData = null) : string
+    public function __invoke(string $viewName, ?object $model = null) : string
     {
-        return $this->render($viewName, $viewData);
+        return $this->render($viewName, $model);
     }
 }

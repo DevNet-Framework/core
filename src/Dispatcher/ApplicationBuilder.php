@@ -9,10 +9,10 @@
 namespace Artister\DevNet\Dispatcher;
 
 use Artister\DevNet\Dependency\IServiceProvider;
-use Artister\DevNet\Http\HttpContext;
 use Artister\DevNet\Dispatcher\RequestDelegate;
 use Artister\DevNet\Dispatcher\IApplicationBuilder;
 use Artister\DevNet\Dispatcher\IMiddleware;
+use Artister\System\Web\Http\HttpContext;
 use Artister\System\Process\Task;
 use Closure;
 

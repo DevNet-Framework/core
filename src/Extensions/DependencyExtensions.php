@@ -9,8 +9,8 @@
 namespace Artister\DevNet\Extensions;
 
 use Artister\DevNet\Dependency\IServiceCollection;
-use Artister\DevNet\Http\HttpContextFactory;
-use Artister\DevNet\Http\HttpContext;
+use Artister\System\Web\Http\HttpContextFactory;
+use Artister\System\Web\Http\HttpContext;
 use Artister\DevNet\Router\RouteBuilder;
 use Artister\DevNet\Mvc\MvcOptions;
 use Artister\DevNet\Mvc\MvcRouteHandler;

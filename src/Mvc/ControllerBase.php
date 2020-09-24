@@ -20,7 +20,7 @@ use Artister\DevNet\Mvc\Providers\FormValueProvider;
 use Artister\DevNet\Mvc\Providers\QueryValueProvider;
 use Artister\DevNet\Mvc\Providers\RouteValueProvider;
 use Artister\DevNet\Dispatcher\IRequestHandler;
-use Artister\DevNet\Http\HttpContext;
+use Artister\System\Web\Http\HttpContext;
 use Artister\System\Process\Task;
 
 Abstract class ControllerBase implements IRequestHandler

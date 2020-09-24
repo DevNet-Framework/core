@@ -8,8 +8,8 @@
 
 namespace Artister\DevNet\Mvc\Providers;
 
-use Artister\DevNet\Http\FileCollection;
 use Artister\DevNet\Mvc\Binder\ValueProvider;
+use Artister\System\Web\Http\FileCollection;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.

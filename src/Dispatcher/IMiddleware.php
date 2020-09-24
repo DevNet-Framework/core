@@ -8,7 +8,7 @@
 
 namespace Artister\DevNet\Dispatcher;
 
-use Artister\DevNet\Http\HttpContext;
+use Artister\System\Web\Http\HttpContext;
 use Artister\System\Process\Task;
 
 interface IMiddleware

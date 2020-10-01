@@ -10,7 +10,7 @@ namespace Artister\DevNet\Router\Internal;
 
 class RouteGenerator
 {
-    static function generatePath(string $urlPattern, array $params = null)
+    static function generatePath(string $urlPattern, array $params = [])
     {
         preg_match_all('%{([\w]+)(=[\w]+)?\??}%', $urlPattern, $matches);
 

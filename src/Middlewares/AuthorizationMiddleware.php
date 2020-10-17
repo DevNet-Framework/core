@@ -10,25 +10,17 @@ namespace Artister\DevNet\Middlewares;
 
 use Artister\DevNet\Dispatcher\IMiddleware;
 use Artister\DevNet\Dispatcher\RequestDelegate;
-use Artister\DevNet\Dependency\IServiceProvider;
+use Artister\System\Security\Authorization\Authorization;
 use Artister\System\Web\Http\HttpContext;
 use Artister\System\Process\Task;
-use Artister\System\Security\Authorization\Authorization;
 
 class AuthorizationMiddleware implements IMiddleware
 {
-    private IServiceProvider $provider;
-
-    public function __construct(IServiceProvider $provider)
-    {
-        $this->provider = $provider;
-    }
-
     public function __invoke(HttpContext $context, RequestDelegate $next) : Task
     {
-        if ($this->provider->has(Authorization::class))
+        if ($context->RequestServices->has(Authorization::class))
         {
-            $authorization = $this->provider->getService(Authorization::class);
+            $authorization = $context->RequestServices->getService(Authorization::class);
             $context->addAttribute('Authorization', $authorization);
         }
 

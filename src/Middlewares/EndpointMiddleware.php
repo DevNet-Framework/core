@@ -10,19 +10,11 @@ namespace Artister\DevNet\Middlewares;
 
 use Artister\DevNet\Dispatcher\IMiddleware;
 use Artister\DevNet\Dispatcher\RequestDelegate;
-use Artister\DevNet\Dependency\IServiceProvider;
 use Artister\System\Web\Http\HttpContext;
 use Artister\System\Process\Task;
 
 class EndpointMiddleware implements IMiddleware
 {
-    private IServiceProvider $serviceProvider;
-
-    public function __construct(IServiceProvider $serviceProvider)
-    {
-        $this->ServiceProvider  = $serviceProvider;
-    }
-
     public function __invoke(HttpContext $context, RequestDelegate $next) : Task
     {
         $requestHandler = $context->Handler;

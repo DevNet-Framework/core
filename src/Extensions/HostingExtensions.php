@@ -31,26 +31,26 @@ class HostingExtensions
         $debug->disable();
     }
 
+    public static function useRouter(ApplicationBuilder $app)
+    {
+        $routeBuilder = $app->Provider->getService(RouteBuilder::class);
+        $app->use(new RouterMiddleware($routeBuilder));
+    }
+
     public static function useAuthentication(ApplicationBuilder $app)
     {
-        $app->use(new AuthenticationMiddleware($app->Provider));
+        $app->use(new AuthenticationMiddleware());
     }
 
     public static function useAuthorization(ApplicationBuilder $app)
     {
-        $app->use(new AuthorizationMiddleware($app->Provider));
-    }
-
-    public static function useRouter(ApplicationBuilder $app)
-    {
-        $routeBuilder = $app->Provider->getService(RouteBuilder::class);
-        $app->use(new RouterMiddleware($app->Provider, $routeBuilder));
+        $app->use(new AuthorizationMiddleware());
     }
 
     public static function useEndpoint(ApplicationBuilder $app, Closure $routeConfig)
     {
         $routeBuilder = $app->Provider->getService(RouteBuilder::class);
         $routeConfig($routeBuilder);
-        $app->use(new EndpointMiddleware($app->Provider));
+        $app->use(new EndpointMiddleware());
     }
 }

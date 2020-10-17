@@ -10,26 +10,18 @@ namespace Artister\DevNet\Middlewares;
 
 use Artister\DevNet\Dispatcher\IMiddleware;
 use Artister\DevNet\Dispatcher\RequestDelegate;
-use Artister\DevNet\Dependency\IServiceProvider;
-use Artister\System\Web\Http\HttpContext;
-use Artister\System\Process\Task;
 use Artister\System\Security\Authentication\Authentication;
 use Artister\System\Security\ClaimsPrincipal;
+use Artister\System\Web\Http\HttpContext;
+use Artister\System\Process\Task;
 
 class AuthenticationMiddleware implements IMiddleware
 {
-    private IServiceProvider $provider;
-
-    public function __construct(IServiceProvider $provider)
-    {
-        $this->provider = $provider;
-    }
-
     public function __invoke(HttpContext $context, RequestDelegate $next) : Task
     {
-        if ($this->provider->has(Authentication::class))
+        if ($context->RequestServices->has(Authentication::class))
         {
-            $authentication = $this->provider->getService(Authentication::class);
+            $authentication = $context->RequestServices->getService(Authentication::class);
             $result = $authentication->authenticate();
 
             $user = $result->isSucceeded() ? $result->Principal : new ClaimsPrincipal();

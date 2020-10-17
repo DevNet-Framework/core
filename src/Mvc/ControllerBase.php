@@ -44,7 +44,7 @@ Abstract class ControllerBase implements IRequestHandler
         $routeContext       = $httpContext->RouteContext;
         $placeholders       = $routeContext->RouteData->Values;
         $actionName         = $placeholders['action'] ?? null;
-        $options            = $httpContext->Services->getService(MvcOptions::class);
+        $options            = $httpContext->RequestServices->getService(MvcOptions::class);
         $valueProvider      = $options->getValueProviders();
 
         $valueProvider->add(new RouteValueProvider($routeContext->RouteData->Values));

@@ -18,12 +18,10 @@ use Artister\System\Process\Task;
 
 class RouterMiddleware implements IMiddleware
 {
-    private IServiceProvider $Provider;
     private RouteBuilder $RouteBuilder;
 
-    public function __construct(IServiceProvider $provider, RouteBuilder $routeBuilder)
+    public function __construct(RouteBuilder $routeBuilder)
     {
-        $this->Provider     = $provider;
         $this->RouteBuilder = $routeBuilder;
     }
 
@@ -57,8 +55,6 @@ class RouterMiddleware implements IMiddleware
                 $context->addAttribute('Handler', $handler);
             }
         }
-
-        $context->addAttribute('Services', $this->Provider);
 
         return $next($context);
     }

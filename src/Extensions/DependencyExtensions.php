@@ -37,7 +37,7 @@ class DependencyExtensions
     {
         $service->addSingleton(HttpContext::class, function($provider) : HttpContext {
             $httpContext = HttpContextFactory::create();
-            $httpContext->addAttribute('Services', $provider);
+            $httpContext->addAttribute('RequestServices', $provider);
             return $httpContext;
         });
     }

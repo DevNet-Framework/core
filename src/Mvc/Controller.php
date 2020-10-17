@@ -21,7 +21,7 @@ Abstract class Controller extends ControllerBase
 
     public function view(string $viewName, object $model = null) : ViewResult
     {
-        $view = $this->ActionContext->HttpContext->Services->getService(ViewManager::class);
+        $view = $this->ActionContext->HttpContext->RequestServices->getService(ViewManager::class);
         $view->setData($this->ViewData);
         return new ViewResult($view($viewName, $model), 200);
     }

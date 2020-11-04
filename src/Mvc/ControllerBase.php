@@ -27,6 +27,7 @@ Abstract class ControllerBase implements IRequestHandler
 {
     protected ActionContext $ActionContext;
     protected ActionExecutionDelegate $Action;
+    protected HttpContext $HttpContext;
     protected array $FilterAttributes = [];
     protected array $ActionFilters = [];
 
@@ -41,6 +42,7 @@ Abstract class ControllerBase implements IRequestHandler
 
     public function __invoke(HttpContext $httpContext) : Task
     {
+        $this->HttpContext  = $httpContext;
         $routeContext       = $httpContext->RouteContext;
         $placeholders       = $routeContext->RouteData->Values;
         $actionName         = $placeholders['action'] ?? null;

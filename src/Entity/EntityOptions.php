@@ -25,7 +25,7 @@ class EntityOptions
         $this->Connection = $connection;
     }
 
-    public function useEntityContext(string $contextType)
+    public function useContext(string $contextType)
     {
         if (!class_exists($contextType))
         {

@@ -28,7 +28,7 @@ class ViewManager
         return $this->$Name;
     }
 
-    public function setDirectory(string $directory)
+    public function setDirectory(string $directory) : void
     {
         $this->Directory = trim($directory, '/');
     }
@@ -38,20 +38,25 @@ class ViewManager
         $this->ViewData = $viewData;
     }
 
-    public function getPath(string $PathName) : string
+    public function getPath(string $pathName) : ?string
     {
-        if ($PathName)
+        if ($pathName)
         {
-            $PathName = trim($PathName, '/');
-            return $this->Directory ."/". $PathName . ".phtml";
+            $pathName = trim($pathName, '/');
+            $path = $this->Directory ."/". $pathName . ".phtml";
+
+            if (file_exists($path))
+            {
+                return $path;
+            }
+            
+            return null;
         }
-        else
-        {
-            return $this->Directory;
-        }
+        
+        return null;
     }
 
-    public function inject(string $Name, $Value)
+    public function inject(string $Name, $Value) : void
     {
         $this->Container->addValue($Name, $Value);
     }

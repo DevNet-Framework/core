@@ -15,10 +15,11 @@ use InvalidArgumentException;
 class ViewEngine
 {
     private ViewManager $Manager;
-    private array $ViewData;
+    private string $Body;
     private string $LayoutName = '';
     private string $SectionName = '';
     private array $Sections = [];
+    private array $ViewData;
 
     public function __construct(ViewManager $manager, array $viewData = [])
     {
@@ -49,7 +50,7 @@ class ViewEngine
         return $this->$name;
     }
 
-    public function layout(string $layoutName)
+    public function layout(string $layoutName) : void
     {
         if (!$this->LayoutName)
         {
@@ -57,18 +58,18 @@ class ViewEngine
         }
     }
 
-    public function section(string $sectionName)
+    public function section(string $sectionName) : void
     {
         ob_start();
         $this->SectionName = $sectionName;
     }
 
-    public function endSection()
+    public function endSection() : void
     {
         $this->Sections[$this->SectionName] = ob_get_clean();
     }
 
-    public function renderSection(string $sectionName)
+    public function renderSection(string $sectionName) : void
     {
         if (isset($this->Sections[$sectionName]))
         {
@@ -80,7 +81,7 @@ class ViewEngine
         }
     }
 
-    public function renderPartial(string $partialName)
+    public function renderPartial(string $partialName) : void
     {
         $partialPath = $this->Manager->getPath($partialName);
         if (file_exists($partialPath))
@@ -89,33 +90,43 @@ class ViewEngine
         }
     }
 
+    public function renderBody() : void
+    {
+        echo $this->Body;
+    }
+
     public function renderView(string $viewName, ?object $model = null) : string
     {
-        ob_start(); 
-
+        ob_start();
         $viewPath = $this->Manager->getPath($viewName);
-        if (file_exists($viewPath))
+
+        if ($viewPath)
         {
             include $viewPath;
-            $layoutPath = $this->Manager->getPath($this->LayoutName);
-            if (file_exists($layoutPath))
-            {
-                include $layoutPath;
-            }
-            else
-            {
-                throw new InvalidArgumentException("invalide path");
-            }
         }
         else
         {
-            throw new InvalidArgumentException("invalide path");
+            throw new InvalidArgumentException("invalide view path");
+        }
+
+        $this->Body = ob_get_clean();
+
+        ob_start();
+        $layoutPath = $this->Manager->getPath($this->LayoutName);
+
+        if ($layoutPath)
+        {
+            include $layoutPath;
+        }
+        else
+        {
+            $this->renderBody();
         }
         
         return ob_get_clean();
     }
 
-    public function inject(string $serviceName)
+    public function inject(string $serviceName) : void
     {
         $provider = $this->Manager->Provider;
 

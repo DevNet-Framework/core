@@ -22,6 +22,6 @@ class FileValueProvider extends ValueProvider
             $files = new FileCollection();
         }
 
-        $this->values = $files->toArray();
+        $this->Values = $files->toArray();
     }
 }

@@ -18,7 +18,7 @@ class FormValueProvider extends ValueProvider
     public function __construct(array $values = null)
     {
         if (!$values) {
-            $this->values = $_POST;
+            $this->Values = $_POST;
         }
     }
 }

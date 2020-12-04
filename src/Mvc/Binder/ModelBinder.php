@@ -8,20 +8,42 @@
 
 namespace Artister\DevNet\Mvc\Binder;
 
+use Artister\System\Web\Http\Form;
+
 class ModelBinder implements IModelBinder
 {
     public function bind(BindingContext $bindingContext)
     {
-        $valueProvider = $bindingContext->ValueProvider;
+        $type = $bindingContext->Type;
 
-        if ($valueProvider->contains($bindingContext->Name))
+        if (class_exists($type))
         {
-            $model = $valueProvider->getValue($bindingContext->Name);
+            $model = new $type();
+            $form = new Form();
+
+            foreach ($form->Fields as $key => $value)
+            {
+                if (property_exists($model, $key))
+                {
+                    $model->$key = $value;
+                }
+            }
+
             $bindingContext->success($model);
         }
         else
         {
-            $bindingContext->failed();
+            $valueProvider = $bindingContext->ValueProvider;
+
+            if ($valueProvider->contains($bindingContext->Name))
+            {
+                $model = $valueProvider->getValue($bindingContext->Name);
+                $bindingContext->success($model);
+            }
+            else
+            {
+                $bindingContext->failed();
+            }
         }
     }
 }

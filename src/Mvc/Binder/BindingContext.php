@@ -27,7 +27,7 @@ class BindingContext
         $this->Name = $name;
         $this->Type = $type;
         $this->ActionContext = $actionContext;
-        $this->ValueProvider = $actionContext->valueProvider;
+        $this->ValueProvider = $actionContext->ValueProvider;
     }
 
     /**

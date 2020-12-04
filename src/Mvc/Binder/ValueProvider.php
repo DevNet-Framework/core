@@ -13,11 +13,11 @@ namespace Artister\DevNet\Mvc\Binder;
  */
 class ValueProvider implements IValueProvider
 {
-    protected $values = [];
+    protected $Values = [];
 
     public function __construct(array $values = [])
     {
-        $this->values = $values;
+        $this->Values = $values;
     }
 
     /**
@@ -25,9 +25,9 @@ class ValueProvider implements IValueProvider
      */
     public function getValue(string $key)
     {
-        if (isset($this->values[$key]))
+        if (isset($this->Values[$key]))
         {
-            return $this->values[$key];
+            return $this->Values[$key];
         }
 
         throw new \Exception("No entry was found");
@@ -39,6 +39,6 @@ class ValueProvider implements IValueProvider
      */
     public function contains(string $key) : bool
     {
-        return isset($this->values[$key]);
+        return isset($this->Values[$key]);
     }
 }

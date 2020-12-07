@@ -10,7 +10,7 @@ namespace Artister\DevNet\Middlewares;
 
 use Artister\DevNet\Dispatcher\IMiddleware;
 use Artister\DevNet\Dispatcher\RequestDelegate;
-use Artister\System\Web\Http\HttpContext;
+use Artister\DevNet\Http\HttpContext;
 use Artister\System\Process\Task;
 
 class EndpointMiddleware implements IMiddleware

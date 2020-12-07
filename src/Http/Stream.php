@@ -80,12 +80,12 @@ class Stream
     {
         if (! $this->Resource)
         {
-            throw Exception\UnreadableStreamException::dueToMissingResource();
+            throw new \Exception('Missing resource');
         }
 
         if (! $this->isReadable())
         {
-            throw Exception\UnreadableStreamException::dueToConfiguration();
+            throw new \Exception ('Not readable');
         }
 
         if ($buffer == null)
@@ -97,7 +97,7 @@ class Stream
 
         if (false === $result)
         {
-            throw Exception\UnreadableStreamException::dueToPhpError();
+            throw new \Exception('Unable to read from resource');
         }
 
         return $result;
@@ -122,23 +122,23 @@ class Stream
         );
     }
 
-    public function write(string $string)
+    public function write(string $string) : int
     {
         if (! $this->Resource)
         {
-            throw Exception\UnwritableStreamException::dueToMissingResource();
+            throw new \Exception('Missing resource');
         }
 
         if (! $this->isWritable())
         {
-            throw Exception\UnwritableStreamException::dueToConfiguration();
+            throw new \Exception('not writible');
         }
 
         $result = fwrite($this->Resource, $string);
 
         if (false === $result)
         {
-            throw Exception\UnwritableStreamException::dueToPhpError();
+            throw new \Exception('Unable to write to resource');
         }
 
         return $result;
@@ -179,7 +179,7 @@ class Stream
 
         if ($result == false)
         {
-            throw new \Exception("PHP unable to read the stream");
+            throw new \Exception("Unable to read from the stream");
         }
         
         return $result;

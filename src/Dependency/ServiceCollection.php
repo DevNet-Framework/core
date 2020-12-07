@@ -8,7 +8,6 @@
 
 namespace Artister\DevNet\Dependency;
 
-use Artister\DevNet\Dependency\Factory\ServiceOptions;
 use ArrayIterator;
 
 class ServiceCollection implements IServiceCollection

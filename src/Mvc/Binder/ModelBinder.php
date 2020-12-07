@@ -8,7 +8,7 @@
 
 namespace Artister\DevNet\Mvc\Binder;
 
-use Artister\System\Web\Http\Form;
+use Artister\DevNet\Http\Form;
 
 class ModelBinder implements IModelBinder
 {

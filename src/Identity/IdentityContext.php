@@ -11,7 +11,7 @@ namespace Artister\DevNet\Identity;
 use Artister\DevNet\Entity\EntityContext;
 use Artister\DevNet\Entity\EntitySet;
 use Artister\DevNet\Entity\EntityModelBuilder;
-use Artister\System\Web\Http\HttpContext;
+use Artister\DevNet\Http\HttpContext;
 
 class IdentityContext
 {

@@ -8,8 +8,6 @@
 
 namespace Artister\DevNet\Mvc\Binder;
 
-use ReflectionFunctionAbstract;
-
 interface IModelBinder
 {
     public function bind(BindingContext $bidingContext);

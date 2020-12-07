@@ -9,7 +9,6 @@
 namespace Artister\DevNet\Mvc\Results;
 
 use Artister\DevNet\Mvc\ActionContext;
-use Artister\DevNet\Http\HttpContext;
 
 class JsonResult extends ActionResult
 {

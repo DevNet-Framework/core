@@ -9,11 +9,9 @@
 namespace Artister\DevNet\Mvc;
 
 use Artister\DevNet\Mvc\Binder\IValueProvider;
-use Artister\DevNet\Mvc\Binder\ValueProvider;
 use Artister\DevNet\Mvc\Binder\CompositeValueProvider;
 use Artister\DevNet\Mvc\Binder\IModelBinder;
 use Artister\DevNet\Mvc\Binder\ModelBinderProvider;
-use Artister\DevNet\Dependency\Factory\ServiceOptions;
 
 class MvcOptions
 {

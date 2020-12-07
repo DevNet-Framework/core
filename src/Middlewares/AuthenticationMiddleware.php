@@ -10,9 +10,9 @@ namespace Artister\DevNet\Middlewares;
 
 use Artister\DevNet\Dispatcher\IMiddleware;
 use Artister\DevNet\Dispatcher\RequestDelegate;
-use Artister\System\Security\Authentication\Authentication;
-use Artister\System\Security\ClaimsPrincipal;
-use Artister\System\Web\Http\HttpContext;
+use Artister\DevNet\Security\Authentication\Authentication;
+use Artister\DevNet\Security\ClaimsPrincipal;
+use Artister\DevNet\Http\HttpContext;
 use Artister\System\Process\Task;
 
 class AuthenticationMiddleware implements IMiddleware

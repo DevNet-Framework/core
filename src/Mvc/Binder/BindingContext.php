@@ -9,7 +9,6 @@
 namespace Artister\DevNet\Mvc\Binder;
 
 use Artister\DevNet\Mvc\ActionContext;
-use ReflectionFunctionAbstract;
 
 class BindingContext
 {

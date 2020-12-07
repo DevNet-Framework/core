@@ -12,8 +12,7 @@ use Artister\DevNet\Router\RouteBuilder;
 use Artister\DevNet\Router\RouteContext;
 use Artister\DevNet\Dispatcher\IMiddleware;
 use Artister\DevNet\Dispatcher\RequestDelegate;
-use Artister\DevNet\Dependency\IServiceProvider;
-use Artister\System\Web\Http\HttpContext;
+use Artister\DevNet\Http\HttpContext;
 use Artister\System\Process\Task;
 
 class RouterMiddleware implements IMiddleware
@@ -59,7 +58,7 @@ class RouterMiddleware implements IMiddleware
         return $next($context);
     }
 
-    public function trimDuplicateSlashes(string $urlPath)
+    public function trimDuplicateSlashes(string $urlPath) : ?string
     {
         return preg_match("%//+%", $urlPath, $matches) == 1 ? preg_replace("%//+%", '/', $urlPath) : null;
     }

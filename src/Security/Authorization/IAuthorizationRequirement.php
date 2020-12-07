@@ -6,12 +6,11 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Dispatcher;
+namespace Artister\DevNet\Security\Authorization;
 
-use Artister\DevNet\Http\HttpContext;
-use Artister\System\Process\Task;
-
-interface IRequestHandler
+interface IAuthorizationRequirement
 {
-    public function __invoke(HttpContext $context) : Task;
+    public function __get(string $name);
+
+    public function getHandlerName() : string;
 }

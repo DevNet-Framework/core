@@ -9,7 +9,7 @@
 namespace Artister\DevNet\Mvc;
 
 use Artister\DevNet\Mvc\Binder\IValueProvider;
-use Artister\System\Web\Http\HttpContext;
+use Artister\DevNet\Http\HttpContext;
 
 class ActionContext
 {

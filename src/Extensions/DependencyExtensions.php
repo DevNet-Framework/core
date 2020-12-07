@@ -9,8 +9,8 @@
 namespace Artister\DevNet\Extensions;
 
 use Artister\DevNet\Dependency\IServiceCollection;
-use Artister\System\Web\Http\HttpContextFactory;
-use Artister\System\Web\Http\HttpContext;
+use Artister\DevNet\Http\HttpContextFactory;
+use Artister\DevNet\Http\HttpContext;
 use Artister\DevNet\Router\RouteBuilder;
 use Artister\DevNet\Mvc\MvcOptions;
 use Artister\DevNet\Mvc\MvcRouteHandler;
@@ -18,11 +18,11 @@ use Artister\DevNet\View\ViewManager;
 use Artister\System\Database\DbConnection;
 use Artister\DevNet\Entity\EntityContext;
 use Artister\DevNet\Entity\EntityOptions;
-use Artister\System\Security\Authentication\Authentication;
-use Artister\System\Security\Authentication\AuthenticationBuilder;
-use Artister\System\Security\Authentication\AuthenticationDefaults;
-use Artister\System\Security\Authorization\Authorization;
-use Artister\System\Security\Authorization\AuthorizationOptions;
+use Artister\DevNet\Security\Authentication\Authentication;
+use Artister\DevNet\Security\Authentication\AuthenticationBuilder;
+use Artister\DevNet\Security\Authentication\AuthenticationDefaults;
+use Artister\DevNet\Security\Authorization\Authorization;
+use Artister\DevNet\Security\Authorization\AuthorizationOptions;
 use Artister\DevNet\Identity\IdentityContext;
 use Artister\DevNet\Identity\IdentityManager;
 use Artister\DevNet\Identity\UserManager;

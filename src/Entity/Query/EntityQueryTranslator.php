@@ -8,9 +8,9 @@
 
 namespace Artister\DevNet\Entity\Query;
 
-use Artister\System\Linq\Expressions\ExpressionVisitor;
-use Artister\System\Linq\Expressions\ExpressionStringBuilder;
-use Artister\System\Linq\Expressions\Expression;
+use Artister\System\Compiler\ExpressionVisitor;
+use Artister\System\Compiler\ExpressionStringBuilder;
+use Artister\System\Compiler\Expressions\Expression;
 use Artister\System\Linq\IQueryable;
 
 
@@ -74,6 +74,11 @@ class EntityQueryTranslator extends ExpressionVisitor
         } else if ($expression->Method == 'OrderByDescending' || $expression->Method == 'ThenByDescending') {
             $this->Out .= " DESC";
         }
+    }
+
+    public function visitArray(Expression $expression)
+    {
+        # code...
     }
 
     public function visitGroup(Expression $expression)

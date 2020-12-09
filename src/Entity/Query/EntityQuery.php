@@ -10,7 +10,7 @@ namespace Artister\DevNet\Entity\Query;
 
 use Artister\System\Collections\Enumerator;
 use Artister\System\Linq\Enumerables\TakeEnumerable;
-use Artister\System\Linq\Expressions\Expression;
+use Artister\System\Compiler\Expressions\Expression;
 use Artister\System\Linq\IQueryProvider;
 use Artister\System\Linq\IQueryable;
 

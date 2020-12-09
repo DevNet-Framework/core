@@ -8,11 +8,12 @@
 
 namespace Artister\DevNet\Entity\Query;
 
-use Artister\DevNet\Entity\Internal\EntityMapper;
-use Artister\System\Database\DbConnection;
-use Artister\System\Linq\Expressions\Expression;
 use Artister\System\Linq\IQueryProvider;
+use Artister\System\Linq\IQueryable;
+use Artister\System\Database\DbConnection;
+use Artister\System\Compiler\Expressions\Expression;
 use Artister\System\Collections\Enumerator;
+use Artister\DevNet\Entity\Internal\EntityMapper;
 
 class EntityQueryProvider implements IQueryProvider
 {
@@ -25,7 +26,7 @@ class EntityQueryProvider implements IQueryProvider
         $this->Mapper       = $mapper;
     }
 
-    public function CreateQuery(string $resultType, Expression $expression = null)
+    public function CreateQuery(string $resultType, Expression $expression = null) : IQueryable
     {
         return new EntityQuery($resultType, $this, $expression);
     }

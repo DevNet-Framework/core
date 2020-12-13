@@ -25,10 +25,9 @@ class HostingExtensions
         $app->use(new ExceptionMiddleware());
     }
 
-    public static function UseExceptionHandler(ApplicationBuilder $app)
+    public static function UseExceptionHandler(ApplicationBuilder $app, string $errorPath = null)
     {
-        $debug = new Debuger();
-        $debug->disable();
+        $app->use(new ExceptionMiddleware($errorPath));
     }
 
     public static function useRouter(ApplicationBuilder $app)

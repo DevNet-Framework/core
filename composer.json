@@ -1,5 +1,5 @@
 {
-    "name": "devnet/devnet",
+    "name": "devnet/framework",
     "description": "The DevNet Framework Components",
     "type": "library",
     "license": "MIT",

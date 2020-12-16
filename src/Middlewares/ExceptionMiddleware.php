@@ -16,11 +16,35 @@ use Artister\System\Process\Task;
 
 class ExceptionMiddleware implements IMiddleware
 {
+    private ?string $ErrorHandlingPath;
+
+    public function __construct(?string $errorHandlingPath = '')
+    {
+        $this->ErrorHandlingPath = $errorHandlingPath;
+    }
+
     public function __invoke(HttpContext $context, RequestDelegate $next) : Task
     {
         $debug = new Debuger();
-        $debug->enable();
+        $debug->disable();
 
-        return $next($context);
+        if ($this->ErrorHandlingPath ==='')
+        {
+            $debug->enable();
+            return $next($context);
+        }
+        else
+        {
+            try
+            {
+                return $next($context);
+            }
+            catch (\Throwable $error)
+            {
+                $context->addAttribute('Error', $error);
+                $context->Request->Uri->Path = $this->ErrorHandlingPath;
+                return $next($context);
+            }
+        }
     }
 }

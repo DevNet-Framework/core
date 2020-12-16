@@ -8,9 +8,8 @@
 
 namespace Artister\DevNet\Extensions;
 
-use Artister\DevNet\Dispatcher\ApplicationBuilder;
 use Artister\DevNet\Router\RouteBuilder;
-use Artister\System\Diagnostic\Debuger;
+use Artister\DevNet\Dispatcher\ApplicationBuilder;
 use Artister\DevNet\Middlewares\RouterMiddleware;
 use Artister\DevNet\Middlewares\EndpointMiddleware;
 use Artister\DevNet\Middlewares\ExceptionMiddleware;
@@ -25,9 +24,9 @@ class HostingExtensions
         $app->use(new ExceptionMiddleware());
     }
 
-    public static function UseExceptionHandler(ApplicationBuilder $app, string $errorPath = null)
+    public static function UseExceptionHandler(ApplicationBuilder $app, ?string $ErrorHandlingPath = '')
     {
-        $app->use(new ExceptionMiddleware($errorPath));
+        $app->use(new ExceptionMiddleware($ErrorHandlingPath));
     }
 
     public static function useRouter(ApplicationBuilder $app)

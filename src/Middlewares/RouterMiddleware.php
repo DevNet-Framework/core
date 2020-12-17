@@ -13,6 +13,7 @@ use Artister\DevNet\Router\RouteContext;
 use Artister\DevNet\Dispatcher\IMiddleware;
 use Artister\DevNet\Dispatcher\RequestDelegate;
 use Artister\DevNet\Http\HttpContext;
+use Artister\DevNet\Http\HttpException;
 use Artister\System\Process\Task;
 
 class RouterMiddleware implements IMiddleware
@@ -53,6 +54,10 @@ class RouterMiddleware implements IMiddleware
             {
                 $context->addAttribute('Handler', $handler);
             }
+        }
+        else
+        {
+            throw new HttpException("Page not found", 404);
         }
 
         return $next($context);

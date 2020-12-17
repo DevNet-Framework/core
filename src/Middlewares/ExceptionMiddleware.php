@@ -28,12 +28,12 @@ class ExceptionMiddleware implements IMiddleware
         $debug = new Debuger();
         $debug->disable();
 
-        if ($this->ErrorHandlingPath ==='')
+        if ($this->ErrorHandlingPath === '')
         {
             $debug->enable();
             return $next($context);
         }
-        else
+        else if ($this->ErrorHandlingPath !== null)
         {
             try
             {
@@ -46,5 +46,7 @@ class ExceptionMiddleware implements IMiddleware
                 return $next($context);
             }
         }
+        
+        return $next($context);
     }
 }

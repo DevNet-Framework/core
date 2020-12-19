@@ -8,7 +8,7 @@
 
 namespace Artister\DevNet\Identity;
 
-use Artister\DevNet\Entity\IEntity;
+use Artister\Data\Entity\IEntity;
 use Artister\System\Collections\IList;
 
 class Role implements IEntity

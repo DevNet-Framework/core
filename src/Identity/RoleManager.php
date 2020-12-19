@@ -8,7 +8,7 @@
 
 namespace Artister\DevNet\Identity;
 
-use Artister\DevNet\Entity\EntitySet;
+use Artister\Data\Entity\EntitySet;
 
 class RoleManager
 {

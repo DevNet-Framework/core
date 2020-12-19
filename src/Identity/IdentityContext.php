@@ -8,10 +8,10 @@
 
 namespace Artister\DevNet\Identity;
 
-use Artister\DevNet\Entity\EntityContext;
-use Artister\DevNet\Entity\EntitySet;
-use Artister\DevNet\Entity\EntityModelBuilder;
 use Artister\DevNet\Http\HttpContext;
+use Artister\Data\Entity\EntityContext;
+use Artister\Data\Entity\EntitySet;
+use Artister\Data\Entity\EntityModelBuilder;
 
 class IdentityContext
 {

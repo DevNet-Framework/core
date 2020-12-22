@@ -8,7 +8,7 @@
 
 namespace Artister\DevNet\Extensions;
 
-use Artister\DevNet\Dependency\IServiceCollection;
+use Artister\System\Dependency\IServiceCollection;
 use Artister\DevNet\Http\HttpContextFactory;
 use Artister\DevNet\Http\HttpContext;
 use Artister\DevNet\Router\RouteBuilder;

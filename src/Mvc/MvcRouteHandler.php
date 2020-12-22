@@ -10,8 +10,8 @@ namespace Artister\DevNet\Mvc;
 
 use Artister\DevNet\Router\IRouteHandler;
 use Artister\DevNet\Router\RouteContext;
-use Artister\DevNet\Dependency\Activator;
-use Artister\DevNet\Dependency\IServiceProvider;
+use Artister\System\Dependency\Activator;
+use Artister\System\Dependency\IServiceProvider;
 use Artister\System\Process\Task;
 
 class MvcRouteHandler implements IRouteHandler

@@ -8,9 +8,9 @@
 
 namespace Artister\DevNet\Hosting;
 
+use Artister\System\Dependency\IServiceProvider;
 use Artister\DevNet\Configuration\IConfiguration;
 use Artister\DevNet\Dispatcher\IApplicationBuilder;
-use Artister\DevNet\Dependency\IServiceProvider;
 use Artister\DevNet\Http\HttpContext;
 
 class WebHost

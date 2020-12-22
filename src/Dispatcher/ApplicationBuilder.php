@@ -8,11 +8,11 @@
 
 namespace Artister\DevNet\Dispatcher;
 
-use Artister\DevNet\Dependency\IServiceProvider;
 use Artister\DevNet\Dispatcher\RequestDelegate;
 use Artister\DevNet\Dispatcher\IApplicationBuilder;
 use Artister\DevNet\Dispatcher\IMiddleware;
 use Artister\DevNet\Http\HttpContext;
+use Artister\System\Dependency\IServiceProvider;
 use Artister\System\Process\Task;
 use Closure;
 

@@ -8,7 +8,7 @@
 
 namespace Artister\DevNet\Router;
 
-use Artister\DevNet\Dependency\IServiceProvider;
+use Artister\System\Dependency\IServiceProvider;
 
 class RouteBuilder implements IRouteBuilder
 {

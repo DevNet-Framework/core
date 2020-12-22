@@ -9,7 +9,7 @@
 namespace Artister\DevNet\Dispatcher;
 
 use Artister\DevNet\Dispatcher\IMiddleware;
-use Artister\DevNet\Dependency\IServiceProvider;
+use Artister\System\Dependency\IServiceProvider;
 use Artister\System\Exceptions\ClassException;
 
 class MiddlewareFactory

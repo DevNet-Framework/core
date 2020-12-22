@@ -8,9 +8,9 @@
 
 namespace Artister\DevNet\Hosting;
 
-use Artister\DevNet\Configuration\IConfiguration;
-use Artister\DevNet\Configuration\ConfigurationBuilder;
 use Artister\DevNet\Dispatcher\ApplicationBuilder;
+use Artister\System\Configuration\IConfiguration;
+use Artister\System\Configuration\ConfigurationBuilder;
 use Artister\System\Dependency\ServiceCollection;
 use Artister\System\Dependency\ServiceProvider;
 use Artister\System\Exceptions\ClassException;

@@ -9,7 +9,7 @@
 namespace Artister\DevNet\Hosting;
 
 use Artister\System\Dependency\IServiceProvider;
-use Artister\DevNet\Configuration\IConfiguration;
+use Artister\System\Configuration\IConfiguration;
 use Artister\DevNet\Dispatcher\IApplicationBuilder;
 use Artister\DevNet\Http\HttpContext;
 

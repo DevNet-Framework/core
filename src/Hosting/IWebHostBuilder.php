@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Hosting;
+namespace Artister\Web\Hosting;
 
 use Closure;
 

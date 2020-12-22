@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Mvc\Binder;
+namespace Artister\Web\Mvc\Binder;
 
 use IteratorAggregate;
 use ArrayIterator;

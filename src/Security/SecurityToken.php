@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Security;
+namespace Artister\Web\Security;
 
 class SecurityToken
 {

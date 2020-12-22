@@ -6,9 +6,9 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Dispatcher;
+namespace Artister\Web\Dispatcher;
 
-use Artister\DevNet\Dispatcher\IMiddleware;
+use Artister\Web\Dispatcher\IMiddleware;
 use Artister\System\Dependency\IServiceProvider;
 use Artister\System\Exceptions\ClassException;
 

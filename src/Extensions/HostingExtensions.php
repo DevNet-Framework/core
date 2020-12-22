@@ -6,15 +6,15 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Extensions;
+namespace Artister\Web\Extensions;
 
-use Artister\DevNet\Router\RouteBuilder;
-use Artister\DevNet\Dispatcher\ApplicationBuilder;
-use Artister\DevNet\Middlewares\RouterMiddleware;
-use Artister\DevNet\Middlewares\EndpointMiddleware;
-use Artister\DevNet\Middlewares\ExceptionMiddleware;
-use Artister\DevNet\Middlewares\AuthenticationMiddleware;
-use Artister\DevNet\Middlewares\AuthorizationMiddleware;
+use Artister\Web\Router\RouteBuilder;
+use Artister\Web\Dispatcher\ApplicationBuilder;
+use Artister\Web\Middlewares\RouterMiddleware;
+use Artister\Web\Middlewares\EndpointMiddleware;
+use Artister\Web\Middlewares\ExceptionMiddleware;
+use Artister\Web\Middlewares\AuthenticationMiddleware;
+use Artister\Web\Middlewares\AuthorizationMiddleware;
 use Closure;
 
 class HostingExtensions

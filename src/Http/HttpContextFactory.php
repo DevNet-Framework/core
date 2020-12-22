@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Http;
+namespace Artister\Web\Http;
 
 class HttpContextFactory
 {

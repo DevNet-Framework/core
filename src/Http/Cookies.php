@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Http;
+namespace Artister\Web\Http;
 
 use Artister\System\Collections\Enumerator;
 use Artister\System\Collections\IDictionary;

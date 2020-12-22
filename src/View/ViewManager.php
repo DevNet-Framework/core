@@ -6,10 +6,10 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\View;
+namespace Artister\Web\View;
 
-use Artister\DevNet\View\Internal\ViewEngine;
-use Artister\DevNet\View\Internal\ViewContainer;
+use Artister\Web\View\Internal\ViewEngine;
+use Artister\Web\View\Internal\ViewContainer;
 
 class ViewManager
 {

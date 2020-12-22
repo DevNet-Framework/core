@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Router;
+namespace Artister\Web\Router;
 
 /**
 * build a Router instance based on routes maping.

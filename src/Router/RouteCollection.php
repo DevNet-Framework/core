@@ -6,9 +6,9 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Router;
+namespace Artister\Web\Router;
 
-use Artister\DevNet\Router\Internal\RouteLogger;
+use Artister\Web\Router\Internal\RouteLogger;
 
 /**
  * Collection of routes

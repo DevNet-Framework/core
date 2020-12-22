@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Dispatcher;
+namespace Artister\Web\Dispatcher;
 
 interface IApplicationBuilder
 {

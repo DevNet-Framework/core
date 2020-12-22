@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Router\Internal;
+namespace Artister\Web\Router\Internal;
 
 class RouteParser
 {   

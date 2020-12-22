@@ -6,9 +6,9 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Mvc\Results;
+namespace Artister\Web\Mvc\Results;
 
-use Artister\DevNet\Mvc\ActionContext;
+use Artister\Web\Mvc\ActionContext;
 
 class ContentResult extends ActionResult
 {

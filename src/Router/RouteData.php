@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Router;
+namespace Artister\Web\Router;
 
 /**
  * Collection of informations about the result of the routing proccess.

@@ -6,9 +6,9 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Hosting;
+namespace Artister\Web\Hosting;
 
-use Artister\DevNet\Dispatcher\ApplicationBuilder;
+use Artister\Web\Dispatcher\ApplicationBuilder;
 use Artister\System\Configuration\IConfiguration;
 use Artister\System\Configuration\ConfigurationBuilder;
 use Artister\System\Dependency\ServiceCollection;

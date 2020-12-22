@@ -6,10 +6,10 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Mvc;
+namespace Artister\Web\Mvc;
 
-use Artister\DevNet\Router\IRouteHandler;
-use Artister\DevNet\Router\RouteContext;
+use Artister\Web\Router\IRouteHandler;
+use Artister\Web\Router\RouteContext;
 use Artister\System\Dependency\Activator;
 use Artister\System\Dependency\IServiceProvider;
 use Artister\System\Process\Task;

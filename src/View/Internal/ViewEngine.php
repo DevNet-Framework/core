@@ -6,9 +6,9 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\View\Internal;
+namespace Artister\Web\View\Internal;
 
-use Artister\DevNet\View\ViewManager;
+use Artister\Web\View\ViewManager;
 use BadMethodCallException;
 use InvalidArgumentException;
 

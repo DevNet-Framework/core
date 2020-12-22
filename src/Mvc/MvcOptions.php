@@ -6,12 +6,12 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Mvc;
+namespace Artister\Web\Mvc;
 
-use Artister\DevNet\Mvc\Binder\IValueProvider;
-use Artister\DevNet\Mvc\Binder\CompositeValueProvider;
-use Artister\DevNet\Mvc\Binder\IModelBinder;
-use Artister\DevNet\Mvc\Binder\ModelBinderProvider;
+use Artister\Web\Mvc\Binder\IValueProvider;
+use Artister\Web\Mvc\Binder\CompositeValueProvider;
+use Artister\Web\Mvc\Binder\IModelBinder;
+use Artister\Web\Mvc\Binder\ModelBinderProvider;
 
 class MvcOptions
 {

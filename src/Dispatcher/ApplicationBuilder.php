@@ -6,12 +6,12 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Dispatcher;
+namespace Artister\Web\Dispatcher;
 
-use Artister\DevNet\Dispatcher\RequestDelegate;
-use Artister\DevNet\Dispatcher\IApplicationBuilder;
-use Artister\DevNet\Dispatcher\IMiddleware;
-use Artister\DevNet\Http\HttpContext;
+use Artister\Web\Dispatcher\RequestDelegate;
+use Artister\Web\Dispatcher\IApplicationBuilder;
+use Artister\Web\Dispatcher\IMiddleware;
+use Artister\Web\Http\HttpContext;
 use Artister\System\Dependency\IServiceProvider;
 use Artister\System\Process\Task;
 use Closure;

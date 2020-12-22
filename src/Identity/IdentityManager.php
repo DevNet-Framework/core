@@ -6,11 +6,11 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Identity;
+namespace Artister\Web\Identity;
 
-use Artister\System\Security\ClaimsPrincipal;
-use Artister\System\Security\ClaimsIdentity;
-use Artister\System\Security\Claim;
+use Artister\Web\Security\ClaimsPrincipal;
+use Artister\Web\Security\ClaimsIdentity;
+use Artister\Web\Security\Claim;
 use Artister\System\Linq;
 
 class IdentityManager

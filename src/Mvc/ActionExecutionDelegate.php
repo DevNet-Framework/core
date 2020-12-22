@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Mvc;
+namespace Artister\Web\Mvc;
 
 use Artister\System\Event\Delegate;
 use Artister\System\Process\Task;

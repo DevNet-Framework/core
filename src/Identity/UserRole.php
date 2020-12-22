@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Identity;
+namespace Artister\Web\Identity;
 
 use Artister\Data\Entity\IEntity;
 
@@ -21,5 +21,10 @@ class UserRole implements IEntity
     public function __get(string $name)
     {
         return $this->$name;
+    }
+
+    public function __set(string $name, $value)
+    {
+        $this->$name = $value;
     }
 }

@@ -6,9 +6,9 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Identity;
+namespace Artister\Web\Identity;
 
-use Artister\DevNet\Http\HttpContext;
+use Artister\Web\Http\HttpContext;
 use Artister\Data\Entity\EntityContext;
 use Artister\Data\Entity\EntitySet;
 use Artister\Data\Entity\EntityModelBuilder;

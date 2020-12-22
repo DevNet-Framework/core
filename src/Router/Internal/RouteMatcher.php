@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Router\Internal;
+namespace Artister\Web\Router\Internal;
 
 /**
  * This is an internal API that supports the Router system infrastructure and not subject to

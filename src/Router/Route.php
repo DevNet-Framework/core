@@ -6,12 +6,12 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Router;
+namespace Artister\Web\Router;
 
-use Artister\DevNet\Router\IRouter;
-use Artister\DevNet\Router\Internal\RouteParser;
-use Artister\DevNet\Router\Internal\RouteMatcher;
-use Artister\DevNet\Router\Internal\RouteGenerator;
+use Artister\Web\Router\IRouter;
+use Artister\Web\Router\Internal\RouteParser;
+use Artister\Web\Router\Internal\RouteMatcher;
+use Artister\Web\Router\Internal\RouteGenerator;
 
 class Route implements IRouter
 {

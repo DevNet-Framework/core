@@ -6,12 +6,12 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Middlewares;
+namespace Artister\Web\Middlewares;
 
-use Artister\DevNet\Dispatcher\IMiddleware;
-use Artister\DevNet\Dispatcher\RequestDelegate;
-use Artister\DevNet\Security\Authorization\Authorization;
-use Artister\DevNet\Http\HttpContext;
+use Artister\Web\Dispatcher\IMiddleware;
+use Artister\Web\Dispatcher\RequestDelegate;
+use Artister\Web\Security\Authorization\Authorization;
+use Artister\Web\Http\HttpContext;
 use Artister\System\Process\Task;
 
 class AuthorizationMiddleware implements IMiddleware

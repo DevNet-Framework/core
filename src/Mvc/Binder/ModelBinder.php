@@ -6,9 +6,9 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Mvc\Binder;
+namespace Artister\Web\Mvc\Binder;
 
-use Artister\DevNet\Http\Form;
+use Artister\Web\Http\Form;
 
 class ModelBinder implements IModelBinder
 {

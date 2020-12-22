@@ -6,13 +6,13 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Middlewares;
+namespace Artister\Web\Middlewares;
 
-use Artister\DevNet\Dispatcher\IMiddleware;
-use Artister\DevNet\Dispatcher\RequestDelegate;
-use Artister\DevNet\Security\Authentication\Authentication;
-use Artister\DevNet\Security\ClaimsPrincipal;
-use Artister\DevNet\Http\HttpContext;
+use Artister\Web\Dispatcher\IMiddleware;
+use Artister\Web\Dispatcher\RequestDelegate;
+use Artister\Web\Security\Authentication\Authentication;
+use Artister\Web\Security\ClaimsPrincipal;
+use Artister\Web\Http\HttpContext;
 use Artister\System\Process\Task;
 
 class AuthenticationMiddleware implements IMiddleware

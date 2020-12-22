@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Mvc\Binder;
+namespace Artister\Web\Mvc\Binder;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.

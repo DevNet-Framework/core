@@ -1,6 +1,6 @@
 {
-    "name": "devnet/framework",
-    "description": "The DevNet Framework Components",
+    "name": "devnet/web",
+    "description": "The DevNet Web Components",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Artister\\DevNet\\" : "src/"
+            "Artister\\Web\\" : "src/"
         }
     }
 }

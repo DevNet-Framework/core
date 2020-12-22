@@ -6,9 +6,9 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Dispatcher;
+namespace Artister\Web\Dispatcher;
 
-use Artister\DevNet\Http\HttpContext;
+use Artister\Web\Http\HttpContext;
 use Artister\System\Event\Delegate;
 use Artister\System\Process\Task;
 

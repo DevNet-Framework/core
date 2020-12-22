@@ -6,29 +6,29 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Extensions;
+namespace Artister\Web\Extensions;
 
 use Artister\System\Dependency\IServiceCollection;
-use Artister\DevNet\Http\HttpContextFactory;
-use Artister\DevNet\Http\HttpContext;
-use Artister\DevNet\Router\RouteBuilder;
-use Artister\DevNet\Mvc\MvcOptions;
-use Artister\DevNet\Mvc\MvcRouteHandler;
-use Artister\DevNet\View\ViewManager;
 use Artister\System\Database\DbConnection;
 use Artister\Data\Entity\EntityContext;
 use Artister\Data\Entity\EntityOptions;
-use Artister\DevNet\Security\Authentication\Authentication;
-use Artister\DevNet\Security\Authentication\AuthenticationBuilder;
-use Artister\DevNet\Security\Authentication\AuthenticationDefaults;
-use Artister\DevNet\Security\Authorization\Authorization;
-use Artister\DevNet\Security\Authorization\AuthorizationOptions;
-use Artister\DevNet\Identity\IdentityContext;
-use Artister\DevNet\Identity\IdentityManager;
-use Artister\DevNet\Identity\UserManager;
-use Artister\DevNet\Identity\RoleManager;
-use Artister\DevNet\Identity\User;
-use Artister\DevNet\Identity\Role;
+use Artister\Web\Http\HttpContextFactory;
+use Artister\Web\Http\HttpContext;
+use Artister\Web\Router\RouteBuilder;
+use Artister\Web\Mvc\MvcOptions;
+use Artister\Web\Mvc\MvcRouteHandler;
+use Artister\Web\View\ViewManager;
+use Artister\Web\Security\Authentication\Authentication;
+use Artister\Web\Security\Authentication\AuthenticationBuilder;
+use Artister\Web\Security\Authentication\AuthenticationDefaults;
+use Artister\Web\Security\Authorization\Authorization;
+use Artister\Web\Security\Authorization\AuthorizationOptions;
+use Artister\Web\Identity\IdentityContext;
+use Artister\Web\Identity\IdentityManager;
+use Artister\Web\Identity\UserManager;
+use Artister\Web\Identity\RoleManager;
+use Artister\Web\Identity\User;
+use Artister\Web\Identity\Role;
 use Closure;
 
 class DependencyExtensions

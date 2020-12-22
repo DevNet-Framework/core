@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Identity;
+namespace Artister\Web\Identity;
 
 use Artister\Data\Entity\EntitySet;
 use Artister\System\Linq;

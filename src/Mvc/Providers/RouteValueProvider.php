@@ -6,9 +6,9 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Mvc\Providers;
+namespace Artister\Web\Mvc\Providers;
 
-use Artister\DevNet\Mvc\Binder\ValueProvider;
+use Artister\Web\Mvc\Binder\ValueProvider;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.

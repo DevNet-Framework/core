@@ -6,12 +6,12 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Mvc\Filters;
+namespace Artister\Web\Mvc\Filters;
 
-use Artister\DevNet\Http\HttpContext;
-use Artister\DevNet\Mvc\IActionFilter;
-use Artister\DevNet\Mvc\ActionExecutionDelegate;
-use Artister\DevNet\Mvc\ActionContext;
+use Artister\Web\Http\HttpContext;
+use Artister\Web\Mvc\IActionFilter;
+use Artister\Web\Mvc\ActionExecutionDelegate;
+use Artister\Web\Mvc\ActionContext;
 use Artister\System\Process\Task;
 
 class HttpMethodFilter implements IActionFilter

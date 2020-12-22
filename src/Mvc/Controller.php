@@ -6,14 +6,14 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Mvc;
+namespace Artister\Web\Mvc;
 
-use Artister\DevNet\View\ViewManager;
-use Artister\DevNet\Mvc\Results\ContentResult;
-use Artister\DevNet\Mvc\Results\ForbidResult;
-use Artister\DevNet\Mvc\Results\JsonResult;
-use Artister\DevNet\Mvc\Results\RedirectResult;
-use Artister\DevNet\Mvc\Results\ViewResult;
+use Artister\Web\View\ViewManager;
+use Artister\Web\Mvc\Results\ContentResult;
+use Artister\Web\Mvc\Results\ForbidResult;
+use Artister\Web\Mvc\Results\JsonResult;
+use Artister\Web\Mvc\Results\RedirectResult;
+use Artister\Web\Mvc\Results\ViewResult;
 
 Abstract class Controller extends ControllerBase
 {

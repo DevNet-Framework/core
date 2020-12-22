@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\View;
+namespace Artister\Web\View;
 
 interface IView
 {

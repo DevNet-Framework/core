@@ -6,10 +6,10 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Router;
+namespace Artister\Web\Router;
 
-use Artister\DevNet\Dependency\Activator;
-use Artister\DevNet\Dependency\IServiceProvider;
+use Artister\System\Dependency\Activator;
+use Artister\System\Dependency\IServiceProvider;
 use Artister\System\Process\Task;
 use Artister\System\Exceptions\ClassException;
 

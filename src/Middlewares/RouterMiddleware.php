@@ -6,14 +6,14 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Middlewares;
+namespace Artister\Web\Middlewares;
 
-use Artister\DevNet\Router\RouteBuilder;
-use Artister\DevNet\Router\RouteContext;
-use Artister\DevNet\Dispatcher\IMiddleware;
-use Artister\DevNet\Dispatcher\RequestDelegate;
-use Artister\DevNet\Http\HttpContext;
-use Artister\DevNet\Http\HttpException;
+use Artister\Web\Router\RouteBuilder;
+use Artister\Web\Router\RouteContext;
+use Artister\Web\Dispatcher\IMiddleware;
+use Artister\Web\Dispatcher\RequestDelegate;
+use Artister\Web\Http\HttpContext;
+use Artister\Web\Http\HttpException;
 use Artister\System\Process\Task;
 
 class RouterMiddleware implements IMiddleware

@@ -6,10 +6,10 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Mvc;
+namespace Artister\Web\Mvc;
 
-use Artister\DevNet\Mvc\Binder\IValueProvider;
-use Artister\DevNet\Http\HttpContext;
+use Artister\Web\Mvc\Binder\IValueProvider;
+use Artister\Web\Http\HttpContext;
 
 class ActionContext
 {

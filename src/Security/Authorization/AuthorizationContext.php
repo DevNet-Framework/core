@@ -6,9 +6,9 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Security\Authorization;
+namespace Artister\Web\Security\Authorization;
 
-use Artister\DevNet\Security\ClaimsPrincipal;
+use Artister\Web\Security\ClaimsPrincipal;
 
 class AuthorizationContext
 {

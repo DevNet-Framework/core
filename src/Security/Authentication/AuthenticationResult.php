@@ -6,9 +6,9 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Security\Authentication;
+namespace Artister\Web\Security\Authentication;
 
-use Artister\DevNet\Security\ClaimsPrincipal;
+use Artister\Web\Security\ClaimsPrincipal;
 use Exception;
 
 class AuthenticationResult

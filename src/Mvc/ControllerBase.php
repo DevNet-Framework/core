@@ -6,21 +6,21 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Mvc;
+namespace Artister\Web\Mvc;
 
-use Artister\DevNet\Mvc\ActionContext;
-use Artister\DevNet\Mvc\Results\ContentResult;
-use Artister\DevNet\Mvc\Results\ForbidResult;
-use Artister\DevNet\Mvc\Results\JsonResult;
-use Artister\DevNet\Mvc\Results\RedirectResult;
-use Artister\DevNet\Mvc\Results\ViewResult;
-use Artister\DevNet\Mvc\Binder\ParameterBinder;
-use Artister\DevNet\Mvc\Providers\FileValueProvider;
-use Artister\DevNet\Mvc\Providers\FormValueProvider;
-use Artister\DevNet\Mvc\Providers\QueryValueProvider;
-use Artister\DevNet\Mvc\Providers\RouteValueProvider;
-use Artister\DevNet\Dispatcher\IRequestHandler;
-use Artister\DevNet\Http\HttpContext;
+use Artister\Web\Mvc\ActionContext;
+use Artister\Web\Mvc\Results\ContentResult;
+use Artister\Web\Mvc\Results\ForbidResult;
+use Artister\Web\Mvc\Results\JsonResult;
+use Artister\Web\Mvc\Results\RedirectResult;
+use Artister\Web\Mvc\Results\ViewResult;
+use Artister\Web\Mvc\Binder\ParameterBinder;
+use Artister\Web\Mvc\Providers\FileValueProvider;
+use Artister\Web\Mvc\Providers\FormValueProvider;
+use Artister\Web\Mvc\Providers\QueryValueProvider;
+use Artister\Web\Mvc\Providers\RouteValueProvider;
+use Artister\Web\Dispatcher\IRequestHandler;
+use Artister\Web\Http\HttpContext;
 use Artister\System\Process\Task;
 
 Abstract class ControllerBase implements IRequestHandler

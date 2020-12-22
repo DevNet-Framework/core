@@ -6,12 +6,12 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Hosting;
+namespace Artister\Web\Hosting;
 
+use Artister\Web\Dispatcher\IApplicationBuilder;
+use Artister\Web\Http\HttpContext;
 use Artister\System\Dependency\IServiceProvider;
 use Artister\System\Configuration\IConfiguration;
-use Artister\DevNet\Dispatcher\IApplicationBuilder;
-use Artister\DevNet\Http\HttpContext;
 
 class WebHost
 {

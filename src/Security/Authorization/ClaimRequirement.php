@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Security\Authorization;
+namespace Artister\Web\Security\Authorization;
 
 use Artister\System\Process\Task;
 

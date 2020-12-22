@@ -6,10 +6,10 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Mvc\Results;
+namespace Artister\Web\Mvc\Results;
 
-use Artister\DevNet\Mvc\IActionResult;
-use Artister\DevNet\Mvc\ActionContext;
+use Artister\Web\Mvc\IActionResult;
+use Artister\Web\Mvc\ActionContext;
 use Artister\System\Process\Task;
 
 abstract class ActionResult implements IActionResult

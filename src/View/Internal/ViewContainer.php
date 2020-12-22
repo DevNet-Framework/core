@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\View\Internal;
+namespace Artister\Web\View\Internal;
 
 class ViewContainer
 {

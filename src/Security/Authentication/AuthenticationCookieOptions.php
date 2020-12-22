@@ -6,7 +6,7 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Security\Authentication;
+namespace Artister\Web\Security\Authentication;
 
 class AuthenticationCookieOptions
 {

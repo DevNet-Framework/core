@@ -6,10 +6,10 @@
  * @link        https://github.com/artister
  */
 
-namespace Artister\DevNet\Security\Authentication;
+namespace Artister\Web\Security\Authentication;
 
-use Artister\DevNet\Security\ClaimsPrincipal;
-use Artister\DevNet\Http\Session;
+use Artister\Web\Security\ClaimsPrincipal;
+use Artister\Web\Http\Session;
 use Exception;
 
 class AuthenticationCookieHandler

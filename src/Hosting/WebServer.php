@@ -8,7 +8,7 @@
 
 namespace Artister\Web\Hosting;
 
-use Artister\System\Runtime\Boot\LauncherProperties;
+use Artister\System\Boot\LauncherProperties;
 
 class WebServer
 {

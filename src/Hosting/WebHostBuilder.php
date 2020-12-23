@@ -14,7 +14,7 @@ use Artister\System\Configuration\ConfigurationBuilder;
 use Artister\System\Dependency\ServiceCollection;
 use Artister\System\Dependency\ServiceProvider;
 use Artister\System\Exceptions\ClassException;
-use Artister\System\Runtime\Boot\LauncherProperties;
+use Artister\System\Boot\LauncherProperties;
 use Closure;
 
 class WebHostBuilder implements IWebHostBuilder

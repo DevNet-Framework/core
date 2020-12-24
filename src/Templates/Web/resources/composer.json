@@ -1,7 +1,7 @@
 {
-    "name": "devnet/web",
-    "description": "The DevNet Web Components",
-    "type": "library",
+    "name": "devnet/web-project",
+    "description": "DevNet Web Application Project",
+    "type": "project",
     "license": "MIT",
     "authors": [
         {
@@ -12,12 +12,13 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=7.4.0",
-        "devnet/core": "dev-master"
+        "devnet/core": "dev-master",
+        "devnet/web": "dev-master",
+        "devnet/entity": "dev-master"
     },
     "autoload": {
         "psr-4": {
-            "Artister\\Web\\" : "src/",
-            "Artister\\Templates\\" : "src/Templates/"
+            "Application\\": ""
         }
     }
 }

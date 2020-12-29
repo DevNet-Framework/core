@@ -13,10 +13,10 @@ use Artister\System\Collections\IList;
 
 class Role implements IEntity
 {
-    private int $Id;
-    private string $Name;
+    protected int $Id;
+    protected string $Name;
 
-    private IList $UserRole;
+    protected IList $UserRole;
 
     public function __construct(string $roleName = null)
     {

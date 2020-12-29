@@ -12,11 +12,11 @@ use Artister\Data\Entity\IEntity;
 
 class UserRole implements IEntity
 {
-    private int $UserId;
-    private int $RoleId;
+    protected int $UserId;
+    protected int $RoleId;
 
-    private User $User;
-    private Role $Role;
+    protected User $User;
+    protected Role $Role;
 
     public function __get(string $name)
     {

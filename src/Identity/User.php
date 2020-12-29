@@ -13,11 +13,11 @@ use Artister\System\Collections\IList;
 
 class User implements IEntity
 {
-    private int $Id;
-    private string $Username;
-    private string $Password;
+    protected int $Id;
+    protected string $Username;
+    protected string $Password;
 
-    private IList $UserRole;
+    protected IList $UserRole;
 
     public function __construct(string $username = null)
     {

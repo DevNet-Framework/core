@@ -103,7 +103,7 @@ class DependencyExtensions
 
         self::addDbConnection($service, $entityOptions->Connection);
         
-        $service->addSingleton($entityContextType, function($provider) use ($entityContextType) : EntityContext {
+        $service->addSingleton(EntityContext::class, function($provider) use ($entityContextType) : EntityContext {
             $dbConnection = $provider->getService(DbConnection::class);
             return new $entityContextType($dbConnection);
         });

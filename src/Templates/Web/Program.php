@@ -63,7 +63,7 @@ class Program
             self::copyFile( __DIR__.'/resources/settings.json', $rootPath."/settings.json");
             self::copyFile( __DIR__.'/resources/Controllers/HomeController.php', $rootPath."/Controllers/HomeController.php");
             self::copyFile( __DIR__.'/resources/Controllers/AccountController.php', $rootPath."/Controllers/AccountController.php");
-            self::copyFile( __DIR__.'/resources/Models/UserForm.php', $rootPath."/Models/UserForm.php");
+            self::copyFile( __DIR__.'/resources/Models/LoginForm.php', $rootPath."/Models/LoginForm.php");
             self::copyFile( __DIR__.'/resources/Views/home/index.phtml', $rootPath."/Views/home/index.phtml");
             self::copyFile( __DIR__.'/resources/Views/account/index.phtml', $rootPath."/Views/account/index.phtml");
             self::copyFile( __DIR__.'/resources/Views/account/login.phtml', $rootPath."/Views/account/login.phtml");

@@ -2,7 +2,7 @@
 
 namespace Application\Models;
 
-class UserForm
+class LoginForm
 {
     private string $Username;
     private string $Password;
@@ -20,11 +20,11 @@ class UserForm
 
     public function isValide() : bool
     {
-        if (!empty($this->Username) && !empty($this->Password))
+        if (empty($this->Username) || empty($this->Password))
         {
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
     }
 }

@@ -9,7 +9,7 @@ use Artister\Web\Security\ClaimsPrincipal;
 use Artister\Web\Security\ClaimsIdentity;
 use Artister\Web\Security\ClaimType;
 use Artister\Web\Security\Claim;
-use Application\Models\UserForm;
+use Application\Models\LoginForm;
 
 class AccountController extends Controller
 {
@@ -27,7 +27,7 @@ class AccountController extends Controller
         return $this->view('account/index');
     }
 
-    public function login(UserForm $form) : IActionResult
+    public function login(LoginForm $form) : IActionResult
     {
         $user = $this->HttpContext->User;
 

@@ -10,13 +10,13 @@ namespace Artister\Web\Identity;
 
 use Artister\Data\Entity\IEntity;
 
-class UserRole implements IEntity
+class IdentityUserRole implements IEntity
 {
     protected int $UserId;
     protected int $RoleId;
 
-    protected User $User;
-    protected Role $Role;
+    protected IdentityUser $User;
+    protected IdentityRole $Role;
 
     public function __get(string $name)
     {

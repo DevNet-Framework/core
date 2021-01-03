@@ -22,7 +22,7 @@ class UserManager
         $this->Users            = $identityContext->Users;
     }
 
-    public function create(User $user)
+    public function create(IdentityUser $user)
     {
         $user->Password = password_hash($user->Password, PASSWORD_DEFAULT);
         
@@ -30,7 +30,7 @@ class UserManager
         $this->IdentityContext->save();
     }
 
-    public function delete(User $User)
+    public function delete(IdentityUser $User)
     {
         $this->Users->remove($User);
         $this->IdentityContext->save();
@@ -41,7 +41,7 @@ class UserManager
         $this->IdentityContext->save();
     }
 
-    public function getUser() : ?User
+    public function getUser() : ?IdentityUser
     {
         $user = $this->IdentityContext->HttpContext->User;
         $claim = $user->findClaim(fn($claim) => $claim->Type == 'UserId');
@@ -55,7 +55,7 @@ class UserManager
         return null;
     }
 
-    public function isInRole(User $user, string $roleName) : bool
+    public function isInRole(IdentityUser $user, string $roleName) : bool
     {
         $role = $this->IdentityContext->Roles->where(fn($x) => $x->Name == $roleName)->first();
         if (!$role)
@@ -76,7 +76,7 @@ class UserManager
         return true;
     }
 
-    public function addToRole(User $user, string $roleName)
+    public function addToRole(IdentityUser $user, string $roleName)
     {
         if ($this->isInRole($user, $roleName))
         {
@@ -84,7 +84,7 @@ class UserManager
         }
 
         $role = $this->IdentityContext->Roles->where(fn($x) => $x->Name == $roleName)->first();
-        $userRole = new UserRole();
+        $userRole = new IdentityUserRole();
         $userRole->UserId = $user->Id;
         $userRole->RoleId = $role->Id;
 
@@ -94,7 +94,7 @@ class UserManager
         return new IdentityResult();
     }
 
-    public function removeFromRole(User $user, string $roleName)
+    public function removeFromRole(IdentityUser $user, string $roleName)
     {
         if (!$this->isInRole($user, $roleName))
         {

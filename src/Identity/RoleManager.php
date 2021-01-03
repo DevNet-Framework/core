@@ -21,13 +21,13 @@ class RoleManager
         $this->Roles            = $identityContext->Roles;
     }
 
-    public function create(Role $role)
+    public function create(IdentityRole $role)
     {
         $this->Roles->add($role);
         $this->IdentityContext->save();
     }
 
-    public function delete(Role $role)
+    public function delete(IdentityRole $role)
     {
         $this->Users->remove($role);
         $this->IdentityContext->save();

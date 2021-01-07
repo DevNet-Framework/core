@@ -10,8 +10,8 @@ namespace Artister\Web\Extensions;
 
 use Artister\System\Dependency\IServiceCollection;
 use Artister\System\Database\DbConnection;
-use Artister\Data\Entity\EntityContext;
-use Artister\Data\Entity\EntityOptions;
+use Artister\Entity\EntityContext;
+use Artister\Entity\EntityOptions;
 use Artister\Web\Http\HttpContextFactory;
 use Artister\Web\Http\HttpContext;
 use Artister\Web\Router\RouteBuilder;
@@ -99,13 +99,10 @@ class DependencyExtensions
     {
         $entityOptions = new EntityOptions;
         $callbackConfig($entityOptions);
-        $entityContextType = $entityOptions->ContextType;
-
-        self::addDbConnection($service, $entityOptions->Connection);
         
-        $service->addSingleton(EntityContext::class, function($provider) use ($entityContextType) : EntityContext {
-            $dbConnection = $provider->getService(DbConnection::class);
-            return new $entityContextType($dbConnection);
+        $service->addSingleton(EntityContext::class, function($provider) use ($entityOptions) : EntityContext {
+            $entityContextType = $entityOptions->ContextType;
+            return new $entityContextType($entityOptions);
         });
     }
 

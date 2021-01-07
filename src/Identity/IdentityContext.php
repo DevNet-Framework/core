@@ -9,9 +9,9 @@
 namespace Artister\Web\Identity;
 
 use Artister\Web\Http\HttpContext;
-use Artister\Data\Entity\EntityContext;
-use Artister\Data\Entity\EntitySet;
-use Artister\Data\Entity\EntityModelBuilder;
+use Artister\Entity\EntityContext;
+use Artister\Entity\EntitySet;
+use Artister\Entity\EntityModelBuilder;
 
 class IdentityContext
 {

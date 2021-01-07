@@ -8,7 +8,7 @@
 
 namespace Artister\Web\Identity;
 
-use Artister\Data\Entity\EntitySet;
+use Artister\Entity\EntitySet;
 
 class RoleManager
 {

@@ -8,7 +8,7 @@
 
 namespace Artister\Web\Identity;
 
-use Artister\Data\Entity\IEntity;
+use Artister\Entity\IEntity;
 
 class IdentityUserRole implements IEntity
 {

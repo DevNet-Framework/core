@@ -8,7 +8,7 @@
 
 namespace Artister\Web\Identity;
 
-use Artister\Data\Entity\IEntity;
+use Artister\Entity\IEntity;
 use Artister\System\Collections\IList;
 
 class IdentityRole implements IEntity

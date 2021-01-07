@@ -8,8 +8,8 @@
 
 namespace Artister\Web\Extensions;
 
+use Artister\Web\Dispatcher\IApplicationBuilder;
 use Artister\Web\Router\RouteBuilder;
-use Artister\Web\Dispatcher\ApplicationBuilder;
 use Artister\Web\Middlewares\RouterMiddleware;
 use Artister\Web\Middlewares\EndpointMiddleware;
 use Artister\Web\Middlewares\ExceptionMiddleware;
@@ -17,35 +17,35 @@ use Artister\Web\Middlewares\AuthenticationMiddleware;
 use Artister\Web\Middlewares\AuthorizationMiddleware;
 use Closure;
 
-class HostingExtensions
+class ApplicationBuilderExtensions
 {
-    public static function UseDeveloperExceptionHandler(ApplicationBuilder $app)
+    public static function UseDeveloperExceptionHandler(IApplicationBuilder $app)
     {
         $app->use(new ExceptionMiddleware());
     }
 
-    public static function UseExceptionHandler(ApplicationBuilder $app, ?string $ErrorHandlingPath = '')
+    public static function UseExceptionHandler(IApplicationBuilder $app, ?string $ErrorHandlingPath = '')
     {
         $app->use(new ExceptionMiddleware($ErrorHandlingPath));
     }
 
-    public static function useRouter(ApplicationBuilder $app)
+    public static function useRouter(IApplicationBuilder $app)
     {
         $routeBuilder = $app->Provider->getService(RouteBuilder::class);
         $app->use(new RouterMiddleware($routeBuilder));
     }
 
-    public static function useAuthentication(ApplicationBuilder $app)
+    public static function useAuthentication(IApplicationBuilder $app)
     {
         $app->use(new AuthenticationMiddleware());
     }
 
-    public static function useAuthorization(ApplicationBuilder $app)
+    public static function useAuthorization(IApplicationBuilder $app)
     {
         $app->use(new AuthorizationMiddleware());
     }
 
-    public static function useEndpoint(ApplicationBuilder $app, Closure $routeConfig)
+    public static function useEndpoint(IApplicationBuilder $app, Closure $routeConfig)
     {
         $routeBuilder = $app->Provider->getService(RouteBuilder::class);
         $routeConfig($routeBuilder);

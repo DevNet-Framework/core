@@ -31,7 +31,7 @@ use Artister\Web\Identity\IdentityUser;
 use Artister\Web\Identity\IdentityRole;
 use Closure;
 
-class DependencyExtensions
+class ServiceCollectionExtensions
 {
     public static function addHttpContext(IServiceCollection $service)
     {

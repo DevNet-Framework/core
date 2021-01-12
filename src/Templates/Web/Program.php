@@ -74,10 +74,9 @@ class Program
             self::copyFile( __DIR__.'/resources/webroot/lib/bootstrap/css/bootstrap.min.css', $rootPath."/webroot/lib/bootstrap/css/bootstrap.min.css");
             self::copyFile( __DIR__.'/resources/webroot/js/script.js', $rootPath."/webroot/js/script.js");
             self::copyFile( __DIR__.'/resources/webroot/lib/bootstrap/js/bootstrap.bundle.min.js', $rootPath."/webroot/lib/bootstrap/js/bootstrap.bundle.min.js");
-            self::copyFile( __DIR__.'/resources/webroot/.htaccess', $rootPath."/webroot/web.config");
+            self::copyFile( __DIR__.'/resources/webroot/index.php', $rootPath."/webroot/index.php");
+            self::copyFile( __DIR__.'/resources/webroot/web.config', $rootPath."/webroot/web.config");
             self::copyFile( __DIR__.'/resources/webroot/.htaccess', $rootPath."/webroot/.htaccess");
-
-            self::createIndex($path);
 
             Console::foregroundColor(ConsoleColor::Green);
             Console::writeline("The template 'Web Application' was created successfully.");
@@ -114,42 +113,6 @@ class Program
         $context->append("}");
 
         $myfile     = fopen($path."/".$className.".php", "w");
-        $size       = fwrite($myfile, $context->__toString());
-        $status     = fclose($myfile);
-
-        if ($size && $status) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public static function createIndex($path) : bool
-    {
-        $vendorPath = dirname(__DIR__, 5);
-        $vendorPath = str_replace("\\", "/", $vendorPath);
-
-        $context = new StringBuilder();
-        $context->appendLine("<?php declare(strict_types = 1);");
-        $context->appendLine();
-        $context->appendLine("if (file_exists(__DIR__ . '/../vendor/autoload.php'))");
-        $context->appendLine("{");
-        $context->appendLine("    require __DIR__ . '/../vendor/autoload.php';");
-        $context->appendLine("}");
-        $context->appendLine("else");
-        $context->appendLine("{");
-        $context->appendLine("    require '{$vendorPath}/autoload.php';");
-        $context->appendLine("}");
-        $context->appendLine();
-        $context->appendLine("use Artister\System\Boot\launcher;");
-        $context->appendLine("use Application\Program;");
-        $context->appendLine();
-        $context->appendLine("\$launcher = launcher::getLauncher();");
-        $context->appendLine("\$launcher->workspace(dirname(__DIR__));");
-        $context->appendLine("\$launcher->entryPoint(Program::class);");
-        $context->appendLine("\$launcher->launch();");
-
-        $myfile     = fopen($path."/webroot/index.php", "w");
         $size       = fwrite($myfile, $context->__toString());
         $status     = fclose($myfile);
 

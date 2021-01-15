@@ -72,8 +72,8 @@ class Program
         $context->appendLine();
         $context->appendLine("namespace {$namespace};");
         $context->appendLine();
-        $context->appendLine("use Artister\DevNet\Mvc\Controller;");
-        $context->appendLine("use Artister\DevNet\Mvc\IActionResult;");
+        $context->appendLine("use Artister\Web\Mvc\Controller;");
+        $context->appendLine("use Artister\Web\Mvc\IActionResult;");
         $context->appendLine();
         $context->appendLine("class {$className} extends Controller");
         $context->appendLine("{");

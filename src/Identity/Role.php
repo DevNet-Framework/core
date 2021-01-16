@@ -9,14 +9,22 @@
 namespace Artister\Web\Identity;
 
 use Artister\Entity\IEntity;
+use Artister\System\Collections\IList;
 
-class IdentityUserRole implements IEntity
+class Role implements IEntity
 {
-    protected int $UserId;
-    protected int $RoleId;
+    protected int $Id;
+    protected string $Name;
 
-    protected IdentityUser $User;
-    protected IdentityRole $Role;
+    protected IList $UserRole;
+
+    public function __construct(string $roleName = null)
+    {
+        if ($roleName)
+        {
+            $this->Name = $roleName;
+        }
+    }
 
     public function __get(string $name)
     {

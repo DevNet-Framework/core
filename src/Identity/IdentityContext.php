@@ -27,11 +27,11 @@ class IdentityContext
         $this->EntityContext    = $entityContext;
         $this->Users            = $entityContext->set($userType);
         $this->Roles            = $entityContext->set($roleType);
-        $this->UserRole         = $entityContext->set(IdentityUserRole::class);
+        $this->UserRole         = $entityContext->set(UserRole::class);
 
         $builder = $entityContext->Model->Builder;
 
-        if ($userType == IdentityUser::class && $roleType == IdentityRole::class)
+        if ($userType == User::class && $roleType == Role::class)
         {
             $this->onModelCreate($builder);
         }
@@ -44,14 +44,14 @@ class IdentityContext
 
     public function onModelCreate(EntityModelBuilder $builder)
     {
-        $builder->entity(IdentityUserRole::class)
-                ->hasForeignKey('UserId', IdentityUser::class)
-                ->hasForeignKey('RoleId', IdentityRole::class)
-                ->hasOne('User', IdentityUser::class)
-                ->hasOne('Role', IdentityRole::class);
+        $builder->entity(UserRole::class)
+                ->hasForeignKey('UserId', User::class)
+                ->hasForeignKey('RoleId', Role::class)
+                ->hasOne('User', User::class)
+                ->hasOne('Role', Role::class);
 
-        $builder->entity(IdentityUser::class)->hasMany('UserRole', IdentityUserRole::class);
-        $builder->entity(IdentityRole::class)->hasMany('UserRole', IdentityUserRole::class);
+        $builder->entity(User::class)->hasMany('UserRole', UserRole::class);
+        $builder->entity(Role::class)->hasMany('UserRole', UserRole::class);
     }
 
     public function save()

@@ -11,7 +11,7 @@ namespace Artister\Web\Identity;
 use Artister\Entity\IEntity;
 use Artister\System\Collections\IList;
 
-class IdentityUser implements IEntity
+class User implements IEntity
 {
     protected int $Id;
     protected string $Username;

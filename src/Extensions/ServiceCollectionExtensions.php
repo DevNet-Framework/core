@@ -27,8 +27,8 @@ use Artister\Web\Identity\IdentityContext;
 use Artister\Web\Identity\IdentityManager;
 use Artister\Web\Identity\UserManager;
 use Artister\Web\Identity\RoleManager;
-use Artister\Web\Identity\IdentityUser;
-use Artister\Web\Identity\IdentityRole;
+use Artister\Web\Identity\User;
+use Artister\Web\Identity\Role;
 use Closure;
 
 class ServiceCollectionExtensions
@@ -106,7 +106,7 @@ class ServiceCollectionExtensions
         });
     }
 
-    public static function addIdentity(IServiceCollection $service, string $userType = IdentityUser::class, string $roleType = IdentityRole::class)
+    public static function addIdentity(IServiceCollection $service, string $userType = User::class, string $roleType = Role::class)
     {
         self::addAuthentication($service);
 

@@ -52,20 +52,14 @@ class MvcRouteHandler implements IRouteHandler
 
             $controllerName         = ucfirst($placeholders['controller']).'Controller';
             $controllerNamespace    = $this->Options->getControllerNamespace();
-            $controllerClass        = $controllerNamespace .'\\'.$controllerName;
+            $this->Target           = $controllerNamespace .'\\'.$controllerName;
         }
 
         if (is_string($this->Target))
         {
-            $controllerClass = $this->Target;
+            $handler = Activator::CreateInstance($this->Target, $this->Provider);
+            $routeContext->Handler = $handler;
         }
-        else
-        {
-            return Task::completedTask();
-        }
-
-        $handler = Activator::CreateInstance($controllerClass, $this->Provider);
-        $routeContext->Handler = $handler;
 
         return Task::completedTask();
     }

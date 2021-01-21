@@ -50,18 +50,14 @@ class RouteBuilder implements IRouteBuilder
      */
     public function mapRoute(string $name, string $pattern, $target = null) : void
     {
-        if ($target)
+        if ($this->DefaultHandler)
         {
-            $routeHandler = new RouteHandler($this->ServiceProvider, $target);
+            $routeHandler = $this->DefaultHandler;
+            $routeHandler->Target = $target;
         }
         else
         {
-            if (!$this->DefaultHandler)
-            {
-                throw new \Exception("Default RouteHandler is missing");
-            }
-
-            $routeHandler = $this->DefaultHandler;
+            $routeHandler = new RouteHandler($this->ServiceProvider, $target);
         }
 
         $pattern = $this->Prefix .'/'. trim($pattern, '/');

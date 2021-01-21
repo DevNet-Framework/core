@@ -18,6 +18,7 @@ class MvcRouteHandler implements IRouteHandler
 {
     private IServiceProvider $Provider;
     private MvcOptions $Options;
+    private $Target;
 
     public function __construct(IServiceProvider $provider)
     {
@@ -25,9 +26,9 @@ class MvcRouteHandler implements IRouteHandler
         $this->Options  = $provider->getService(MvcOptions::class);
     }
 
-    public function setTarget($target) : void
+    public function __set(string $name, $value)
     {
-        $this->Target = $target;
+        $this->$name = $value;
     }
 
     public function handle(RouteContext $routeContext) : Task

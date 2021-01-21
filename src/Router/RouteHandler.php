@@ -28,6 +28,11 @@ class RouteHandler implements IRouteHandler
     {
         return $this->$name;
     }
+
+    public function __set(string $name, $value)
+    {
+        $this->$name = $value;
+    }
     
     public function handle(RouteContext $routeContext) : Task
     {

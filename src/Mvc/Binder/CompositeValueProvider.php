@@ -24,7 +24,7 @@ class CompositeValueProvider implements IValueProvider
     {
         foreach ($this->providers as $provider)
         {
-            if ($provider->has($key))
+            if ($provider->contains($key))
             {
                 return $provider->getValue($key);
             }

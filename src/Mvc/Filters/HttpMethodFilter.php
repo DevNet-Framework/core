@@ -25,8 +25,13 @@ class HttpMethodFilter implements IActionFilter
     
     public function onActionExecutionAsync(ActionContext $context, ActionExecutionDelegate $next) : Task
     {
-        $httpContext = $context->ServiceProvider->getService(HttpContext::class);
+        $httpContext = $context->HttpContext;
         $httpMethod = $httpContext->Request->Method;
+
+        foreach ($this->Options as &$option)
+        {
+            $option = strtoupper($option);
+        }
 
         if (in_array($httpMethod, $this->Options))
         {

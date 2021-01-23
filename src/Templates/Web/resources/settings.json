@@ -1,13 +1,13 @@
 {
     "controller": {
-        "shortname": true,
-        "namespace": "Project\\Controllers"
+        "namespace": "Application\\Controllers",
+        "shortname": true
     },
     "view": {
         "directory": "../views/"
     },
     "database": {
-        "connection": "mysql://root:root@127.0.0.1:3306/test",
+        "connection": "//username:password@127.0.0.1/database",
         "charset": "utf-8"
     }
 }

@@ -60,7 +60,8 @@ class ServiceCollectionExtensions
         $options = new AuthorizationOptions();
         $options->addPolicy("Authentication", fn($policy) => $policy->requireAuthentication());
 
-        if ($configuration) {
+        if ($configuration)
+        {
             $configuration($options);
         }
 
@@ -79,8 +80,8 @@ class ServiceCollectionExtensions
     
     public static function addMvc(IServiceCollection $service, Closure $configuration = null)
     {
-        
         $options = new MvcOptions();
+
         if ($configuration)
         {
             $configuration($options);
@@ -95,15 +96,16 @@ class ServiceCollectionExtensions
         $service->addSingleton(RouteBuilder::class, fn($provider) => new RouteBuilder($provider, new MvcRouteHandler($provider)));
     }
 
-    public static function addEntityContext(IServiceCollection $service, Closure $callbackConfig)
+    public static function addEntityContext(IServiceCollection $service, string $entityConext, Closure $configuration = null)
     {
         $entityOptions = new EntityOptions;
-        $callbackConfig($entityOptions);
+
+        if ($configuration)
+        {
+            $configuration($entityOptions);
+        }
         
-        $service->addSingleton(EntityContext::class, function($provider) use ($entityOptions) : EntityContext {
-            $entityContextType = $entityOptions->ContextType;
-            return new $entityContextType($entityOptions);
-        });
+        $service->addSingleton(EntityContext::class, fn() => new $entityConext($entityOptions));
     }
 
     public static function addIdentity(IServiceCollection $service, string $userType = User::class, string $roleType = Role::class)

@@ -57,6 +57,7 @@ class Program
 
         if ($result)
         {
+            self::copyFile( __DIR__.'/resources/project.phproj', $rootPath."/project.phproj");
             self::copyFile( __DIR__.'/resources/composer.json', $rootPath."/composer.json");
             self::copyFile( __DIR__.'/resources/Startup.php', $rootPath."/Startup.php");
             self::copyFile( __DIR__.'/resources/Routes.php', $rootPath."/Routes.php");

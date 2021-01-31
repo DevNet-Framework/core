@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<project>
+  <properties>
+    <namespace>Application</namespace>
+    <entrypoint>Program</entrypoint>
+  </properties>
+</project>

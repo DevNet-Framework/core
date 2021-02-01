@@ -108,27 +108,31 @@ class ServiceCollectionExtensions
         $service->addSingleton(EntityContext::class, fn() => new $entityConext($entityOptions));
     }
 
-    public static function addIdentity(IServiceCollection $service, string $userType = User::class, string $roleType = Role::class)
+    public static function addIdentity(IServiceCollection $service, string $userType = User::class, string $roleType = Role::class, Closure $configuration = null)
     {
-        self::addAuthentication($service);
+        self::addAuthentication($service, $configuration);
 
-        $service->addSingleton(IdentityContext::class, function($provider) use ($userType, $roleType) : IdentityContext {
+        $service->addSingleton(IdentityContext::class, function($provider) use ($userType, $roleType) : IdentityContext
+        {
             $httpContext = $provider->getService(HttpContext::class);
             $entityContext = $provider->getService(EntityContext::class);
             return new IdentityContext($httpContext, $entityContext, $userType, $roleType);
         });
 
-        $service->addSingleton(IdentityManager::class, function($provider) : IdentityManager {
+        $service->addSingleton(IdentityManager::class, function($provider) : IdentityManager
+        {
             $identityContext = $provider->getService(IdentityContext::class);
             return new IdentityManager($identityContext);
         });
 
-        $service->addSingleton(UserManager::class, function($provider) : UserManager {
+        $service->addSingleton(UserManager::class, function($provider) : UserManager
+        {
             $identityContext = $provider->getService(IdentityContext::class);
             return new UserManager($identityContext);
         });
         
-        $service->addSingleton(RoleManager::class, function($provider) : RoleManager {
+        $service->addSingleton(RoleManager::class, function($provider) : RoleManager
+        {
             $identityContext = $provider->getService(IdentityContext::class);
             return new RoleManager($identityContext);
         });

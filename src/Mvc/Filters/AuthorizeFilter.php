@@ -11,6 +11,7 @@ namespace Artister\Web\Mvc\Filters;
 use Artister\Web\Mvc\IActionFilter;
 use Artister\Web\Mvc\ActionContext;
 use Artister\Web\Mvc\ActionExecutionDelegate;
+use Artister\Web\Security\Authentication\AuthenticationDefaults;
 use Artister\System\Process\Task;
 
 class AuthorizeFilter implements IActionFilter
@@ -40,11 +41,13 @@ class AuthorizeFilter implements IActionFilter
                     $authentication = $httpContext->getAttribute('Authentication');
                     $loginPath      = "/account/login";
 
-                    /* if ($authentication) {
-                        $loginPath  = $authentication->Options->LoginPath;
-                    } */
+                    if ($authentication)
+                    {
+                        $handler    = $authentication->Handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
+                        $loginPath  = $handler->Options->LoginPath;
+                    }
 
-                $httpContext->Response->redirect($loginPath);
+                    $httpContext->Response->redirect($loginPath);
                 }
                 else
                 {

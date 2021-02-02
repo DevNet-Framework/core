@@ -18,7 +18,7 @@ class MvcRouteHandler implements IRouteHandler
 {
     private IServiceProvider $Provider;
     private MvcOptions $Options;
-    private $Target = null;
+    private ?string $Target = null;
 
     public function __construct(IServiceProvider $provider)
     {
@@ -40,7 +40,9 @@ class MvcRouteHandler implements IRouteHandler
             return Task::completedTask();
         }
 
-        if (!$this->Target)
+        $target = $this->Target;
+
+        if (!$target)
         {
             $placeholders   = $routeContext->RouteData->Values;
             $controllerName = $placeholders['controller'] ?? null;
@@ -50,16 +52,13 @@ class MvcRouteHandler implements IRouteHandler
                 return Task::completedTask();
             }
 
-            $controllerName         = ucfirst($placeholders['controller']).'Controller';
-            $controllerNamespace    = $this->Options->getControllerNamespace();
-            $this->Target           = $controllerNamespace .'\\'.$controllerName;
+            $controllerName      = ucfirst($placeholders['controller']).'Controller';
+            $controllerNamespace = $this->Options->getControllerNamespace();
+            $target              = $controllerNamespace .'\\'.$controllerName;
         }
 
-        if (is_string($this->Target))
-        {
-            $handler = Activator::CreateInstance($this->Target, $this->Provider);
-            $routeContext->Handler = $handler;
-        }
+        $handler = Activator::CreateInstance($target, $this->Provider);
+        $routeContext->Handler = $handler;
 
         return Task::completedTask();
     }

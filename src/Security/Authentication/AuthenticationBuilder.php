@@ -14,7 +14,7 @@ class AuthenticationBuilder
 {
     private array $Authentications;
 
-    public function addCookie(string $AuthenticationSchem, Closure $configuration = null)
+    public function addCookie(string $authenticationSchem, Closure $configuration = null)
     {
         $options = new AuthenticationCookieOptions();
         
@@ -23,7 +23,7 @@ class AuthenticationBuilder
             $configuration($options);
         }
 
-        $this->Authentications[$AuthenticationSchem] = new AuthenticationCookieHandler($options);
+        $this->Authentications[$authenticationSchem] = new AuthenticationCookieHandler($options);
     }
 
     public function build()

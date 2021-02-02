@@ -20,6 +20,11 @@ class Authentication
         $this->Handlers = $handlers;
     }
 
+    public function __get(string $name)
+    {
+        return $this->$name;
+    }
+
     public function SignIn(ClaimsPrincipal $user, ?bool $isPersistent = null)
     {
         $handler = $this->Handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;

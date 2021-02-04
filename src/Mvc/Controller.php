@@ -19,8 +19,15 @@ Abstract class Controller extends ControllerBase
 {
     protected array $ViewData = [];
 
-    public function view(string $viewName, object $model = null) : ViewResult
+    public function view(string $viewName = null, object $model = null) : ViewResult
     {
+        if (!$viewName)
+        {
+            $controllerName = str_replace("Controller", "",$this->ActionContext->ActionDescriptor->ControllerName);
+            $actionName     = $this->ActionContext->ActionDescriptor->ActionName;
+            $viewName       = $controllerName."/".$actionName;
+        }
+
         $view = $this->ActionContext->HttpContext->RequestServices->getService(ViewManager::class);
         $view->setData($this->ViewData);
         return new ViewResult($view($viewName, $model), 200);

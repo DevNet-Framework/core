@@ -9,6 +9,6 @@ class HomeController extends Controller
 {
     public function index() : IActionResult
     {
-        return $this->view('home/index');
+        return $this->view();
     }
 }

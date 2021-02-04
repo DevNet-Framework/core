@@ -24,7 +24,7 @@ class AccountController extends Controller
         $emailClaim = $user->findClaim(fn($claim) => $claim->Type == "Email");
         $email = $emailClaim ? $emailClaim->Value : null;
         $this->ViewData['Email'] = $email;
-        return $this->view('account/index');
+        return $this->view();
     }
 
     public function login(LoginForm $form) : IActionResult
@@ -38,7 +38,7 @@ class AccountController extends Controller
 
         if (!$form->isValide())
         {
-            return $this->view('account/login');
+            return $this->view();
         }
 
         $identity = new ClaimsIdentity('AuthenticationUser');
@@ -60,6 +60,6 @@ class AccountController extends Controller
 
     public function register() : IActionResult
     {
-        return $this->view('account/register');
+        return $this->view();
     }
 }

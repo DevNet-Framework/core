@@ -18,9 +18,9 @@ class ActionDescriptor
 
     public function __construct($target, string $actionName)
     {
-        $this->MethodInfo       = new ReflectionMethod($target, $actionName);
-        $this->ClassName        = $this->MethodInfo->getDeclaringClass()->getName();
-        $this->ActionName       = $actionName;
+        $this->MethodInfo     = new ReflectionMethod($target, $actionName);
+        $this->ControllerName = $this->MethodInfo->getDeclaringClass()->getName();
+        $this->ActionName     = $actionName;
     }
 
     public function __get(string $name)

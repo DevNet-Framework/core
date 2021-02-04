@@ -19,7 +19,7 @@ class ActionDescriptor
     public function __construct($target, string $actionName)
     {
         $this->MethodInfo     = new ReflectionMethod($target, $actionName);
-        $this->ControllerName = $this->MethodInfo->getDeclaringClass()->getName();
+        $this->ControllerName = substr(strrchr($this->MethodInfo->getDeclaringClass()->getName(), "\\"), 1);
         $this->ActionName     = $actionName;
     }
 

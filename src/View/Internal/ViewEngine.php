@@ -106,7 +106,7 @@ class ViewEngine
         }
         else
         {
-            throw new InvalidArgumentException("invalide view path");
+            throw new InvalidArgumentException("invalide view name : {$viewName}");
         }
 
         $this->Body = ob_get_clean();

@@ -65,12 +65,12 @@ class Program
             self::copyFile( __DIR__.'/resources/Controllers/HomeController.php', $rootPath."/Controllers/HomeController.php");
             self::copyFile( __DIR__.'/resources/Controllers/AccountController.php', $rootPath."/Controllers/AccountController.php");
             self::copyFile( __DIR__.'/resources/Models/LoginForm.php', $rootPath."/Models/LoginForm.php");
-            self::copyFile( __DIR__.'/resources/Views/home/index.phtml', $rootPath."/Views/home/index.phtml");
-            self::copyFile( __DIR__.'/resources/Views/account/index.phtml', $rootPath."/Views/account/index.phtml");
-            self::copyFile( __DIR__.'/resources/Views/account/login.phtml', $rootPath."/Views/account/login.phtml");
-            self::copyFile( __DIR__.'/resources/Views/account/register.phtml', $rootPath."/Views/account/register.phtml");
-            self::copyFile( __DIR__.'/resources/Views/layouts/layout.phtml', $rootPath."/Views/layouts/layout.phtml");
-            self::copyFile( __DIR__.'/resources/Views/layouts/navbar.phtml', $rootPath."/Views/layouts/navbar.phtml");
+            self::copyFile( __DIR__.'/resources/Views/Home/index.phtml', $rootPath."/Views/home/index.phtml");
+            self::copyFile( __DIR__.'/resources/Views/Account/index.phtml', $rootPath."/Views/Account/index.phtml");
+            self::copyFile( __DIR__.'/resources/Views/Account/login.phtml', $rootPath."/Views/Account/login.phtml");
+            self::copyFile( __DIR__.'/resources/Views/Account/register.phtml', $rootPath."/Views/Account/register.phtml");
+            self::copyFile( __DIR__.'/resources/Views/Layouts/layout.phtml', $rootPath."/Views/Layouts/layout.phtml");
+            self::copyFile( __DIR__.'/resources/Views/Layouts/navbar.phtml', $rootPath."/Views/Layouts/navbar.phtml");
             self::copyFile( __DIR__.'/resources/webroot/css/style.css', $rootPath."/webroot/css/style.css");
             self::copyFile( __DIR__.'/resources/webroot/lib/bootstrap/css/bootstrap.min.css', $rootPath."/webroot/lib/bootstrap/css/bootstrap.min.css");
             self::copyFile( __DIR__.'/resources/webroot/js/script.js', $rootPath."/webroot/js/script.js");

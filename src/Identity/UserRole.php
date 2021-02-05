@@ -15,8 +15,8 @@ class UserRole implements IEntity
     protected int $UserId;
     protected int $RoleId;
 
-    protected IdentityUser $User;
-    protected IdentityRole $Role;
+    protected User $User;
+    protected Role $Role;
 
     public function __get(string $name)
     {

@@ -19,8 +19,26 @@ Abstract class Controller extends ControllerBase
 {
     protected array $ViewData = [];
 
-    public function view(string $viewName = null, object $model = null) : ViewResult
+    public function view($parameter = null, object $model = null) : ViewResult
     {
+        if (!$parameter)
+        {
+            $viewName = null;
+        }
+        else if (is_string($parameter))
+        {
+            $viewName = $parameter;
+        }
+        else if (is_object($parameter))
+        {
+            $viewName = null;
+            $model = $parameter;
+        }
+        else
+        {
+            throw new \Exception("Invalide argument type, parameter 1 must be string or object");
+        }
+        
         if (!$viewName)
         {
             $controllerName = str_replace("Controller", "",$this->ActionContext->ActionDescriptor->ControllerName);

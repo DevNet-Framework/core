@@ -105,7 +105,7 @@ Abstract class ControllerBase implements IRequestHandler
         $this->FilterAttributes[$target][] = [$filter, $options];
     }
 
-    abstract public function view(string $viewName, object $model = null) : ViewResult;
+    abstract public function view($parameter, object $model = null) : ViewResult;
 
     abstract public function content(string $content, int $status = 200) : ContentResult;
 

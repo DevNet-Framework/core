@@ -1,8 +1,8 @@
 <?php declare(strict_types = 1);
 /**
  * @author      Mohammed Moussaoui
- * @copyright   Copyright (c) 2018-2020 Mohammed Moussaoui
- * @license     MIT License
+ * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
+ * @license     MIT License. For full license information see LICENSE file in the project root.
  * @link        https://github.com/artister
  */
 
@@ -17,17 +17,21 @@ class IdentityContext
 {
     private HttpContext $HttpContext;
     private EntityContext $EntityContext;
+    private string $UserType;
+    private string $RoleType;
     private EntitySet $Users;
     private EntitySet $Roles;
     private EntitySet $UserRole;
 
     public function __construct(HttpContext $httpContext, EntityContext $entityContext, string $userType, string $roleType)
     {
-        $this->HttpContext      = $httpContext;
-        $this->EntityContext    = $entityContext;
-        $this->Users            = $entityContext->set($userType);
-        $this->Roles            = $entityContext->set($roleType);
-        $this->UserRole         = $entityContext->set(UserRole::class);
+        $this->HttpContext   = $httpContext;
+        $this->EntityContext = $entityContext;
+        $this->UserType      = $userType;
+        $this->RoleType      = $roleType;
+        $this->Users         = $entityContext->set($userType);
+        $this->Roles         = $entityContext->set($roleType);
+        $this->UserRole      = $entityContext->set(UserRole::class);
 
         $builder = $entityContext->Model->Builder;
 
@@ -45,13 +49,13 @@ class IdentityContext
     public function onModelCreate(EntityModelBuilder $builder)
     {
         $builder->entity(UserRole::class)
-                ->hasForeignKey('UserId', User::class)
-                ->hasForeignKey('RoleId', Role::class)
-                ->hasOne('User', User::class)
-                ->hasOne('Role', Role::class);
+                ->hasForeignKey('UserId', $this->UserType)
+                ->hasForeignKey('RoleId', $this->RoleType)
+                ->hasOne('User', $this->UserType)
+                ->hasOne('Role', $this->RoleType);
 
-        $builder->entity(User::class)->hasMany('UserRole', UserRole::class);
-        $builder->entity(Role::class)->hasMany('UserRole', UserRole::class);
+        $builder->entity($this->UserType)->hasMany('UserRole', UserRole::class);
+        $builder->entity($this->RoleType)->hasMany('UserRole', UserRole::class);
     }
 
     public function save()

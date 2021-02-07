@@ -9,20 +9,29 @@
 namespace Artister\Web\Mvc;
 
 use Artister\Web\Mvc\Binder\IValueProvider;
-use Artister\Web\Mvc\Binder\CompositeValueProvider;
 use Artister\Web\Mvc\Binder\IModelBinder;
 use Artister\Web\Mvc\Binder\ModelBinderProvider;
+use Artister\Web\Mvc\Binder\CompositeValueProvider;
+use Artister\Web\Mvc\Providers\FileValueProvider;
+use Artister\Web\Mvc\Providers\FormValueProvider;
+use Artister\Web\Mvc\Providers\QueryValueProvider;
+use Artister\Web\Mvc\Providers\RouteValueProvider;
 
 class MvcOptions
 {
     private string $ControllerNamespace = 'Application\\Controllers';
     private string $ViewDirectory = '../Views/';
     private array $ActionFilters = [];
-    private CompositeValueProvider $compositeValueProvider;
+    private ?IModelBinder $ModelBinder = null;
+    private CompositeValueProvider $ValueProviders;
 
     public function __construct()
     {
-        $this->compositeValueProvider = new CompositeValueProvider();
+        $this->ValueProviders = new CompositeValueProvider();
+        $this->ValueProviders->add(new RouteValueProvider());
+        $this->ValueProviders->add(new QueryValueProvider());
+        $this->ValueProviders->add(new FormValueProvider());
+        $this->ValueProviders->add(new FileValueProvider());
     }
 
     public function setControllerNamespace(string $namespace)
@@ -58,23 +67,23 @@ class MvcOptions
 
     public function addValueProvider(IValueProvider $valueProvider)
     {
-        $this->compositeValueProvider->add($valueProvider);
+        $this->ValueProviders->add($valueProvider);
         return $this;
     }
 
     public function addModelBinder(IModelBinder $modelBinder)
     {
-        $this->modelBinder = $modelBinder;
+        $this->ModelBinder = $modelBinder;
         return $this;
     }
 
     public function getValueProviders() : CompositeValueProvider
     {
-        return $this->compositeValueProvider;
+        return $this->ValueProviders;
     }
 
     public function getModelBinderProvider() : ModelBinderProvider
     {
-        return new ModelBinderProvider($this->modelBinder);
+        return new ModelBinderProvider($this->ModelBinder);
     }
 }

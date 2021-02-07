@@ -10,11 +10,11 @@ namespace Artister\Web\Mvc\Binder;
 
 class CompositeValueProvider implements IValueProvider
 {
-    protected $providers = [];
+    protected array $Providers = [];
 
     public function add(IValueProvider $provider)
     {
-        $this->providers[] = $provider;
+        $this->Providers[get_class($provider)] = $provider;
     }
 
     /**
@@ -22,7 +22,7 @@ class CompositeValueProvider implements IValueProvider
      */
     public function getValue(string $key)
     {
-        foreach ($this->providers as $provider)
+        foreach ($this->Providers as $provider)
         {
             if ($provider->contains($key))
             {
@@ -39,7 +39,7 @@ class CompositeValueProvider implements IValueProvider
      */
     public function contains(string $key) : bool
     {
-        foreach ($this->providers as $provider)
+        foreach ($this->Providers as $provider)
         {
             if ($provider->contains($key))
             {

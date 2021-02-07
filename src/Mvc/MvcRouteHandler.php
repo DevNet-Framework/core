@@ -13,6 +13,7 @@ use Artister\Web\Router\RouteContext;
 use Artister\System\Dependency\Activator;
 use Artister\System\Dependency\IServiceProvider;
 use Artister\System\Process\Task;
+use Artister\Web\Mvc\Providers\RouteValueProvider;
 
 class MvcRouteHandler implements IRouteHandler
 {
@@ -40,25 +41,29 @@ class MvcRouteHandler implements IRouteHandler
             return Task::completedTask();
         }
 
-        $target = $this->Target[0] ?? null;
-
-        if (!$target)
+        $options        = $this->Provider->getService(MvcOptions::class);
+        $placeholders   = $routeContext->RouteData->Values;
+        $controllerName = $this->Target[0] ?? null;
+        $actionName     = $this->Target[1] ?? null;
+        
+        if (!$controllerName)
         {
-            $placeholders   = $routeContext->RouteData->Values;
+            $namespace      = $options->getControllerNamespace();
             $controllerName = $placeholders['controller'] ?? null;
-
-            if (!$controllerName)
-            {
-                return Task::completedTask();
-            }
-
-            $controllerName      = ucfirst($placeholders['controller']).'Controller';
-            $controllerNamespace = $this->Options->getControllerNamespace();
-            $target              = $controllerNamespace .'\\'.$controllerName;
+            $controllerName = ucfirst($placeholders['controller']).'Controller';
+            $controllerName = $namespace .'\\'.$controllerName;
         }
 
-        $handler = Activator::CreateInstance($target, $this->Provider);
-        $routeContext->Handler = $handler;
+        if (!$actionName)
+        {
+            $actionName = $placeholders['action'] ?? null;
+        }
+
+        $valueProvider = $options->getValueProviders();
+        $valueProvider->add(new RouteValueProvider($routeContext->RouteData->Values));
+
+        $invoker = new ActionInvoker($controllerName, $actionName, $valueProvider);
+        $routeContext->Handler = $invoker;
 
         return Task::completedTask();
     }

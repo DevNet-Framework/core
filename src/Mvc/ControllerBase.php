@@ -25,9 +25,9 @@ use Artister\System\Process\Task;
 
 Abstract class ControllerBase implements IRequestHandler
 {
+    protected HttpContext $HttpContext;
     protected ActionContext $ActionContext;
     protected ActionExecutionDelegate $Action;
-    protected HttpContext $HttpContext;
     protected array $FilterAttributes = [];
     protected array $ActionFilters = [];
 
@@ -42,24 +42,12 @@ Abstract class ControllerBase implements IRequestHandler
 
     public function __invoke(HttpContext $httpContext) : Task
     {
-        $this->HttpContext  = $httpContext;
-        $routeContext       = $httpContext->RouteContext;
-        $placeholders       = $routeContext->RouteData->Values;
-        $actionName         = $placeholders['action'] ?? null;
-        $options            = $httpContext->RequestServices->getService(MvcOptions::class);
-        $valueProvider      = $options->getValueProviders();
+        $this->HttpContext   = $httpContext;
+        $this->ActionContext = $httpContext->ActionContext;
 
-        $valueProvider->add(new RouteValueProvider($routeContext->RouteData->Values));
-        $valueProvider->add(new QueryValueProvider());
-        $valueProvider->add(new FormValueProvider());
-        $valueProvider->add(new FileValueProvider());
-
-        $actionDescriptor       = new ActionDescriptor($this, $actionName);
-        $this->ActionContext    = new ActionContext($actionDescriptor, $httpContext, $valueProvider);
-
-        $controllerFilters      = $this->FilterAttributes[self::class] ?? [];
-        $actionFilters          = $this->FilterAttributes[strtolower($actionName)] ?? [];
-        $filterAttributes       = array_merge($controllerFilters, $actionFilters);
+        $controllerFilters   = $this->FilterAttributes[self::class] ?? [];
+        $actionFilters       = $this->FilterAttributes[strtolower($this->ActionContext->ActionDescriptor->ActionName)] ?? [];
+        $filterAttributes    = array_merge($controllerFilters, $actionFilters);
 
         foreach ($filterAttributes as $filterAttribute)
         {
@@ -86,11 +74,10 @@ Abstract class ControllerBase implements IRequestHandler
 
     public function execute(ActionContext $actionContext) : Task
     {
-        $parameterBinder            = new ParameterBinder();
-        $actionReflector            = $actionContext->ActionDescriptor->MethodInfo;
-        $arguments                  = $parameterBinder->resolveArguments($actionContext);
-
-        $actioinResult = $actionReflector->invokeArgs($this, $arguments);
+        $parameterBinder = new ParameterBinder();
+        $actionReflector = $actionContext->ActionDescriptor->MethodInfo;
+        $arguments       = $parameterBinder->resolveArguments($actionContext);
+        $actioinResult   = $actionReflector->invokeArgs($this, $arguments);
 
         return $actioinResult->executeAsync($this->ActionContext);
     }

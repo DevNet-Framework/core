@@ -48,7 +48,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route
      */
-    public function mapRoute(string $name, string $pattern, $target = null) : void
+    public function mapRoute(string $name, string $pattern, string ...$target) : void
     {
         if ($this->DefaultHandler)
         {

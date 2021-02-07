@@ -18,7 +18,7 @@ class MvcRouteHandler implements IRouteHandler
 {
     private IServiceProvider $Provider;
     private MvcOptions $Options;
-    private ?string $Target = null;
+    private array $Target = [];
 
     public function __construct(IServiceProvider $provider)
     {
@@ -40,7 +40,7 @@ class MvcRouteHandler implements IRouteHandler
             return Task::completedTask();
         }
 
-        $target = $this->Target;
+        $target = $this->Target[0] ?? null;
 
         if (!$target)
         {

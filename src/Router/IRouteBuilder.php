@@ -13,7 +13,7 @@ namespace Artister\Web\Router;
 */
 interface IRouteBuilder
 {
-    public function mapRoute(string $name, string $pattern);
+    public function mapRoute(string $name, string $pattern, string ...$target);
     
     public function build() : IRouter;
 }

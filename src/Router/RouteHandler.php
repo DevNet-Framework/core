@@ -36,21 +36,36 @@ class RouteHandler implements IRouteHandler
     
     public function handle(RouteContext $routeContext) : Task
     {
-        if (is_object($this->Target))
-        {
-            $routeContext->Handler = $this->Target;
-        }
+        $target  = null;
 
         if (is_string($this->Target))
         {
-            if (!class_exists($this->Target))
+            $target = $this->Target;
+        }
+        else if (is_array($this->Target))
+        {
+            $target = (string)$this->Target[0] ?? null;
+        }
+        else if (is_object($this->Target))
+        {
+            $handler = $this->Target;
+        }
+        else
+        {
+            throw new \Exception("Invalid Argument Type, route endpoint must be of type callable|string");
+        }
+
+        if ($target)
+        {
+            if (!class_exists($target))
             {
-                throw ClassException::classNotFound($this->Target);
+                throw ClassException::classNotFound($target);
             }
 
-            $handler = Activator::CreateInstance($this->Target, $this->ServiceProvider);
-            $routeContext->Handler = $handler;
+            $handler = Activator::CreateInstance($target, $this->ServiceProvider);
         }
+
+        $routeContext->Handler = $handler;
 
         return Task::completedTask();
     }

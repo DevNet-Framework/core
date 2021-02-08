@@ -57,7 +57,7 @@ class RouteBuilder implements IRouteBuilder
         }
         else
         {
-            $routeHandler = new RouteHandler($this->ServiceProvider, $target);
+            $routeHandler = new RouteHandler($this->ServiceProvider, $target[0] ?? null);
         }
 
         $pattern = $this->Prefix .'/'. trim($pattern, '/');

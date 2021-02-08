@@ -42,10 +42,6 @@ class RouteHandler implements IRouteHandler
         {
             $target = $this->Target;
         }
-        else if (is_array($this->Target))
-        {
-            $target = (string)$this->Target[0] ?? null;
-        }
         else if (is_object($this->Target))
         {
             $handler = $this->Target;

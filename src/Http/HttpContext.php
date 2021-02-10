@@ -12,12 +12,14 @@ class HttpContext
 {
     private Request $Request;
     private Response $Response;
+    private FeatureCollection $Features;
     private array $Attributes = [];
 
     public function __construct(Request $request, Response $response)
     {
         $this->Request = $request;
         $this->Response = $response;
+        $this->Features = new FeatureCollection();
     }
 
     public function __get(string $name)

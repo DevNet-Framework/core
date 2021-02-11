@@ -39,13 +39,17 @@ class Cookies
         }
     }
 
-    public function add(String $name, string $value, DateTime $expires)
+    public function add(String $name, string $value, CookieOptions $options = null) : void
     {
+        $cookie = "{$name}={$value};";
+        
+        if ($options)
+        {
+            $cookie .= "{$options->__toString()}";
+        }
+        
         $this->Cookies[$name] = $value;
-
-        $expires = $expires->format(DateTime::COOKIE);
-        $value = "{$name}={$value}; expires={$expires};";
-        $this->Headers->add('Set-Cookie', $value);
+        $this->Headers->add('Set-Cookie', $cookie);
     }
 
     public function contains(string $name) : bool

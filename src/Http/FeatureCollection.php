@@ -24,7 +24,7 @@ class FeatureCollection implements IEnumerable
 
     public function get(string $type) : ?object
     {
-        return $Items[$type] ?? null;
+        return $this->Items[$type] ?? null;
     }
 
     public function getIterator() : Enumerator

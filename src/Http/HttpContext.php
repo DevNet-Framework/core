@@ -28,6 +28,7 @@ class HttpContext
         {
             case 'Request':
             case 'Response':
+            case 'Features':
                 return $this->$name;
                 break;
             default:

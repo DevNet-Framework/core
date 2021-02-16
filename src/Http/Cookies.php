@@ -39,6 +39,11 @@ class Cookies
         }
     }
 
+    public function getValue(String $name) : ?string
+    {
+        return $this->Cookies[$name] ?? null;
+    }
+
     public function add(String $name, string $value, CookieOptions $options = null) : void
     {
         $cookie = "{$name}={$value};";

@@ -17,8 +17,8 @@ class CookieOptions
     public ?string $Domain    = null;
     public ?string $Path      = null;
     public ?string $SameSite  = null;
+    public ?bool $HttpOnly    = null;
     public bool $Secure       = false;
-    public bool $HttpOnly     = false;
 
     public function __construct(?DateTime $expires = null, ?string $path = null)
     {
@@ -39,8 +39,8 @@ class CookieOptions
         $options .= $this->MaxAge ? "Max-Age={$this->MaxAge};" : "";
         $options .= $this->Path ? "Path={$this->Path};" : "";
         $options .= $this->SameSite ? "SameSite={$this->SameSite};" : "";
-        $options .= $this->Secure ? "Secure;" : "";
         $options .= $this->HttpOnly ? "HttpOnly;" : "";
+        $options .= $this->Secure ? "Secure;" : "";
         
         return $options;
     }

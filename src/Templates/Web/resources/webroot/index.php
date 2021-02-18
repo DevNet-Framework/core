@@ -19,17 +19,18 @@ else
         $project = simplexml_load_file($projectPath);
     }
 
-    if (!file_exists((string)$project->runtime->path))
+    if (!file_exists((string)$project->autoload->path."/autoload.php"))
     {
-        $project->runtime->path = exec("devnet --path");
+        $project->autoload->path = dirname(exec("devnet --path"));
+        $dom                     = new DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput       = true;
         
-        $dom = new DOMDocument();
-        $dom->formatOutput = true;
         $dom->loadXML($project->asXML());
         $dom->save($projectPath);
     }
 
-    require dirname((string)$project->runtime->path) . "/autoload.php";
+    require (string)$project->autoload->path."/autoload.php";
 }
 
 $launcher = launcher::getLauncher();

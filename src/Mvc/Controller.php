@@ -14,6 +14,7 @@ use Artister\Web\Mvc\Results\ForbidResult;
 use Artister\Web\Mvc\Results\JsonResult;
 use Artister\Web\Mvc\Results\RedirectResult;
 use Artister\Web\Mvc\Results\ViewResult;
+use Artister\Web\Mvc\Features\HtmlHelper;
 
 Abstract class Controller extends ControllerBase
 {
@@ -48,6 +49,7 @@ Abstract class Controller extends ControllerBase
 
         $view = $this->ActionContext->HttpContext->RequestServices->getService(ViewManager::class);
         $view->setData($this->ViewData);
+        $view->inject("Html", new HtmlHelper($this->HttpContext));
         return new ViewResult($view($viewName, $model), 200);
     }
 

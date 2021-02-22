@@ -19,12 +19,10 @@ class ViewEngine
     private string $LayoutName = '';
     private string $SectionName = '';
     private array $Sections = [];
-    private array $ViewData;
 
     public function __construct(ViewManager $manager, array $viewData = [])
     {
         $this->Manager = $manager;
-        $this->ViewData = $viewData;
     }
 
     public function __get(string $name)

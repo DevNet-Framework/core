@@ -48,7 +48,7 @@ Abstract class Controller extends ControllerBase
         }
 
         $view = $this->ActionContext->HttpContext->RequestServices->getService(ViewManager::class);
-        $view->setData($this->ViewData);
+        $view->inject("ViewData", $this->ViewData);
         $view->inject("Html", new HtmlHelper($this->HttpContext));
         return new ViewResult($view($viewName, $model), 200);
     }

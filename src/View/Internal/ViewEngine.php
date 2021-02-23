@@ -8,8 +8,8 @@
 
 namespace Artister\Web\View\Internal;
 
+use Artister\System\Exceptions\PropertyException;
 use Artister\Web\View\ViewManager;
-use BadMethodCallException;
 use InvalidArgumentException;
 
 class ViewEngine
@@ -35,14 +35,14 @@ class ViewEngine
         if (!property_exists($this, $name))
         {
             $class = get_class($this);
-            return "Undefined property: {$class}::\${$name}";
+            throw new PropertyException("Undefined property: {$class}::\${$name}");
         }
 
         $rp = new \ReflectionProperty($this, $name);
         if ($rp->isPrivate() || $rp->isProtected())
         {
             $class = get_class($this);
-            return "Cannot access private or protected property {$class}::\${$name}";
+            throw new PropertyException("Cannot access private or protected property {$class}::\${$name}");
         }
 
         return $this->$name;
@@ -100,7 +100,15 @@ class ViewEngine
 
         if ($viewPath)
         {
-            include $viewPath;
+            try
+            {
+                include $viewPath;
+            }
+            catch (\Throwable $th)
+            {
+                ob_clean();
+                throw $th;
+            }
         }
         else
         {
@@ -114,7 +122,15 @@ class ViewEngine
 
         if ($layoutPath)
         {
-            include $layoutPath;
+            try
+            {
+                include $layoutPath;
+            }
+            catch (\Throwable $th)
+            {
+                ob_clean();
+                throw $th;
+            }
         }
         else
         {

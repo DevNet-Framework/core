@@ -79,7 +79,7 @@ class Program
         $context->appendLine("{");
         $context->appendLine("    public function index() : IActionResult");
         $context->appendLine("    {");
-        $context->appendLine("        return \$this->content(\"Hello World!\");");
+        $context->appendLine("        return \$this->view();");
         $context->appendLine("    }");
         $context->append("}");
 

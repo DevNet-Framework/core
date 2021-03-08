@@ -38,7 +38,7 @@ class ViewManager
         $this->ViewData = $viewData;
     }
 
-    public function getPath(string $pathName) : ?string
+    public function getPath(string $pathName) : string
     {
         if ($pathName)
         {
@@ -50,10 +50,10 @@ class ViewManager
                 return $path;
             }
             
-            return null;
+            return "";
         }
         
-        return null;
+        return "";
     }
 
     public function inject(string $Name, $Value) : void

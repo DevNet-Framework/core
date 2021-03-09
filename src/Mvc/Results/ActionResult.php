@@ -10,7 +10,7 @@ namespace Artister\Web\Mvc\Results;
 
 use Artister\Web\Mvc\IActionResult;
 use Artister\Web\Mvc\ActionContext;
-use Artister\System\Process\Task;
+use Artister\System\Async\Task;
 
 abstract class ActionResult implements IActionResult
 {

@@ -8,7 +8,7 @@
 
 namespace Artister\Web\Mvc;
 
-use Artister\System\Process\Task;
+use Artister\System\Async\Task;
 
 interface IActionResult
 {

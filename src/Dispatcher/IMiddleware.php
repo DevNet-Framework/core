@@ -9,7 +9,7 @@
 namespace Artister\Web\Dispatcher;
 
 use Artister\Web\Http\HttpContext;
-use Artister\System\Process\Task;
+use Artister\System\Async\Task;
 
 interface IMiddleware
 {

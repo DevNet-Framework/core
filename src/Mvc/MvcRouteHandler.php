@@ -12,7 +12,7 @@ use Artister\Web\Router\IRouteHandler;
 use Artister\Web\Router\RouteContext;
 use Artister\System\Dependency\Activator;
 use Artister\System\Dependency\IServiceProvider;
-use Artister\System\Process\Task;
+use Artister\System\Async\Task;
 use Artister\Web\Mvc\Providers\RouteValueProvider;
 
 class MvcRouteHandler implements IRouteHandler

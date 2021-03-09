@@ -12,7 +12,7 @@ use Artister\Web\Dispatcher\IMiddleware;
 use Artister\Web\Dispatcher\RequestDelegate;
 use Artister\Web\Security\Authorization\Authorization;
 use Artister\Web\Http\HttpContext;
-use Artister\System\Process\Task;
+use Artister\System\Async\Task;
 
 class AuthorizationMiddleware implements IMiddleware
 {

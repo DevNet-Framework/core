@@ -13,7 +13,7 @@ use Artister\Web\Dispatcher\RequestDelegate;
 use Artister\Web\Security\Authentication\Authentication;
 use Artister\Web\Security\ClaimsPrincipal;
 use Artister\Web\Http\HttpContext;
-use Artister\System\Process\Task;
+use Artister\System\Async\Task;
 
 class AuthenticationMiddleware implements IMiddleware
 {

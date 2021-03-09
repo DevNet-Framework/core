@@ -13,7 +13,7 @@ use Artister\Web\Dispatcher\IApplicationBuilder;
 use Artister\Web\Dispatcher\IMiddleware;
 use Artister\Web\Http\HttpContext;
 use Artister\System\Dependency\IServiceProvider;
-use Artister\System\Process\Task;
+use Artister\System\Async\Task;
 use Closure;
 
 class ApplicationBuilder implements IApplicationBuilder

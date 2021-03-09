@@ -10,7 +10,7 @@ namespace Artister\Web\Router;
 
 use Artister\System\Dependency\Activator;
 use Artister\System\Dependency\IServiceProvider;
-use Artister\System\Process\Task;
+use Artister\System\Async\Task;
 use Artister\System\Exceptions\ClassException;
 
 class RouteHandler implements IRouteHandler

@@ -9,7 +9,7 @@
 namespace Artister\Web\Mvc;
 
 use Artister\System\Event\Delegate;
-use Artister\System\Process\Task;
+use Artister\System\Async\Task;
 
 class ActionExecutionDelegate extends Delegate
 {

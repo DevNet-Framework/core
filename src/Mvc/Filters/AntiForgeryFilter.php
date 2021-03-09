@@ -12,7 +12,7 @@ use Artister\Web\Http\HttpContext;
 use Artister\Web\Mvc\IActionFilter;
 use Artister\Web\Mvc\ActionExecutionDelegate;
 use Artister\Web\Mvc\ActionContext;
-use Artister\System\Process\Task;
+use Artister\System\Async\Task;
 use Artister\Web\Security\Antiforgery\IAntiforgery;
 
 class AntiForgeryFilter implements IActionFilter

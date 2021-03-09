@@ -13,7 +13,7 @@ use Artister\Web\Mvc\Binder\IValueProvider;
 use Artister\Web\Mvc\ActionContext;
 use Artister\Web\Http\HttpContext;
 use Artister\System\Dependency\Activator;
-use Artister\System\Process\Task;
+use Artister\System\Async\Task;
 
 class ActionInvoker implements IRequestHandler
 {

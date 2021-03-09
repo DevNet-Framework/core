@@ -12,7 +12,7 @@ use Artister\Web\Dispatcher\IMiddleware;
 use Artister\Web\Dispatcher\RequestDelegate;
 use Artister\Web\Http\HttpContext;
 use Artister\System\Diagnostic\Debuger;
-use Artister\System\Process\Task;
+use Artister\System\Async\Task;
 
 class ExceptionMiddleware implements IMiddleware
 {

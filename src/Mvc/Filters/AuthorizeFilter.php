@@ -12,7 +12,7 @@ use Artister\Web\Mvc\IActionFilter;
 use Artister\Web\Mvc\ActionContext;
 use Artister\Web\Mvc\ActionExecutionDelegate;
 use Artister\Web\Security\Authentication\AuthenticationDefaults;
-use Artister\System\Process\Task;
+use Artister\System\Async\Task;
 
 class AuthorizeFilter implements IActionFilter
 {

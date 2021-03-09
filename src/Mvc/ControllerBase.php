@@ -21,7 +21,7 @@ use Artister\Web\Mvc\Providers\QueryValueProvider;
 use Artister\Web\Mvc\Providers\RouteValueProvider;
 use Artister\Web\Dispatcher\IRequestHandler;
 use Artister\Web\Http\HttpContext;
-use Artister\System\Process\Task;
+use Artister\System\Async\Task;
 
 Abstract class ControllerBase implements IRequestHandler
 {

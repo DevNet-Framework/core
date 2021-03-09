@@ -14,7 +14,7 @@ use Artister\Web\Dispatcher\IMiddleware;
 use Artister\Web\Dispatcher\RequestDelegate;
 use Artister\Web\Http\HttpContext;
 use Artister\Web\Http\HttpException;
-use Artister\System\Process\Task;
+use Artister\System\Async\Task;
 
 class RouterMiddleware implements IMiddleware
 {

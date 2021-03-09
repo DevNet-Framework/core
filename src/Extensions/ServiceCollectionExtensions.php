@@ -18,6 +18,9 @@ use Artister\Web\Router\RouteBuilder;
 use Artister\Web\Mvc\MvcOptions;
 use Artister\Web\Mvc\MvcRouteHandler;
 use Artister\Web\View\ViewManager;
+use Artister\Web\Security\Antiforgery\IAntiforgery;
+use Artister\Web\Security\Antiforgery\Antiforgery;
+use Artister\Web\Security\Antiforgery\AntiforgeryOptions;
 use Artister\Web\Security\Authentication\Authentication;
 use Artister\Web\Security\Authentication\AuthenticationBuilder;
 use Artister\Web\Security\Authentication\AuthenticationDefaults;
@@ -40,6 +43,18 @@ class ServiceCollectionExtensions
             $httpContext->addAttribute('RequestServices', $provider);
             return $httpContext;
         });
+    }
+
+    public static function addAntiforgery(IServiceCollection $service, Closure $configuration = null)
+    {
+        $options = new AntiforgeryOptions();
+
+        if ($configuration)
+        {
+            $configuration($options);
+        }
+
+        $service->addSingleton(IAntiforgery::class, fn() => new Antiforgery($options));
     }
 
     public static function addAuthentication(IServiceCollection $service, Closure $configuration = null)

@@ -58,8 +58,8 @@ class IdentityContext
         $builder->entity($this->RoleType)->hasMany('UserRole', UserRole::class);
     }
 
-    public function save()
+    public function save() : int
     {
-        $this->EntityContext->save();
+        return $this->EntityContext->save();
     }
 }

@@ -22,23 +22,23 @@ class UserManager
         $this->Users            = $identityContext->Users;
     }
 
-    public function create(User $user)
+    public function create(User $user) : int
     {
         $user->Password = password_hash($user->Password, PASSWORD_DEFAULT);
         
         $this->Users->add($user);
-        $this->IdentityContext->save();
+        return $this->IdentityContext->save();
     }
 
-    public function delete(User $User)
+    public function delete(User $User) : int
     {
         $this->Users->remove($User);
-        $this->IdentityContext->save();
+        return $this->IdentityContext->save();
     }
 
-    public function update()
+    public function update() : int
     {
-        $this->IdentityContext->save();
+        return $this->IdentityContext->save();
     }
 
     public function getUser() : ?User

@@ -120,7 +120,8 @@ class ServiceCollectionExtensions
             $configuration($entityOptions);
         }
         
-        $service->addSingleton(EntityContext::class, fn() => new $entityConext($entityOptions));
+        $service->addSingleton($entityConext, fn() => new $entityConext($entityOptions));
+        $service->addSingleton(EntityContext::class, fn($provider) => $provider->getService($entityConext));
     }
 
     public static function addIdentity(IServiceCollection $service, string $userType = User::class, string $roleType = Role::class, Closure $configuration = null)

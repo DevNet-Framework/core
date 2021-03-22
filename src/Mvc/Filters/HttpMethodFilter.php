@@ -12,6 +12,7 @@ use Artister\Web\Http\HttpContext;
 use Artister\Web\Mvc\IActionFilter;
 use Artister\Web\Mvc\ActionExecutionDelegate;
 use Artister\Web\Mvc\ActionContext;
+use Artister\Web\Http\HttpException;
 use Artister\System\Async\Task;
 
 class HttpMethodFilter implements IActionFilter
@@ -33,13 +34,12 @@ class HttpMethodFilter implements IActionFilter
             $option = strtoupper($option);
         }
 
-        if (in_array($httpMethod, $this->Options))
+        if (!in_array($httpMethod, $this->Options))
         {
-            return $next($context);
+            $httpContext->Response->setStatusCode(405);
+            throw new HttpException("\"{$httpMethod}\" Method Not Allowed", 405);
         }
 
-        $httpContext->Response->setStatusCode(405);
-
-        return Task::completedTask();
+        return $next($context);
     }
 }

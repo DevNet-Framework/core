@@ -36,8 +36,9 @@ use Closure;
 
 class ServiceCollectionExtensions
 {
-    public static function addAntiforgery(IServiceCollection $services, $options = new AntiforgeryOptions();
-
+    public static function addAntiforgery(IServiceCollection $service, Closure $configuration = null)
+    {
+        $options = new AntiforgeryOptions();
         if ($configuration)
         {
             $configuration($options);

@@ -8,13 +8,16 @@
 
 namespace Artister\Web\Hosting;
 
-use Artister\Web\Dispatcher\ApplicationBuilder;
 use Artister\System\Configuration\IConfiguration;
 use Artister\System\Configuration\ConfigurationBuilder;
 use Artister\System\Dependency\ServiceCollection;
 use Artister\System\Dependency\ServiceProvider;
 use Artister\System\Exceptions\ClassException;
 use Artister\System\Boot\LauncherProperties;
+use Artister\Web\Dispatcher\ApplicationBuilder;
+use Artister\Web\Http\HttpContextFactory;
+use Artister\Web\Http\HttpContext;
+use Artister\Web\Router\RouteBuilder;
 use Closure;
 
 class WebHostBuilder implements IWebHostBuilder
@@ -30,6 +33,14 @@ class WebHostBuilder implements IWebHostBuilder
         $this->Services         = new ServiceCollection();
         $this->Provider         = new ServiceProvider($this->Services);
         $this->AppBuilder       = new ApplicationBuilder($this->Provider);
+
+        $this->Services->addSingleton(HttpContext::class, function($provider) : HttpContext {
+            $httpContext = HttpContextFactory::create();
+            $httpContext->addAttribute('RequestServices', $provider);
+            return $httpContext;
+        });
+
+        $this->Services->addSingleton(RouteBuilder::class, fn($provider) => new RouteBuilder($provider));
     }
 
     public function configureServices(Closure $configureServices)

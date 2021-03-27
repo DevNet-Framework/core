@@ -10,10 +10,9 @@ namespace Artister\Web\Mvc;
 
 use Artister\Web\Router\IRouteHandler;
 use Artister\Web\Router\RouteContext;
-use Artister\System\Dependency\Activator;
+use Artister\Web\Mvc\Providers\RouteValueProvider;
 use Artister\System\Dependency\IServiceProvider;
 use Artister\System\Async\Task;
-use Artister\Web\Mvc\Providers\RouteValueProvider;
 
 class MvcRouteHandler implements IRouteHandler
 {
@@ -48,10 +47,10 @@ class MvcRouteHandler implements IRouteHandler
         
         if (!$controllerName)
         {
-            $namespace      = $options->getControllerNamespace();
             $controllerName = $placeholders['controller'] ?? null;
-            $controllerName = ucfirst($placeholders['controller']).'Controller';
-            $controllerName = $namespace .'\\'.$controllerName;
+            $prefix         = (string)strstr($routeContext->UrlPath, $controllerName, true);
+            $prefix         = ltrim(str_replace('/', '\\', $prefix), '\\');
+            $controllerName = ucwords($options->getControllerNamespace().'\\'.$prefix.$controllerName.'Controller', '\\');
         }
 
         if (!$actionName)

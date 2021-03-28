@@ -10,9 +10,10 @@ namespace Artister\Web\Mvc;
 
 use Artister\Web\Router\IRouteHandler;
 use Artister\Web\Router\RouteContext;
-use Artister\Web\Mvc\Providers\RouteValueProvider;
+use Artister\System\Dependency\Activator;
 use Artister\System\Dependency\IServiceProvider;
 use Artister\System\Async\Task;
+use Artister\Web\Mvc\Providers\RouteValueProvider;
 
 class MvcRouteHandler implements IRouteHandler
 {
@@ -40,22 +41,25 @@ class MvcRouteHandler implements IRouteHandler
             return Task::completedTask();
         }
 
+        $prefix         = null;
         $options        = $this->Provider->getService(MvcOptions::class);
-        $placeholders   = $routeContext->RouteData->Values;
+        $routeData      = $routeContext->RouteData;
         $controllerName = $this->Target[0] ?? null;
         $actionName     = $this->Target[1] ?? null;
         
         if (!$controllerName)
         {
-            $controllerName = $placeholders['controller'] ?? null;
-            $prefix         = (string)strstr($routeContext->UrlPath, $controllerName, true);
-            $prefix         = ltrim(str_replace('/', '\\', $prefix), '\\');
-            $controllerName = ucwords($options->getControllerNamespace().'\\'.$prefix.$controllerName.'Controller', '\\');
+            $namespace      = $options->getControllerNamespace();
+            $controllerName = $routeData->Values['controller'] ?? null;
+            $prefix         = ltrim((string)strstr($routeContext->UrlPath, $controllerName, true),'/');
+            $controllerName = ucwords($namespace.'\\'.str_replace('/', '\\', $prefix).$controllerName.'Controller', '\\');
         }
+
+        $routeData->Values['prefix'] = $prefix;
 
         if (!$actionName)
         {
-            $actionName = $placeholders['action'] ?? null;
+            $actionName = $routeData->Values['action'] ?? null;
         }
 
         $valueProvider = $options->getValueProviders();

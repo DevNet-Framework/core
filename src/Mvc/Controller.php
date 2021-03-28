@@ -42,14 +42,16 @@ Abstract class Controller extends ControllerBase
         
         if (!$viewName)
         {
-            $controllerName = str_replace("Controller", "",$this->ActionContext->ActionDescriptor->ControllerName);
+            $prefix         = $this->HttpContext->RouteContext->RouteData->Values['prefix'];
+            $controllerName = $this->ActionContext->ActionDescriptor->ControllerName;
+            $controllerName = str_replace('Controller', '',$this->ActionContext->ActionDescriptor->ControllerName);
             $actionName     = $this->ActionContext->ActionDescriptor->ActionName;
-            $viewName       = $controllerName."/".$actionName;
+            $viewName       = ucwords($prefix.$controllerName.'/'.$actionName, '/');
         }
 
         $view = $this->ActionContext->HttpContext->RequestServices->getService(ViewManager::class);
-        $view->inject("ViewData", $this->ViewData);
-        $view->inject("Html", new HtmlHelper($this->HttpContext));
+        $view->inject('ViewData', $this->ViewData);
+        $view->inject('Html', new HtmlHelper($this->HttpContext));
         return new ViewResult($view($viewName, $model), 200);
     }
 

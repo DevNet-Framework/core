@@ -112,7 +112,7 @@ class ViewEngine
         }
         else
         {
-            throw new InvalidArgumentException("invalide view name : {$viewName}");
+            throw new InvalidArgumentException("Vew name : {$viewName} Not found");
         }
 
         $this->Body = ob_get_clean();

@@ -3,22 +3,22 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet
  */
 
-namespace Artister\Web\Hosting;
+namespace DevNet\Web\Hosting;
 
-use Artister\System\Boot\LauncherProperties;
+use DevNet\System\Boot\LauncherProperties;
 
 class WebServer
 {
     private string $Directoty;
     private string $Host = 'localhost';
-    private int $Port  = 8000;
+    private int $Port    = 8000;
 
     public function __construct()
     {
-        $this->Directoty  = LauncherProperties::getWorkspace()."/webroot";
+        $this->Directoty = LauncherProperties::getWorkspace()."/webroot";
     }
 
     public function setDirectoty(string $directoty)

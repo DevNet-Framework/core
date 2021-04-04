@@ -3,10 +3,10 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Router;
+namespace DevNet\Web\Router;
 
 class RouteContext
 {
@@ -18,9 +18,9 @@ class RouteContext
     public function __construct(string $httpMethod, string $urlPath)
     {
         $this->HttpMethod = $httpMethod;
-        $this->UrlPath = $urlPath;
-        $this->RouteData = new RouteData();
-        $this->Handler = null;
+        $this->UrlPath    = $urlPath;
+        $this->RouteData  = new RouteData();
+        $this->Handler    = null;
     }
 
     /**

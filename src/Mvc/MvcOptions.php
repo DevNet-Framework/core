@@ -3,19 +3,19 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Mvc;
+namespace DevNet\Web\Mvc;
 
-use Artister\Web\Mvc\Binder\IValueProvider;
-use Artister\Web\Mvc\Binder\IModelBinder;
-use Artister\Web\Mvc\Binder\ModelBinderProvider;
-use Artister\Web\Mvc\Binder\CompositeValueProvider;
-use Artister\Web\Mvc\Providers\FileValueProvider;
-use Artister\Web\Mvc\Providers\FormValueProvider;
-use Artister\Web\Mvc\Providers\QueryValueProvider;
-use Artister\Web\Mvc\Providers\RouteValueProvider;
+use DevNet\Web\Mvc\Binder\IValueProvider;
+use DevNet\Web\Mvc\Binder\IModelBinder;
+use DevNet\Web\Mvc\Binder\ModelBinderProvider;
+use DevNet\Web\Mvc\Binder\CompositeValueProvider;
+use DevNet\Web\Mvc\Providers\FileValueProvider;
+use DevNet\Web\Mvc\Providers\FormValueProvider;
+use DevNet\Web\Mvc\Providers\QueryValueProvider;
+use DevNet\Web\Mvc\Providers\RouteValueProvider;
 
 class MvcOptions
 {

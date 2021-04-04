@@ -3,15 +3,15 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Router;
+namespace DevNet\Web\Router;
 
-use Artister\Web\Router\IRouter;
-use Artister\Web\Router\Internal\RouteParser;
-use Artister\Web\Router\Internal\RouteMatcher;
-use Artister\Web\Router\Internal\RouteGenerator;
+use DevNet\Web\Router\IRouter;
+use DevNet\Web\Router\Internal\RouteParser;
+use DevNet\Web\Router\Internal\RouteMatcher;
+use DevNet\Web\Router\Internal\RouteGenerator;
 
 class Route implements IRouter
 {

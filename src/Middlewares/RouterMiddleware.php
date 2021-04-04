@@ -3,18 +3,18 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Middlewares;
+namespace DevNet\Web\Middlewares;
 
-use Artister\Web\Router\RouteBuilder;
-use Artister\Web\Router\RouteContext;
-use Artister\Web\Dispatcher\IMiddleware;
-use Artister\Web\Dispatcher\RequestDelegate;
-use Artister\Web\Http\HttpContext;
-use Artister\Web\Http\HttpException;
-use Artister\System\Async\Task;
+use DevNet\Web\Router\RouteBuilder;
+use DevNet\Web\Router\RouteContext;
+use DevNet\Web\Dispatcher\IMiddleware;
+use DevNet\Web\Dispatcher\RequestDelegate;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Http\HttpException;
+use DevNet\System\Async\Task;
 
 class RouterMiddleware implements IMiddleware
 {
@@ -27,9 +27,9 @@ class RouterMiddleware implements IMiddleware
 
     public function __invoke(HttpContext $context, RequestDelegate $next) : Task
     {
-        $request = $context->Request;
+        $request    = $context->Request;
         $httpMethod = $request->Method;
-        $urlPath = $request->Uri->Path;
+        $urlPath    = $request->Uri->Path;
 
         $trimmedPath = $this->trimDuplicateSlashes($urlPath);
 

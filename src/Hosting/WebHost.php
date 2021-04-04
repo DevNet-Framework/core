@@ -3,15 +3,15 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Hosting;
+namespace DevNet\Web\Hosting;
 
-use Artister\Web\Dispatcher\IApplicationBuilder;
-use Artister\Web\Http\HttpContext;
-use Artister\System\Dependency\IServiceProvider;
-use Artister\System\Configuration\IConfiguration;
+use DevNet\Web\Dispatcher\IApplicationBuilder;
+use DevNet\Web\Http\HttpContext;
+use DevNet\System\Dependency\IServiceProvider;
+use DevNet\System\Configuration\IConfiguration;
 
 class WebHost
 {

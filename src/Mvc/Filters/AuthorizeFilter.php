@@ -3,16 +3,16 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Mvc\Filters;
+namespace DevNet\Web\Mvc\Filters;
 
-use Artister\Web\Mvc\IActionFilter;
-use Artister\Web\Mvc\ActionContext;
-use Artister\Web\Mvc\ActionExecutionDelegate;
-use Artister\Web\Security\Authentication\AuthenticationDefaults;
-use Artister\System\Async\Task;
+use DevNet\Web\Mvc\IActionFilter;
+use DevNet\Web\Mvc\ActionContext;
+use DevNet\Web\Mvc\ActionExecutionDelegate;
+use DevNet\Web\Security\Authentication\AuthenticationDefaults;
+use DevNet\System\Async\Task;
 
 class AuthorizeFilter implements IActionFilter
 {
@@ -25,14 +25,14 @@ class AuthorizeFilter implements IActionFilter
 
     public function onActionExecutionAsync(ActionContext $context, ActionExecutionDelegate $next) : Task
     {
-        $httpContext    = $context->HttpContext;
-        $authorization  = $context->HttpContext->Authorization;
+        $httpContext   = $context->HttpContext;
+        $authorization = $context->HttpContext->Authorization;
 
         if ($authorization)
         {
-            $user           = $httpContext->User;
-            $policy         = $this->Options['Policy'] ?? 'Authentication';
-            $result         = $authorization->Authorize($policy, $user);
+            $user   = $httpContext->User;
+            $policy = $this->Options['Policy'] ?? 'Authentication';
+            $result = $authorization->Authorize($policy, $user);
 
             if (!$result->isSucceeded())
             {
@@ -43,8 +43,8 @@ class AuthorizeFilter implements IActionFilter
 
                     if ($authentication)
                     {
-                        $handler    = $authentication->Handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
-                        $loginPath  = $handler->Options->LoginPath;
+                        $handler   = $authentication->Handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
+                        $loginPath = $handler->Options->LoginPath;
                     }
 
                     $httpContext->Response->redirect($loginPath);

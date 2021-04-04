@@ -3,10 +3,10 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Http;
+namespace DevNet\Web\Http;
 
 class Form
 {
@@ -25,8 +25,8 @@ class Form
             $files = new FileCollection();
         }
 
-        $this->Fields   = $fields;
-        $this->Files    = $files;
+        $this->Fields = $fields;
+        $this->Files  = $files;
     }
 
     public function __get(string $name)

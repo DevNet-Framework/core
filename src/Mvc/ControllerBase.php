@@ -3,25 +3,25 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Mvc;
+namespace DevNet\Web\Mvc;
 
-use Artister\Web\Mvc\ActionContext;
-use Artister\Web\Mvc\Results\ContentResult;
-use Artister\Web\Mvc\Results\ForbidResult;
-use Artister\Web\Mvc\Results\JsonResult;
-use Artister\Web\Mvc\Results\RedirectResult;
-use Artister\Web\Mvc\Results\ViewResult;
-use Artister\Web\Mvc\Binder\ParameterBinder;
-use Artister\Web\Mvc\Providers\FileValueProvider;
-use Artister\Web\Mvc\Providers\FormValueProvider;
-use Artister\Web\Mvc\Providers\QueryValueProvider;
-use Artister\Web\Mvc\Providers\RouteValueProvider;
-use Artister\Web\Dispatcher\IRequestHandler;
-use Artister\Web\Http\HttpContext;
-use Artister\System\Async\Task;
+use DevNet\Web\Mvc\ActionContext;
+use DevNet\Web\Mvc\Results\ContentResult;
+use DevNet\Web\Mvc\Results\ForbidResult;
+use DevNet\Web\Mvc\Results\JsonResult;
+use DevNet\Web\Mvc\Results\RedirectResult;
+use DevNet\Web\Mvc\Results\ViewResult;
+use DevNet\Web\Mvc\Binder\ParameterBinder;
+use DevNet\Web\Mvc\Providers\FileValueProvider;
+use DevNet\Web\Mvc\Providers\FormValueProvider;
+use DevNet\Web\Mvc\Providers\QueryValueProvider;
+use DevNet\Web\Mvc\Providers\RouteValueProvider;
+use DevNet\Web\Dispatcher\IRequestHandler;
+use DevNet\Web\Http\HttpContext;
+use DevNet\System\Async\Task;
 
 Abstract class ControllerBase implements IRequestHandler
 {

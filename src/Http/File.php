@@ -3,10 +3,10 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Http;
+namespace DevNet\Web\Http;
 
 class File
 {
@@ -18,11 +18,11 @@ class File
 
     public function __construct(string $name, string $type, string $temp, int $size, int $error)
     {
-        $this->Name     = $name;
-        $this->Type     = $type;
-        $this->Temp     = $temp;
-        $this->Size     = $size;
-        $this->Error    = $error;
+        $this->Name  = $name;
+        $this->Type  = $type;
+        $this->Temp  = $temp;
+        $this->Size  = $size;
+        $this->Error = $error;
     }
 
     public function __get(string $name)

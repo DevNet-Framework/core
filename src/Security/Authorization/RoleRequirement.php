@@ -3,12 +3,12 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Security\Authorization;
+namespace DevNet\Web\Security\Authorization;
 
-use Artister\System\Async\Task;
+use DevNet\System\Async\Task;
 
 class RoleRequirement extends AuthorizationHandler implements IAuthorizationRequirement
 {
@@ -16,7 +16,7 @@ class RoleRequirement extends AuthorizationHandler implements IAuthorizationRequ
 
     public function __construct(array $allowedRoles)
     {
-        $this->AllowedRoles    = $allowedRoles;
+        $this->AllowedRoles = $allowedRoles;
     }
 
     public function __get(string $name)
@@ -31,7 +31,7 @@ class RoleRequirement extends AuthorizationHandler implements IAuthorizationRequ
 
     public function HandleRequirement(AuthorizationContext $context, IAuthorizationRequirement $requirement) : Task
     {
-        $user =  $context->User;
+        $user = $context->User;
         if ($user) {
             if ($this->AllowedValues) {
                 $found = $user->findClaims(fn($claim) => $claim->Type == 'Role' 

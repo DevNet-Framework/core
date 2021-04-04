@@ -3,18 +3,18 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Extensions;
+namespace DevNet\Web\Extensions;
 
-use Artister\Web\Dispatcher\IApplicationBuilder;
-use Artister\Web\Router\RouteBuilder;
-use Artister\Web\Middlewares\RouterMiddleware;
-use Artister\Web\Middlewares\EndpointMiddleware;
-use Artister\Web\Middlewares\ExceptionMiddleware;
-use Artister\Web\Middlewares\AuthenticationMiddleware;
-use Artister\Web\Middlewares\AuthorizationMiddleware;
+use DevNet\Web\Dispatcher\IApplicationBuilder;
+use DevNet\Web\Router\RouteBuilder;
+use DevNet\Web\Middlewares\RouterMiddleware;
+use DevNet\Web\Middlewares\EndpointMiddleware;
+use DevNet\Web\Middlewares\ExceptionMiddleware;
+use DevNet\Web\Middlewares\AuthenticationMiddleware;
+use DevNet\Web\Middlewares\AuthorizationMiddleware;
 use Closure;
 
 class ApplicationBuilderExtensions

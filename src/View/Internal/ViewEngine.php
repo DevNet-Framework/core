@@ -3,22 +3,22 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\View\Internal;
+namespace DevNet\Web\View\Internal;
 
-use Artister\System\Exceptions\PropertyException;
-use Artister\Web\View\ViewManager;
+use DevNet\System\Exceptions\PropertyException;
+use DevNet\Web\View\ViewManager;
 use InvalidArgumentException;
 
 class ViewEngine
 {
     private ViewManager $Manager;
     private string $Body;
-    private string $LayoutName = '';
+    private string $LayoutName  = '';
     private string $SectionName = '';
-    private array $Sections = [];
+    private array $Sections     = [];
 
     public function __construct(ViewManager $manager, array $viewData = [])
     {

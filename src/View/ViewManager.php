@@ -3,13 +3,13 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\View;
+namespace DevNet\Web\View;
 
-use Artister\Web\View\Internal\ViewEngine;
-use Artister\Web\View\Internal\ViewContainer;
+use DevNet\Web\View\Internal\ViewEngine;
+use DevNet\Web\View\Internal\ViewContainer;
 
 class ViewManager
 {

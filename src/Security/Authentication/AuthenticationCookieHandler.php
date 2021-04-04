@@ -3,13 +3,13 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Security\Authentication;
+namespace DevNet\Web\Security\Authentication;
 
-use Artister\Web\Security\ClaimsPrincipal;
-use Artister\Web\Http\Session;
+use DevNet\Web\Security\ClaimsPrincipal;
+use DevNet\Web\Http\Session;
 use Exception;
 
 class AuthenticationCookieHandler

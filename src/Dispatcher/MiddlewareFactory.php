@@ -3,14 +3,14 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Dispatcher;
+namespace DevNet\Web\Dispatcher;
 
-use Artister\Web\Dispatcher\IMiddleware;
-use Artister\System\Dependency\IServiceProvider;
-use Artister\System\Exceptions\ClassException;
+use DevNet\Web\Dispatcher\IMiddleware;
+use DevNet\System\Dependency\IServiceProvider;
+use DevNet\System\Exceptions\ClassException;
 
 class MiddlewareFactory
 {
@@ -32,9 +32,9 @@ class MiddlewareFactory
 
             $interfaceNames = class_implements($middleware);
 
-            if (!in_array("Artister\System\Web\Hosting\IMiddleware", $interfaceNames))
+            if (!in_array("DevNet\System\Web\Hosting\IMiddleware", $interfaceNames))
             {
-                throw new \Exception("invalide type, class must be of type Artister\System\Web\Hosting\IMiddleware");
+                throw new \Exception("invalide type, class must be of type DevNet\System\Web\Hosting\IMiddleware");
             }
         }
 

@@ -3,13 +3,13 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Http;
+namespace DevNet\Web\Http;
 
-use Artister\System\Collections\Dictionary;
-use Artister\System\Type;
+use DevNet\System\Collections\Dictionary;
+use DevNet\System\Type;
 
 class FileCollection extends Dictionary
 {

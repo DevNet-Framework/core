@@ -3,12 +3,12 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Mvc\Results;
+namespace DevNet\Web\Mvc\Results;
 
-use Artister\Web\Mvc\ActionContext;
+use DevNet\Web\Mvc\ActionContext;
 
 class RedirectResult extends ActionResult
 {
@@ -37,6 +37,5 @@ class RedirectResult extends ActionResult
 
         $url = $scheme .'://'. $host . $port . $this->Path;
         $httpContext->Response->Headers->add("Location", $url);
-        //$httpContext->response->setStatusCode($this->statusCode);
     }
 }

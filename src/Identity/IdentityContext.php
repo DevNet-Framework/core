@@ -3,15 +3,15 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Identity;
+namespace DevNet\Web\Identity;
 
-use Artister\Web\Http\HttpContext;
-use Artister\Entity\EntityContext;
-use Artister\Entity\EntitySet;
-use Artister\Entity\EntityModelBuilder;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Entity\EntityContext;
+use DevNet\Entity\EntitySet;
+use DevNet\Entity\EntityModelBuilder;
 
 class IdentityContext
 {

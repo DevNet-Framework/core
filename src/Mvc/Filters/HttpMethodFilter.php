@@ -3,17 +3,17 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Mvc\Filters;
+namespace DevNet\Web\Mvc\Filters;
 
-use Artister\Web\Http\HttpContext;
-use Artister\Web\Mvc\IActionFilter;
-use Artister\Web\Mvc\ActionExecutionDelegate;
-use Artister\Web\Mvc\ActionContext;
-use Artister\Web\Http\HttpException;
-use Artister\System\Async\Task;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Mvc\IActionFilter;
+use DevNet\Web\Mvc\ActionExecutionDelegate;
+use DevNet\Web\Mvc\ActionContext;
+use DevNet\Web\Http\HttpException;
+use DevNet\System\Async\Task;
 
 class HttpMethodFilter implements IActionFilter
 {
@@ -27,7 +27,7 @@ class HttpMethodFilter implements IActionFilter
     public function onActionExecutionAsync(ActionContext $context, ActionExecutionDelegate $next) : Task
     {
         $httpContext = $context->HttpContext;
-        $httpMethod = $httpContext->Request->Method;
+        $httpMethod  = $httpContext->Request->Method;
 
         foreach ($this->Options as &$option)
         {

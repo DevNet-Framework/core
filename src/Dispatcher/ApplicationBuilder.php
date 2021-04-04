@@ -3,22 +3,22 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Dispatcher;
+namespace DevNet\Web\Dispatcher;
 
-use Artister\Web\Dispatcher\RequestDelegate;
-use Artister\Web\Dispatcher\IApplicationBuilder;
-use Artister\Web\Dispatcher\IMiddleware;
-use Artister\Web\Http\HttpContext;
-use Artister\System\Dependency\IServiceProvider;
-use Artister\System\Async\Task;
+use DevNet\Web\Dispatcher\RequestDelegate;
+use DevNet\Web\Dispatcher\IApplicationBuilder;
+use DevNet\Web\Dispatcher\IMiddleware;
+use DevNet\Web\Http\HttpContext;
+use DevNet\System\Dependency\IServiceProvider;
+use DevNet\System\Async\Task;
 use Closure;
 
 class ApplicationBuilder implements IApplicationBuilder
 {
-    use \Artister\System\Extension\ExtensionTrait;
+    use \DevNet\System\Extension\ExtensionTrait;
 
     private IserviceProvider $Provider;
     private MiddlewareFactory $MiddlewareFactoty;
@@ -50,7 +50,7 @@ class ApplicationBuilder implements IApplicationBuilder
             }
             else if (!$middleware instanceof IMiddleware)
             {
-                throw new \Exception("invalide type, class must be of type Artister\System\Web\Hosting\IMiddleware");
+                throw new \Exception("invalide type, class must be of type DevNet\System\Web\Hosting\IMiddleware");
             }
         }
 

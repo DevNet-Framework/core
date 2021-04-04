@@ -3,15 +3,15 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) 2018-2020 Mohammed Moussaoui
  * @license     MIT License
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Identity;
+namespace DevNet\Web\Identity;
 
-use Artister\Web\Security\ClaimsPrincipal;
-use Artister\Web\Security\ClaimsIdentity;
-use Artister\Web\Security\Claim;
-use Artister\System\Linq;
+use DevNet\Web\Security\ClaimsPrincipal;
+use DevNet\Web\Security\ClaimsIdentity;
+use DevNet\Web\Security\Claim;
+use DevNet\System\Linq;
 
 class IdentityManager
 {

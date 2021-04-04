@@ -3,12 +3,12 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) 2018-2020 Mohammed Moussaoui
  * @license     MIT License
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Identity;
+namespace DevNet\Web\Identity;
 
-use Artister\Data\Entity\IEntity;
+use DevNet\Data\Entity\IEntity;
 
 class IdentityResult
 {

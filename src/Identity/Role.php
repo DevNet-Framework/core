@@ -3,13 +3,13 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) 2018-2020 Mohammed Moussaoui
  * @license     MIT License
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Identity;
+namespace DevNet\Web\Identity;
 
-use Artister\Entity\IEntity;
-use Artister\System\Collections\IList;
+use DevNet\Entity\IEntity;
+use DevNet\System\Collections\IList;
 
 class Role implements IEntity
 {

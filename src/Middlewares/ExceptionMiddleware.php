@@ -3,16 +3,16 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Middlewares;
+namespace DevNet\Web\Middlewares;
 
-use Artister\Web\Dispatcher\IMiddleware;
-use Artister\Web\Dispatcher\RequestDelegate;
-use Artister\Web\Http\HttpContext;
-use Artister\System\Diagnostic\Debuger;
-use Artister\System\Async\Task;
+use DevNet\Web\Dispatcher\IMiddleware;
+use DevNet\Web\Dispatcher\RequestDelegate;
+use DevNet\Web\Http\HttpContext;
+use DevNet\System\Diagnostic\Debuger;
+use DevNet\System\Async\Task;
 
 class ExceptionMiddleware implements IMiddleware
 {

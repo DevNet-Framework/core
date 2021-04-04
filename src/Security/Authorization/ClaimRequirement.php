@@ -3,12 +3,12 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Security\Authorization;
+namespace DevNet\Web\Security\Authorization;
 
-use Artister\System\Async\Task;
+use DevNet\System\Async\Task;
 
 class ClaimRequirement extends AuthorizationHandler implements IAuthorizationRequirement
 {
@@ -17,8 +17,8 @@ class ClaimRequirement extends AuthorizationHandler implements IAuthorizationReq
 
     public function __construct(string $claimType, array $allowedValues = null)
     {
-        $this->ClaimType        = $claimType;
-        $this->AllowedValues    = $allowedValues;
+        $this->ClaimType     = $claimType;
+        $this->AllowedValues = $allowedValues;
     }
 
     public function __get(string $name)

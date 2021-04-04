@@ -3,17 +3,17 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Mvc;
+namespace DevNet\Web\Mvc;
 
-use Artister\Web\Router\IRouteHandler;
-use Artister\Web\Router\RouteContext;
-use Artister\System\Dependency\Activator;
-use Artister\System\Dependency\IServiceProvider;
-use Artister\System\Async\Task;
-use Artister\Web\Mvc\Providers\RouteValueProvider;
+use DevNet\Web\Router\IRouteHandler;
+use DevNet\Web\Router\RouteContext;
+use DevNet\System\Dependency\Activator;
+use DevNet\System\Dependency\IServiceProvider;
+use DevNet\System\Async\Task;
+use DevNet\Web\Mvc\Providers\RouteValueProvider;
 
 class MvcRouteHandler implements IRouteHandler
 {

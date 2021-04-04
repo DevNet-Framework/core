@@ -3,12 +3,12 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Router;
+namespace DevNet\Web\Router;
 
-use Artister\System\Dependency\IServiceProvider;
+use DevNet\System\Dependency\IServiceProvider;
 
 class RouteBuilder implements IRouteBuilder
 {
@@ -16,12 +16,12 @@ class RouteBuilder implements IRouteBuilder
     private ?IRouteHandler $DefaultHandler;
     private array $Routes;
     private string $Prefix = '';
-    private string $Name = '';
+    private string $Name   = '';
 
     public function __construct(IServiceProvider $serviceProvider, IRouteHandler $defaultHandler = null)
     {
         $this->ServiceProvider = $serviceProvider;
-        $this->DefaultHandler = $defaultHandler;
+        $this->DefaultHandler  = $defaultHandler;
     }
 
     /**

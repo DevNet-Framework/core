@@ -3,18 +3,18 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Mvc;
+namespace DevNet\Web\Mvc;
 
-use Artister\Web\View\ViewManager;
-use Artister\Web\Mvc\Results\ContentResult;
-use Artister\Web\Mvc\Results\ForbidResult;
-use Artister\Web\Mvc\Results\JsonResult;
-use Artister\Web\Mvc\Results\RedirectResult;
-use Artister\Web\Mvc\Results\ViewResult;
-use Artister\Web\Mvc\Features\HtmlHelper;
+use DevNet\Web\View\ViewManager;
+use DevNet\Web\Mvc\Results\ContentResult;
+use DevNet\Web\Mvc\Results\ForbidResult;
+use DevNet\Web\Mvc\Results\JsonResult;
+use DevNet\Web\Mvc\Results\RedirectResult;
+use DevNet\Web\Mvc\Results\ViewResult;
+use DevNet\Web\Mvc\Features\HtmlHelper;
 
 Abstract class Controller extends ControllerBase
 {
@@ -33,7 +33,7 @@ Abstract class Controller extends ControllerBase
         else if (is_object($parameter))
         {
             $viewName = null;
-            $model = $parameter;
+            $model    = $parameter;
         }
         else
         {
@@ -75,3 +75,4 @@ Abstract class Controller extends ControllerBase
         return new ForbidResult();
     }
 }
+

@@ -3,15 +3,15 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Router;
+namespace DevNet\Web\Router;
 
-use Artister\System\Dependency\Activator;
-use Artister\System\Dependency\IServiceProvider;
-use Artister\System\Async\Task;
-use Artister\System\Exceptions\ClassException;
+use DevNet\System\Async\Task;
+use DevNet\System\Dependency\Activator;
+use DevNet\System\Dependency\IServiceProvider;
+use DevNet\System\Exceptions\ClassException;
 
 class RouteHandler implements IRouteHandler
 {
@@ -36,7 +36,7 @@ class RouteHandler implements IRouteHandler
     
     public function handle(RouteContext $routeContext) : Task
     {
-        $target  = null;
+        $target = null;
 
         if (is_string($this->Target))
         {

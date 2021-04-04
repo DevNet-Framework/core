@@ -3,21 +3,21 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Hosting;
+namespace DevNet\Web\Hosting;
 
-use Artister\System\Configuration\IConfiguration;
-use Artister\System\Configuration\ConfigurationBuilder;
-use Artister\System\Dependency\ServiceCollection;
-use Artister\System\Dependency\ServiceProvider;
-use Artister\System\Exceptions\ClassException;
-use Artister\System\Boot\LauncherProperties;
-use Artister\Web\Dispatcher\ApplicationBuilder;
-use Artister\Web\Http\HttpContextFactory;
-use Artister\Web\Http\HttpContext;
-use Artister\Web\Router\RouteBuilder;
+use DevNet\System\Configuration\IConfiguration;
+use DevNet\System\Configuration\ConfigurationBuilder;
+use DevNet\System\Dependency\ServiceCollection;
+use DevNet\System\Dependency\ServiceProvider;
+use DevNet\System\Exceptions\ClassException;
+use DevNet\System\Boot\LauncherProperties;
+use DevNet\Web\Dispatcher\ApplicationBuilder;
+use DevNet\Web\Http\HttpContextFactory;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Router\RouteBuilder;
 use Closure;
 
 class WebHostBuilder implements IWebHostBuilder

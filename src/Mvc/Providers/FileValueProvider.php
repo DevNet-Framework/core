@@ -3,13 +3,13 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Mvc\Providers;
+namespace DevNet\Web\Mvc\Providers;
 
-use Artister\Web\Mvc\Binder\ValueProvider;
-use Artister\Web\Http\FileCollection;
+use DevNet\Web\Mvc\Binder\ValueProvider;
+use DevNet\Web\Http\FileCollection;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.

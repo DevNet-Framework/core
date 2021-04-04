@@ -3,35 +3,35 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Extensions;
+namespace DevNet\Web\Extensions;
 
-use Artister\System\Dependency\IServiceCollection;
-use Artister\System\Database\DbConnection;
-use Artister\Entity\EntityContext;
-use Artister\Entity\EntityOptions;
-use Artister\Web\Http\HttpContextFactory;
-use Artister\Web\Http\HttpContext;
-use Artister\Web\Router\RouteBuilder;
-use Artister\Web\Mvc\MvcOptions;
-use Artister\Web\Mvc\MvcRouteHandler;
-use Artister\Web\View\ViewManager;
-use Artister\Web\Security\Antiforgery\IAntiforgery;
-use Artister\Web\Security\Antiforgery\Antiforgery;
-use Artister\Web\Security\Antiforgery\AntiforgeryOptions;
-use Artister\Web\Security\Authentication\Authentication;
-use Artister\Web\Security\Authentication\AuthenticationBuilder;
-use Artister\Web\Security\Authentication\AuthenticationDefaults;
-use Artister\Web\Security\Authorization\Authorization;
-use Artister\Web\Security\Authorization\AuthorizationOptions;
-use Artister\Web\Identity\IdentityContext;
-use Artister\Web\Identity\IdentityManager;
-use Artister\Web\Identity\UserManager;
-use Artister\Web\Identity\RoleManager;
-use Artister\Web\Identity\User;
-use Artister\Web\Identity\Role;
+use DevNet\System\Dependency\IServiceCollection;
+use DevNet\System\Database\DbConnection;
+use DevNet\Entity\EntityContext;
+use DevNet\Entity\EntityOptions;
+use DevNet\Web\Http\HttpContextFactory;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Router\RouteBuilder;
+use DevNet\Web\Mvc\MvcOptions;
+use DevNet\Web\Mvc\MvcRouteHandler;
+use DevNet\Web\View\ViewManager;
+use DevNet\Web\Security\Antiforgery\IAntiforgery;
+use DevNet\Web\Security\Antiforgery\Antiforgery;
+use DevNet\Web\Security\Antiforgery\AntiforgeryOptions;
+use DevNet\Web\Security\Authentication\Authentication;
+use DevNet\Web\Security\Authentication\AuthenticationBuilder;
+use DevNet\Web\Security\Authentication\AuthenticationDefaults;
+use DevNet\Web\Security\Authorization\Authorization;
+use DevNet\Web\Security\Authorization\AuthorizationOptions;
+use DevNet\Web\Identity\IdentityContext;
+use DevNet\Web\Identity\IdentityManager;
+use DevNet\Web\Identity\UserManager;
+use DevNet\Web\Identity\RoleManager;
+use DevNet\Web\Identity\User;
+use DevNet\Web\Identity\Role;
 use Closure;
 
 class ServiceCollectionExtensions

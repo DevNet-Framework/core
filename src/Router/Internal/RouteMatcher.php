@@ -3,16 +3,14 @@
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
  * @license     MIT License. For full license information see LICENSE file in the project root.
- * @link        https://github.com/artister
+ * @link        https://github.com/DevNet-Framework
  */
 
-namespace Artister\Web\Router\Internal;
+namespace DevNet\Web\Router\Internal;
 
 /**
- * This is an internal API that supports the Router system infrastructure and not subject to
- * the same compatibility standards as public APIs. It may be changed or removed without notice in
- * any release. You should only use it directly in your code with extreme caution and knowing that
- * doing so can result in application failures when updating to a new release.
+ * This is an internal API that supports the Router system infrastructure, It may be changed or removed without notice in
+ * any release, Becasue is not subjected to be standard as public APIs.
  */
 class RouteMatcher
 {

@@ -8,12 +8,14 @@
 
 namespace DevNet\Web\Mvc;
 
-use DevNet\Web\Dispatcher\IRequestHandler;
-use DevNet\Web\Mvc\Binder\IValueProvider;
-use DevNet\Web\Mvc\ActionContext;
-use DevNet\Web\Http\HttpContext;
-use DevNet\System\Dependency\Activator;
 use DevNet\System\Async\Task;
+use DevNet\System\Dependency\Activator;
+use DevNet\System\Exceptions\ClassException;
+use DevNet\Web\Dispatcher\IRequestHandler;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Mvc\ActionContext;
+use DevNet\Web\Mvc\Binder\IValueProvider;
+use DevNet\Web\Mvc\ControllerException;
 
 class ActionInvoker implements IRequestHandler
 {
@@ -30,12 +32,24 @@ class ActionInvoker implements IRequestHandler
 
     public function __invoke(HttpContext $httpContext) : Task
     {
-        $controller       = Activator::CreateInstance($this->ControllerName, $httpContext->RequestServices);
+        try
+        {
+            $controller = Activator::CreateInstance($this->ControllerName, $httpContext->RequestServices);
+        }
+        catch (ClassException $exception)
+        {
+            throw new ControllerException("Not found Controller : {$this->ControllerName}", 404);
+        }
+
+        if (!method_exists($this->ControllerName, $this->ActionName))
+        {
+            throw new ControllerException("Undefined method : {$this->ControllerName}::{$this->ActionName}()", 404);
+        }
+
         $actionDescriptor = new ActionDescriptor($controller, $this->ActionName);
         $actionContext    = new ActionContext($actionDescriptor, $httpContext, $this->ValueProvider);
         
         $httpContext->addAttribute("ActionContext", $actionContext);
-
         return $controller($httpContext);
     }
 }

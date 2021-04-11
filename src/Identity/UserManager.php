@@ -18,8 +18,8 @@ class UserManager
 
     public function __construct(IdentityContext $identityContext)
     {
-        $this->IdentityContext  = $identityContext;
-        $this->Users            = $identityContext->Users;
+        $this->IdentityContext = $identityContext;
+        $this->Users           = $identityContext->Users;
     }
 
     public function create(User $user) : int
@@ -43,7 +43,7 @@ class UserManager
 
     public function getUser() : ?User
     {
-        $user = $this->IdentityContext->HttpContext->User;
+        $user  = $this->IdentityContext->HttpContext->User;
         $claim = $user->findClaim(fn($claim) => $claim->Type == 'UserId');
 
         if ($claim)
@@ -80,10 +80,15 @@ class UserManager
     {
         if ($this->isInRole($user, $roleName))
         {
-            return new IdentityResult(1);
+            return new IdentityResult(0);
         }
 
         $role = $this->IdentityContext->Roles->where(fn($x) => $x->Name == $roleName)->first();
+        if (!$role)
+        {
+            return new IdentityResult(-1);
+        }
+
         $userRole = new UserRole();
         $userRole->UserId = $user->Id;
         $userRole->RoleId = $role->Id;
@@ -91,17 +96,22 @@ class UserManager
         $this->IdentityContext->UserRole->add($userRole);
         $this->IdentityContext->Save();
 
-        return new IdentityResult();
+        return new IdentityResult(1);
     }
 
     public function removeFromRole(User $user, string $roleName)
     {
         if (!$this->isInRole($user, $roleName))
         {
-            return new IdentityResult(1);
+            return new IdentityResult(0);
         }
 
         $role = $this->IdentityContext->Roles->where(fn($x) => $x->Name == $roleName)->first();
+        if (!$role)
+        {
+            return new IdentityResult(-1);
+        }
+
         $userId = $user->Id;
         $roleId = $role->Id;
         $userRole = $this->IdentityContext->UserRole
@@ -110,6 +120,6 @@ class UserManager
         $this->IdentityContext->UserRole->remove($userRole);
         $this->IdentityContext->Save();
 
-        return new IdentityResult();
+        return new IdentityResult(1);
     }
 }

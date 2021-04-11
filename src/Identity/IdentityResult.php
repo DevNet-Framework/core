@@ -12,11 +12,16 @@ use DevNet\Data\Entity\IEntity;
 
 class IdentityResult
 {
-    private int $Error = 0;
+    const Succeeded  = 1;
+    const NoAction   = 0;
+    const Failed     = -1;
+    const NotAllowed = -2;
 
-    public function __construct(int $error = 0)
+    private int $Status = 0;
+
+    public function __construct(int $code = 0)
     {
-        $this->Error = $error;
+        $this->Status = $code;
     }
 
     public function __get(string $name)
@@ -26,6 +31,6 @@ class IdentityResult
 
     public function isSucceeded() : bool
     {
-        return $this->Error == 0 ? true : false;
+        return $this->Status == 1 ? true : false;
     }
 }

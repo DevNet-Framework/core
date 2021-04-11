@@ -19,7 +19,7 @@ class IdentityManager
 
     public function __construct(IdentityContext $identityContext)
     {
-        $this->IdentityContext  = $identityContext;
+        $this->IdentityContext = $identityContext;
     }
 
     public function __get(string $name)
@@ -29,17 +29,19 @@ class IdentityManager
 
     public function signIn(string $username, string $password, bool $isPersistent = false) : IdentityResult
     {
-        $users  = $this->IdentityContext->Users;
-        $user   = $users->where(fn($User) => $User->Username == $username)->first();
+        $users = $this->IdentityContext->Users;
+        $user  = $users->where(fn($User) => $User->Username == $username)->first();
 
-        if (!$user) {
-            return new IdentityResult(1);
+        if (!$user)
+        {
+            return new IdentityResult(-1);
         }
 
         $passwordHash = $user->Password;
 
-        if (!password_verify($password, $passwordHash)) {
-            return new IdentityResult(2);
+        if (!password_verify($password, $passwordHash))
+        {
+            return new IdentityResult(-2);
         }
 
         $identity = new ClaimsIdentity('IdentityUser');
@@ -48,7 +50,7 @@ class IdentityManager
         $userPrincipale = new ClaimsPrincipal($identity);
         $this->IdentityContext->HttpContext->Authentication->signIn($userPrincipale, $isPersistent);
 
-        return new IdentityResult();
+        return new IdentityResult(1);
     }
 
     public function signOut()

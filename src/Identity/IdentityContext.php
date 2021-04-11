@@ -33,12 +33,7 @@ class IdentityContext
         $this->Roles         = $entityContext->set($roleType);
         $this->UserRole      = $entityContext->set(UserRole::class);
 
-        $builder = $entityContext->Model->Builder;
-
-        if ($userType == User::class && $roleType == Role::class)
-        {
-            $this->onModelCreate($builder);
-        }
+        $this->onModelCreate($entityContext->Model->Builder);
     }
 
     public function __get(string $name)

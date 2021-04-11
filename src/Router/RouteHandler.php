@@ -11,7 +11,6 @@ namespace DevNet\Web\Router;
 use DevNet\System\Async\Task;
 use DevNet\System\Dependency\Activator;
 use DevNet\System\Dependency\IServiceProvider;
-use DevNet\System\Exceptions\ClassException;
 
 class RouteHandler implements IRouteHandler
 {
@@ -48,16 +47,11 @@ class RouteHandler implements IRouteHandler
         }
         else
         {
-            throw new \Exception("Invalid Argument Type, route endpoint must be of type callable|string");
+            throw new RouterException("Invalid Argument Type, route endpoint must be of type callable|string");
         }
 
         if ($target)
         {
-            if (!class_exists($target))
-            {
-                throw ClassException::classNotFound($target);
-            }
-
             $handler = Activator::CreateInstance($target, $this->ServiceProvider);
         }
 

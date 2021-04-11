@@ -8,12 +8,12 @@
 
 namespace DevNet\Web\Middlewares;
 
-use DevNet\Web\Router\RouteBuilder;
-use DevNet\Web\Router\RouteContext;
 use DevNet\Web\Dispatcher\IMiddleware;
 use DevNet\Web\Dispatcher\RequestDelegate;
 use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Http\HttpException;
+use DevNet\Web\Router\RouteBuilder;
+use DevNet\Web\Router\RouteContext;
+use DevNet\Web\Router\RouterException;
 use DevNet\System\Async\Task;
 
 class RouterMiddleware implements IMiddleware
@@ -57,7 +57,7 @@ class RouterMiddleware implements IMiddleware
         }
         else
         {
-            throw new HttpException("Page not found", 404);
+            throw new RouterException("No route maches your request", 404);
         }
 
         return $next($context);

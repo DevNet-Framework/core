@@ -49,8 +49,10 @@ class WebHost
         header($statusLine, true);
         
         // Send the response headers from the headers list.
-        foreach ($response->Headers->getAll() as $name => $values) {
-            foreach ($values as $value) {
+        foreach ($response->Headers->getAll() as $name => $values)
+        {
+            foreach ($values as $value)
+            {
                 // keep a previous similar header.
                 header("$name: $value", false);
             }
@@ -58,9 +60,11 @@ class WebHost
         
         // Output the message body.
         $size = $context->Response->Body->getSize();
-        if ($size > 0) {
+        if ($size > 0)
+        {
             $response->Body->seek(0);
-            while (!$response->Body->eof()) {
+            while (!$response->Body->eof())
+            {
                 echo $response->Body->read(1024);
             }
         }

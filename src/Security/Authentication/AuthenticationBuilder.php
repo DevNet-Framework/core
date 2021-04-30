@@ -8,6 +8,7 @@
 
 namespace DevNet\Web\Security\Authentication;
 
+use DevNet\System\Boot\LauncherProperties;
 use Closure;
 
 class AuthenticationBuilder
@@ -17,6 +18,7 @@ class AuthenticationBuilder
     public function addCookie(string $authenticationSchem, Closure $configuration = null)
     {
         $options = new AuthenticationCookieOptions();
+        $options->CookieName .= "-".md5(LauncherProperties::getWorkspace());
         
         if ($configuration)
         {

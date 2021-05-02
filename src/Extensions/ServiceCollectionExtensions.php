@@ -113,10 +113,13 @@ class ServiceCollectionExtensions
 
     public static function addIdentity(IServiceCollection $services, string $userType = User::class, string $roleType = Role::class, Closure $configuration = null)
     {
-        self::addAuthentication($services, $configuration);
-
-        $services->addSingleton(IdentityContext::class, function($provider) use ($userType, $roleType) : IdentityContext
+        $services->addSingleton(IdentityContext::class, function($provider) use ($services, $userType, $roleType) : IdentityContext
         {
+            if (!$provider->has(Authentication::class))
+            {
+                self::addAuthentication($services);
+            }
+
             $httpContext = $provider->getService(HttpContext::class);
             $entityContext = $provider->getService(EntityContext::class);
             return new IdentityContext($httpContext, $entityContext, $userType, $roleType);

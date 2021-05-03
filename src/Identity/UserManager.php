@@ -24,6 +24,22 @@ class UserManager
 
     public function create(User $user) : int
     {
+        $result = null;
+        preg_match("%".$this->IdentityContext->Options->UsernameFormat."%", $user->Username, $result);
+
+        if (!$result)
+        {
+            throw new \Exception("Username must meet the following format: {$this->IdentityContext->Options->UsernameFormat}");
+        }
+
+        $result = null;
+        preg_match("%".$this->IdentityContext->Options->PasswordFormat."%", $user->Password, $result);
+
+        if (!$result)
+        {
+            throw new \Exception("Password must meet the following format: {$this->IdentityContext->Options->PasswordFormat}");
+        }
+
         $user->Password = password_hash($user->Password, PASSWORD_DEFAULT);
         
         $this->Users->add($user);

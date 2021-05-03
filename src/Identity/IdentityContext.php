@@ -19,16 +19,23 @@ class IdentityContext
     private EntityContext $EntityContext;
     private string $UserType;
     private string $RoleType;
+    private IdentityOptions $Options;
     private EntitySet $Users;
     private EntitySet $Roles;
     private EntitySet $UserRole;
 
-    public function __construct(HttpContext $httpContext, EntityContext $entityContext, string $userType, string $roleType)
+    public function __construct(
+        HttpContext $httpContext,
+        EntityContext $entityContext,
+        string $userType,
+        string $roleType,
+        IdentityOptions $identityOptions)
     {
         $this->HttpContext   = $httpContext;
         $this->EntityContext = $entityContext;
         $this->UserType      = $userType;
         $this->RoleType      = $roleType;
+        $this->Options       = $identityOptions;
         $this->Users         = $entityContext->set($userType);
         $this->Roles         = $entityContext->set($roleType);
         $this->UserRole      = $entityContext->set(UserRole::class);

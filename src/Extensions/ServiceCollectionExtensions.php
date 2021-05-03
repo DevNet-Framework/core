@@ -12,7 +12,6 @@ use DevNet\System\Dependency\IServiceCollection;
 use DevNet\System\Database\DbConnection;
 use DevNet\Entity\EntityContext;
 use DevNet\Entity\EntityOptions;
-use DevNet\Web\Http\HttpContextFactory;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Router\RouteBuilder;
 use DevNet\Web\Mvc\MvcOptions;
@@ -27,6 +26,7 @@ use DevNet\Web\Security\Authentication\AuthenticationDefaults;
 use DevNet\Web\Security\Authorization\Authorization;
 use DevNet\Web\Security\Authorization\AuthorizationOptions;
 use DevNet\Web\Identity\IdentityContext;
+use DevNet\Web\Identity\IdentityOptions;
 use DevNet\Web\Identity\IdentityManager;
 use DevNet\Web\Identity\UserManager;
 use DevNet\Web\Identity\RoleManager;
@@ -92,7 +92,7 @@ class ServiceCollectionExtensions
             $configuration($options);
         }
         
-        $viewDirectory  = $options->getViewDirectory();
+        $viewDirectory = $options->getViewDirectory();
         $services->addView($viewDirectory);
         $services->addSingleton(MvcOptions::class, $options);
         $services->addSingleton(RouteBuilder::class, fn($provider) => new RouteBuilder($provider, new MvcRouteHandler($provider)));
@@ -113,7 +113,14 @@ class ServiceCollectionExtensions
 
     public static function addIdentity(IServiceCollection $services, string $userType = User::class, string $roleType = Role::class, Closure $configuration = null)
     {
-        $services->addSingleton(IdentityContext::class, function($provider) use ($services, $userType, $roleType) : IdentityContext
+        $identityOptions = new IdentityOptions;
+
+        if ($configuration)
+        {
+            $configuration($identityOptions);
+        }
+
+        $services->addSingleton(IdentityContext::class, function($provider) use ($services, $userType, $roleType, $identityOptions) : IdentityContext
         {
             if (!$provider->has(Authentication::class))
             {
@@ -122,7 +129,7 @@ class ServiceCollectionExtensions
 
             $httpContext = $provider->getService(HttpContext::class);
             $entityContext = $provider->getService(EntityContext::class);
-            return new IdentityContext($httpContext, $entityContext, $userType, $roleType);
+            return new IdentityContext($httpContext, $entityContext, $userType, $roleType, $identityOptions);
         });
 
         $services->addSingleton(IdentityManager::class, function($provider) : IdentityManager

@@ -29,7 +29,7 @@ class UserManager
 
         if (!$result)
         {
-            throw new \Exception("Username must meet the following format: {$this->IdentityContext->Options->UsernameFormat}");
+            throw new IdentityException("Username doesn't meet the format requirements: {$this->IdentityContext->Options->UsernameFormat}");
         }
 
         $result = null;
@@ -37,7 +37,7 @@ class UserManager
 
         if (!$result)
         {
-            throw new \Exception("Password must meet the following format: {$this->IdentityContext->Options->PasswordFormat}");
+            throw new IdentityException("Password doesn't meet the format requirements: {$this->IdentityContext->Options->PasswordFormat}");
         }
 
         $user->Password = password_hash($user->Password, PASSWORD_DEFAULT);

@@ -15,6 +15,7 @@ use DevNet\Web\Mvc\Results\JsonResult;
 use DevNet\Web\Mvc\Results\RedirectResult;
 use DevNet\Web\Mvc\Results\ViewResult;
 use DevNet\Web\Mvc\Features\HtmlHelper;
+use DevNet\System\Exceptions\ArgumentException;
 
 Abstract class Controller extends ControllerBase
 {
@@ -60,8 +61,14 @@ Abstract class Controller extends ControllerBase
         return new ContentResult($content, $status);
     }
 
-    public function json(array $data, $statusCode = 200) : JsonResult
+    public function json($data, $statusCode = 200) : JsonResult
     {
+        if (!is_array($data) && !is_object($data))
+        {
+            $class = get_class($this);
+            throw new ArgumentException("Argument 1 passed to {$class}::json() must be of the type object | array.");
+        }
+
         return new JsonResult($data, $statusCode);
     }
 

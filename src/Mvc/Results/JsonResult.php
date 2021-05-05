@@ -15,7 +15,7 @@ class JsonResult extends ActionResult
     protected string $Content;
     protected int $StatusCode;
 
-    public function __construct(array $data, int $statusCode = 200)
+    public function __construct($data, int $statusCode = 200)
     {
         $this->Content    = json_encode($data);
         $this->StatusCode = $statusCode;

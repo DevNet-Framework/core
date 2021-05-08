@@ -50,13 +50,7 @@ class ServiceCollectionExtensions
     public static function addAuthentication(IServiceCollection $services, Closure $configuration = null)
     {
         $builder = new AuthenticationBuilder();
-        $builder->addCookie(AuthenticationDefaults::AuthenticationScheme);
-
-        if ($configuration)
-        {
-            $configuration($builder);
-        }
-
+        $builder->addCookie(AuthenticationDefaults::AuthenticationScheme, $configuration);
         $services->addSingleton(Authentication::class, fn() => $builder->build());
     }
 

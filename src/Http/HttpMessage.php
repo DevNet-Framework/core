@@ -8,12 +8,14 @@
 
 namespace DevNet\Web\Http;
 
+use DevNet\System\IO\Stream;
+
 abstract class HttpMessage
 {
     protected string $Protocol;
     protected Headers $Headers;
     protected Cookies $Cookies;
-    protected $Body;
+    protected Stream $Body;
 
     public function setProtocol(string $protocol = null)
     {

@@ -8,6 +8,8 @@
 
 namespace DevNet\Web\Http;
 
+use DevNet\System\IO\Stream;
+
 class Response extends HttpMessage
 {
     private int $StatusCode;

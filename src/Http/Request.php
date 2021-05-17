@@ -8,6 +8,8 @@
 
 namespace DevNet\Web\Http;
 
+use DevNet\System\IO\Stream;
+
 class Request extends HttpMessage
 {
     private string $Method;

@@ -8,7 +8,7 @@
 
 namespace DevNet\Web\Hosting;
 
-use DevNet\System\Boot\LauncherProperties;
+use DevNet\System\Runtime\LauncherProperties;
 
 class WebServer
 {

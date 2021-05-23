@@ -13,7 +13,7 @@ use DevNet\System\Configuration\ConfigurationBuilder;
 use DevNet\System\Dependency\ServiceCollection;
 use DevNet\System\Dependency\ServiceProvider;
 use DevNet\System\Exceptions\ClassException;
-use DevNet\System\Boot\LauncherProperties;
+use DevNet\System\Runtime\LauncherProperties;
 use DevNet\Web\Dispatcher\ApplicationBuilder;
 use DevNet\Web\Http\HttpContextFactory;
 use DevNet\Web\Http\HttpContext;

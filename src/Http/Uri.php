@@ -42,7 +42,7 @@ class Uri
             }
 
             // Port
-            $this->Port = !empty($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : ($this->Scheme == 'https' ? 443 : 80);
+            $this->Port = !empty($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : ($this->Scheme == 'https' ? '443' : '80');
 
             // Path
             if (isset($_SERVER['REQUEST_URI']))
@@ -57,7 +57,7 @@ class Uri
                 $this->Query = $_SERVER['QUERY_STRING'];
             }
 
-            $port = $this->Port != 80 && $this->Port != '' ? ":".$this->Port : '';
+            $port = $this->Port != '80' && $this->Port != '' ? ":".$this->Port : '';
             $query = !empty($this->Query) ? '?'.$this->Query : '';
 
             $this->Url = $this->Scheme."://".$this->Host.$port.$this->Path.$query;

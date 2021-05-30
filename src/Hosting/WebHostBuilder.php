@@ -8,16 +8,16 @@
 
 namespace DevNet\Web\Hosting;
 
-use DevNet\System\Configuration\IConfiguration;
-use DevNet\System\Configuration\ConfigurationBuilder;
-use DevNet\System\Dependency\ServiceCollection;
-use DevNet\System\Dependency\ServiceProvider;
-use DevNet\System\Exceptions\ClassException;
-use DevNet\System\Runtime\LauncherProperties;
+use DevNet\Web\Configuration\IConfiguration;
+use DevNet\Web\Configuration\ConfigurationBuilder;
+use DevNet\Web\Dependency\ServiceCollection;
+use DevNet\Web\Dependency\ServiceProvider;
 use DevNet\Web\Dispatcher\ApplicationBuilder;
 use DevNet\Web\Http\HttpContextFactory;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Router\RouteBuilder;
+use DevNet\System\Exceptions\ClassException;
+use DevNet\System\Runtime\LauncherProperties;
 use Closure;
 
 class WebHostBuilder implements IWebHostBuilder
@@ -29,10 +29,10 @@ class WebHostBuilder implements IWebHostBuilder
 
     public function __construct()
     {
-        $this->ConfigBuilder    = new ConfigurationBuilder();
-        $this->Services         = new ServiceCollection();
-        $this->Provider         = new ServiceProvider($this->Services);
-        $this->AppBuilder       = new ApplicationBuilder($this->Provider);
+        $this->ConfigBuilder = new ConfigurationBuilder();
+        $this->Services      = new ServiceCollection();
+        $this->Provider      = new ServiceProvider($this->Services);
+        $this->AppBuilder    = new ApplicationBuilder($this->Provider);
 
         $this->Services->addSingleton(HttpContext::class, function($provider) : HttpContext {
             $httpContext = HttpContextFactory::create();

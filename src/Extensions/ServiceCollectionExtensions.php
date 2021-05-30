@@ -8,10 +8,7 @@
 
 namespace DevNet\Web\Extensions;
 
-use DevNet\System\Dependency\IServiceCollection;
-use DevNet\System\Database\DbConnection;
-use DevNet\Entity\EntityContext;
-use DevNet\Entity\EntityOptions;
+use DevNet\Web\Dependency\IServiceCollection;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Router\RouteBuilder;
 use DevNet\Web\Mvc\MvcOptions;
@@ -32,6 +29,9 @@ use DevNet\Web\Identity\UserManager;
 use DevNet\Web\Identity\RoleManager;
 use DevNet\Web\Identity\User;
 use DevNet\Web\Identity\Role;
+use DevNet\System\Database\DbConnection;
+use DevNet\Entity\EntityContext;
+use DevNet\Entity\EntityOptions;
 use Closure;
 
 class ServiceCollectionExtensions

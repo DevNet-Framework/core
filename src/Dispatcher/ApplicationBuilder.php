@@ -12,7 +12,7 @@ use DevNet\Web\Dispatcher\RequestDelegate;
 use DevNet\Web\Dispatcher\IApplicationBuilder;
 use DevNet\Web\Dispatcher\IMiddleware;
 use DevNet\Web\Http\HttpContext;
-use DevNet\System\Dependency\IServiceProvider;
+use DevNet\Web\Dependency\IServiceProvider;
 use DevNet\System\Async\Task;
 use Closure;
 

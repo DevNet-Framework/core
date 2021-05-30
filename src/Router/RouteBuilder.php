@@ -8,7 +8,7 @@
 
 namespace DevNet\Web\Router;
 
-use DevNet\System\Dependency\IServiceProvider;
+use DevNet\Web\Dependency\IServiceProvider;
 
 class RouteBuilder implements IRouteBuilder
 {

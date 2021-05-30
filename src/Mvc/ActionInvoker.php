@@ -9,8 +9,8 @@
 namespace DevNet\Web\Mvc;
 
 use DevNet\System\Async\Task;
-use DevNet\System\Dependency\Activator;
 use DevNet\System\Exceptions\ClassException;
+use DevNet\Web\Dependency\Activator;
 use DevNet\Web\Dispatcher\IRequestHandler;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Mvc\ActionContext;

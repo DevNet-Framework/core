@@ -10,10 +10,9 @@ namespace DevNet\Web\Mvc;
 
 use DevNet\Web\Router\IRouteHandler;
 use DevNet\Web\Router\RouteContext;
-use DevNet\System\Dependency\Activator;
-use DevNet\System\Dependency\IServiceProvider;
-use DevNet\System\Async\Task;
+use DevNet\Web\Dependency\IServiceProvider;
 use DevNet\Web\Mvc\Providers\RouteValueProvider;
+use DevNet\System\Async\Task;
 
 class MvcRouteHandler implements IRouteHandler
 {

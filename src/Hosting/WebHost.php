@@ -10,8 +10,8 @@ namespace DevNet\Web\Hosting;
 
 use DevNet\Web\Dispatcher\IApplicationBuilder;
 use DevNet\Web\Http\HttpContext;
-use DevNet\System\Dependency\IServiceProvider;
-use DevNet\System\Configuration\IConfiguration;
+use DevNet\Web\Dependency\IServiceProvider;
+use DevNet\Web\Configuration\IConfiguration;
 
 class WebHost
 {
@@ -21,9 +21,9 @@ class WebHost
 
     public function __construct(IApplicationBuilder $AppBuilder, IServiceProvider $provider)
     {
-        $this->AppBuilder   = $AppBuilder;
-        $this->Provider     = $provider;
-        $this->Server       = new WebServer();
+        $this->AppBuilder = $AppBuilder;
+        $this->Provider   = $provider;
+        $this->Server     = new WebServer();
     }
 
     public function run()

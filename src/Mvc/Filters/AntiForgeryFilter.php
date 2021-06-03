@@ -8,12 +8,12 @@
 
 namespace DevNet\Web\Mvc\Filters;
 
-use DevNet\Web\Http\HttpContext;
+use DevNet\System\Async\Task;
 use DevNet\Web\Mvc\IActionFilter;
 use DevNet\Web\Mvc\ActionExecutionDelegate;
 use DevNet\Web\Mvc\ActionContext;
-use DevNet\System\Async\Task;
 use DevNet\Web\Security\Antiforgery\IAntiforgery;
+use DevNet\Web\Security\Antiforgery\AntiforgeryException;
 
 class AntiForgeryFilter implements IActionFilter
 {
@@ -33,7 +33,7 @@ class AntiForgeryFilter implements IActionFilter
 
         if (!$result)
         {
-            throw new \Exception("AntiForgery");
+            throw new AntiforgeryException("Invalid AntiForgery Token.");
         }
 
         return $next($context);

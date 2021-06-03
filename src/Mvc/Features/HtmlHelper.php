@@ -20,7 +20,7 @@ class HtmlHelper
         $this->HttpContext = $httpContext;
     }
 
-    public function antiForgery() : ?string
+    public function antiForgeryToken() : ?string
     {
         $antiForgery = $this->HttpContext->RequestServices->getService(IAntiforgery::class);
         if (!$antiForgery)

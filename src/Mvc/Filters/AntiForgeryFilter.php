@@ -24,7 +24,7 @@ class AntiForgeryFilter implements IActionFilter
         $this->Options = $options;
     }
     
-    public function onActionExecutionAsync(ActionContext $context, ActionExecutionDelegate $next) : Task
+    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next) : Task
     {
         $httpContext = $context->HttpContext;
         $antiforgery = $httpContext->RequestServices->getService(IAntiforgery::class);

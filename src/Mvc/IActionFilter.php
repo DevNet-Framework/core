@@ -13,5 +13,5 @@ use DevNet\System\Async\Task;
 interface IActionFilter
 {
     //ActionExecutionContext
-    public function onActionExecutionAsync(ActionContext $context, ActionExecutionDelegate $next) : Task;
+    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next) : Task;
 }

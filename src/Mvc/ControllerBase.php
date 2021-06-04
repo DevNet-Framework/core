@@ -62,7 +62,7 @@ Abstract class ControllerBase implements IRequestHandler
         $actionFilter = array_shift($this->ActionFilters);
         if ($actionFilter)
         {
-            return $actionFilter->onActionExecutionAsync($actionContext, $this->Action);
+            return $actionFilter->onActionExecution($actionContext, $this->Action);
         }
 
         return $this->execute($actionContext);

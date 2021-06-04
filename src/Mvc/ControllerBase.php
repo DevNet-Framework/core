@@ -15,10 +15,6 @@ use DevNet\Web\Mvc\Results\JsonResult;
 use DevNet\Web\Mvc\Results\RedirectResult;
 use DevNet\Web\Mvc\Results\ViewResult;
 use DevNet\Web\Mvc\Binder\ParameterBinder;
-use DevNet\Web\Mvc\Providers\FileValueProvider;
-use DevNet\Web\Mvc\Providers\FormValueProvider;
-use DevNet\Web\Mvc\Providers\QueryValueProvider;
-use DevNet\Web\Mvc\Providers\RouteValueProvider;
 use DevNet\Web\Dispatcher\IRequestHandler;
 use DevNet\Web\Http\HttpContext;
 use DevNet\System\Async\Task;
@@ -45,7 +41,7 @@ Abstract class ControllerBase implements IRequestHandler
         $this->HttpContext   = $httpContext;
         $this->ActionContext = $httpContext->ActionContext;
 
-        $controllerFilters   = $this->FilterAttributes[self::class] ?? [];
+        $controllerFilters   = $this->FilterAttributes[$this->ActionContext->ActionDescriptor->MethodInfo->getDeclaringClass()->getName()] ?? [];
         $actionFilters       = $this->FilterAttributes[strtolower($this->ActionContext->ActionDescriptor->ActionName)] ?? [];
         $filterAttributes    = array_merge($controllerFilters, $actionFilters);
 

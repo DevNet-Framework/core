@@ -11,9 +11,9 @@ namespace DevNet\Web\Extensions;
 use DevNet\Web\Dependency\IServiceCollection;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Router\RouteBuilder;
-use DevNet\Web\Mvc\MvcOptions;
-use DevNet\Web\Mvc\MvcRouteHandler;
 use DevNet\Web\View\ViewManager;
+use DevNet\Web\Controller\ControllerOptions;
+use DevNet\Web\Controller\ControllerRouteHandler;
 use DevNet\Web\Security\Antiforgery\IAntiforgery;
 use DevNet\Web\Security\Antiforgery\Antiforgery;
 use DevNet\Web\Security\Antiforgery\AntiforgeryOptions;
@@ -79,7 +79,7 @@ class ServiceCollectionExtensions
     
     public static function addMvc(IServiceCollection $services, Closure $configuration = null)
     {
-        $options = new MvcOptions();
+        $options = new ControllerOptions();
 
         if ($configuration)
         {
@@ -88,8 +88,8 @@ class ServiceCollectionExtensions
         
         $viewDirectory = $options->getViewDirectory();
         $services->addView($viewDirectory);
-        $services->addSingleton(MvcOptions::class, $options);
-        $services->addSingleton(RouteBuilder::class, fn($provider) => new RouteBuilder($provider, new MvcRouteHandler($provider)));
+        $services->addSingleton(ControllerOptions::class, $options);
+        $services->addSingleton(RouteBuilder::class, fn($provider) => new RouteBuilder($provider, new ControllerRouteHandler($provider)));
     }
 
     public static function addEntityContext(IServiceCollection $services, string $entityConext, Closure $configuration = null)

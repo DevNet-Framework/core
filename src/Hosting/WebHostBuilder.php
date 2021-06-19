@@ -6,16 +6,16 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Hosting;
+namespace DevNet\Core\Hosting;
 
-use DevNet\Web\Configuration\IConfiguration;
-use DevNet\Web\Configuration\ConfigurationBuilder;
-use DevNet\Web\Dependency\ServiceCollection;
-use DevNet\Web\Dependency\ServiceProvider;
-use DevNet\Web\Dispatcher\ApplicationBuilder;
-use DevNet\Web\Http\HttpContextFactory;
-use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Router\RouteBuilder;
+use DevNet\Core\Configuration\IConfiguration;
+use DevNet\Core\Configuration\ConfigurationBuilder;
+use DevNet\Core\Dependency\ServiceCollection;
+use DevNet\Core\Dependency\ServiceProvider;
+use DevNet\Core\Dispatcher\ApplicationBuilder;
+use DevNet\Core\Http\HttpContextFactory;
+use DevNet\Core\Http\HttpContext;
+use DevNet\Core\Router\RouteBuilder;
 use DevNet\System\Exceptions\ClassException;
 use DevNet\System\Runtime\LauncherProperties;
 use Closure;

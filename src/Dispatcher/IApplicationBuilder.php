@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Dispatcher;
+namespace DevNet\Core\Dispatcher;
 
 interface IApplicationBuilder
 {

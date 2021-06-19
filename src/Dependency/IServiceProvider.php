@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Dependency;
+namespace DevNet\Core\Dependency;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.

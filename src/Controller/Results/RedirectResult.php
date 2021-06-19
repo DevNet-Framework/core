@@ -6,9 +6,9 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller\Results;
+namespace DevNet\Core\Controller\Results;
 
-use DevNet\Web\Controller\ActionContext;
+use DevNet\Core\Controller\ActionContext;
 
 class RedirectResult extends ActionResult
 {
@@ -23,12 +23,11 @@ class RedirectResult extends ActionResult
 
     public function execute(ActionContext $actionContext) : void
     {
-        $httpContext    = $actionContext->HttpContext;
-        $scheme         = $httpContext->Request->Uri->Scheme;
-        $host           = $httpContext->Request->Uri->Host;
-        $port           = $httpContext->Request->Uri->Port;
-
-        $port           = $port != 80 && $port != '' ? ":".$port : '';
+        $httpContext = $actionContext->HttpContext;
+        $scheme      = $httpContext->Request->Uri->Scheme;
+        $host        = $httpContext->Request->Uri->Host;
+        $port        = $httpContext->Request->Uri->Port;
+        $port        = $port != 80 && $port != '' ? ":".$port : '';
 
         if (strpos($this->Path, "/") !== 0 )
         {

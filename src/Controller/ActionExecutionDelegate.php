@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller;
+namespace DevNet\Core\Controller;
 
 use DevNet\System\Event\Delegate;
 use DevNet\System\Async\Task;

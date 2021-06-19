@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Security\Antiforgery;
+namespace DevNet\Core\Security\Antiforgery;
 
 use Exception;
 

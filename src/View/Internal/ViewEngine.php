@@ -6,10 +6,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\View\Internal;
+namespace DevNet\Core\View\Internal;
 
 use DevNet\System\Exceptions\PropertyException;
-use DevNet\Web\View\ViewManager;
+use DevNet\Core\View\ViewManager;
 use InvalidArgumentException;
 
 class ViewEngine

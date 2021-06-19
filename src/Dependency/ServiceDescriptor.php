@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Dependency;
+namespace DevNet\Core\Dependency;
 
 use Closure;
 

@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller\Binder;
+namespace DevNet\Core\Controller\Binder;
 
 interface IValueProvider
 {

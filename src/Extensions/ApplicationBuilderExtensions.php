@@ -6,15 +6,15 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Extensions;
+namespace DevNet\Core\Extensions;
 
-use DevNet\Web\Dispatcher\IApplicationBuilder;
-use DevNet\Web\Router\RouteBuilder;
-use DevNet\Web\Middlewares\RouterMiddleware;
-use DevNet\Web\Middlewares\EndpointMiddleware;
-use DevNet\Web\Middlewares\ExceptionMiddleware;
-use DevNet\Web\Middlewares\AuthenticationMiddleware;
-use DevNet\Web\Middlewares\AuthorizationMiddleware;
+use DevNet\Core\Dispatcher\IApplicationBuilder;
+use DevNet\Core\Router\RouteBuilder;
+use DevNet\Core\Middlewares\RouterMiddleware;
+use DevNet\Core\Middlewares\EndpointMiddleware;
+use DevNet\Core\Middlewares\ExceptionMiddleware;
+use DevNet\Core\Middlewares\AuthenticationMiddleware;
+use DevNet\Core\Middlewares\AuthorizationMiddleware;
 use Closure;
 
 class ApplicationBuilderExtensions

@@ -6,9 +6,9 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Identity;
+namespace DevNet\Core\Identity;
 
-use DevNet\Web\Http\HttpContext;
+use DevNet\Core\Http\HttpContext;
 use DevNet\Entity\EntityContext;
 use DevNet\Entity\EntitySet;
 use DevNet\Entity\EntityModelBuilder;

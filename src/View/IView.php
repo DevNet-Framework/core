@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\View;
+namespace DevNet\Core\View;
 
 interface IView
 {

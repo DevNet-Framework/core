@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Configuration;
+namespace DevNet\Core\Configuration;
 
 class ConfigurationRoot implements IConfiguration
 {

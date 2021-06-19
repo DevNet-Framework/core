@@ -6,13 +6,13 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Middlewares;
+namespace DevNet\Core\Middlewares;
 
-use DevNet\Web\Dispatcher\IMiddleware;
-use DevNet\Web\Dispatcher\RequestDelegate;
-use DevNet\Web\Security\Authentication\Authentication;
-use DevNet\Web\Security\ClaimsPrincipal;
-use DevNet\Web\Http\HttpContext;
+use DevNet\Core\Dispatcher\IMiddleware;
+use DevNet\Core\Dispatcher\RequestDelegate;
+use DevNet\Core\Security\Authentication\Authentication;
+use DevNet\Core\Security\ClaimsPrincipal;
+use DevNet\Core\Http\HttpContext;
 use DevNet\System\Async\Task;
 
 class AuthenticationMiddleware implements IMiddleware

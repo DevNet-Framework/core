@@ -6,9 +6,9 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Security\Antiforgery;
+namespace DevNet\Core\Security\Antiforgery;
 
-use DevNet\Web\Http\HttpContext;
+use DevNet\Core\Http\HttpContext;
 
 class AntiforgeryTokenGenerator
 {

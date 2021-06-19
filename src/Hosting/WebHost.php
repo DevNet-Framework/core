@@ -6,12 +6,12 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Hosting;
+namespace DevNet\Core\Hosting;
 
-use DevNet\Web\Dispatcher\IApplicationBuilder;
-use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Dependency\IServiceProvider;
-use DevNet\Web\Configuration\IConfiguration;
+use DevNet\Core\Dispatcher\IApplicationBuilder;
+use DevNet\Core\Dependency\IServiceProvider;
+use DevNet\Core\Configuration\IConfiguration;
+use DevNet\Core\Http\HttpContext;
 
 class WebHost
 {

@@ -6,14 +6,14 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Middlewares;
+namespace DevNet\Core\Middlewares;
 
-use DevNet\Web\Dispatcher\IMiddleware;
-use DevNet\Web\Dispatcher\RequestDelegate;
-use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Router\RouteBuilder;
-use DevNet\Web\Router\RouteContext;
-use DevNet\Web\Router\RouterException;
+use DevNet\Core\Dispatcher\IMiddleware;
+use DevNet\Core\Dispatcher\RequestDelegate;
+use DevNet\Core\Http\HttpContext;
+use DevNet\Core\Router\RouteBuilder;
+use DevNet\Core\Router\RouteContext;
+use DevNet\Core\Router\RouterException;
 use DevNet\System\Async\Task;
 
 class RouterMiddleware implements IMiddleware

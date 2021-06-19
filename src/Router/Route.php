@@ -6,12 +6,12 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Router;
+namespace DevNet\Core\Router;
 
-use DevNet\Web\Router\IRouter;
-use DevNet\Web\Router\Internal\RouteParser;
-use DevNet\Web\Router\Internal\RouteMatcher;
-use DevNet\Web\Router\Internal\RouteGenerator;
+use DevNet\Core\Router\IRouter;
+use DevNet\Core\Router\Internal\RouteParser;
+use DevNet\Core\Router\Internal\RouteMatcher;
+use DevNet\Core\Router\Internal\RouteGenerator;
 
 class Route implements IRouter
 {

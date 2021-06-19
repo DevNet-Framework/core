@@ -6,10 +6,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Router;
+namespace DevNet\Core\Router;
 
-use DevNet\Web\Dependency\Activator;
-use DevNet\Web\Dependency\IServiceProvider;
+use DevNet\Core\Dependency\Activator;
+use DevNet\Core\Dependency\IServiceProvider;
 use DevNet\System\Async\Task;
 
 class RouteHandler implements IRouteHandler

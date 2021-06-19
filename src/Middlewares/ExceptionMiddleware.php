@@ -6,11 +6,11 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Middlewares;
+namespace DevNet\Core\Middlewares;
 
-use DevNet\Web\Dispatcher\IMiddleware;
-use DevNet\Web\Dispatcher\RequestDelegate;
-use DevNet\Web\Http\HttpContext;
+use DevNet\Core\Dispatcher\IMiddleware;
+use DevNet\Core\Dispatcher\RequestDelegate;
+use DevNet\Core\Http\HttpContext;
 use DevNet\System\Diagnostic\Debuger;
 use DevNet\System\Async\Task;
 

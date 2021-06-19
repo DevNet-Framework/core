@@ -6,9 +6,9 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller\Results;
+namespace DevNet\Core\Controller\Results;
 
-use DevNet\Web\Controller\ActionContext;
+use DevNet\Core\Controller\ActionContext;
 
 class ContentResult extends ActionResult
 {

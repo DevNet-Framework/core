@@ -6,10 +6,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Dispatcher;
+namespace DevNet\Core\Dispatcher;
 
-use DevNet\Web\Dispatcher\IMiddleware;
-use DevNet\Web\Dependency\IServiceProvider;
+use DevNet\Core\Dispatcher\IMiddleware;
+use DevNet\Core\Dependency\IServiceProvider;
 use DevNet\System\Exceptions\ClassException;
 
 class MiddlewareFactory
@@ -32,9 +32,9 @@ class MiddlewareFactory
 
             $interfaceNames = class_implements($middleware);
 
-            if (!in_array("DevNet\System\Web\Hosting\IMiddleware", $interfaceNames))
+            if (!in_array("DevNet\Core\Hosting\IMiddleware", $interfaceNames))
             {
-                throw new \Exception("invalide type, class must be of type DevNet\System\Web\Hosting\IMiddleware");
+                throw new \Exception("invalide type, class must be of type DevNet\Core\Hosting\IMiddleware");
             }
         }
 

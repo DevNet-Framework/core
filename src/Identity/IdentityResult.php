@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Identity;
+namespace DevNet\Core\Identity;
 
 use DevNet\Data\Entity\IEntity;
 

@@ -6,16 +6,16 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller;
+namespace DevNet\Core\Controller;
 
 use DevNet\System\Async\Task;
 use DevNet\System\Exceptions\ClassException;
-use DevNet\Web\Dependency\Activator;
-use DevNet\Web\Dispatcher\IRequestHandler;
-use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Controller\ActionContext;
-use DevNet\Web\Controller\Binder\IValueProvider;
-use DevNet\Web\Controller\ControllerException;
+use DevNet\Core\Dependency\Activator;
+use DevNet\Core\Dispatcher\IRequestHandler;
+use DevNet\Core\Http\HttpContext;
+use DevNet\Core\Controller\ActionContext;
+use DevNet\Core\Controller\Binder\IValueProvider;
+use DevNet\Core\Controller\ControllerException;
 
 class ActionInvoker implements IRequestHandler
 {

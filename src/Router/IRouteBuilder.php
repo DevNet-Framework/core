@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Router;
+namespace DevNet\Core\Router;
 
 /**
 * build a Router instance based on routes maping.

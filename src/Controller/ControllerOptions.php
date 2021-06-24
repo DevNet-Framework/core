@@ -8,6 +8,7 @@
 
 namespace DevNet\Core\Controller;
 
+use DevNet\System\Runtime\LauncherProperties;
 use DevNet\Core\Controller\Binder\IValueProvider;
 use DevNet\Core\Controller\Binder\IModelBinder;
 use DevNet\Core\Controller\Binder\ModelBinderProvider;
@@ -19,7 +20,7 @@ use DevNet\Core\Controller\Providers\RouteValueProvider;
 
 class ControllerOptions
 {
-    private string $ControllerNamespace = 'Application\\Controllers';
+    private string $ControllerNamespace;
     private string $ViewDirectory = '../Views/';
     private array $ActionFilters = [];
     private ?IModelBinder $ModelBinder = null;
@@ -27,6 +28,7 @@ class ControllerOptions
 
     public function __construct()
     {
+        $this->ControllerNamespace = LauncherProperties::getNamespace().'\\Controllers';
         $this->ValueProviders = new CompositeValueProvider();
         $this->ValueProviders->add(new RouteValueProvider());
         $this->ValueProviders->add(new QueryValueProvider());

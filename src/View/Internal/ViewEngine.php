@@ -48,6 +48,23 @@ class ViewEngine
         return $this->$name;
     }
 
+    public function inject(string $serviceName, string $serviceType) : void
+    {
+        $provider = $this->Manager->Provider;
+        if ($provider)
+        {
+            if ($provider->has($serviceType))
+            {
+                $this->Manager->inject($serviceName, $provider->getService($serviceType));
+            }
+        }
+        else
+        {
+            $service = new $serviceType;
+            $this->Manager->inject($serviceName, $service);
+        }
+    }
+
     public function layout(string $layoutName) : void
     {
         if (!$this->LayoutName)
@@ -138,15 +155,5 @@ class ViewEngine
         }
         
         return ob_get_clean();
-    }
-
-    public function inject(string $serviceName) : void
-    {
-        $provider = $this->Manager->Provider;
-
-        if ($provider->contains($serviceName))
-        {
-            $this->Dependencies[$serviceName] = $provider->getService($serviceName);
-        }
     }
 }

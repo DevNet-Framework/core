@@ -74,7 +74,7 @@ class ServiceCollectionExtensions
 
     public static function addView(IServiceCollection $services, string $directory)
     {
-        $services->addSingleton(ViewManager::class, fn() => new ViewManager($directory));
+        $services->addSingleton(ViewManager::class, fn($provider) => new ViewManager($directory, $provider));
     }
     
     public static function addMvc(IServiceCollection $services, Closure $configuration = null)

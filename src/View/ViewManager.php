@@ -8,6 +8,7 @@
 
 namespace DevNet\Core\View;
 
+use DevNet\Core\Dependency\IServiceProvider;
 use DevNet\Core\View\Internal\ViewEngine;
 use DevNet\Core\View\Internal\ViewContainer;
 
@@ -16,10 +17,12 @@ class ViewManager
     private string $Directory;
     private array $ViewData = [];
     private ViewContainer $Container;
+    private ?IServiceProvider $Provider;
 
-    public function __construct(string $Directory = null)
+    public function __construct(string $Directory = null, ?IServiceProvider $provider = null)
     {
         $this->setDirectory($Directory);
+        $this->Provider  = $provider;
         $this->Container = new ViewContainer();
     }
 

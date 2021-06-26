@@ -116,7 +116,7 @@ class ServiceCollectionExtensions
 
         $services->addSingleton(IdentityContext::class, function($provider) use ($services, $userType, $roleType, $identityOptions) : IdentityContext
         {
-            if (!$provider->has(Authentication::class))
+            if (!$provider->contains(Authentication::class))
             {
                 self::addAuthentication($services);
             }

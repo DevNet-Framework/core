@@ -107,7 +107,7 @@ class ServiceProvider implements IServiceProvider
      * @return bool Returns true if the container can return an entry for the given identifier.
      * Returns false otherwise.
      */
-    public function has(string $serviceType) : bool
+    public function contains(string $serviceType) : bool
     {
         //$service = strtolower($service);
 

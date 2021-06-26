@@ -19,7 +19,7 @@ class AuthenticationMiddleware implements IMiddleware
 {
     public function __invoke(HttpContext $context, RequestDelegate $next) : Task
     {
-        if ($context->RequestServices->has(Authentication::class))
+        if ($context->RequestServices->contains(Authentication::class))
         {
             $authentication = $context->RequestServices->getService(Authentication::class);
             $result = $authentication->authenticate();

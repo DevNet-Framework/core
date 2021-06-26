@@ -39,7 +39,7 @@ Class Activator
                 $parameterType = $parameter->getType()->getName();
             }
 
-            if (!$provider->has($parameterType))
+            if (!$provider->contains($parameterType))
             {
                 break;
             }

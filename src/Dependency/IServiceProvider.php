@@ -18,5 +18,5 @@ interface IServiceProvider
      */
     public function getService(string $serviceType);
 
-    public function has(string $serviceType);
+    public function contains(string $serviceType);
 }

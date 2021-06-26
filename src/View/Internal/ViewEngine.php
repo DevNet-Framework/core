@@ -53,7 +53,7 @@ class ViewEngine
         $provider = $this->Manager->Provider;
         if ($provider)
         {
-            if ($provider->has($serviceType))
+            if ($provider->contains($serviceType))
             {
                 $this->Manager->inject($serviceName, $provider->getService($serviceType));
             }

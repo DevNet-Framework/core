@@ -58,7 +58,7 @@ class ViewManager
 
     public function inject(string $Name, $Value) : void
     {
-        $this->Container->addValue($Name, $Value);
+        $this->Container->set($Name, $Value);
     }
 
     public function render(string $viewName, ?object $model = null) : string

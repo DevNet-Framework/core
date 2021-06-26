@@ -10,20 +10,20 @@ namespace DevNet\Core\View\Internal;
 
 class ViewContainer
 {
-    private array $Dependencies;
+    protected array $Items;
 
-    public function addValue(string $Name, $Value) : void
+    public function set(string $Name, $Value) : void
     {
-        $this->Dependencies[$Name] = $Value;
+        $this->Items[$Name] = $Value;
     }
 
-    public function getValue(string $Name)
+    public function get(string $Name)
     {
-        return $this->Dependencies[$Name] ?? null;
+        return $this->Items[$Name] ?? null;
     }
 
-    public function contains(string $Name) : bool
+    public function has(string $Name) : bool
     {
-        return isset($this->Dependencies[$Name]) ? true : false;
+        return isset($this->Items[$Name]) ? true : false;
     }
 }

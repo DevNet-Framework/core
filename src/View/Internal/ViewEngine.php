@@ -27,9 +27,9 @@ class ViewEngine
 
     public function __get(string $name)
     {
-        if ($this->Manager->Container->contains($name))
+        if ($this->Manager->Container->has($name))
         {
-            return $this->Manager->Container->getValue($name);
+            return $this->Manager->Container->get($name);
         }
 
         if (!property_exists($this, $name))

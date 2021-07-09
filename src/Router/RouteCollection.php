@@ -64,7 +64,7 @@ class RouteCollection implements IRouter
         if (isset($this->Routes[$RouteName]))
         {
             $route = $this->Routes[$RouteName];
-            return $route->generatePath($routePathContext);
+            return $route->getRoutePath($routePathContext);
         }
 
         throw new \Exception("invalide route name");

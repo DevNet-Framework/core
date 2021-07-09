@@ -15,6 +15,7 @@ use DevNet\Core\Controller\Results\JsonResult;
 use DevNet\Core\Controller\Results\RedirectResult;
 use DevNet\Core\Controller\Results\ViewResult;
 use DevNet\Core\Controller\Features\HtmlHelper;
+use DevNet\Core\Controller\Features\UrlHelper;
 use DevNet\System\Exceptions\ArgumentException;
 
 Abstract class AbstractController extends ControllerBase
@@ -53,6 +54,7 @@ Abstract class AbstractController extends ControllerBase
         $view = $this->ActionContext->HttpContext->RequestServices->getService(ViewManager::class);
         $view->inject('ViewData', $this->ViewData);
         $view->inject('Html', new HtmlHelper($this->HttpContext));
+        $view->inject('Url', new UrlHelper($this->HttpContext));
         return new ViewResult($view($viewName, $model), 200);
     }
 
@@ -82,4 +84,3 @@ Abstract class AbstractController extends ControllerBase
         return new ForbidResult();
     }
 }
-

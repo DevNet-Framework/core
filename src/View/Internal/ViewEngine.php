@@ -90,10 +90,6 @@ class ViewEngine
         {
             echo $this->Sections[$sectionName];
         }
-        else
-        {
-            throw new InvalidArgumentException("Section $sectionName doesn't exist.");
-        }
     }
 
     public function renderPartial(string $partialName) : void

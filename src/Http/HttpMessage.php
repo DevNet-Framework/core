@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -19,8 +20,7 @@ abstract class HttpMessage
 
     public function setProtocol(string $protocol = null)
     {
-        if (!$protocol)
-        {
+        if (!$protocol) {
             $protocol = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : '';
         }
 

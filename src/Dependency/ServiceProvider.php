@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -29,21 +30,15 @@ class ServiceProvider implements IServiceProvider
      */
     public function getService(string $serviceType)
     {
-        foreach ($this->ServiceCollection as $serviceDescriptor)
-        {
-            if ($serviceType == $serviceDescriptor->ServiceType)
-            {
-                if ($serviceDescriptor->ImplementationInstance)
-                {
-                    if (isset($this->InstanceServices[$serviceType]))
-                    {
-                        if ($serviceDescriptor->Lifetime == 1)
-                        {
+        foreach ($this->ServiceCollection as $serviceDescriptor) {
+            if ($serviceType == $serviceDescriptor->ServiceType) {
+                if ($serviceDescriptor->ImplementationInstance) {
+                    if (isset($this->InstanceServices[$serviceType])) {
+                        if ($serviceDescriptor->Lifetime == 1) {
                             return $this->InstanceServices[$serviceType];
                         }
 
-                        if ($serviceDescriptor->Lifetime == 2)
-                        {
+                        if ($serviceDescriptor->Lifetime == 2) {
                             return clone $this->InstanceServices[$serviceType];
                         }
                     }
@@ -51,45 +46,36 @@ class ServiceProvider implements IServiceProvider
                     return $serviceDescriptor->ImplementationInstance;
                 }
 
-                if ($serviceDescriptor->ImplimentationType)
-                {
-                    if (isset($this->InstanceServices[$serviceType]))
-                    {
-                        if ($serviceDescriptor->Lifetime == 1)
-                        {
+                if ($serviceDescriptor->ImplimentationType) {
+                    if (isset($this->InstanceServices[$serviceType])) {
+                        if ($serviceDescriptor->Lifetime == 1) {
                             return $this->InstanceServices[$serviceType];
                         }
 
-                        if ($serviceDescriptor->Lifetime == 2)
-                        {
+                        if ($serviceDescriptor->Lifetime == 2) {
                             return clone $this->InstanceServices[$serviceType];
                         }
                     }
-                    
+
                     $instance = Activator::CreateInstance($serviceDescriptor->ImplimentationType, $this);
                     $this->InstanceServices[$serviceType] = $instance;
                     return $instance;
                 }
 
-                if ($serviceDescriptor->ImplimentationFactory)
-                {
-                    if (isset($this->InstanceServices[$serviceType]))
-                    {
-                        if ($serviceDescriptor->Lifetime == 1)
-                        {
+                if ($serviceDescriptor->ImplimentationFactory) {
+                    if (isset($this->InstanceServices[$serviceType])) {
+                        if ($serviceDescriptor->Lifetime == 1) {
                             return $this->InstanceServices[$serviceType];
                         }
 
-                        if ($serviceDescriptor->Lifetime == 2)
-                        {
+                        if ($serviceDescriptor->Lifetime == 2) {
                             return clone $this->InstanceServices[$serviceType];
                         }
                     }
                     $factory = $serviceDescriptor->ImplimentationFactory;
                     $instance = $factory($this);
 
-                    if (!$instance instanceof $serviceType)
-                    {
+                    if (!$instance instanceof $serviceType) {
                         throw new \Exception("Return value of factory function must be of the type '$serviceType'");
                     }
 
@@ -107,14 +93,12 @@ class ServiceProvider implements IServiceProvider
      * @return bool Returns true if the container can return an entry for the given identifier.
      * Returns false otherwise.
      */
-    public function contains(string $serviceType) : bool
+    public function contains(string $serviceType): bool
     {
         //$service = strtolower($service);
 
-        foreach ($this->ServiceCollection as $serviceDescriptor)
-        {
-            if ($serviceDescriptor->ServiceType == $serviceType)
-            {
+        foreach ($this->ServiceCollection as $serviceDescriptor) {
+            if ($serviceDescriptor->ServiceType == $serviceType) {
                 return true;
             }
         }

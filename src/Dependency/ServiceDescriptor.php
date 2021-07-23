@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -23,8 +24,7 @@ class ServiceDescriptor
 
     public function __construct(int $lifetime, string $serviceType, $service)
     {
-        switch ($service)
-        {
+        switch ($service) {
             case is_callable($service):
                 $this->describeFactory($lifetime, $serviceType, $service);
                 break;
@@ -50,8 +50,7 @@ class ServiceDescriptor
 
     public function describeInstance(int $lifetime, string $serviceType, object $implementationInstance)
     {
-        if (!$implementationInstance instanceof $serviceType)
-        {
+        if (!$implementationInstance instanceof $serviceType) {
             throw new \Exception("type not complatible");
         }
 
@@ -62,19 +61,16 @@ class ServiceDescriptor
 
     public function describeType(int $lifetime, string $serviceType, string $implimentationType)
     {
-        if (!class_exists($implimentationType))
-        {
+        if (!class_exists($implimentationType)) {
             throw new \Exception("class not found");
         }
 
-        if (!class_exists($serviceType) && !interface_exists($serviceType))
-        {
+        if (!class_exists($serviceType) && !interface_exists($serviceType)) {
             throw new \Exception("invalid service type");
         }
 
         $interfaces = class_implements($implimentationType);
-        if (!in_array($serviceType, $interfaces) && $serviceType != $implimentationType)
-        {
+        if (!in_array($serviceType, $interfaces) && $serviceType != $implimentationType) {
             throw new \Exception("incompatible type");
         }
 
@@ -85,8 +81,7 @@ class ServiceDescriptor
 
     public function describeFactory(int $lifetime, string $serviceType, Closure $implimentationFactory)
     {
-        if (!class_exists($serviceType) && !interface_exists($serviceType))
-        {
+        if (!class_exists($serviceType) && !interface_exists($serviceType)) {
             throw new \Exception("service type not found");
         }
 

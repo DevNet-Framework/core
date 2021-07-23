@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -15,5 +16,5 @@ interface IApplicationBuilder
      */
     public function use($middleware);
 
-    public function build() : RequestDelegate;
+    public function build(): RequestDelegate;
 }

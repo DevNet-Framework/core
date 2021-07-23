@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -18,5 +19,5 @@ interface IRouteHandler
      */
     public function __set(string $name, $value);
 
-    public function handle(RouteContext $routeContext) : Task;
+    public function handle(RouteContext $routeContext): Task;
 }

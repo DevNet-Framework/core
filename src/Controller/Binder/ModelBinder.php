@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -16,32 +17,24 @@ class ModelBinder implements IModelBinder
     {
         $type = $bindingContext->Type;
 
-        if (class_exists($type))
-        {
+        if (class_exists($type)) {
             $model = new $type();
             $form = new Form();
 
-            foreach ($form->Fields as $key => $value)
-            {
-                if (property_exists($model, $key))
-                {
+            foreach ($form->Fields as $key => $value) {
+                if (property_exists($model, $key)) {
                     $model->$key = $value;
                 }
             }
 
             $bindingContext->success($model);
-        }
-        else
-        {
+        } else {
             $valueProvider = $bindingContext->ValueProvider;
 
-            if ($valueProvider->contains($bindingContext->Name))
-            {
+            if ($valueProvider->contains($bindingContext->Name)) {
                 $model = $valueProvider->getValue($bindingContext->Name);
                 $bindingContext->success($model);
-            }
-            else
-            {
+            } else {
                 $bindingContext->failed();
             }
         }

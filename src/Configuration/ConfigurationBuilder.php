@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -31,10 +32,9 @@ class ConfigurationBuilder
 
     public function addJsonFile(string $path)
     {
-        $fullPath = $this->BasePath."/".$path;
+        $fullPath = $this->BasePath . "/" . $path;
 
-        if (!file_exists($fullPath))
-        {
+        if (!file_exists($fullPath)) {
             throw new \Exception("Not found file {$fullPath}");
         }
 
@@ -47,16 +47,11 @@ class ConfigurationBuilder
     {
         $options = [];
         $key = null;
-        foreach ($args as $arg)
-        {
-            if (str_starts_with($arg, '--'))
-            {
+        foreach ($args as $arg) {
+            if (str_starts_with($arg, '--')) {
                 $key = ltrim($arg, '--');
-            }
-            else
-            {
-                if ($key)
-                {
+            } else {
+                if ($key) {
                     $options[$key] = $arg;
                     $key = null;
                 }
@@ -66,8 +61,8 @@ class ConfigurationBuilder
         $this->Settings = array_merge($this->Settings, $options);
     }
 
-    public function build() : IConfiguration
+    public function build(): IConfiguration
     {
-       return new ConfigurationRoot($this->Settings);
+        return new ConfigurationRoot($this->Settings);
     }
 }

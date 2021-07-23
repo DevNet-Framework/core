@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -21,7 +22,7 @@ class ContentResult extends ActionResult
         $this->StatusCode = $statusCode;
     }
 
-    public function execute(ActionContext $actionContext) : void
+    public function execute(ActionContext $actionContext): void
     {
         $httpContext = $actionContext->HttpContext;
         $httpContext->Response->Headers->add("Content-Type", "text/plain");

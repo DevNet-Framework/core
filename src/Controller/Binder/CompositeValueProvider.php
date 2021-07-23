@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -22,10 +23,8 @@ class CompositeValueProvider implements IValueProvider
      */
     public function getValue(string $key)
     {
-        foreach ($this->Providers as $provider)
-        {
-            if ($provider->contains($key))
-            {
+        foreach ($this->Providers as $provider) {
+            if ($provider->contains($key)) {
                 return $provider->getValue($key);
             }
         }
@@ -37,12 +36,10 @@ class CompositeValueProvider implements IValueProvider
      * Check if the container can return an entry for the given identifier.
      * Returns true, otherwise Returns false.
      */
-    public function contains(string $key) : bool
+    public function contains(string $key): bool
     {
-        foreach ($this->Providers as $provider)
-        {
-            if ($provider->contains($key))
-            {
+        foreach ($this->Providers as $provider) {
+            if ($provider->contains($key)) {
                 return true;
             }
         }

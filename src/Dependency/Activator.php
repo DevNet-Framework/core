@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -11,36 +12,31 @@ namespace DevNet\Core\Dependency;
 use DevNet\System\Exceptions\ClassException;
 use ReflectionClass;
 
-Class Activator
+class Activator
 {
     public static function CreateInstance(string $type, IServiceProvider $provider = null)
     {
-        if (!class_exists($type))
-        {
+        if (!class_exists($type)) {
             throw ClassException::classNotFound($type);
         }
 
         $classInfo  = new ReflectionClass($type);
         $methodInfo = $classInfo->getConstructor();
 
-        if (!$methodInfo || !$provider)
-        {
+        if (!$methodInfo || !$provider) {
             return $classInfo->newInstance();
         }
 
         $parameters = $methodInfo->getParameters();
         $arguments  = [];
 
-        foreach ($parameters as $parameter)
-        {
+        foreach ($parameters as $parameter) {
             $parameterType = '';
-            if ($parameter->getType())
-            {
+            if ($parameter->getType()) {
                 $parameterType = $parameter->getType()->getName();
             }
 
-            if (!$provider->contains($parameterType))
-            {
+            if (!$provider->contains($parameterType)) {
                 break;
             }
 

@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -26,7 +27,7 @@ class ClaimsIdentity
         return $this->$Name;
     }
 
-    public function isAuthenticated() : bool
+    public function isAuthenticated(): bool
     {
         return $this->AuthenticationType ? true : false;
     }
@@ -36,10 +37,9 @@ class ClaimsIdentity
         $this->Claims[spl_object_id($Claim)] = $Claim;
     }
 
-    public function removeClaim(Claim $Claim) : bool
+    public function removeClaim(Claim $Claim): bool
     {
-        if (isset($this->Claims[spl_object_id($Claim)]))
-        {
+        if (isset($this->Claims[spl_object_id($Claim)])) {
             unset($this->Claims[spl_object_id($Claim)]);
             return true;
         }
@@ -47,12 +47,10 @@ class ClaimsIdentity
         return false;
     }
 
-    public function hasClaim(string $type, string $value) : bool
+    public function hasClaim(string $type, string $value): bool
     {
-        foreach ($this->Claims as $claim)
-        {
-            if ($claim->Type == $type && $claim->Value == $value)
-            {
+        foreach ($this->Claims as $claim) {
+            if ($claim->Type == $type && $claim->Value == $value) {
                 return true;
             }
         }
@@ -60,12 +58,10 @@ class ClaimsIdentity
         return false;
     }
 
-    public function findClaim(Closure $predecate) : ?Claim
+    public function findClaim(Closure $predecate): ?Claim
     {
-        foreach ($this->Claims as $claim)
-        {
-            if ($predecate($claim))
-            {
+        foreach ($this->Claims as $claim) {
+            if ($predecate($claim)) {
                 return $claim;
             }
         }
@@ -73,14 +69,12 @@ class ClaimsIdentity
         return null;
     }
 
-    public function findClaims(Closure $predecate) : array
+    public function findClaims(Closure $predecate): array
     {
         $claims = [];
 
-        foreach ($this->Claims as $claim)
-        {
-            if ($predecate($claim))
-            {
+        foreach ($this->Claims as $claim) {
+            if ($predecate($claim)) {
                 $claims[] = $claim;
             }
         }
@@ -88,7 +82,7 @@ class ClaimsIdentity
         return $claims;
     }
 
-    public function getObjectData() : string
+    public function getObjectData(): string
     {
         return serialize($this);
     }

@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -23,16 +24,15 @@ class AntiForgeryFilter implements IActionFilter
     {
         $this->Options = $options;
     }
-    
-    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next) : Task
+
+    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next): Task
     {
         $httpContext = $context->HttpContext;
         $antiforgery = $httpContext->RequestServices->getService(IAntiforgery::class);
 
         $result = $antiforgery->validateTokens($httpContext);
 
-        if (!$result)
-        {
+        if (!$result) {
             throw new AntiforgeryException("Invalid AntiForgery Token.");
         }
 

@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -23,37 +24,31 @@ class AuthorizeFilter implements IActionFilter
         $this->Options = $options;
     }
 
-    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next) : Task
+    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next): Task
     {
         $httpContext   = $context->HttpContext;
         $authorization = $context->HttpContext->Authorization;
 
-        if ($authorization)
-        {
+        if ($authorization) {
             $user   = $httpContext->User;
             $policy = $this->Options['Policy'] ?? 'Authentication';
             $result = $authorization->Authorize($policy, $user);
 
-            if (!$result->isSucceeded())
-            {
-                if ($policy == 'Authentication')
-                {
+            if (!$result->isSucceeded()) {
+                if ($policy == 'Authentication') {
                     $authentication = $httpContext->getAttribute('Authentication');
                     $loginPath      = "/account/login";
 
-                    if ($authentication)
-                    {
+                    if ($authentication) {
                         $handler   = $authentication->Handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
                         $loginPath = $handler->Options->LoginPath;
                     }
 
                     $httpContext->Response->redirect($loginPath);
-                }
-                else
-                {
+                } else {
                     $httpContext->Response->setStatusCode(403);
                 }
-                
+
                 return Task::completedTask();
             }
         }

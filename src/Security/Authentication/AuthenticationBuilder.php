@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -18,10 +19,9 @@ class AuthenticationBuilder
     public function addCookie(string $authenticationSchem, Closure $configuration = null)
     {
         $options = new AuthenticationCookieOptions();
-        $options->CookieName .= "-".md5(LauncherProperties::getWorkspace());
-        
-        if ($configuration)
-        {
+        $options->CookieName .= "-" . md5(LauncherProperties::getWorkspace());
+
+        if ($configuration) {
             $configuration($options);
         }
 

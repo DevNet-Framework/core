@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -9,9 +10,9 @@
 namespace DevNet\Core\Router\Internal;
 
 class RouteParser
-{   
+{
     static function parseUrlPath(string $urlPath)
-    {   
+    {
         // remove doublicated slshes
         $urlPath = preg_replace("%\/+%", '/', $urlPath);
         $urlPath = parse_url($urlPath, PHP_URL_PATH);
@@ -37,23 +38,16 @@ class RouteParser
     {
         $routeData = [];
 
-        foreach ($matches as $token => $value)
-        {
-            if (is_string ($token)) {
-                if(strrpos($token, "_"))
-                {
+        foreach ($matches as $token => $value) {
+            if (is_string($token)) {
+                if (strrpos($token, "_")) {
                     $default = explode("_", $token);
-                    if ($value == null)
-                    {
+                    if ($value == null) {
                         $routeData[$default[0]] = $default[1];
-                    }
-                    else
-                    {
+                    } else {
                         $routeData[$default[0]] = $value;
                     }
-                }
-                else
-                {
+                } else {
                     $routeData[$token] = $value;
                 }
             }

@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -28,42 +29,37 @@ class ConfigurationRoot implements IConfiguration
 
         $value = $this->Settings;
 
-        foreach ($keys as $key)
-        {
+        foreach ($keys as $key) {
             $value = $value[$key] ?? null;
 
-            if ($value == null)
-            {
+            if ($value == null) {
                 return null;
             }
         }
-        
-        if (is_array($value))
-        {
+
+        if (is_array($value)) {
             return null;
         }
 
         return $value;
     }
 
-    public function getSection(string $key) : IConfiguration
+    public function getSection(string $key): IConfiguration
     {
         return new ConfigurationSection($this, $key);
     }
 
-    public function getChildren(string $key = '') : array
+    public function getChildren(string $key = ''): array
     {
         $path = $key;
         $keys = explode(":", $key);
 
         $settings = $this->Settings;
 
-        foreach ($keys as $key)
-        {
+        foreach ($keys as $key) {
             $settings = $settings[$key] ?? null;
 
-            if (!is_array($settings))
-            {
+            if (!is_array($settings)) {
                 return [];
             }
         }
@@ -71,11 +67,9 @@ class ConfigurationRoot implements IConfiguration
         $children   = [];
         $keys       = array_keys($settings);
 
-        foreach ($keys as $key)
-        {
-            if ($path != '')
-            {
-                $key = $path.":".$key;
+        foreach ($keys as $key) {
+            if ($path != '') {
+                $key = $path . ":" . $key;
             }
 
             $children[] = new ConfigurationSection($this, $key);

@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -26,11 +27,10 @@ class CookieOptions
         $this->Path = $path;
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         $options = "";
-        if ($this->Expires)
-        {
+        if ($this->Expires) {
             $expires = $this->Expires->format("D, d-M-Y H:i:s T");
             $options .= "Expires={$expires};";
         }
@@ -41,7 +41,7 @@ class CookieOptions
         $options .= $this->SameSite ? "SameSite={$this->SameSite};" : "";
         $options .= $this->HttpOnly ? "HttpOnly;" : "";
         $options .= $this->Secure ? "Secure;" : "";
-        
+
         return $options;
     }
 }

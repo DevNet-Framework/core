@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -19,12 +20,12 @@ class RoutePathContext
         $this->parameters = $parameters;
     }
 
-    public function getRouteName() : string
+    public function getRouteName(): string
     {
         return $this->routeName;
     }
 
-    public function getParameters() : ?array
+    public function getParameters(): ?array
     {
         return $this->parameters;
     }

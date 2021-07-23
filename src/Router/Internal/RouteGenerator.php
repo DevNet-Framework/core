@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -15,31 +16,20 @@ class RouteGenerator
         preg_match_all('%{([\w]+)(=[\w]+)?\??}%', $urlPattern, $matches);
 
         $matches = array_combine($matches[1], $matches[0]);
-        
-        foreach ($matches as $token => $placeholder)
-        {
+
+        foreach ($matches as $token => $placeholder) {
             $pattern = preg_replace('%\?%', '\?', $placeholder);
-            if (isset($params[$token]))
-            {
-                $urlPattern = preg_replace('%'.$pattern.'%', $params[$token], $urlPattern);
-        
-            }
-            else if (preg_match('%{[\w]+=([\w]+)}%', $placeholder, $value))
-            {
-                $urlPattern = preg_replace('%'.$pattern.'%', $value[1], $urlPattern);
-                
-            }
-            else if (preg_match('%{[\w]+\?}%', $placeholder))
-            {
-                $urlPattern = preg_replace('%/?'.$pattern.'%', '', $urlPattern);
-        
-            }
-            else
-            {
+            if (isset($params[$token])) {
+                $urlPattern = preg_replace('%' . $pattern . '%', $params[$token], $urlPattern);
+            } else if (preg_match('%{[\w]+=([\w]+)}%', $placeholder, $value)) {
+                $urlPattern = preg_replace('%' . $pattern . '%', $value[1], $urlPattern);
+            } else if (preg_match('%{[\w]+\?}%', $placeholder)) {
+                $urlPattern = preg_replace('%/?' . $pattern . '%', '', $urlPattern);
+            } else {
                 $urlPattern = 'Error';
             }
         }
-        
+
         return $urlPattern;
     }
 }

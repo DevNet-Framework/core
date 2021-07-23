@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -17,8 +18,7 @@ class ModelBinderProvider implements IteratorAggregate
 
     public function __construct(IModelBinder $modelBinder = null)
     {
-        if ($modelBinder)
-        {
+        if ($modelBinder) {
             $this->ModelBinders[] = $modelBinder;
         }
     }
@@ -29,7 +29,7 @@ class ModelBinderProvider implements IteratorAggregate
         return $this;
     }
 
-    public function getIterator() : iterable
+    public function getIterator(): iterable
     {
         return new ArrayIterator($this->ModelBinders);
     }

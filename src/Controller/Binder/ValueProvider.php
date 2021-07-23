@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -25,8 +26,7 @@ class ValueProvider implements IValueProvider
      */
     public function getValue(string $key)
     {
-        if (isset($this->Values[$key]))
-        {
+        if (isset($this->Values[$key])) {
             return $this->Values[$key];
         }
 
@@ -37,7 +37,7 @@ class ValueProvider implements IValueProvider
      * Check if the container can return an entry for the given identifier.
      * Returns true, otherwise Returns false.
      */
-    public function contains(string $key) : bool
+    public function contains(string $key): bool
     {
         return isset($this->Values[$key]);
     }

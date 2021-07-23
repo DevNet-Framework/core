@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -17,10 +18,9 @@ use DevNet\System\Async\Task;
 
 class AuthenticationMiddleware implements IMiddleware
 {
-    public function __invoke(HttpContext $context, RequestDelegate $next) : Task
+    public function __invoke(HttpContext $context, RequestDelegate $next): Task
     {
-        if ($context->RequestServices->contains(Authentication::class))
-        {
+        if ($context->RequestServices->contains(Authentication::class)) {
             $authentication = $context->RequestServices->getService(Authentication::class);
             $result = $authentication->authenticate();
 

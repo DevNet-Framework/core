@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -20,13 +21,12 @@ class UrlHelper
         $this->HttpContext = $httpContext;
     }
 
-    public function route(string $routeName, array $values = []) : string
+    public function route(string $routeName, array $values = []): string
     {
-        if (!$values)
-        {
+        if (!$values) {
             $values = $this->HttpContext->RouteValues;
         }
-        
+
         $path = new RoutePathContext($routeName, $values);
         $router = $this->HttpContext->RouteContext->RouteData->Routers[0];
 

@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -30,25 +31,21 @@ class ActionInvoker implements IRequestHandler
         $this->ValueProvider  = $provider;
     }
 
-    public function __invoke(HttpContext $httpContext) : Task
+    public function __invoke(HttpContext $httpContext): Task
     {
-        try
-        {
+        try {
             $controller = Activator::CreateInstance($this->ControllerName, $httpContext->RequestServices);
-        }
-        catch (ClassException $exception)
-        {
+        } catch (ClassException $exception) {
             throw new ControllerException("Not found Controller : {$this->ControllerName}", 404);
         }
 
-        if (!method_exists($this->ControllerName, $this->ActionName))
-        {
+        if (!method_exists($this->ControllerName, $this->ActionName)) {
             throw new ControllerException("Undefined method : {$this->ControllerName}::{$this->ActionName}()", 404);
         }
 
         $actionDescriptor = new ActionDescriptor($controller, $this->ActionName);
         $actionContext    = new ActionContext($actionDescriptor, $httpContext, $this->ValueProvider);
-        
+
         $httpContext->addAttribute("ActionContext", $actionContext);
         return $controller($httpContext);
     }

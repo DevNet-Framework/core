@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -12,7 +13,7 @@ use DevNet\Core\Controller\ActionContext;
 
 class ForbidResult extends ActionResult
 {
-    public function execute(ActionContext $actionContext) : void
+    public function execute(ActionContext $actionContext): void
     {
         $httpContext = $actionContext->HttpContext;
         $httpContext->response->setStatusCode(403);

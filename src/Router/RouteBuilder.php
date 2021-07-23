@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -27,7 +28,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * set the route prefix.
      */
-    public function group(string $prefix, callable $callback) : void
+    public function group(string $prefix, callable $callback): void
     {
         $this->Prefix = trim($prefix, '/');
         $callback($this);
@@ -39,7 +40,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * set route name
      */
-    public function name(string $name) : RouteBuilder
+    public function name(string $name): RouteBuilder
     {
         $this->Name = $name;
         return $this;
@@ -48,19 +49,16 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route
      */
-    public function mapRoute(string $name, string $pattern, string ...$target) : void
+    public function mapRoute(string $name, string $pattern, string ...$target): void
     {
-        if ($this->DefaultHandler)
-        {
+        if ($this->DefaultHandler) {
             $routeHandler = $this->DefaultHandler;
             $routeHandler->Target = $target;
-        }
-        else
-        {
+        } else {
             $routeHandler = new RouteHandler($this->ServiceProvider, $target[0] ?? null);
         }
 
-        $pattern = $this->Prefix .'/'. trim($pattern, '/');
+        $pattern = $this->Prefix . '/' . trim($pattern, '/');
         $this->Routes[] = new Route($name, 'ANY', $pattern, $routeHandler);
         $this->Name = ''; // reset the name for the next route
     }
@@ -68,7 +66,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route using the Http Verb GET.
      */
-    public function mapGet(string $pattern, $target) : void
+    public function mapGet(string $pattern, $target): void
     {
         $this->mapVerb('GET', $pattern, $target);
     }
@@ -76,7 +74,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route using the Http Verb POST.
      */
-    public function mapPost(string $pattern, $target) : void
+    public function mapPost(string $pattern, $target): void
     {
         $this->mapVerb('POST', $pattern, $target);
     }
@@ -84,7 +82,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route using the Http Verb PUT.
      */
-    public function mapPut(string $pattern, $target) : void
+    public function mapPut(string $pattern, $target): void
     {
         $this->mapVerb('PUT', $pattern, $target);
     }
@@ -92,7 +90,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route using the Http Verb DELETE.
      */
-    public function mapDelete(string $pattern, $target) : void
+    public function mapDelete(string $pattern, $target): void
     {
         $this->mapVerb('DELETE', $pattern, $target);
     }
@@ -100,9 +98,9 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route using Http Verb.
      */
-    public function mapVerb(string $verb, string $pattern, $target) : void
+    public function mapVerb(string $verb, string $pattern, $target): void
     {
-        $pattern = $this->Prefix .'/'. trim($pattern, '/');
+        $pattern = $this->Prefix . '/' . trim($pattern, '/');
         $this->Routes[] = new Route($this->Name, $verb, $pattern, new RouteHandler($this->ServiceProvider, $target));
         $this->Name = ''; // reset the name for the next route
     }
@@ -110,7 +108,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * build the router and retur RouteCollection instance.
      */
-    public function build() : IRouter
+    public function build(): IRouter
     {
         $routeCollection = new RouteCollection();
         foreach ($this->Routes as $route) {

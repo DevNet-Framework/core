@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -31,11 +32,10 @@ class WebHost
         $config = $this->Provider->getService(IConfiguration::class);
         $port = $config->getValue('port');
 
-        if ($port)
-        {
+        if ($port) {
             $this->Server->setPort(intval($port));
         }
-        
+
         $this->Server->start();
 
         $context    = $this->Provider->getService(HttpContext::class);
@@ -43,40 +43,35 @@ class WebHost
 
         $applicaion($context)->wait();
         $response = $context->Response;
-        
+
         // Send the "status line".
         $statusLine = $response->getStatusLine();
         header($statusLine, true);
-        
+
         // Send the response headers from the headers list.
-        foreach ($response->Headers->getAll() as $name => $values)
-        {
-            foreach ($values as $value)
-            {
+        foreach ($response->Headers->getAll() as $name => $values) {
+            foreach ($values as $value) {
                 // keep a previous similar header.
                 header("$name: $value", false);
             }
         }
-        
+
         // Output the message body.
         $size = $context->Response->Body->getSize();
-        if ($size > 0)
-        {
+        if ($size > 0) {
             $response->Body->seek(0);
-            while (!$response->Body->eof())
-            {
+            while (!$response->Body->eof()) {
                 echo $response->Body->read(1024);
             }
         }
         exit();
     }
 
-    public static function createBuilder(array $args = []) : WebHostBuilder
+    public static function createBuilder(array $args = []): WebHostBuilder
     {
         $builder = new WebHostBuilder();
-        
-        $builder->configureApplication(function($config) use ($args)
-        {
+
+        $builder->configureApplication(function ($config) use ($args) {
             $config->addJsonFile("/settings.json");
             $config->addCommandLine($args);
         });

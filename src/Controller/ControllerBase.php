@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -19,7 +20,7 @@ use DevNet\Core\Dispatcher\IRequestHandler;
 use DevNet\Core\Http\HttpContext;
 use DevNet\System\Async\Task;
 
-Abstract class ControllerBase implements IRequestHandler
+abstract class ControllerBase implements IRequestHandler
 {
     protected HttpContext $HttpContext;
     protected ActionContext $ActionContext;
@@ -36,7 +37,7 @@ Abstract class ControllerBase implements IRequestHandler
         return $this->$name;
     }
 
-    public function __invoke(HttpContext $httpContext) : Task
+    public function __invoke(HttpContext $httpContext): Task
     {
         $this->HttpContext   = $httpContext;
         $this->ActionContext = $httpContext->ActionContext;
@@ -45,8 +46,7 @@ Abstract class ControllerBase implements IRequestHandler
         $actionFilters       = $this->FilterAttributes[strtolower($this->ActionContext->ActionDescriptor->ActionName)] ?? [];
         $filterAttributes    = array_merge($controllerFilters, $actionFilters);
 
-        foreach ($filterAttributes as $filterAttribute)
-        {
+        foreach ($filterAttributes as $filterAttribute) {
             $actionFilter           = $filterAttribute[0];
             $options                = $filterAttribute[1];
             $this->ActionFilters[]  = new $actionFilter($options);
@@ -57,18 +57,17 @@ Abstract class ControllerBase implements IRequestHandler
         return $action($this->ActionContext);
     }
 
-    public function next(ActionContext $actionContext) : Task
+    public function next(ActionContext $actionContext): Task
     {
         $actionFilter = array_shift($this->ActionFilters);
-        if ($actionFilter)
-        {
+        if ($actionFilter) {
             return $actionFilter->onActionExecution($actionContext, $this->Action);
         }
 
         return $this->execute($actionContext);
     }
 
-    public function execute(ActionContext $actionContext) : Task
+    public function execute(ActionContext $actionContext): Task
     {
         $parameterBinder = new ParameterBinder();
         $actionReflector = $actionContext->ActionDescriptor->MethodInfo;
@@ -80,21 +79,20 @@ Abstract class ControllerBase implements IRequestHandler
 
     public function filter(string $target, string $filter, array $options = [])
     {
-        if ($target)
-        {
+        if ($target) {
             strtolower($target);
         }
 
         $this->FilterAttributes[$target][] = [$filter, $options];
     }
 
-    abstract public function view($parameter, object $model = null) : ViewResult;
+    abstract public function view($parameter, object $model = null): ViewResult;
 
-    abstract public function content(string $content, int $status = 200) : ContentResult;
+    abstract public function content(string $content, int $status = 200): ContentResult;
 
-    abstract public function json(array $data, $statusCode = 200) : JsonResult;
+    abstract public function json(array $data, $statusCode = 200): JsonResult;
 
-    abstract public function redirect(string $path) : RedirectResult;
+    abstract public function redirect(string $path): RedirectResult;
 
-    abstract public function forbidResult() : ForbidResult;
+    abstract public function forbidResult(): ForbidResult;
 }

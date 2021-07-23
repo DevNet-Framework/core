@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -12,9 +13,9 @@ use DevNet\Core\Http\HttpContext;
 
 interface IAntiforgery
 {
-    public function storeTokens(HttpContext $httpContext) : AntiforgeryTokenSet;
+    public function storeTokens(HttpContext $httpContext): AntiforgeryTokenSet;
 
-    public function getTokens(HttpContext $httpContext) : AntiforgeryTokenSet;
+    public function getTokens(HttpContext $httpContext): AntiforgeryTokenSet;
 
-    public function validateTokens(HttpContext $httpContext) : bool;
+    public function validateTokens(HttpContext $httpContext): bool;
 }

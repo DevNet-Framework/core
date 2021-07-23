@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) 2018-2020 Mohammed Moussaoui
@@ -29,7 +30,7 @@ class IdentityResult
         return $this->$name;
     }
 
-    public function isSucceeded() : bool
+    public function isSucceeded(): bool
     {
         return $this->Status == 1 ? true : false;
     }

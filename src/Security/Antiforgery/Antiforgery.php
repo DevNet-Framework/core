@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -17,8 +18,7 @@ class Antiforgery implements IAntiforgery
 
     public function __construct(AntiforgeryOptions $options)
     {
-        if ($options->Cookie->HttpOnly === null)
-        {
+        if ($options->Cookie->HttpOnly === null) {
             $options->Cookie->HttpOnly = true;
         }
 
@@ -32,37 +32,32 @@ class Antiforgery implements IAntiforgery
         return $this->$name;
     }
 
-    public function storeTokens(HttpContext $httpContext) : AntiforgeryTokenSet
+    public function storeTokens(HttpContext $httpContext): AntiforgeryTokenSet
     {
         $tokens = $this->getTokens($httpContext);
         $this->Store->saveCookieToken($httpContext, $tokens->CookieToken);
         return $tokens;
     }
 
-    public function getTokens(HttpContext $httpContext) : AntiforgeryTokenSet
+    public function getTokens(HttpContext $httpContext): AntiforgeryTokenSet
     {
         $tokens = $httpContext->Features->get(AntiforgeryTokenSet::class);
 
-        if (!$tokens)
-        {
+        if (!$tokens) {
             $tokens = new AntiforgeryTokenSet();
             $token  = $this->Store->getCookieToken($httpContext);
 
-            if (!$token)
-            {
+            if (!$token) {
                 $tokens->CookieToken = $this->Generator->GenerateCookieToken()->Value;
-            }
-            else
-            {
+            } else {
                 $tokens->CookieToken = $token;
             }
-            
+
             $tokens->FormFieldName = $this->Options->FormFieldName;
             $httpContext->Features->set($tokens);
         }
 
-        if (!$tokens->RequestToken)
-        {
+        if (!$tokens->RequestToken) {
             $cookieToken = $tokens->CookieToken;
             $tokens->RequestToken = $this->Generator->GenerateRequestToken($cookieToken)->Value;
         }
@@ -70,12 +65,11 @@ class Antiforgery implements IAntiforgery
         return $tokens;
     }
 
-    public function validateTokens(HttpContext $httpContext) : bool
+    public function validateTokens(HttpContext $httpContext): bool
     {
         $method = $httpContext->Request->Method;
 
-        if (!in_array($method, ["POST", "PUT", "UPDATE", "DELETE"]))
-        {
+        if (!in_array($method, ["POST", "PUT", "UPDATE", "DELETE"])) {
             return true;
         }
 

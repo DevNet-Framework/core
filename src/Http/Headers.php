@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -15,13 +16,12 @@ class Headers
 
     public function __construct(array $headerValues = [])
     {
-        foreach ($headerValues as $name => $value)
-        {
+        foreach ($headerValues as $name => $value) {
             $this->add($name, $value);
         }
     }
 
-    public function contains(string $name) : bool
+    public function contains(string $name): bool
     {
         return isset($this->HeaderNames[strtolower($name)]);
     }
@@ -36,18 +36,16 @@ class Headers
     public function remove(string $name)
     {
         $normalized = strtolower($name);
-        if (isset($this->HeaderNames[$normalized]))
-        {
+        if (isset($this->HeaderNames[$normalized])) {
             $name = $this->HeaderNames[$normalized];
             unset($this->HeaderValues[$name]);
         }
     }
 
-    public function getValues(string $name) : array
+    public function getValues(string $name): array
     {
         $normalized = strtolower($name);
-        if (isset($this->HeaderNames[$normalized]))
-        {
+        if (isset($this->HeaderNames[$normalized])) {
             $name = $this->HeaderNames[$normalized];
             return $this->HeaderValues[$name];
         }

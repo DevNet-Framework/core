@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -23,30 +24,24 @@ class ExceptionMiddleware implements IMiddleware
         $this->ErrorHandlingPath = $errorHandlingPath;
     }
 
-    public function __invoke(HttpContext $context, RequestDelegate $next) : Task
+    public function __invoke(HttpContext $context, RequestDelegate $next): Task
     {
         $debug = new Debuger();
         $debug->disable();
 
-        if ($this->ErrorHandlingPath === '')
-        {
+        if ($this->ErrorHandlingPath === '') {
             $debug->enable();
             return $next($context);
-        }
-        else if ($this->ErrorHandlingPath !== null)
-        {
-            try
-            {
+        } else if ($this->ErrorHandlingPath !== null) {
+            try {
                 return $next($context);
-            }
-            catch (\Throwable $error)
-            {
+            } catch (\Throwable $error) {
                 $context->addAttribute('Error', $error);
                 $context->Request->Uri->Path = $this->ErrorHandlingPath;
                 return $next($context);
             }
         }
-        
+
         return $next($context);
     }
 }

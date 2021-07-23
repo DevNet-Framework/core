@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -12,10 +13,9 @@ use DevNet\System\Async\Task;
 
 abstract class AuthorizationHandler implements IAuthorizationHandler
 {
-    public function handle(AuthorizationContext $context) : Task
+    public function handle(AuthorizationContext $context): Task
     {
-        foreach ($context->Requirements as $requirement)
-        {
+        foreach ($context->Requirements as $requirement) {
             if (get_class($this) == $requirement->getHandlerName()) {
                 $this->handleRequirement($context, $requirement)->wait();
             }
@@ -24,5 +24,5 @@ abstract class AuthorizationHandler implements IAuthorizationHandler
         return Task::completedTask();
     }
 
-    abstract public function HandleRequirement(AuthorizationContext $context, IAuthorizationRequirement $requirement) : Task;
+    abstract public function HandleRequirement(AuthorizationContext $context, IAuthorizationRequirement $requirement): Task;
 }

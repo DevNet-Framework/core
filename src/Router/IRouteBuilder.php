@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -9,11 +10,11 @@
 namespace DevNet\Core\Router;
 
 /**
-* build a Router instance based on routes maping.
-*/
+ * build a Router instance based on routes maping.
+ */
 interface IRouteBuilder
 {
     public function mapRoute(string $name, string $pattern, string ...$target);
-    
-    public function build() : IRouter;
+
+    public function build(): IRouter;
 }

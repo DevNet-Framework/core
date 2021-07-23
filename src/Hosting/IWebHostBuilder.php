@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -16,5 +17,5 @@ interface IWebHostBuilder
 
     public function configureApplication(Closure $configureApp);
 
-    public function build() : WebHost;
+    public function build(): WebHost;
 }

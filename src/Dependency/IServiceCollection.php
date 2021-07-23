@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -12,7 +13,7 @@ use IteratorAggregate;
 
 interface IServiceCollection extends IteratorAggregate
 {
-    public function add(ServiceDescriptor $serviceDescriptor) : void;
+    public function add(ServiceDescriptor $serviceDescriptor): void;
 
-    public function getIterator() : Iterable;
+    public function getIterator(): Iterable;
 }

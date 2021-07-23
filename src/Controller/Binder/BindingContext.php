@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -22,7 +23,7 @@ class BindingContext
         string $name,
         string $type,
         ActionContext $actionContext
-    ){
+    ) {
         $this->Name = $name;
         $this->Type = $type;
         $this->ActionContext = $actionContext;
@@ -38,12 +39,12 @@ class BindingContext
         return $this->$name;
     }
 
-    public function success($model) : void
+    public function success($model): void
     {
         $this->Result = $model;
     }
 
-    public function failed() : void
+    public function failed(): void
     {
         $this->Result = null;
     }

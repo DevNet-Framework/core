@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -17,19 +18,14 @@ class FileCollection extends Dictionary
     {
         parent::__construct(Type::String, File::class);
 
-        if ($files)
-        {
-            foreach ($files as $key => $file)
-            {
+        if ($files) {
+            foreach ($files as $key => $file) {
                 $this->Add($key, $file);
             }
-        }
-        else
-        {
+        } else {
             $files = $_FILES;
 
-            foreach ($files as $key => $info)
-            {
+            foreach ($files as $key => $info) {
                 $file = new File($info['name'], $info['type'], $info['tmp_name'], $info['size'], $info['error']);
                 $this->Add($key, $file);
             }

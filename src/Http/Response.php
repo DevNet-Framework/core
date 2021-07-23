@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -94,22 +95,19 @@ class Response extends HttpMessage
         Headers $headers = null,
         Cookies $cookies = null,
         Stream $body = null
-    ){
-        if (!$headers)
-        {
+    ) {
+        if (!$headers) {
             $headers = new Headers();
         }
 
-        if (!$cookies)
-        {
+        if (!$cookies) {
             $cookies = new Cookies($headers);
         }
 
-        if (!$body)
-        {
+        if (!$body) {
             $body = new Stream('php://temp', 'r+');
         }
-        
+
         $this->Headers      = $headers;
         $this->Cookies      = $cookies;
         $this->Body         = $body;
@@ -125,10 +123,8 @@ class Response extends HttpMessage
 
     public function setStatusCode(int $statusCode, string $reasonPhrase = null)
     {
-        if (!$reasonPhrase)
-        {
-            if (isset($this->Messages[$statusCode]))
-            {
+        if (!$reasonPhrase) {
+            if (isset($this->Messages[$statusCode])) {
                 $reasonPhrase = $this->Messages[$statusCode];
             }
         }
@@ -137,7 +133,7 @@ class Response extends HttpMessage
         $this->ReasonPhrase = $reasonPhrase;
     }
 
-    public function getStatusLine() : string
+    public function getStatusLine(): string
     {
         return "{$this->Protocol} {$this->StatusCode} {$this->ReasonPhrase}";
     }

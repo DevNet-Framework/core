@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -18,37 +19,29 @@ use DevNet\Core\Controller\Features\HtmlHelper;
 use DevNet\Core\Controller\Features\UrlHelper;
 use DevNet\System\Exceptions\ArgumentException;
 
-Abstract class AbstractController extends ControllerBase
+abstract class AbstractController extends ControllerBase
 {
     protected array $ViewData = [];
 
-    public function view($parameter = null, object $model = null) : ViewResult
+    public function view($parameter = null, object $model = null): ViewResult
     {
-        if (!$parameter)
-        {
+        if (!$parameter) {
             $viewName = null;
-        }
-        else if (is_string($parameter))
-        {
+        } else if (is_string($parameter)) {
             $viewName = $parameter;
-        }
-        else if (is_object($parameter))
-        {
+        } else if (is_object($parameter)) {
             $viewName = null;
             $model    = $parameter;
-        }
-        else
-        {
+        } else {
             throw new \Exception("Invalide argument type, parameter 1 must be string or object");
         }
-        
-        if (!$viewName)
-        {
+
+        if (!$viewName) {
             $prefix         = $this->HttpContext->RouteContext->RouteData->Values['prefix'];
             $controllerName = $this->ActionContext->ActionDescriptor->ControllerName;
-            $controllerName = str_replace('Controller', '',$this->ActionContext->ActionDescriptor->ControllerName);
+            $controllerName = str_replace('Controller', '', $this->ActionContext->ActionDescriptor->ControllerName);
             $actionName     = $this->ActionContext->ActionDescriptor->ActionName;
-            $viewName       = ucwords($prefix.$controllerName.'/'.$actionName, '/');
+            $viewName       = ucwords($prefix . $controllerName . '/' . $actionName, '/');
         }
 
         $view = $this->ActionContext->HttpContext->RequestServices->getService(ViewManager::class);
@@ -58,15 +51,14 @@ Abstract class AbstractController extends ControllerBase
         return new ViewResult($view($viewName, $model), 200);
     }
 
-    public function content(string $content, int $status = 200) : ContentResult
+    public function content(string $content, int $status = 200): ContentResult
     {
         return new ContentResult($content, $status);
     }
 
-    public function json($data, $statusCode = 200) : JsonResult
+    public function json($data, $statusCode = 200): JsonResult
     {
-        if (!is_array($data) && !is_object($data))
-        {
+        if (!is_array($data) && !is_object($data)) {
             $class = get_class($this);
             throw new ArgumentException("Argument 1 passed to {$class}::json() must be of the type object | array.");
         }
@@ -74,12 +66,12 @@ Abstract class AbstractController extends ControllerBase
         return new JsonResult($data, $statusCode);
     }
 
-    public function redirect(string $path) : RedirectResult
+    public function redirect(string $path): RedirectResult
     {
         return new RedirectResult($path);
     }
 
-    public function forbidResult() : ForbidResult
+    public function forbidResult(): ForbidResult
     {
         return new ForbidResult();
     }

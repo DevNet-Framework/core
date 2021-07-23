@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -16,8 +17,7 @@ class ParameterBinder
 
     public function __construct(ModelBinderProvider $modelBinderProvider = null)
     {
-        if (!$modelBinderProvider)
-        {
+        if (!$modelBinderProvider) {
             $modelBinderProvider = new ModelBinderProvider(new ModelBinder());
         }
 
@@ -29,17 +29,14 @@ class ParameterBinder
         $arguments  = [];
         $parameters = $actionContext->ActionDescriptor->MethodInfo->getParameters();
 
-        foreach ($parameters as $key => $parameter)
-        {
+        foreach ($parameters as $key => $parameter) {
             $modelName = $parameter->getName();
             $modelType = '';
-            if ($parameter->getType())
-            {
+            if ($parameter->getType()) {
                 $modelType = $parameter->getType()->getName();
             }
 
-            foreach ($this->ModelBinderProvider as $modelBinder)
-            {
+            foreach ($this->ModelBinderProvider as $modelBinder) {
                 $bindingContext = new BindingContext(
                     $modelName,
                     $modelType,
@@ -47,8 +44,7 @@ class ParameterBinder
                 );
 
                 $modelBinder->bind($bindingContext);
-                if ($bindingContext->Result == true)
-                {
+                if ($bindingContext->Result == true) {
                     break;
                 }
             }

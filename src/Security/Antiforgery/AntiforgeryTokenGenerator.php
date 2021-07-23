@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -12,22 +13,21 @@ use DevNet\Core\Http\HttpContext;
 
 class AntiforgeryTokenGenerator
 {
-    public function generateCookieToken() : AntiforgeryToken
+    public function generateCookieToken(): AntiforgeryToken
     {
         return new AntiforgeryToken();
     }
 
-    public function generateRequestToken(string $cookieToken) : AntiforgeryToken
+    public function generateRequestToken(string $cookieToken): AntiforgeryToken
     {
         return new AntiforgeryToken($cookieToken);
     }
 
-    public function matchTokens(HttpContext $httpContext, $tokens) : bool
+    public function matchTokens(HttpContext $httpContext, $tokens): bool
     {
         $formToken = $httpContext->Request->Form->getValue($tokens->FormFieldName);
 
-        if ($tokens->RequestToken == $formToken)
-        {
+        if ($tokens->RequestToken == $formToken) {
             return true;
         }
 

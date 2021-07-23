@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -26,15 +27,15 @@ class ConfigurationSection implements IConfiguration
 
     public function getValue(string $key)
     {
-        return $this->Root->getValue($this->Path.":".$key);
+        return $this->Root->getValue($this->Path . ":" . $key);
     }
 
-    public function getSection(string $key) : IConfiguration
+    public function getSection(string $key): IConfiguration
     {
-        return new ConfigurationSection($this->Root, $this->Path.":".$key);
+        return new ConfigurationSection($this->Root, $this->Path . ":" . $key);
     }
 
-    public function getChildren() : array
+    public function getChildren(): array
     {
         return $this->Root->getChildren($this->Path);
     }

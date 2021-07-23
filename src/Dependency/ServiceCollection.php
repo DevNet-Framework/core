@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -16,32 +17,30 @@ class ServiceCollection implements IServiceCollection
 
     private array $Services = [];
 
-    public function add(ServiceDescriptor $serviceDescriptor) : void
+    public function add(ServiceDescriptor $serviceDescriptor): void
     {
         $this->Services[$serviceDescriptor->ServiceType] =  $serviceDescriptor;
     }
 
     public function addSingleton(string $serviceType, $service = null)
     {
-        if (!$service)
-        {
+        if (!$service) {
             $service = $serviceType;
-        } 
+        }
 
         $this->add(new ServiceDescriptor(1, $serviceType, $service));
     }
 
     public function AddTransient(string $serviceType, $service = null)
     {
-        if (!$service)
-        {
+        if (!$service) {
             $service = $serviceType;
         }
 
         $this->add(new ServiceDescriptor(2, $serviceType, $service));
     }
 
-    public function getIterator() : Iterable
+    public function getIterator(): Iterable
     {
         return new ArrayIterator($this->Services);
     }

@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -23,19 +24,17 @@ class HttpMethodFilter implements IActionFilter
     {
         $this->Options = $options;
     }
-    
-    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next) : Task
+
+    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next): Task
     {
         $httpContext = $context->HttpContext;
         $httpMethod  = $httpContext->Request->Method;
 
-        foreach ($this->Options as &$option)
-        {
+        foreach ($this->Options as &$option) {
             $option = strtoupper($option);
         }
 
-        if (!in_array($httpMethod, $this->Options))
-        {
+        if (!in_array($httpMethod, $this->Options)) {
             $httpContext->Response->setStatusCode(405);
             throw new HttpException("\"{$httpMethod}\" Method Not Allowed", 405);
         }

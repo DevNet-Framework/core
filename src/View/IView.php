@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -10,5 +11,5 @@ namespace DevNet\Core\View;
 
 interface IView
 {
-    public function render(string $viewName, $viewData) : string;
+    public function render(string $viewName, $viewData): string;
 }

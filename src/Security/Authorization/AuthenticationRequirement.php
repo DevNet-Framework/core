@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -17,17 +18,16 @@ class AuthenticationRequirement extends AuthorizationHandler implements IAuthori
         return $this->$name;
     }
 
-    public function getHandlerName() : string
+    public function getHandlerName(): string
     {
         return get_class($this);
     }
 
-    public function HandleRequirement(AuthorizationContext $context, IAuthorizationRequirement $requirement) : Task
+    public function HandleRequirement(AuthorizationContext $context, IAuthorizationRequirement $requirement): Task
     {
         $user = $context->User;
 
-        if ($user)
-        {
+        if ($user) {
             if ($user->isAuthenticated()) {
                 $context->success($requirement);
             }

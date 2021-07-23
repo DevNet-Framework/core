@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -34,13 +35,13 @@ class WebHostBuilder implements IWebHostBuilder
         $this->Provider      = new ServiceProvider($this->Services);
         $this->AppBuilder    = new ApplicationBuilder($this->Provider);
 
-        $this->Services->addSingleton(HttpContext::class, function($provider) : HttpContext {
+        $this->Services->addSingleton(HttpContext::class, function ($provider): HttpContext {
             $httpContext = HttpContextFactory::create();
             $httpContext->addAttribute('RequestServices', $provider);
             return $httpContext;
         });
 
-        $this->Services->addSingleton(RouteBuilder::class, fn($provider) => new RouteBuilder($provider));
+        $this->Services->addSingleton(RouteBuilder::class, fn ($provider) => new RouteBuilder($provider));
     }
 
     public function configureServices(Closure $configureServices)
@@ -72,8 +73,7 @@ class WebHostBuilder implements IWebHostBuilder
 
     public function useStartup(string $startup)
     {
-        if (!class_exists($startup))
-        {
+        if (!class_exists($startup)) {
             throw ClassException::classNotFound($startup);
         }
 
@@ -87,7 +87,7 @@ class WebHostBuilder implements IWebHostBuilder
         return $this;
     }
 
-    public function build() : WebHost
+    public function build(): WebHost
     {
         $webHost = new WebHost($this->AppBuilder, $this->Provider);
         return $webHost;

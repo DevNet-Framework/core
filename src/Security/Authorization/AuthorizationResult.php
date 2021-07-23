@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -24,12 +25,12 @@ class AuthorizationResult
         return $this->$name;
     }
 
-    public function isSucceeded() : bool
+    public function isSucceeded(): bool
     {
         return $this->Status == 1 ? true : false;
     }
 
-    public function isFailed() : bool
+    public function isFailed(): bool
     {
         return $this->Status == -1 ? true : false;
     }

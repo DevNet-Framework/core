@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -16,8 +17,7 @@ class ClaimsPrincipal
 
     public function __construct(ClaimsIdentity $Identity = null)
     {
-        if ($Identity != null)
-        {
+        if ($Identity != null) {
             $this->Identities[$Identity->AuthenticationType] = $Identity;
         }
     }
@@ -27,13 +27,11 @@ class ClaimsPrincipal
         $this->Identities[$Identity->AuthenticationType] = $Identity;
     }
 
-    public function findClaim(Closure $predecate) : ?Claim
+    public function findClaim(Closure $predecate): ?Claim
     {
-        foreach ($this->Identities as $identity)
-        {
+        foreach ($this->Identities as $identity) {
             $claim = $identity->findClaim($predecate);
-            if ($claim != null)
-            {
+            if ($claim != null) {
                 return $claim;
             }
         }
@@ -41,14 +39,12 @@ class ClaimsPrincipal
         return null;
     }
 
-    public function findClaims(Closure $predecate) : array
+    public function findClaims(Closure $predecate): array
     {
         $claims = [];
 
-        foreach ($this->Identities as $identity)
-        {
-            foreach ($identity->findClaims($predecate) as $claim)
-            {
+        foreach ($this->Identities as $identity) {
+            foreach ($identity->findClaims($predecate) as $claim) {
                 $claims[] = $claim;
             }
         }
@@ -58,10 +54,8 @@ class ClaimsPrincipal
 
     public function isAuthenticated()
     {
-        foreach ($this->Identities as $identity)
-        {
-            if ($identity->isAuthenticated())
-            {
+        foreach ($this->Identities as $identity) {
+            if ($identity->isAuthenticated()) {
                 return true;
             }
 
@@ -69,12 +63,10 @@ class ClaimsPrincipal
         }
     }
 
-    public function IsInRole(string $role) : bool
+    public function IsInRole(string $role): bool
     {
-        foreach ($this->Identities as $identity)
-        {
-            if ($identity->hasClaim(ClaimType::Role, $role))
-            {
+        foreach ($this->Identities as $identity) {
+            if ($identity->hasClaim(ClaimType::Role, $role)) {
                 return true;
             }
         }
@@ -82,7 +74,7 @@ class ClaimsPrincipal
         return false;
     }
 
-    public function object() : string
+    public function object(): string
     {
         return serialize($this);
     }

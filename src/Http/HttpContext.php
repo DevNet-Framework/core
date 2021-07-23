@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -24,8 +25,7 @@ class HttpContext
 
     public function __get(string $name)
     {
-        switch ($name)
-        {
+        switch ($name) {
             case 'Request':
             case 'Response':
             case 'Features':
@@ -37,7 +37,7 @@ class HttpContext
         }
     }
 
-    public function addAttribute(string $name, $value) : void
+    public function addAttribute(string $name, $value): void
     {
         $this->Attributes[$name] = $value;
     }
@@ -47,10 +47,9 @@ class HttpContext
         return $this->Attributes[$name] ?? null;
     }
 
-    public function removeAttribute(string $name) : bool
+    public function removeAttribute(string $name): bool
     {
-        if (isset($this->Attributes[$name]))
-        {
+        if (isset($this->Attributes[$name])) {
             unset($this->Attributes[$name]);
             return true;
         }

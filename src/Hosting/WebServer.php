@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -18,7 +19,7 @@ class WebServer
 
     public function __construct()
     {
-        $this->Directoty = LauncherProperties::getWorkspace()."/webroot";
+        $this->Directoty = LauncherProperties::getWorkspace() . "/webroot";
     }
 
     public function setDirectoty(string $directoty)
@@ -38,8 +39,7 @@ class WebServer
 
     public function start()
     {
-        if (PHP_SAPI == 'cli')
-        {            
+        if (PHP_SAPI == 'cli') {
             shell_exec("php -S {$this->Host}:{$this->Port} -t {$this->Directoty}");
             exit;
         }

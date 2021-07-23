@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -17,7 +18,8 @@ class RouteHandler implements IRouteHandler
     private IServiceProvider $ServiceProvider;
     private $Target;
 
-    public function __construct(IServiceProvider $serviceProvider, $target) {
+    public function __construct(IServiceProvider $serviceProvider, $target)
+    {
 
         $this->ServiceProvider = $serviceProvider;
         $this->Target = $target;
@@ -32,26 +34,20 @@ class RouteHandler implements IRouteHandler
     {
         $this->$name = $value;
     }
-    
-    public function handle(RouteContext $routeContext) : Task
+
+    public function handle(RouteContext $routeContext): Task
     {
         $target = null;
 
-        if (is_string($this->Target))
-        {
+        if (is_string($this->Target)) {
             $target = $this->Target;
-        }
-        else if (is_object($this->Target))
-        {
+        } else if (is_object($this->Target)) {
             $handler = $this->Target;
-        }
-        else
-        {
+        } else {
             throw new RouterException("Invalid Argument Type, route endpoint must be of type callable|string");
         }
 
-        if ($target)
-        {
+        if ($target) {
             $handler = Activator::CreateInstance($target, $this->ServiceProvider);
         }
 

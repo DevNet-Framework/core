@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -11,8 +12,8 @@ namespace DevNet\Core\Configuration;
 interface IConfiguration
 {
     public function getValue(string $key);
-    
-    public function getSection(string $key) : IConfiguration;
 
-    public function getChildren() : array;
+    public function getSection(string $key): IConfiguration;
+
+    public function getChildren(): array;
 }

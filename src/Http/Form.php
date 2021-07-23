@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -12,16 +13,14 @@ class Form
 {
     public array $Fields;
     public FileCollection $Files;
-    
+
     public function __construct(array $fields = null, FileCollection $files = null)
     {
-        if (!$fields)
-        {
+        if (!$fields) {
             $fields = $_POST;
         }
 
-        if (!$files)
-        {
+        if (!$files) {
             $files = new FileCollection();
         }
 

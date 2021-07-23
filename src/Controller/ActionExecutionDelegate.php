@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -14,5 +15,7 @@ use DevNet\System\Async\Task;
 class ActionExecutionDelegate extends Delegate
 {
     /** RequestDelegate signature */
-    public function delegate(ActionContext $context) : Task {}
+    public function delegate(ActionContext $context): Task
+    {
+    }
 }

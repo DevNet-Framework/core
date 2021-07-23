@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -20,36 +21,31 @@ class RouteCollection implements IRouter
     /**
      * add a route object to the array container
      */
-    public function add(Route $route) : void
+    public function add(Route $route): void
     {
-        if ($route->Name != '')
-        {
+        if ($route->Name != '') {
             $this->Routes[$route->Name] = $route;
-        }
-        else
-        {
+        } else {
             $this->Routes[] = $route;
         }
     }
 
-    public function getRoute(string $name) : IRouter
+    public function getRoute(string $name): IRouter
     {
         return $this->Routes[$name];
     }
 
-    public function getRoutes() : array
+    public function getRoutes(): array
     {
         return $this->Routes;
     }
 
-    public function matchRoute(RouteContext $routeContext) : bool
+    public function matchRoute(RouteContext $routeContext): bool
     {
         $routeContext->RouteData->Routers[] = $this;
 
-        foreach ($this->Routes as $route)
-        {
-            if ($route->matchRoute($routeContext))
-            {
+        foreach ($this->Routes as $route) {
+            if ($route->matchRoute($routeContext)) {
                 return true;
             }
         }
@@ -57,12 +53,11 @@ class RouteCollection implements IRouter
         return false;
     }
 
-    public function getRoutePath(RoutePathContext $routePathContext) : string
+    public function getRoutePath(RoutePathContext $routePathContext): string
     {
         $RouteName = $routePathContext->getRouteName();
 
-        if (isset($this->Routes[$RouteName]))
-        {
+        if (isset($this->Routes[$RouteName])) {
             $route = $this->Routes[$RouteName];
             return $route->getRoutePath($routePathContext);
         }

@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -19,7 +20,7 @@ class Authorization
         $this->Options = $options;
     }
 
-    public function Authorize(string $policyName, ?ClaimsPrincipal $user) : AuthorizationResult
+    public function Authorize(string $policyName, ?ClaimsPrincipal $user): AuthorizationResult
     {
         $policy = $this->Options->getPolicy($policyName);
 
@@ -29,7 +30,7 @@ class Authorization
 
         $handlers = $requirements = $policy->Requirements;
         $context = new AuthorizationContext($requirements, $user);
-        
+
         foreach ($handlers as $handler) {
             $handler->handle($context);
         }

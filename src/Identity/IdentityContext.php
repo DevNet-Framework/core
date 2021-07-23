@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -29,8 +30,8 @@ class IdentityContext
         EntityContext $entityContext,
         string $userType,
         string $roleType,
-        IdentityOptions $identityOptions)
-    {
+        IdentityOptions $identityOptions
+    ) {
         $this->HttpContext   = $httpContext;
         $this->EntityContext = $entityContext;
         $this->UserType      = $userType;
@@ -51,16 +52,16 @@ class IdentityContext
     public function onModelCreate(EntityModelBuilder $builder)
     {
         $builder->entity(UserRole::class)
-                ->hasForeignKey('UserId', $this->UserType)
-                ->hasForeignKey('RoleId', $this->RoleType)
-                ->hasOne('User', $this->UserType)
-                ->hasOne('Role', $this->RoleType);
+            ->hasForeignKey('UserId', $this->UserType)
+            ->hasForeignKey('RoleId', $this->RoleType)
+            ->hasOne('User', $this->UserType)
+            ->hasOne('Role', $this->RoleType);
 
         $builder->entity($this->UserType)->hasMany('UserRole', UserRole::class);
         $builder->entity($this->RoleType)->hasMany('UserRole', UserRole::class);
     }
 
-    public function save() : int
+    public function save(): int
     {
         return $this->EntityContext->save();
     }

@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -27,20 +28,17 @@ class ViewEngine
 
     public function __get(string $name)
     {
-        if ($this->Manager->Container->has($name))
-        {
+        if ($this->Manager->Container->has($name)) {
             return $this->Manager->Container->get($name);
         }
 
-        if (!property_exists($this, $name))
-        {
+        if (!property_exists($this, $name)) {
             $class = get_class($this);
             throw new PropertyException("Undefined property: {$class}::\${$name}");
         }
 
         $rp = new \ReflectionProperty($this, $name);
-        if ($rp->isPrivate() || $rp->isProtected())
-        {
+        if ($rp->isPrivate() || $rp->isProtected()) {
             $class = get_class($this);
             throw new PropertyException("Cannot access private or protected property {$class}::\${$name}");
         }
@@ -48,83 +46,70 @@ class ViewEngine
         return $this->$name;
     }
 
-    public function inject(string $serviceName, string $serviceType) : void
+    public function inject(string $serviceName, string $serviceType): void
     {
         $provider = $this->Manager->Provider;
-        if ($provider)
-        {
-            if ($provider->contains($serviceType))
-            {
+        if ($provider) {
+            if ($provider->contains($serviceType)) {
                 $this->Manager->inject($serviceName, $provider->getService($serviceType));
             }
-        }
-        else
-        {
+        } else {
             $service = new $serviceType;
             $this->Manager->inject($serviceName, $service);
         }
     }
 
-    public function layout(string $layoutName) : void
+    public function layout(string $layoutName): void
     {
-        if (!$this->LayoutName)
-        {
+        if (!$this->LayoutName) {
             $this->LayoutName = $layoutName;
         }
     }
 
-    public function section(string $sectionName) : void
+    public function section(string $sectionName): void
     {
         ob_start();
         $this->SectionName = $sectionName;
     }
 
-    public function endSection() : void
+    public function endSection(): void
     {
         $this->Sections[$this->SectionName] = ob_get_clean();
     }
 
-    public function renderSection(string $sectionName) : void
+    public function renderSection(string $sectionName): void
     {
-        if (isset($this->Sections[$sectionName]))
-        {
+        if (isset($this->Sections[$sectionName])) {
             echo $this->Sections[$sectionName];
         }
     }
 
-    public function renderPartial(string $partialName) : void
+    public function renderPartial(string $partialName): void
     {
         $partialPath = $this->Manager->getPath($partialName);
-        if (file_exists($partialPath))
-        {
+        if (file_exists($partialPath)) {
             include $partialPath;
         }
     }
 
-    public function renderBody() : void
+    public function renderBody(): void
     {
         echo $this->Body;
     }
 
-    public function renderView(string $viewName, ?object $model = null) : string
+    public function renderView(string $viewName, ?object $model = null): string
     {
         ob_start();
         $viewPath = $this->Manager->getPath($viewName);
 
-        if ($viewPath)
-        {
-            try
-            {
+        if ($viewPath) {
+            try {
                 include $viewPath;
-            }
-            catch (\Throwable $th)
-            {
+            } catch (\Throwable $th) {
                 ob_clean();
                 throw $th;
             }
-        }
-        else
-        {
+        } else {
             throw new InvalidArgumentException("Vew name : {$viewName} Not found");
         }
 
@@ -133,23 +118,17 @@ class ViewEngine
         ob_start();
         $layoutPath = $this->Manager->getPath($this->LayoutName);
 
-        if ($layoutPath)
-        {
-            try
-            {
+        if ($layoutPath) {
+            try {
                 include $layoutPath;
-            }
-            catch (\Throwable $th)
-            {
+            } catch (\Throwable $th) {
                 ob_clean();
                 throw $th;
             }
-        }
-        else
-        {
+        } else {
             $this->renderBody();
         }
-        
+
         return ob_get_clean();
     }
 }

@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) 2018-2020 Mohammed Moussaoui
@@ -20,8 +21,7 @@ class Role implements IEntity
 
     public function __construct(string $roleName = null)
     {
-        if ($roleName)
-        {
+        if ($roleName) {
             $this->Name = $roleName;
         }
     }

@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -26,21 +27,20 @@ class ClaimRequirement extends AuthorizationHandler implements IAuthorizationReq
         return $this->$name;
     }
 
-    public function getHandlerName() : string
+    public function getHandlerName(): string
     {
         return get_class($this);
     }
 
-    public function HandleRequirement(AuthorizationContext $context, IAuthorizationRequirement $requirement) : Task
+    public function HandleRequirement(AuthorizationContext $context, IAuthorizationRequirement $requirement): Task
     {
         $user =  $context->User;
         if ($user) {
             if ($this->AllowedValues) {
-                $found = $user->findClaims(fn($claim) => $claim->Type == $requirement->ClaimType 
+                $found = $user->findClaims(fn ($claim) => $claim->Type == $requirement->ClaimType
                     && in_array($claim->Value, $this->AllowedValues));
-            }
-            else {
-                $found = $user->findClaims(fn($claim) => $claim->Type == $requirement->ClaimType);
+            } else {
+                $found = $user->findClaims(fn ($claim) => $claim->Type == $requirement->ClaimType);
             }
 
             if ($found) {

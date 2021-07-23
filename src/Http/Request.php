@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -16,7 +17,7 @@ class Request extends HttpMessage
     private Uri $Uri;
     private Form $Form;
     private FileCollection $Files;
-    private array $Attributes =[];
+    private array $Attributes = [];
 
     public function __construct(
         ?string $method         = null,
@@ -26,42 +27,35 @@ class Request extends HttpMessage
         ?Stream $body           = null,
         ?Form $form             = null,
         ?FileCollection $files  = null
-    ){
-        if (!$method)
-        {
+    ) {
+        if (!$method) {
             $method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
         }
 
-        if (!$uri)
-        {
+        if (!$uri) {
             $uri = new Uri();
         }
 
-        if (!$headers)
-        {
+        if (!$headers) {
             $headers = new Headers(getallheaders());
         }
 
-        if (!$cookies)
-        {
+        if (!$cookies) {
             $cookies = new Cookies($headers);
         }
 
-        if (!$body)
-        {
+        if (!$body) {
             $body = new Stream('php://input', 'r');
         }
 
-        if (!$form)
-        {
+        if (!$form) {
             $form = new Form();
         }
 
-        if (!$files)
-        {
+        if (!$files) {
             $files = new FileCollection();
         }
-        
+
         $this->Method  = $method;
         $this->Uri     = $uri;
         $this->Headers = $headers;

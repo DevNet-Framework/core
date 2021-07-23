@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -31,12 +32,11 @@ class ControllerRouteHandler implements IRouteHandler
         $this->$name = $value;
     }
 
-    public function handle(RouteContext $routeContext) : Task
+    public function handle(RouteContext $routeContext): Task
     {
         $handler = $routeContext->Handler;
 
-        if ($handler)
-        {
+        if ($handler) {
             return Task::completedTask();
         }
 
@@ -45,19 +45,17 @@ class ControllerRouteHandler implements IRouteHandler
         $routeData      = $routeContext->RouteData;
         $controllerName = $this->Target[0] ?? null;
         $actionName     = $this->Target[1] ?? null;
-        
-        if (!$controllerName)
-        {
+
+        if (!$controllerName) {
             $namespace      = $options->getControllerNamespace();
             $controllerName = $routeData->Values['controller'] ?? null;
-            $prefix         = ltrim((string)strstr($routeContext->UrlPath, $controllerName, true),'/');
-            $controllerName = ucwords($namespace.'\\'.str_replace('/', '\\', $prefix).$controllerName.'Controller', '\\');
+            $prefix         = ltrim((string)strstr($routeContext->UrlPath, $controllerName, true), '/');
+            $controllerName = ucwords($namespace . '\\' . str_replace('/', '\\', $prefix) . $controllerName . 'Controller', '\\');
         }
 
         $routeData->Values['prefix'] = $prefix;
 
-        if (!$actionName)
-        {
+        if (!$actionName) {
             $actionName = $routeData->Values['action'] ?? null;
         }
 

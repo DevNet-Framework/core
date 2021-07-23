@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -41,21 +42,15 @@ class ApplicationBuilder implements IApplicationBuilder
      */
     public function use($middleware)
     {
-        if (is_object($middleware))
-        {
-            if ($middleware instanceof Closure)
-            {
+        if (is_object($middleware)) {
+            if ($middleware instanceof Closure) {
                 $middleware = new RequestDelegate($middleware);
-
-            }
-            else if (!$middleware instanceof IMiddleware)
-            {
+            } else if (!$middleware instanceof IMiddleware) {
                 throw new \Exception("invalide type, class must be of type DevNet\Core\Hosting\IMiddleware");
             }
         }
 
-        if (is_string($middleware))
-        {
+        if (is_string($middleware)) {
             $middleware = $this->MiddlewareFactoty->create($middleware);
         }
 
@@ -64,19 +59,18 @@ class ApplicationBuilder implements IApplicationBuilder
 
     public function pipe(callable $middleware, RequestDelegate $next)
     {
-        return new RequestDelegate(function (HttpContext $context) use ($middleware, $next) : Task {
+        return new RequestDelegate(function (HttpContext $context) use ($middleware, $next): Task {
             return $middleware($context, $next);
         });
     }
 
-    public function Build() : RequestDelegate
+    public function Build(): RequestDelegate
     {
-        $app = new RequestDelegate(function(HttpContext $context) : Task {
+        $app = new RequestDelegate(function (HttpContext $context): Task {
 
             $RequestHandler = $context->Handler;
 
-            if ($RequestHandler)
-            {
+            if ($RequestHandler) {
                 throw new \Exception("The request has reached the end of the pipeline without being executed the endpoint");
             }
 
@@ -84,8 +78,7 @@ class ApplicationBuilder implements IApplicationBuilder
             return Task::completedTask();
         });
 
-        foreach(array_reverse($this->Middlewares) as $middleware)
-        {
+        foreach (array_reverse($this->Middlewares) as $middleware) {
             $app = $this->pipe($middleware, $app);
         }
 

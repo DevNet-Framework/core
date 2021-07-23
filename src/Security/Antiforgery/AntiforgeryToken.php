@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -15,21 +16,15 @@ class AntiforgeryToken
 
     public function __construct(string $token = null, string $key = null)
     {
-        if ($token)
-        {
-            if ($key)
-            {
+        if ($token) {
+            if ($key) {
                 $this->Value = hash_hmac('sha256', $this->Value, $key);
-            }
-            else
-            {
+            } else {
                 $this->Value = hash('sha256', $token);
             }
 
             $this->IsHashed = true;
-        }
-        else
-        {
+        } else {
             $this->Value = bin2hex(random_bytes(32));
         }
     }

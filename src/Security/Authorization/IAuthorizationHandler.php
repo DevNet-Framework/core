@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -12,5 +13,5 @@ use DevNet\System\Async\Task;
 
 interface IAuthorizationHandler
 {
-    public function handle(AuthorizationContext $context) : Task;
+    public function handle(AuthorizationContext $context): Task;
 }

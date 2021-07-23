@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -13,5 +14,5 @@ use DevNet\System\Async\Task;
 
 interface IMiddleware
 {
-    public function __invoke(HttpContext $context, RequestDelegate $next) : Task;
+    public function __invoke(HttpContext $context, RequestDelegate $next): Task;
 }

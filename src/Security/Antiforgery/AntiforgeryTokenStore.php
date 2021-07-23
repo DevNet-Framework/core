@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -19,12 +20,12 @@ class AntiforgeryTokenStore
         $this->Options = $options;
     }
 
-    public function getCookieToken(HttpContext $httpContext) : ?string
+    public function getCookieToken(HttpContext $httpContext): ?string
     {
         return $httpContext->Request->Cookies->getValue($this->Options->CookieName);
     }
 
-    public function saveCookieToken(HttpContext $httpContext, string $token) : void
+    public function saveCookieToken(HttpContext $httpContext, string $token): void
     {
         $httpContext->Response->Cookies->Add($this->Options->CookieName, $token, $this->Options->Cookie);
     }

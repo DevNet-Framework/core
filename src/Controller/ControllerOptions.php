@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -28,7 +29,7 @@ class ControllerOptions
 
     public function __construct()
     {
-        $this->ControllerNamespace = LauncherProperties::getNamespace().'\\Controllers';
+        $this->ControllerNamespace = LauncherProperties::getNamespace() . '\\Controllers';
         $this->ValueProviders = new CompositeValueProvider();
         $this->ValueProviders->add(new RouteValueProvider());
         $this->ValueProviders->add(new QueryValueProvider());
@@ -41,7 +42,7 @@ class ControllerOptions
         $this->ControllerNamespace = $namespace;
     }
 
-    public function getControllerNamespace() : string
+    public function getControllerNamespace(): string
     {
         return $this->ControllerNamespace;
     }
@@ -51,7 +52,7 @@ class ControllerOptions
         $this->ViewDirectory = $directory;
     }
 
-    public function getViewDirectory() : string
+    public function getViewDirectory(): string
     {
         return $this->ViewDirectory;
     }
@@ -62,7 +63,7 @@ class ControllerOptions
         return $this;
     }
 
-    public function getFilters() : array
+    public function getFilters(): array
     {
         return $this->ActionFilters;
     }
@@ -79,12 +80,12 @@ class ControllerOptions
         return $this;
     }
 
-    public function getValueProviders() : CompositeValueProvider
+    public function getValueProviders(): CompositeValueProvider
     {
         return $this->ValueProviders;
     }
 
-    public function getModelBinderProvider() : ModelBinderProvider
+    public function getModelBinderProvider(): ModelBinderProvider
     {
         return new ModelBinderProvider($this->ModelBinder);
     }

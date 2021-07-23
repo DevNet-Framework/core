@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -29,8 +30,7 @@ class Authentication
     {
         $handler = $this->Handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
 
-        if ($handler)
-        {
+        if ($handler) {
             $handler->SignIn($user, $isPersistent);
         }
     }
@@ -39,18 +39,16 @@ class Authentication
     {
         $handler = $this->Handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
 
-        if ($handler)
-        {
+        if ($handler) {
             $handler->SignOut();
         }
     }
 
-    public function authenticate() : AuthenticationResult
+    public function authenticate(): AuthenticationResult
     {
         $handler = $this->Handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
 
-        if ($handler)
-        {
+        if ($handler) {
             return $handler->authenticate();
         }
 

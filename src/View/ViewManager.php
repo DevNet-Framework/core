@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -31,7 +32,7 @@ class ViewManager
         return $this->$Name;
     }
 
-    public function setDirectory(string $directory) : void
+    public function setDirectory(string $directory): void
     {
         $this->Directory = trim($directory, '/');
     }
@@ -41,36 +42,34 @@ class ViewManager
         $this->ViewData = $viewData;
     }
 
-    public function getPath(string $pathName) : string
+    public function getPath(string $pathName): string
     {
-        if ($pathName)
-        {
+        if ($pathName) {
             $pathName = trim($pathName, '/');
-            $path = $this->Directory ."/". $pathName . ".phtml";
+            $path = $this->Directory . "/" . $pathName . ".phtml";
 
-            if (file_exists($path))
-            {
+            if (file_exists($path)) {
                 return $path;
             }
-            
+
             return "";
         }
-        
+
         return "";
     }
 
-    public function inject(string $Name, $Value) : void
+    public function inject(string $Name, $Value): void
     {
         $this->Container->set($Name, $Value);
     }
 
-    public function render(string $viewName, ?object $model = null) : string
+    public function render(string $viewName, ?object $model = null): string
     {
         $engine = new ViewEngine($this, $this->ViewData);
         return $engine->renderView($viewName, $model);
     }
 
-    public function __invoke(string $viewName, ?object $model = null) : string
+    public function __invoke(string $viewName, ?object $model = null): string
     {
         return $this->render($viewName, $model);
     }

@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -21,19 +22,16 @@ class MiddlewareFactory
         $this->Provider = $provider;
     }
 
-    public function create(string $middleware) : IMiddleware
+    public function create(string $middleware): IMiddleware
     {
-        if (is_string($middleware))
-        {
-            if (!class_exists($middleware))
-            {
+        if (is_string($middleware)) {
+            if (!class_exists($middleware)) {
                 throw ClassException::classNotFound($middleware);
             }
 
             $interfaceNames = class_implements($middleware);
 
-            if (!in_array("DevNet\Core\Hosting\IMiddleware", $interfaceNames))
-            {
+            if (!in_array("DevNet\Core\Hosting\IMiddleware", $interfaceNames)) {
                 throw new \Exception("invalide type, class must be of type DevNet\Core\Hosting\IMiddleware");
             }
         }

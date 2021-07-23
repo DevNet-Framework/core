@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -12,7 +13,7 @@ class HttpContextFactory
 {
     public $Options;
 
-    static public function create() : HttpContext
+    static public function create(): HttpContext
     {
         $request = new Request();
         $response = new Response();

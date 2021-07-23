@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -12,5 +13,5 @@ interface IAuthorizationRequirement
 {
     public function __get(string $name);
 
-    public function getHandlerName() : string;
+    public function getHandlerName(): string;
 }

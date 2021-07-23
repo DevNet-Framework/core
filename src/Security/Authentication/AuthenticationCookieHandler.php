@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -30,15 +31,12 @@ class AuthenticationCookieHandler
 
     public function SignIn(ClaimsPrincipal $user, ?bool $isPersistent = null)
     {
-        if ($isPersistent)
-        {
+        if ($isPersistent) {
             $this->Session->setOptions(['cookie_lifetime' => $this->Options->TimeSpan]);
-        }
-        else
-        {
+        } else {
             $this->Session->setOptions(['cookie_lifetime' => 0]);
         }
-        
+
         $this->Session->start();
         $this->Session->set(ClaimsPrincipal::class, $user);
     }
@@ -48,18 +46,17 @@ class AuthenticationCookieHandler
         $this->Session->destroy();
     }
 
-    public function authenticate() : AuthenticationResult
+    public function authenticate(): AuthenticationResult
     {
         if ($this->Session->isSet()) {
             $this->Session->start();
             $principal = $this->Session->get(ClaimsPrincipal::class);
 
-            if ($principal)
-            {
+            if ($principal) {
                 return new AuthenticationResult($principal);
             }
         }
 
-        return new AuthenticationResult(new Exception("Session cookie dose not have ClaimsPrincipal data")); 
+        return new AuthenticationResult(new Exception("Session cookie dose not have ClaimsPrincipal data"));
     }
 }

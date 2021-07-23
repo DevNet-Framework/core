@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) 2018-2020 Mohammed Moussaoui
@@ -27,20 +28,18 @@ class IdentityManager
         return $this->$name;
     }
 
-    public function signIn(string $username, string $password, bool $isPersistent = false) : IdentityResult
+    public function signIn(string $username, string $password, bool $isPersistent = false): IdentityResult
     {
         $users = $this->IdentityContext->Users;
-        $user  = $users->where(fn($User) => $User->Username == $username)->first();
+        $user  = $users->where(fn ($User) => $User->Username == $username)->first();
 
-        if (!$user)
-        {
+        if (!$user) {
             return new IdentityResult(-1);
         }
 
         $passwordHash = $user->Password;
 
-        if (!password_verify($password, $passwordHash))
-        {
+        if (!password_verify($password, $passwordHash)) {
             return new IdentityResult(-2);
         }
 
@@ -58,13 +57,11 @@ class IdentityManager
         $this->IdentityContext->HttpContext->Authentication->signOut();
     }
 
-    public function isSignedIn() : bool
+    public function isSignedIn(): bool
     {
         $user = $this->IdentityContext->HttpContext->User;
-        if ($user)
-        {
-            if ($user->isAuthenticated())
-            {
+        if ($user) {
+            if ($user->isAuthenticated()) {
                 return true;
             }
         }

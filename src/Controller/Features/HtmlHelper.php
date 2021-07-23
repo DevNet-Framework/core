@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -20,11 +21,10 @@ class HtmlHelper
         $this->HttpContext = $httpContext;
     }
 
-    public function antiForgeryToken() : ?string
+    public function antiForgeryToken(): ?string
     {
         $antiForgery = $this->HttpContext->RequestServices->getService(IAntiforgery::class);
-        if (!$antiForgery)
-        {
+        if (!$antiForgery) {
             return null;
         }
 

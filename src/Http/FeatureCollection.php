@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -22,12 +23,12 @@ class FeatureCollection implements IEnumerable
         $this->Items[get_class($feature)] = $feature;
     }
 
-    public function get(string $type) : ?object
+    public function get(string $type): ?object
     {
         return $this->Items[$type] ?? null;
     }
 
-    public function getIterator() : Enumerator
+    public function getIterator(): Enumerator
     {
         return new Enumerator($this->Items);
     }

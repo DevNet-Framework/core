@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -14,14 +15,12 @@ namespace DevNet\Core\Router\Internal;
  */
 class RouteMatcher
 {
-    static function matchUrl($pattern, $urlPath) : ?array
+    static function matchUrl($pattern, $urlPath): ?array
     {
         $segments = substr_count($pattern, '/') - substr_count($urlPath, '/');
-        if ($segments >= 0)
-        {
+        if ($segments >= 0) {
             $urlPath = $urlPath . str_repeat('/', $segments);
-            if (preg_match('%^'.$pattern.'$%', $urlPath, $matches))
-            {
+            if (preg_match('%^' . $pattern . '$%', $urlPath, $matches)) {
                 return $matches;
             }
         }
@@ -29,13 +28,12 @@ class RouteMatcher
         return null;
     }
 
-    static function matchMethod($httpMethod, $verb) : bool
+    static function matchMethod($httpMethod, $verb): bool
     {
         $httpMethod = strtoupper($httpMethod);
         $verb = strtoupper($verb);
-        
-        if ($verb == $httpMethod || $verb == 'ANY' || $verb == '')
-        {
+
+        if ($verb == $httpMethod || $verb == 'ANY' || $verb == '') {
             return true;
         }
 

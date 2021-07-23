@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -19,22 +20,17 @@ class Session
         $this->Name = $Name;
         $this->Options['name'] = $Name;
 
-        if (isset($lifetime))
-        {
+        if (isset($lifetime)) {
             $this->Options['cookie_lifetime'] = $lifetime;
         }
 
-        if (isset($Path))
-        {
+        if (isset($Path)) {
             $this->Options['cookie_path'] = $Path;
         }
 
-        if(isset($_COOKIE[$Name]))
-        {
+        if (isset($_COOKIE[$Name])) {
             $this->Id = $_COOKIE[$Name];
-        }
-        else
-        {
+        } else {
             $this->Id = session_create_id();
         }
     }
@@ -44,19 +40,18 @@ class Session
         $this->Options = array_merge($this->Options, $Options);
     }
 
-    public function start() : void
+    public function start(): void
     {
         $this->close();
         session_id($this->Id);
         session_start($this->Options);
 
-        if ($this->has('SessionOptions'))
-        {
+        if ($this->has('SessionOptions')) {
             $this->Options = array_merge($this->get('SessionOptions'), $this->Options);
             $this->close();
             session_start($this->Options);
         }
-        
+
         $_COOKIE[$this->Name] = $this->Id;
         //setcookie(session_name(), session_id(), time()+$lifetime);
         $this->set('SessionOptions', $this->Options);
@@ -67,7 +62,7 @@ class Session
         return isset($_COOKIE[$this->Name]) ? true : false;
     }
 
-    public function regenerate(bool $DeleteOldSession = true) : void
+    public function regenerate(bool $DeleteOldSession = true): void
     {
         session_regenerate_id($DeleteOldSession);
         $this->Id = session_id();
@@ -84,7 +79,7 @@ class Session
         return $_SESSION[$Name] ?? null;
     }
 
-    public function has(string $Name) : bool
+    public function has(string $Name): bool
     {
         return isset($_SESSION[$Name]);
     }
@@ -101,7 +96,7 @@ class Session
         return $this->Options['name'] ?? 'PHPSESSID';
     }
 
-    public function getId() : string
+    public function getId(): string
     {
         return session_id();
     }
@@ -125,18 +120,21 @@ class Session
         $_SESSION = array();
 
         // delete the session cookie.
-        if (ini_get("session.use_cookies"))
-        {
+        if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000,
-                $params["path"], $params["domain"],
-                $params["secure"], $params["httponly"]
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
             );
         }
 
         // Unset session cookie variable.
-        if (isset($_COOKIE[$this->getName()]))
-        {
+        if (isset($_COOKIE[$this->getName()])) {
             unset($_COOKIE[$this->getName()]);
         }
 

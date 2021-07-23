@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -17,11 +18,11 @@ abstract class ActionResult implements IActionResult
     protected string $Content;
     protected int $StatusCode;
 
-    public function executeAsync(ActionContext $controllerContext) : Task
+    public function executeAsync(ActionContext $controllerContext): Task
     {
         $this->execute($controllerContext);
         return Task::completedTask();
     }
 
-    abstract public function execute(ActionContext $controllerContext) : void;
+    abstract public function execute(ActionContext $controllerContext): void;
 }

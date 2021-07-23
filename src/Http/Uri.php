@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -19,24 +20,20 @@ class Uri
 
     public function __construct(string $url = '')
     {
-        if (!empty($url))
-        {
+        if (!empty($url)) {
             $this->Url      = $url;
             $this->Scheme   = parse_url($url, PHP_URL_SCHEME);
             $this->Host     = parse_url($url, PHP_URL_HOST);
             $this->Port     = parse_url($url, PHP_URL_PORT);
             $this->Path     = parse_url($url, PHP_URL_PATH);
             $this->Query    = parse_url($url, PHP_URL_QUERY);
-        } 
-        else 
-        {
+        } else {
             // Scheme
             $https = !isset($_SERVER['HTTPS']) ? 'off' : $_SERVER['HTTPS'];
             $this->Scheme = $https == 'off' ? 'http' : 'https';
 
             // Host
-            if (isset($_SERVER['HTTP_HOST']))
-            {
+            if (isset($_SERVER['HTTP_HOST'])) {
                 $hostFragments = explode(':', $_SERVER['HTTP_HOST']);
                 $this->Host = $hostFragments[0];
             }
@@ -45,22 +42,20 @@ class Uri
             $this->Port = !empty($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : ($this->Scheme == 'https' ? '443' : '80');
 
             // Path
-            if (isset($_SERVER['REQUEST_URI']))
-            {
+            if (isset($_SERVER['REQUEST_URI'])) {
                 $uriFragments = explode('?', $_SERVER['REQUEST_URI']);
                 $this->Path = $uriFragments[0];
             }
- 
+
             // Query string
-            if (isset($_SERVER['QUERY_STRING']))
-            {
+            if (isset($_SERVER['QUERY_STRING'])) {
                 $this->Query = $_SERVER['QUERY_STRING'];
             }
 
-            $port = $this->Port != '80' && $this->Port != '' ? ":".$this->Port : '';
-            $query = !empty($this->Query) ? '?'.$this->Query : '';
+            $port = $this->Port != '80' && $this->Port != '' ? ":" . $this->Port : '';
+            $query = !empty($this->Query) ? '?' . $this->Query : '';
 
-            $this->Url = $this->Scheme."://".$this->Host.$port.$this->Path.$query;
+            $this->Url = $this->Scheme . "://" . $this->Host . $port . $this->Path . $query;
         }
     }
 

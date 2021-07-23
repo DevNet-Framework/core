@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -12,7 +13,7 @@ class ViewContainer
 {
     protected array $Items;
 
-    public function set(string $Name, $Value) : void
+    public function set(string $Name, $Value): void
     {
         $this->Items[$Name] = $Value;
     }
@@ -22,7 +23,7 @@ class ViewContainer
         return $this->Items[$Name] ?? null;
     }
 
-    public function has(string $Name) : bool
+    public function has(string $Name): bool
     {
         return isset($this->Items[$Name]) ? true : false;
     }

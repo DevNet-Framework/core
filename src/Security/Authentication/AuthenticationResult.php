@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -18,13 +19,11 @@ class AuthenticationResult
 
     public function __construct(object $result)
     {
-        if ($result instanceof ClaimsPrincipal)
-        {
+        if ($result instanceof ClaimsPrincipal) {
             $this->Principal = $result;
         }
 
-        if ($result instanceof Exception)
-        {
+        if ($result instanceof Exception) {
             $this->Error = $result;
         }
     }
@@ -34,12 +33,12 @@ class AuthenticationResult
         return $this->$name;
     }
 
-    public function isSucceeded() : bool
+    public function isSucceeded(): bool
     {
         return $this->Principal ? true : false;
     }
 
-    public function isFailed() : bool
+    public function isFailed(): bool
     {
         return $this->Error ? true : false;
     }

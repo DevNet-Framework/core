@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -29,8 +30,7 @@ class RouteContext
      */
     public function __get(string $name)
     {
-        switch ($name)
-        {
+        switch ($name) {
             case 'UrlPath':
             case 'HttpMethod':
             case 'RouteData':

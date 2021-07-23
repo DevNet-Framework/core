@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @author      Mohammed Moussaoui
  * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
@@ -41,14 +42,13 @@ class AuthorizationContext
         }
     }
 
-    public function getResult() : AuthorizationResult
+    public function getResult(): AuthorizationResult
     {
         $status = 0;
 
         if (!$this->FailCalled && $this->SuccessCalled && !$this->Requirements) {
             $status = 1;
-        }
-        else if ($this->FailCalled) {
+        } else if ($this->FailCalled) {
             $status = -1;
         }
 

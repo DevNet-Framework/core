@@ -9,9 +9,9 @@
 
 namespace DevNet\Core\Dependency;
 
-/**
- * Describes the interface of a container that exposes methods to read its entries.
- */
+use DevNet\System\Activator;
+use DevNet\System\IServiceProvider;
+
 class ServiceProvider implements IServiceProvider
 {
     protected array $InstanceServices = [];
@@ -23,10 +23,7 @@ class ServiceProvider implements IServiceProvider
     }
 
     /**
-     * @param string $id Identifier of the entry to look for.
-     * @throws NotFoundException  No entry was found for **this** identifier.
-     * @throws ContainerException Error while retrieving the entry.
-     * @return mixed Finds an entry of the container by its identifier and returns it.
+     * Find and return entry of the provider by its service type or throw an exception if not found.
      */
     public function getService(string $serviceType)
     {
@@ -89,14 +86,10 @@ class ServiceProvider implements IServiceProvider
     }
 
     /**
-     * @param string $id Identifier of the entry to look for.
-     * @return bool Returns true if the container can return an entry for the given identifier.
-     * Returns false otherwise.
+     * Check if the provider can return an entry for the given serviceType.
      */
     public function contains(string $serviceType): bool
     {
-        //$service = strtolower($service);
-
         foreach ($this->ServiceCollection as $serviceDescriptor) {
             if ($serviceDescriptor->ServiceType == $serviceType) {
                 return true;

@@ -10,8 +10,8 @@
 namespace DevNet\Core\Controller;
 
 use DevNet\System\Async\Task;
+use DevNet\System\Activator;
 use DevNet\System\Exceptions\ClassException;
-use DevNet\Core\Dependency\Activator;
 use DevNet\Core\Dispatcher\IRequestHandler;
 use DevNet\Core\Http\HttpContext;
 use DevNet\Core\Controller\ActionContext;

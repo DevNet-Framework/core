@@ -9,7 +9,7 @@
 
 namespace DevNet\Core\View;
 
-use DevNet\Core\Dependency\IServiceProvider;
+use DevNet\System\IServiceProvider;
 use DevNet\Core\View\Internal\ViewEngine;
 use DevNet\Core\View\Internal\ViewContainer;
 

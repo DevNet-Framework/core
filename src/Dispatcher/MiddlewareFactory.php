@@ -10,7 +10,7 @@
 namespace DevNet\Core\Dispatcher;
 
 use DevNet\Core\Dispatcher\IMiddleware;
-use DevNet\Core\Dependency\IServiceProvider;
+use DevNet\System\IServiceProvider;
 use DevNet\System\Exceptions\ClassException;
 
 class MiddlewareFactory

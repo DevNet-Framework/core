@@ -9,7 +9,7 @@
 
 namespace DevNet\Core\Router;
 
-use DevNet\Core\Dependency\IServiceProvider;
+use DevNet\System\IServiceProvider;
 
 class RouteBuilder implements IRouteBuilder
 {

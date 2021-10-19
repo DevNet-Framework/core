@@ -11,8 +11,8 @@ namespace DevNet\Core\Controller;
 
 use DevNet\Core\Router\IRouteHandler;
 use DevNet\Core\Router\RouteContext;
-use DevNet\Core\Dependency\IServiceProvider;
 use DevNet\Core\Controller\Providers\RouteValueProvider;
+use DevNet\System\IServiceProvider;
 use DevNet\System\Async\Task;
 
 class ControllerRouteHandler implements IRouteHandler

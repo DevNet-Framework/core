@@ -9,9 +9,9 @@
 
 namespace DevNet\Core\Router;
 
-use DevNet\Core\Dependency\Activator;
-use DevNet\Core\Dependency\IServiceProvider;
 use DevNet\System\Async\Task;
+use DevNet\System\Activator;
+use DevNet\System\IServiceProvider;
 
 class RouteHandler implements IRouteHandler
 {

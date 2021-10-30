@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title><?= $this->ViewData['error'] ?></title>
+   <?php $this->renderPartial('ExceptionStyle') ?>
+</head>
+<body>
+   <main>
+      <div class="error-message">
+         <div class="container">
+            <h3><?= "{$this->ViewData['error']} ! Uncaught 
+            {$this->ViewData['class']} 
+            {$this->ViewData['code']}" ?></h3>
+         </div>
+      </div>
+      <div class="error-details">
+         <div class="container">
+            <h4 class="error-title"><?= "{$this->ViewData['message']}" ?></h4>
+            <?= "in {$this->ViewData['file']}" ?> <span><?= "line {$this->ViewData['line']}" ?></span><br><br>
+            <div class="error-bar">
+               <h4 class="error-title">Stack Trace</h4>
+            </div>
+            <div>
+               <ol>
+                  <?php foreach ($this->ViewData['trace'] as $frame) : ?>
+                     <?php
+                     $class = $frame['class'] ?? '';
+                     $type = $frame['type'] ?? '';
+                     $function = $frame['function'] ?? '';
+                     $file = $frame['file'] ?? '';
+                     $line = $frame['line'] ?? '';
+                     ?>
+                     <li class="error-trace">
+                        <div class="error-content">
+                           <?= "at {$class}{$type}{$function}()" ?><br>
+                           <?= "in {$file}" ?> <span><?= "line {$line}" ?></span>
+                        </div>
+                     </li>
+                  <?php endforeach; ?>
+               </ol>
+            </div>
+         </div>
+      </div>
+   </main>
+</body>
+</html>

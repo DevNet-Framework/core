@@ -12,36 +12,90 @@ namespace DevNet\Core\Middlewares;
 use DevNet\Core\Dispatcher\IMiddleware;
 use DevNet\Core\Dispatcher\RequestDelegate;
 use DevNet\Core\Http\HttpContext;
-use DevNet\System\Diagnostic\Debuger;
+use DevNet\Core\View\ViewManager;
 use DevNet\System\Async\Task;
+use Throwable;
 
 class ExceptionMiddleware implements IMiddleware
 {
-    private ?string $ErrorHandlingPath;
+    private ?string $ExceptionPath;
 
-    public function __construct(?string $errorHandlingPath = '')
+    public function __construct(?string $exceptionPath = null)
     {
-        $this->ErrorHandlingPath = $errorHandlingPath;
+        $this->ExceptionPath = $exceptionPath;
     }
 
     public function __invoke(HttpContext $context, RequestDelegate $next): Task
     {
-        $debug = new Debuger();
-        $debug->disable();
-
-        if ($this->ErrorHandlingPath === '') {
-            $debug->enable();
+        try {
             return $next($context);
-        } else if ($this->ErrorHandlingPath !== null) {
-            try {
-                return $next($context);
-            } catch (\Throwable $error) {
-                $context->addAttribute('Error', $error);
-                $context->Request->Uri->Path = $this->ErrorHandlingPath;
+        } catch (Throwable $error) {
+            $context->addAttribute('Error', $error);
+            if ($this->ExceptionPath) {
+                $context->Request->Uri->Path = $this->ExceptionPath;
                 return $next($context);
             }
+            return $this->handel($context);
+        }
+    }
+
+    public function handel(HttpContext $context): task
+    {
+        $error = $context->Error;
+        $data  = $this->parse($error);
+        $view  = new ViewManager(__DIR__.'/Views');
+        $view->inject('ViewData', $data);
+        $context->Response->Body->write($view->render('ExceptionView'));
+        return Task::completedTask();
+    }
+
+    public function parse(Throwable $error): array
+    {
+        $severities = [
+            E_ERROR             => 'Fatal Error',
+            E_WARNING           => 'Warning',
+            E_PARSE             => 'Parse Error',
+            E_NOTICE            => 'Notice',
+            E_CORE_ERROR        => 'Core Error',
+            E_CORE_WARNING      => 'Core Warning',
+            E_COMPILE_ERROR     => 'Compile Error',
+            E_COMPILE_WARNING   => 'Compile Warning',
+            E_USER_ERROR        => 'User Error',
+            E_USER_WARNING      => 'User Warning',
+            E_USER_NOTICE       => 'User Notice',
+            E_STRICT            => 'Strict Error',
+            E_RECOVERABLE_ERROR => 'Recoverable Error',
+            E_DEPRECATED        => 'Deprecated',
+            E_USER_DEPRECATED   => 'User Deprecated'
+        ];
+
+        $trace = $error->getTrace();
+        if ($error instanceof \ErrorException) {
+            $severity = $severities[$error->getSeverity()];
+        } else {
+            $severity = $severities[E_ERROR];
         }
 
-        return $next($context);
+        $firstfile = $trace[0]['file'] ?? null;
+
+        if ($error->getFile() == $firstfile) {
+            array_shift($trace);
+        }
+
+        if ($error->getCode() == 0) {
+            $code = '';
+        } else {
+            $code = $error->getCode();
+        }
+
+        $data['error']   = $severity;
+        $data['message'] = $error->getMessage();
+        $data['class']   = get_class($error);
+        $data['code']    = $code;
+        $data['file']    = $error->getFile();
+        $data['line']    = $error->getLine();
+        $data['trace']   = $trace;
+
+        return $data;
     }
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
    <title><?= $this->ViewData['error'] ?></title>
    <?php $this->renderPartial('ExceptionStyle') ?>
 </head>
+
 <body>
    <main>
       <div class="error-message">
@@ -32,6 +34,10 @@
                      $function = $frame['function'] ?? '';
                      $file = $frame['file'] ?? '';
                      $line = $frame['line'] ?? '';
+
+                     if (!($file && $line)) {
+                        continue;
+                     }
                      ?>
                      <li class="error-trace">
                         <div class="error-content">
@@ -46,4 +52,5 @@
       </div>
    </main>
 </body>
+
 </html>

@@ -13,7 +13,7 @@ class AuthenticationCookieOptions
 {
     const DefaultScheme         = 'AuthenticationCookie';
 
-    public string $CookieName   = 'Devnet-Cookie';
+    public string $CookieName   = 'Devnet-Identity';
     public string $CookiePath   = '/';
     public string $LoginPath    = '/account/login';
     public string $DeniedPath   = '';

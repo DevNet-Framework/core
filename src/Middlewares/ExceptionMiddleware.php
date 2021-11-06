@@ -27,6 +27,10 @@ class ExceptionMiddleware implements IMiddleware
 
     public function __invoke(HttpContext $context, RequestDelegate $next): Task
     {
+        set_error_handler(function (int $severity, string $message, string $file, int $line) {
+            throw new \ErrorException($message, 0, $severity, $file, $line);
+        });
+
         try {
             return $next($context);
         } catch (Throwable $error) {
@@ -43,7 +47,7 @@ class ExceptionMiddleware implements IMiddleware
     {
         $error = $context->Error;
         $data  = $this->parse($error);
-        $view  = new ViewManager(__DIR__.'/Views');
+        $view  = new ViewManager(__DIR__ . '/Views');
         $view->inject('ViewData', $data);
         $context->Response->Body->write($view->render('ExceptionView'));
         return Task::completedTask();

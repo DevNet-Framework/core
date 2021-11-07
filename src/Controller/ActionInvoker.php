@@ -9,14 +9,14 @@
 
 namespace DevNet\Core\Controller;
 
-use DevNet\System\Async\Task;
-use DevNet\System\Activator;
-use DevNet\System\Exceptions\ClassException;
-use DevNet\Core\Dispatcher\IRequestHandler;
-use DevNet\Core\Http\HttpContext;
 use DevNet\Core\Controller\ActionContext;
-use DevNet\Core\Controller\Binder\IValueProvider;
 use DevNet\Core\Controller\ControllerException;
+use DevNet\Core\Controller\Binder\IValueProvider;
+use DevNet\Core\Http\HttpContext;
+use DevNet\Core\Middleware\IRequestHandler;
+use DevNet\System\Activator;
+use DevNet\System\Async\Task;
+use DevNet\System\Exceptions\ClassException;
 
 class ActionInvoker implements IRequestHandler
 {

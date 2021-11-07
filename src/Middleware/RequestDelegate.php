@@ -7,11 +7,11 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Dispatcher;
+namespace DevNet\Core\Middleware;
 
 use DevNet\Core\Http\HttpContext;
-use DevNet\System\Event\Delegate;
 use DevNet\System\Async\Task;
+use DevNet\System\Event\Delegate;
 
 class RequestDelegate extends Delegate
 {

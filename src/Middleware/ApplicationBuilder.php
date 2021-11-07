@@ -7,14 +7,14 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Dispatcher;
+namespace DevNet\Core\Middleware;
 
-use DevNet\Core\Dispatcher\RequestDelegate;
-use DevNet\Core\Dispatcher\IApplicationBuilder;
-use DevNet\Core\Dispatcher\IMiddleware;
 use DevNet\Core\Http\HttpContext;
-use DevNet\System\IServiceProvider;
+use DevNet\Core\Middleware\IApplicationBuilder;
+use DevNet\Core\Middleware\IMiddleware;
+use DevNet\Core\Middleware\RequestDelegate;
 use DevNet\System\Async\Task;
+use DevNet\System\IServiceProvider;
 use Closure;
 
 class ApplicationBuilder implements IApplicationBuilder

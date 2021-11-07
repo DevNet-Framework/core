@@ -9,10 +9,10 @@
 
 namespace DevNet\Core\Middlewares;
 
-use DevNet\Core\Dispatcher\IMiddleware;
-use DevNet\Core\Dispatcher\RequestDelegate;
-use DevNet\Core\Security\Authorization\Authorization;
 use DevNet\Core\Http\HttpContext;
+use DevNet\Core\Middleware\IMiddleware;
+use DevNet\Core\Middleware\RequestDelegate;
+use DevNet\Core\Security\Authorization\Authorization;
 use DevNet\System\Async\Task;
 
 class AuthorizationMiddleware implements IMiddleware

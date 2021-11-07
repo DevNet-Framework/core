@@ -9,15 +9,15 @@
 
 namespace DevNet\Core\Controller;
 
+use DevNet\Core\Http\HttpContext;
 use DevNet\Core\Controller\ActionContext;
+use DevNet\Core\Controller\Binder\ParameterBinder;
 use DevNet\Core\Controller\Results\ContentResult;
 use DevNet\Core\Controller\Results\ForbidResult;
 use DevNet\Core\Controller\Results\JsonResult;
 use DevNet\Core\Controller\Results\RedirectResult;
 use DevNet\Core\Controller\Results\ViewResult;
-use DevNet\Core\Controller\Binder\ParameterBinder;
-use DevNet\Core\Dispatcher\IRequestHandler;
-use DevNet\Core\Http\HttpContext;
+use DevNet\Core\Middleware\IRequestHandler;
 use DevNet\System\Async\Task;
 
 abstract class ControllerBase implements IRequestHandler

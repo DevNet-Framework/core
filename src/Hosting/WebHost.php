@@ -9,9 +9,9 @@
 
 namespace DevNet\Core\Hosting;
 
-use DevNet\Core\Dispatcher\IApplicationBuilder;
-use DevNet\Core\Configuration\IConfiguration;
 use DevNet\Core\Http\HttpContext;
+use DevNet\Core\Configuration\IConfiguration;
+use DevNet\Core\Middleware\IApplicationBuilder;
 use DevNet\System\IServiceProvider;
 
 class WebHost

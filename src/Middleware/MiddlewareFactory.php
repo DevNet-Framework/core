@@ -7,11 +7,11 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Dispatcher;
+namespace DevNet\Core\Middleware;
 
-use DevNet\Core\Dispatcher\IMiddleware;
-use DevNet\System\IServiceProvider;
+use DevNet\Core\Middleware\IMiddleware;
 use DevNet\System\Exceptions\ClassException;
+use DevNet\System\IServiceProvider;
 
 class MiddlewareFactory
 {

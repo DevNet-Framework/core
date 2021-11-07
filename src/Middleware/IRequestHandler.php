@@ -7,12 +7,12 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Dispatcher;
+namespace DevNet\Core\Middleware;
 
 use DevNet\Core\Http\HttpContext;
 use DevNet\System\Async\Task;
 
-interface IMiddleware
+interface IRequestHandler
 {
-    public function __invoke(HttpContext $context, RequestDelegate $next): Task;
+    public function __invoke(HttpContext $context): Task;
 }

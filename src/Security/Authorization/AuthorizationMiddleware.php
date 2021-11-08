@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Middlewares;
+namespace DevNet\Core\Security\Authorization;
 
 use DevNet\Core\Http\HttpContext;
 use DevNet\Core\Middleware\IMiddleware;

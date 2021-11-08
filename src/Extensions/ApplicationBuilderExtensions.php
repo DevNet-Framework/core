@@ -12,9 +12,9 @@ namespace DevNet\Core\Extensions;
 use DevNet\Core\Middleware\IApplicationBuilder;
 use DevNet\Core\Middleware\EndpointMiddleware;
 use DevNet\Core\Middlewares\ExceptionMiddleware;
-use DevNet\Core\Middlewares\AuthorizationMiddleware;
 use DevNet\Core\Router\RouteBuilder;
 use DevNet\Core\Router\RouterMiddleware;
+use DevNet\Core\Security\Authorization\AuthorizationMiddleware;
 use DevNet\Core\Security\Authentication\AuthenticationMiddleware;
 use Closure;
 

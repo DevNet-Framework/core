@@ -10,24 +10,19 @@
 namespace DevNet\Core\Extensions;
 
 use DevNet\Core\Middleware\IApplicationBuilder;
-use DevNet\Core\Middleware\EndpointMiddleware;
-use DevNet\Core\Middlewares\ExceptionMiddleware;
-use DevNet\Core\Router\RouteBuilder;
+use DevNet\Core\Exception\ExceptionMiddleware;
 use DevNet\Core\Router\RouterMiddleware;
-use DevNet\Core\Security\Authorization\AuthorizationMiddleware;
 use DevNet\Core\Security\Authentication\AuthenticationMiddleware;
+use DevNet\Core\Security\Authorization\AuthorizationMiddleware;
+use DevNet\Core\Middleware\EndpointMiddleware;
+use DevNet\Core\Router\RouteBuilder;
 use Closure;
 
 class ApplicationBuilderExtensions
 {
-    public static function UseDeveloperExceptionHandler(IApplicationBuilder $app)
+    public static function UseExceptionHandler(IApplicationBuilder $app, ?string $errorHandlingPath = '')
     {
-        $app->use(new ExceptionMiddleware());
-    }
-
-    public static function UseExceptionHandler(IApplicationBuilder $app, ?string $ErrorHandlingPath = '')
-    {
-        $app->use(new ExceptionMiddleware($ErrorHandlingPath));
+        $app->use(new ExceptionMiddleware($errorHandlingPath));
     }
 
     public static function useRouter(IApplicationBuilder $app)

@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Middlewares;
+namespace DevNet\Core\Exception;
 
 use DevNet\Core\Http\HttpContext;
 use DevNet\Core\Middleware\IMiddleware;
@@ -18,11 +18,11 @@ use Throwable;
 
 class ExceptionMiddleware implements IMiddleware
 {
-    private ?string $ExceptionPath;
+    private ?string $ErrorHandlingPath;
 
-    public function __construct(?string $exceptionPath = null)
+    public function __construct(?string $errorHandlingPath = null)
     {
-        $this->ExceptionPath = $exceptionPath;
+        $this->ErrorHandlingPath = $errorHandlingPath;
     }
 
     public function __invoke(HttpContext $context, RequestDelegate $next): Task
@@ -35,8 +35,8 @@ class ExceptionMiddleware implements IMiddleware
             return $next($context);
         } catch (Throwable $error) {
             $context->addAttribute('Error', $error);
-            if ($this->ExceptionPath) {
-                $context->Request->Uri->Path = $this->ExceptionPath;
+            if ($this->ErrorHandlingPath) {
+                $context->Request->Uri->Path = $this->ErrorHandlingPath;
                 return $next($context);
             }
             return $this->handel($context);

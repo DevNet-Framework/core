@@ -9,13 +9,13 @@
 
 namespace DevNet\Core\Extensions;
 
-use DevNet\Core\Router\RouteBuilder;
 use DevNet\Core\Middleware\IApplicationBuilder;
 use DevNet\Core\Middleware\EndpointMiddleware;
 use DevNet\Core\Middlewares\ExceptionMiddleware;
-use DevNet\Core\Middlewares\RouterMiddleware;
 use DevNet\Core\Middlewares\AuthenticationMiddleware;
 use DevNet\Core\Middlewares\AuthorizationMiddleware;
+use DevNet\Core\Router\RouterMiddleware;
+use DevNet\Core\Router\RouteBuilder;
 use Closure;
 
 class ApplicationBuilderExtensions

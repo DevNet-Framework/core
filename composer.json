@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DevNet\\Core\\" : "src/"
+            "DevNet\\Core\\" : "lib/"
         }
     }
 }

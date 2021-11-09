@@ -13,10 +13,7 @@ use DevNet\Core\Configuration\IConfiguration;
 use DevNet\Core\Configuration\ConfigurationBuilder;
 use DevNet\Core\Dependency\ServiceCollection;
 use DevNet\Core\Dependency\ServiceProvider;
-use DevNet\Core\Http\HttpContext;
-use DevNet\Core\Http\HttpContextFactory;
 use DevNet\Core\Middleware\ApplicationBuilder;
-use DevNet\Core\Router\RouteBuilder;
 use DevNet\System\Exceptions\ClassException;
 use DevNet\System\Runtime\LauncherProperties;
 use Closure;
@@ -34,27 +31,13 @@ class WebHostBuilder implements IWebHostBuilder
         $this->Services      = new ServiceCollection();
         $this->Provider      = new ServiceProvider($this->Services);
         $this->AppBuilder    = new ApplicationBuilder($this->Provider);
-
-        $this->Services->addSingleton(HttpContext::class, function ($provider): HttpContext {
-            $httpContext = HttpContextFactory::create();
-            $httpContext->addAttribute('RequestServices', $provider);
-            return $httpContext;
-        });
-
-        $this->Services->addSingleton(RouteBuilder::class, fn ($provider) => new RouteBuilder($provider));
     }
 
-    public function configureServices(Closure $configureServices)
-    {
-        $configureServices($this->Services);
-        return $this;
-    }
-
-    public function configureApplication(Closure $configureApp)
+    public function useConfiguration(Closure $configure)
     {
         $basePath = LauncherProperties::getWorkspace();
         $this->ConfigBuilder->addBasePath($basePath);
-        $configureApp($this->ConfigBuilder);
+        $configure($this->ConfigBuilder);
 
         return $this;
     }
@@ -65,9 +48,15 @@ class WebHostBuilder implements IWebHostBuilder
         return $this;
     }
 
-    public function useConfiguration(string $key, string $value)
+    public function configureServices(Closure $configureServices)
     {
-        $this->Config[$key] = $value;
+        $configureServices($this->Services);
+        return $this;
+    }
+
+    public function configureApplication(Closure $configureApplication)
+    {
+        $configureApplication($this->AppBuilder);
         return $this;
     }
 
@@ -89,7 +78,6 @@ class WebHostBuilder implements IWebHostBuilder
 
     public function build(): WebHost
     {
-        $webHost = new WebHost($this->AppBuilder, $this->Provider);
-        return $webHost;
+        return new WebHost($this->AppBuilder, $this->Provider);
     }
 }

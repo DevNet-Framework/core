@@ -9,9 +9,11 @@
 
 namespace DevNet\Core\Hosting;
 
-use DevNet\Core\Http\HttpContext;
 use DevNet\Core\Configuration\IConfiguration;
+use DevNet\Core\Http\HttpContext;
+use DevNet\Core\Http\HttpContextFactory;
 use DevNet\Core\Middleware\IApplicationBuilder;
+use DevNet\Core\Router\RouteBuilder;
 use DevNet\System\IServiceProvider;
 
 class WebHost
@@ -67,13 +69,24 @@ class WebHost
         exit();
     }
 
-    public static function createBuilder(array $args = []): WebHostBuilder
+    public static function createDefaultBuilder(array $args = []): WebHostBuilder
     {
         $builder = new WebHostBuilder();
 
-        $builder->configureApplication(function ($config) use ($args) {
+        $builder->useConfiguration(function ($config) use ($args) {
             $config->addJsonFile("/settings.json");
             $config->addCommandLine($args);
+        });
+
+        $builder->configureServices(function ($services)
+        {
+            $services->addSingleton(HttpContext::class, function ($provider): HttpContext {
+                $httpContext = HttpContextFactory::create();
+                $httpContext->addAttribute('RequestServices', $provider);
+                return $httpContext;
+            });
+
+            $services->addSingleton(RouteBuilder::class, fn ($provider) => new RouteBuilder($provider));
         });
 
         return $builder;

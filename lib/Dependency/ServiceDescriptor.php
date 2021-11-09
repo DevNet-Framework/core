@@ -10,6 +10,7 @@
 namespace DevNet\Core\Dependency;
 
 use Closure;
+use DevNet\System\Exceptions\ClassException;
 
 class ServiceDescriptor
 {
@@ -21,6 +22,14 @@ class ServiceDescriptor
     protected ?string $ImplimentationType = null;
     protected ?object $ImplementationInstance = null;
     protected ?Closure $ImplimentationFactory = null;
+
+    /**
+     * Read-only for all properties.
+     */
+    public function __get(string $name)
+    {
+        return $this->$name;
+    }
 
     public function __construct(int $lifetime, string $serviceType, $service)
     {
@@ -35,58 +44,50 @@ class ServiceDescriptor
                 $this->describeType($lifetime, $serviceType, $service);
                 break;
             default:
-                throw new \Exception("type not complatible");
+                throw new \Exception("incomplatible type, it must be of type object, or string of class type, or a callable factory");
                 break;
         }
     }
 
-    /**
-     * Read-only for all properties.
-     */
-    public function __get(string $name)
-    {
-        return $this->$name;
-    }
-
-    public function describeInstance(int $lifetime, string $serviceType, object $implementationInstance)
+    public function describeInstance(int $lifetime, string $serviceType, object $implementationInstance): void
     {
         if (!$implementationInstance instanceof $serviceType) {
-            throw new \Exception("type not complatible");
+            throw new ClassException("The given service: " . get_class($implementationInstance) . " is not compatible with the declared type: {$serviceType}");
         }
 
-        $this->Lifetime                 = $lifetime;
-        $this->ServiceType              = $serviceType;
-        $this->ImplementationInstance   = $implementationInstance;
+        $this->Lifetime               = $lifetime;
+        $this->ServiceType            = $serviceType;
+        $this->ImplementationInstance = $implementationInstance;
     }
 
-    public function describeType(int $lifetime, string $serviceType, string $implimentationType)
+    public function describeType(int $lifetime, string $serviceType, string $implimentationType): void
     {
-        if (!class_exists($implimentationType)) {
-            throw new \Exception("class not found");
+        if (!class_exists($serviceType) && !interface_exists($serviceType)) {
+            throw new ClassException("Can not find declared service type: {$serviceType}");
         }
 
-        if (!class_exists($serviceType) && !interface_exists($serviceType)) {
-            throw new \Exception("invalid service type");
+        if (!class_exists($implimentationType)) {
+            throw new ClassException("Can not find declared service type: {$implimentationType}");
         }
 
         $interfaces = class_implements($implimentationType);
         if (!in_array($serviceType, $interfaces) && $serviceType != $implimentationType) {
-            throw new \Exception("incompatible type");
+            throw new ClassException("The given service: {$implimentationType} is not compatible with the declared type: {$serviceType}");
         }
 
-        $this->Lifetime             = $lifetime;
-        $this->ServiceType          = $serviceType;
-        $this->ImplimentationType   = $implimentationType;
+        $this->Lifetime           = $lifetime;
+        $this->ServiceType        = $serviceType;
+        $this->ImplimentationType = $implimentationType;
     }
 
-    public function describeFactory(int $lifetime, string $serviceType, Closure $implimentationFactory)
+    public function describeFactory(int $lifetime, string $serviceType, Closure $implimentationFactory): void
     {
         if (!class_exists($serviceType) && !interface_exists($serviceType)) {
-            throw new \Exception("service type not found");
+            throw new ClassException("Can not find declared service type: {$serviceType}");
         }
 
-        $this->Lifetime                 = $lifetime;
-        $this->ServiceType              = $serviceType;
-        $this->ImplimentationFactory    = $implimentationFactory;
+        $this->Lifetime              = $lifetime;
+        $this->ServiceType           = $serviceType;
+        $this->ImplimentationFactory = $implimentationFactory;
     }
 }

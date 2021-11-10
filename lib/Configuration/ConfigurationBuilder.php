@@ -26,8 +26,7 @@ class ConfigurationBuilder
 
     public function addSetting(string $key, $value)
     {
-        $setting = [$key, $value];
-        $this->Settings = array_merge($this->Settings, $setting);
+        $this->Settings[$key] = $value;
     }
 
     public function addJsonFile(string $path)

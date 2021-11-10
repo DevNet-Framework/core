@@ -34,6 +34,9 @@ class ExceptionMiddleware implements IMiddleware
         try {
             return $next($context);
         } catch (Throwable $error) {
+            if (PHP_SAPI == 'cli') {
+                throw new $error;
+            }
             $context->addAttribute('Error', $error);
             if ($this->ErrorHandlingPath) {
                 $context->Request->Uri->Path = $this->ErrorHandlingPath;

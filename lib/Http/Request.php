@@ -37,7 +37,11 @@ class Request extends HttpMessage
         }
 
         if (!$headers) {
-            $headers = new Headers(getallheaders());
+            try {
+                $headers = new Headers(getallheaders());
+            } catch (\Throwable $th) {
+                $headers = new Headers([]);
+            }
         }
 
         if (!$cookies) {

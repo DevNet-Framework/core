@@ -11,15 +11,15 @@ namespace DevNet\Core\Configuration;
 
 class ConfigurationBuilder
 {
-    private string $BasePath;
-    private array $Settings;
+    private string $BasePath = '/';
+    private array $Settings = [];
 
     public function __construct(array $settings = [])
     {
         $this->Settings = $settings;
     }
 
-    public function addBasePath(string $basePath)
+    public function setBasePath(string $basePath)
     {
         $this->BasePath = $basePath;
     }
@@ -40,24 +40,6 @@ class ConfigurationBuilder
         $settings = file_get_contents($fullPath);
         $settings = json_decode($settings, true);
         $this->Settings = array_merge($this->Settings, $settings);
-    }
-
-    public function addCommandLine(array $args)
-    {
-        $options = [];
-        $key = null;
-        foreach ($args as $arg) {
-            if (str_starts_with($arg, '--')) {
-                $key = ltrim($arg, '--');
-            } else {
-                if ($key) {
-                    $options[$key] = $arg;
-                    $key = null;
-                }
-            }
-        }
-
-        $this->Settings = array_merge($this->Settings, $options);
     }
 
     public function build(): IConfiguration

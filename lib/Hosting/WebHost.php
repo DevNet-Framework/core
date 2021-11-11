@@ -9,12 +9,15 @@
 
 namespace DevNet\Core\Hosting;
 
+use Closure;
 use DevNet\Core\Configuration\IConfiguration;
 use DevNet\Core\Http\HttpContext;
 use DevNet\Core\Http\HttpContextFactory;
 use DevNet\Core\Middleware\IApplicationBuilder;
 use DevNet\Core\Router\RouteBuilder;
 use DevNet\System\IServiceProvider;
+use DevNet\System\Runtime\Launcher;
+use DevNet\System\Runtime\LauncherProperties;
 
 class WebHost
 {
@@ -27,21 +30,30 @@ class WebHost
         $this->AppBuilder = $AppBuilder;
         $this->Provider   = $provider;
         $this->Server     = new WebServer();
+
+        $launcher = Launcher::getLauncher();
+        $launcher->Provider($provider);
     }
 
-    public function run()
+    public function start(Closure $configure): void
+    {
+        $configure($this->AppBuilder);
+        $this->run();
+    }
+
+    public function run(): void
     {
         $config = $this->Provider->getService(IConfiguration::class);
-        $port = $config->getValue('port');
+        $args   = $config->Settings['args'] ?? [];
 
-        if ($port) {
-            $this->Server->setPort(intval($port));
-        }
-
-        $this->Server->start();
+        $this->Server->start($args);
 
         $context    = $this->Provider->getService(HttpContext::class);
         $applicaion = $this->AppBuilder->build();
+
+        if (PHP_SAPI == 'cli') {
+            return;
+        }
 
         $applicaion($context)->wait();
         $response = $context->Response;
@@ -66,28 +78,28 @@ class WebHost
                 echo $response->Body->read(1024);
             }
         }
-        exit();
+        exit;
     }
 
     public static function createDefaultBuilder(array $args = []): WebHostBuilder
     {
-        $builder = new WebHostBuilder();
+        $basePath = LauncherProperties::getWorkspace();
+        $builder  = new WebHostBuilder();
 
-        $builder->useConfiguration(function ($config) use ($args) {
-            $config->addJsonFile("/settings.json");
-            $config->addCommandLine($args);
+        $builder->ConfigBuilder->setBasePath($basePath);
+        $builder->ConfigBuilder->addJsonFile("/settings.json");
+        $builder->ConfigBuilder->addSetting('args', $args);
+
+        $config = $builder->ConfigBuilder->build();
+        $builder->Services->addSingleton(IConfiguration::class, $config);
+
+        $builder->Services->addSingleton(HttpContext::class, function ($provider): HttpContext {
+            $httpContext = HttpContextFactory::create();
+            $httpContext->addAttribute('RequestServices', $provider);
+            return $httpContext;
         });
 
-        $builder->configureServices(function ($services)
-        {
-            $services->addSingleton(HttpContext::class, function ($provider): HttpContext {
-                $httpContext = HttpContextFactory::create();
-                $httpContext->addAttribute('RequestServices', $provider);
-                return $httpContext;
-            });
-
-            $services->addSingleton(RouteBuilder::class, fn ($provider) => new RouteBuilder($provider));
-        });
+        $builder->Services->addSingleton(RouteBuilder::class, fn ($provider) => new RouteBuilder($provider));
 
         return $builder;
     }

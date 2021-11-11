@@ -25,6 +25,11 @@ class WebHostBuilder implements IWebHostBuilder
     private ServiceProvider $Provider;
     private ApplicationBuilder $AppBuilder;
 
+    public function __get(string $name)
+    {
+        return $this->$name;
+    }
+
     public function __construct()
     {
         $this->ConfigBuilder = new ConfigurationBuilder();
@@ -36,7 +41,7 @@ class WebHostBuilder implements IWebHostBuilder
     public function useConfiguration(Closure $configure)
     {
         $basePath = LauncherProperties::getWorkspace();
-        $this->ConfigBuilder->addBasePath($basePath);
+        $this->ConfigBuilder->setBasePath($basePath);
         $configure($this->ConfigBuilder);
 
         return $this;
@@ -51,12 +56,6 @@ class WebHostBuilder implements IWebHostBuilder
     public function configureServices(Closure $configureServices)
     {
         $configureServices($this->Services);
-        return $this;
-    }
-
-    public function configureApplication(Closure $configureApplication)
-    {
-        $configureApplication($this->AppBuilder);
         return $this;
     }
 

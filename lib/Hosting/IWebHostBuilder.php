@@ -15,7 +15,5 @@ interface IWebHostBuilder
 {
     public function configureServices(Closure $configureServices);
 
-    public function configureApplication(Closure $configureApp);
-
     public function build(): WebHost;
 }

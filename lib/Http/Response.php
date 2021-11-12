@@ -9,6 +9,7 @@
 
 namespace DevNet\Core\Http;
 
+use DevNet\System\Async\Task;
 use DevNet\System\IO\Stream;
 
 class Response extends HttpMessage
@@ -138,8 +139,27 @@ class Response extends HttpMessage
         return "{$this->Protocol} {$this->StatusCode} {$this->ReasonPhrase}";
     }
 
-    public function redirect(string $path)
+    public function redirect(string $location, bool $permanent = false)
     {
-        $this->Headers->add('Location', $path);
+        if ($permanent) {
+            $this->setStatusCode(301);
+        } else {
+            $this->setStatusCode(302);
+        }
+        $this->Headers->add('Location', $location);
+    }
+
+    public function writeAsync(string $string): Task
+    {
+        $result = $this->Body->write($string);
+        return Task::fromResult($result);
+    }
+
+    public function writeJsonAsync($value): Task
+    {
+        $content = json_encode($value);
+        $this->Headers->add("Content-Type", "application/json");
+        $result = $this->Body->write($content);
+        return Task::fromResult($result);
     }
 }

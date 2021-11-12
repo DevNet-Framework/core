@@ -23,9 +23,9 @@ class ServiceProvider implements IServiceProvider
     }
 
     /**
-     * Find and return entry of the provider by its service type or throw an exception if not found.
+     * Find and return entry of the provider by its service type or null if not found.
      */
-    public function getService(string $serviceType)
+    public function getService(string $serviceType): ?object
     {
         foreach ($this->ServiceCollection as $serviceDescriptor) {
             if ($serviceType == $serviceDescriptor->ServiceType) {
@@ -82,7 +82,7 @@ class ServiceProvider implements IServiceProvider
             }
         }
 
-        throw new \Exception("service '$serviceType' not found");
+        return null;
     }
 
     /**
@@ -90,8 +90,11 @@ class ServiceProvider implements IServiceProvider
      */
     public function contains(string $serviceType): bool
     {
-        foreach ($this->ServiceCollection as $serviceDescriptor) {
-            if ($serviceDescriptor->ServiceType == $serviceType) {
+        if (isset($this->InstanceServices[$serviceType])) {
+            return true;
+        } else {
+            $service = $this->getService($serviceType);
+            if ($service) {
                 return true;
             }
         }

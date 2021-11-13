@@ -11,17 +11,10 @@ namespace DevNet\Core\Http;
 
 class HttpContext
 {
-    private Request $Request;
-    private Response $Response;
+    private HttpRequest $Request;
+    private HttpResponse $Response;
     private FeatureCollection $Features;
     private array $Attributes = [];
-
-    public function __construct(Request $request, Response $response)
-    {
-        $this->Request = $request;
-        $this->Response = $response;
-        $this->Features = new FeatureCollection();
-    }
 
     public function __get(string $name)
     {
@@ -35,6 +28,13 @@ class HttpContext
                 return $this->Attributes[$name] ?? null;
                 break;
         }
+    }
+
+    public function __construct(HttpRequest $request, HttpResponse $response)
+    {
+        $this->Request = $request;
+        $this->Response = $response;
+        $this->Features = new FeatureCollection();
     }
 
     public function addAttribute(string $name, $value): void

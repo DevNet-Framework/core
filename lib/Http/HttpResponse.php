@@ -12,7 +12,7 @@ namespace DevNet\Core\Http;
 use DevNet\System\Async\Task;
 use DevNet\System\IO\Stream;
 
-class Response extends HttpMessage
+class HttpResponse extends HttpMessage
 {
     private int $StatusCode;
     private string $ReasonPhrase;
@@ -92,34 +92,23 @@ class Response extends HttpMessage
         511 => "Network Authentication Required",
     ];
 
+    public function __get(string $name)
+    {
+        return $this->$name;
+    }
+
     public function __construct(
         Headers $headers = null,
         Cookies $cookies = null,
         Stream $body = null
     ) {
-        if (!$headers) {
-            $headers = new Headers();
-        }
-
-        if (!$cookies) {
-            $cookies = new Cookies($headers);
-        }
-
-        if (!$body) {
-            $body = new Stream('php://temp', 'r+');
-        }
-
         $this->Headers      = $headers;
         $this->Cookies      = $cookies;
         $this->Body         = $body;
         $this->StatusCode   = 200;
         $this->ReasonPhrase = 'OK';
-        $this->setProtocol();
-    }
 
-    public function __get(string $name)
-    {
-        return $this->$name;
+        $this->setProtocol();
     }
 
     public function setStatusCode(int $statusCode, string $reasonPhrase = null)

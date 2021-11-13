@@ -9,14 +9,47 @@
 
 namespace DevNet\Core\Http;
 
+use DevNet\System\IO\Stream;
+
 class HttpContextFactory
 {
-    public $Options;
-
-    static public function create(): HttpContext
+    public static function create(): HttpContext
     {
-        $request = new Request();
-        $response = new Response();
+        $request = self::createRequest();
+        $response = self::createResponse();
         return new HttpContext($request, $response);
+    }
+
+    public static function createRequest(): HttpRequest
+    {
+        $uri         = new Uri();
+        $uri->Scheme = isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) ? 'https' : 'http';
+        $uri->Host   = $_SERVER['HTTP_HOST'] ?? 'localhost';
+        $uri->Port   = !empty($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : ($uri->Scheme == 'https' ? '443' : '80');
+        $uri->Path   = isset($_SERVER['REQUEST_URI']) ? strstr($_SERVER['REQUEST_URI'] . '?', '?', true) : '/';
+        $uri->Query  = $_SERVER['QUERY_STRING'] ?? null;
+        $method      = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+
+        try {
+            $headers = new Headers(getallheaders());
+        } catch (\Throwable $th) {
+            $headers = new Headers([]);
+        }
+
+        $cookies = new Cookies($headers);
+        $body    = new Stream('php://input', 'r');
+        $files   = new FileCollection($_FILES);
+        $form    = new Form($_POST, $files);
+        $request = new HttpRequest($method, $uri, $headers, $cookies, $body, $form);
+        return $request;
+    }
+
+    public static function createResponse(): HttpResponse
+    {
+        $headers  = new Headers();
+        $cookies  = new Cookies($headers);
+        $body     = new Stream('php://temp', 'r+');
+        $response = new HttpResponse($headers, $cookies, $body);
+        return $response;
     }
 }

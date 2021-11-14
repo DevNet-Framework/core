@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Security\Authentication;
+namespace DevNet\Web\Security\Authentication;
 
 class AuthenticationDefaults
 {

@@ -7,9 +7,9 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Security\Antiforgery;
+namespace DevNet\Web\Security\Antiforgery;
 
-use DevNet\Core\Http\HttpContext;
+use DevNet\Web\Http\HttpContext;
 
 class AntiforgeryTokenStore
 {

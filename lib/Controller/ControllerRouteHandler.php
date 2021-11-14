@@ -7,11 +7,11 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Controller;
+namespace DevNet\Web\Controller;
 
-use DevNet\Core\Router\IRouteHandler;
-use DevNet\Core\Router\RouteContext;
-use DevNet\Core\Controller\Providers\RouteValueProvider;
+use DevNet\Web\Router\IRouteHandler;
+use DevNet\Web\Router\RouteContext;
+use DevNet\Web\Controller\Providers\RouteValueProvider;
 use DevNet\System\IServiceProvider;
 use DevNet\System\Async\Task;
 

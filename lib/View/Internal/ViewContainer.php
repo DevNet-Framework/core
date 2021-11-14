@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\View\Internal;
+namespace DevNet\Web\View\Internal;
 
 class ViewContainer
 {

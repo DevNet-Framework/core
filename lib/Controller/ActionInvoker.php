@@ -7,13 +7,13 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Controller;
+namespace DevNet\Web\Controller;
 
-use DevNet\Core\Controller\ActionContext;
-use DevNet\Core\Controller\ControllerException;
-use DevNet\Core\Controller\Binder\IValueProvider;
-use DevNet\Core\Http\HttpContext;
-use DevNet\Core\Middleware\IRequestHandler;
+use DevNet\Web\Controller\ActionContext;
+use DevNet\Web\Controller\ControllerException;
+use DevNet\Web\Controller\Binder\IValueProvider;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Middleware\IRequestHandler;
 use DevNet\System\Activator;
 use DevNet\System\Async\Task;
 use DevNet\System\Exceptions\ClassException;

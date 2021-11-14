@@ -7,13 +7,13 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Hosting;
+namespace DevNet\Web\Hosting;
 
-use DevNet\Core\Configuration\IConfiguration;
-use DevNet\Core\Configuration\ConfigurationBuilder;
-use DevNet\Core\Dependency\ServiceCollection;
-use DevNet\Core\Dependency\ServiceProvider;
-use DevNet\Core\Middleware\ApplicationBuilder;
+use DevNet\Web\Configuration\IConfiguration;
+use DevNet\Web\Configuration\ConfigurationBuilder;
+use DevNet\Web\Dependency\ServiceCollection;
+use DevNet\Web\Dependency\ServiceProvider;
+use DevNet\Web\Middleware\ApplicationBuilder;
 use DevNet\System\Exceptions\ClassException;
 use DevNet\System\Runtime\LauncherProperties;
 use Closure;

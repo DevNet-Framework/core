@@ -1,6 +1,6 @@
 {
-    "name": "devnet/core",
-    "description": "The DevNet Core Library",
+    "name": "devnet/web",
+    "description": "The DevNet Web components",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -11,11 +11,11 @@
     ],
     "require": {
         "php": ">=7.4.0",
-        "devnet/system": "1.0.*"
+        "devnet/core": "1.0.*"
     },
     "autoload": {
         "psr-4": {
-            "DevNet\\Core\\" : "lib/"
+            "DevNet\\Web\\" : "lib/"
         }
     }
 }

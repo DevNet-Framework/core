@@ -7,11 +7,11 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\View;
+namespace DevNet\Web\View;
 
 use DevNet\System\IServiceProvider;
-use DevNet\Core\View\Internal\ViewEngine;
-use DevNet\Core\View\Internal\ViewContainer;
+use DevNet\Web\View\Internal\ViewEngine;
+use DevNet\Web\View\Internal\ViewContainer;
 
 class ViewManager
 {

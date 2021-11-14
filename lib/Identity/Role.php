@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Identity;
+namespace DevNet\Web\Identity;
 
 use DevNet\Entity\IEntity;
 use DevNet\System\Collections\IList;

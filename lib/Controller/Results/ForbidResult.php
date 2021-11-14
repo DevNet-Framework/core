@@ -7,9 +7,9 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Controller\Results;
+namespace DevNet\Web\Controller\Results;
 
-use DevNet\Core\Controller\ActionContext;
+use DevNet\Web\Controller\ActionContext;
 
 class ForbidResult extends ActionResult
 {

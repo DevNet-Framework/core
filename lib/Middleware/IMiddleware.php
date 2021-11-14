@@ -7,9 +7,9 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Middleware;
+namespace DevNet\Web\Middleware;
 
-use DevNet\Core\Http\HttpContext;
+use DevNet\Web\Http\HttpContext;
 use DevNet\System\Async\Task;
 
 interface IMiddleware

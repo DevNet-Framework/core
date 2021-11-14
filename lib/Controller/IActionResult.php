@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Controller;
+namespace DevNet\Web\Controller;
 
 use DevNet\System\Async\Task;
 

@@ -7,12 +7,12 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Security\Authorization;
+namespace DevNet\Web\Security\Authorization;
 
-use DevNet\Core\Http\HttpContext;
-use DevNet\Core\Middleware\IMiddleware;
-use DevNet\Core\Middleware\RequestDelegate;
-use DevNet\Core\Security\Authorization\Authorization;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Middleware\IMiddleware;
+use DevNet\Web\Middleware\RequestDelegate;
+use DevNet\Web\Security\Authorization\Authorization;
 use DevNet\System\Async\Task;
 
 class AuthorizationMiddleware implements IMiddleware

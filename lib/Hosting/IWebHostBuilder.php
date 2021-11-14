@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Hosting;
+namespace DevNet\Web\Hosting;
 
 use Closure;
 

@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Controller\Binder;
+namespace DevNet\Web\Controller\Binder;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.

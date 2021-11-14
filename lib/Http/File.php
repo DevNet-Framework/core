@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Http;
+namespace DevNet\Web\Http;
 
 class File
 {

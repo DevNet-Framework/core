@@ -7,29 +7,29 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Extensions;
+namespace DevNet\Web\Extensions;
 
-use DevNet\Core\Dependency\IServiceCollection;
-use DevNet\Core\Http\HttpContext;
-use DevNet\Core\Router\RouteBuilder;
-use DevNet\Core\View\ViewManager;
-use DevNet\Core\Controller\ControllerOptions;
-use DevNet\Core\Controller\ControllerRouteHandler;
-use DevNet\Core\Security\Antiforgery\IAntiforgery;
-use DevNet\Core\Security\Antiforgery\Antiforgery;
-use DevNet\Core\Security\Antiforgery\AntiforgeryOptions;
-use DevNet\Core\Security\Authentication\Authentication;
-use DevNet\Core\Security\Authentication\AuthenticationBuilder;
-use DevNet\Core\Security\Authentication\AuthenticationDefaults;
-use DevNet\Core\Security\Authorization\Authorization;
-use DevNet\Core\Security\Authorization\AuthorizationOptions;
-use DevNet\Core\Identity\IdentityContext;
-use DevNet\Core\Identity\IdentityOptions;
-use DevNet\Core\Identity\IdentityManager;
-use DevNet\Core\Identity\UserManager;
-use DevNet\Core\Identity\RoleManager;
-use DevNet\Core\Identity\User;
-use DevNet\Core\Identity\Role;
+use DevNet\Web\Dependency\IServiceCollection;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Router\RouteBuilder;
+use DevNet\Web\View\ViewManager;
+use DevNet\Web\Controller\ControllerOptions;
+use DevNet\Web\Controller\ControllerRouteHandler;
+use DevNet\Web\Security\Antiforgery\IAntiforgery;
+use DevNet\Web\Security\Antiforgery\Antiforgery;
+use DevNet\Web\Security\Antiforgery\AntiforgeryOptions;
+use DevNet\Web\Security\Authentication\Authentication;
+use DevNet\Web\Security\Authentication\AuthenticationBuilder;
+use DevNet\Web\Security\Authentication\AuthenticationDefaults;
+use DevNet\Web\Security\Authorization\Authorization;
+use DevNet\Web\Security\Authorization\AuthorizationOptions;
+use DevNet\Web\Identity\IdentityContext;
+use DevNet\Web\Identity\IdentityOptions;
+use DevNet\Web\Identity\IdentityManager;
+use DevNet\Web\Identity\UserManager;
+use DevNet\Web\Identity\RoleManager;
+use DevNet\Web\Identity\User;
+use DevNet\Web\Identity\Role;
 use DevNet\System\Database\DbConnection;
 use DevNet\Entity\EntityContext;
 use DevNet\Entity\EntityOptions;

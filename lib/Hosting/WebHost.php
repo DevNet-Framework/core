@@ -7,14 +7,14 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Hosting;
+namespace DevNet\Web\Hosting;
 
 use Closure;
-use DevNet\Core\Configuration\IConfiguration;
-use DevNet\Core\Http\HttpContext;
-use DevNet\Core\Http\HttpContextFactory;
-use DevNet\Core\Middleware\IApplicationBuilder;
-use DevNet\Core\Router\RouteBuilder;
+use DevNet\Web\Configuration\IConfiguration;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Http\HttpContextFactory;
+use DevNet\Web\Middleware\IApplicationBuilder;
+use DevNet\Web\Router\RouteBuilder;
 use DevNet\System\IServiceProvider;
 use DevNet\System\Runtime\Launcher;
 use DevNet\System\Runtime\LauncherProperties;

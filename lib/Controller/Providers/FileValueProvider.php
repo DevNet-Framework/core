@@ -7,10 +7,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Controller\Providers;
+namespace DevNet\Web\Controller\Providers;
 
-use DevNet\Core\Controller\Binder\ValueProvider;
-use DevNet\Core\Http\FileCollection;
+use DevNet\Web\Controller\Binder\ValueProvider;
+use DevNet\Web\Http\FileCollection;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.

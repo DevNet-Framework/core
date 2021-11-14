@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Middleware;
+namespace DevNet\Web\Middleware;
 
 interface IApplicationBuilder
 {

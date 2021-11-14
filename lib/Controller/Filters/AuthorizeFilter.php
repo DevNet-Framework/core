@@ -7,12 +7,12 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Controller\Filters;
+namespace DevNet\Web\Controller\Filters;
 
-use DevNet\Core\Controller\IActionFilter;
-use DevNet\Core\Controller\ActionContext;
-use DevNet\Core\Controller\ActionExecutionDelegate;
-use DevNet\Core\Security\Authentication\AuthenticationDefaults;
+use DevNet\Web\Controller\IActionFilter;
+use DevNet\Web\Controller\ActionContext;
+use DevNet\Web\Controller\ActionExecutionDelegate;
+use DevNet\Web\Security\Authentication\AuthenticationDefaults;
 use DevNet\System\Async\Task;
 
 class AuthorizeFilter implements IActionFilter

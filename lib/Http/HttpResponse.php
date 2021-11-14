@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Http;
+namespace DevNet\Web\Http;
 
 use DevNet\System\Async\Task;
 use DevNet\System\IO\Stream;

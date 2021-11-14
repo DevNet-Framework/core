@@ -7,9 +7,9 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Controller\Binder;
+namespace DevNet\Web\Controller\Binder;
 
-use DevNet\Core\Controller\ActionContext;
+use DevNet\Web\Controller\ActionContext;
 
 class ParameterBinder
 {

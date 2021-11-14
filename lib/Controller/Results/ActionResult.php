@@ -7,10 +7,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Controller\Results;
+namespace DevNet\Web\Controller\Results;
 
-use DevNet\Core\Controller\IActionResult;
-use DevNet\Core\Controller\ActionContext;
+use DevNet\Web\Controller\IActionResult;
+use DevNet\Web\Controller\ActionContext;
 use DevNet\System\Async\Task;
 
 abstract class ActionResult implements IActionResult

@@ -34,7 +34,7 @@ class ViewManager
 
     public function setDirectory(string $directory): void
     {
-        $this->Directory = trim($directory, '/');
+        $this->Directory = rtrim($directory, '/');
     }
 
     public function setData(array $viewData)

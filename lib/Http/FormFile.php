@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Http;
 
-class File
+class FormFile
 {
     private string $Name;
     private string $Type;

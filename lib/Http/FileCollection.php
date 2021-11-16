@@ -16,7 +16,7 @@ class FileCollection extends Dictionary
 {
     public function __construct(array $files = null)
     {
-        parent::__construct(Type::String, File::class);
+        parent::__construct(Type::String, FormFile::class);
 
         if ($files) {
             foreach ($files as $key => $file) {
@@ -26,7 +26,7 @@ class FileCollection extends Dictionary
             $files = $_FILES;
 
             foreach ($files as $key => $info) {
-                $file = new File($info['name'], $info['type'], $info['tmp_name'], $info['size'], $info['error']);
+                $file = new FormFile($info['name'], $info['type'], $info['tmp_name'], $info['size'], $info['error']);
                 $this->Add($key, $file);
             }
         }

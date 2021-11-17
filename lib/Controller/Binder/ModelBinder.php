@@ -19,7 +19,7 @@ class ModelBinder implements IModelBinder
 
         if (class_exists($type)) {
             $model = new $type();
-            $form = new Form();
+            $form  = $bindingContext->ActionContext->HttpContext->Request->Form;
 
             foreach ($form->Fields as $key => $value) {
                 if (property_exists($model, $key)) {

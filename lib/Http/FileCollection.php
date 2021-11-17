@@ -9,26 +9,34 @@
 
 namespace DevNet\Web\Http;
 
-use DevNet\System\Collections\Dictionary;
+use DevNet\System\Collections\ArrayList;
 use DevNet\System\Type;
 
-class FileCollection extends Dictionary
+class FileCollection extends ArrayList
 {
-    public function __construct(array $files = null)
+    public function __construct()
     {
-        parent::__construct(Type::String, FormFile::class);
+        parent::__construct(Type::Integer, FormFile::class);
+    }
 
-        if ($files) {
-            foreach ($files as $key => $file) {
-                $this->Add($key, $file);
-            }
-        } else {
-            $files = $_FILES;
-
-            foreach ($files as $key => $info) {
-                $file = new FormFile($info['name'], $info['type'], $info['tmp_name'], $info['size'], $info['error']);
-                $this->Add($key, $file);
+    public function getFile(string $name): ?FormFile
+    {
+        foreach ($this->Array as $file) {
+            if ($file->Name == $name) {
+                return $file;
             }
         }
+        return null;
+    }
+
+    public function getFiles(string $name): array
+    {
+        $files = [];
+        foreach ($this->Array as $file) {
+            if ($file->Name == $name) {
+                $files[] = $file;
+            }
+        }
+        return $files;
     }
 }

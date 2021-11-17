@@ -36,10 +36,30 @@ class HttpContextFactory
             $headers = new Headers([]);
         }
 
+        $files = [];
+        foreach ($_FILES as $name => $input) {
+            foreach ($input as $key => $file) {
+                if (is_array($file)) {
+                    foreach ($file as $index => $file) {
+                        $fileCollection[$name][$index][$key] = $file;
+                    }
+                } else {
+                    $fileCollection[$name][0][$key] = $file;
+                }
+            }
+        }
+
+        $fileCollection = new FileCollection();
+        foreach ($files as $name => $input) {
+            foreach ($input as $file) {
+                $formFile = new FormFile($name, $file['name'], $file['type'], $file['size'], $file['tmp_name'], $file['error']);
+                $fileCollection->add($formFile);
+            }
+        }
+
         $cookies = new Cookies($headers);
         $body    = new Stream('php://input', 'r');
-        $files   = new FileCollection($_FILES);
-        $form    = new Form($_POST, $files);
+        $form    = new Form($_POST, $fileCollection);
         $request = new HttpRequest($method, $uri, $headers, $cookies, $body, $form);
         return $request;
     }

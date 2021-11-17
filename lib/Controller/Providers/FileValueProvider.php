@@ -9,20 +9,39 @@
 
 namespace DevNet\Web\Controller\Providers;
 
-use DevNet\Web\Controller\Binder\ValueProvider;
+use DevNet\Web\Controller\Binder\IValueProvider;
 use DevNet\Web\Http\FileCollection;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.
  */
-class FileValueProvider extends ValueProvider
+class FileValueProvider implements IValueProvider
 {
+    private FileCollection $Files;
+
     public function __construct(FileCollection $files = null)
     {
         if (!$files) {
             $files = new FileCollection();
         }
+        $this->Files = $files;
+    }
 
-        $this->Values = $files->toArray();
+    public function getValue(string $key)
+    {
+        $files = $this->Files->getFiles($key);
+        if (count($files) == 1) {
+            return $files[0];
+        }
+        return $files;
+    }
+
+    public function contains(string $key): bool
+    {
+        $files = $this->Files->getFiles($key);
+        if (count($files) > 0) {
+            return true;
+        }
+        return false;
     }
 }

@@ -11,11 +11,10 @@ namespace DevNet\Web\Http;
 
 class FormFile
 {
-    private ?string $InputName;
-    private ?string $FileName;
-    private ?string $FileType;
-    private ?string $TempName;
-    private ?int $FileSize;
+    private ?string $Name;
+    private ?string $Type;
+    private ?string $Temp;
+    private ?int $Size;
     private ?int $Error;
 
     public function __get(string $name)
@@ -24,23 +23,21 @@ class FormFile
     }
 
     public function __construct(
-        string $inputName,
-        string $fileName,
-        string $fileType,
-        string $tempName,
-        int $fileSize,
+        string $name,
+        string $type,
+        string $temp,
+        int $size,
         int $error
     ) {
-        $this->InputName = $inputName;
-        $this->FileName  = $fileName;
-        $this->FileType  = $fileType;
-        $this->TempName  = $tempName;
-        $this->FileSize  = $fileSize;
-        $this->Error     = $error;
+        $this->Name  = $name;
+        $this->Type  = $type;
+        $this->Temp  = $temp;
+        $this->Size  = $size;
+        $this->Error = $error;
     }
 
     public function copyTo(string $target): bool
     {
-        return copy($this->TempName, $target);
+        return copy($this->Temp, $target);
     }
 }

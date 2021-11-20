@@ -27,6 +27,16 @@ class ModelBinder implements IModelBinder
                 }
             }
 
+            foreach ($form->Files as $name => $upload) {
+                if (property_exists($model, $name)) {
+                    if (count($upload) == 1) {
+                        $model->$name = $upload[0];
+                    } else {
+                        $model->$key = $upload;
+                    }
+                }
+            }
+
             $bindingContext->success($model);
         } else {
             $valueProvider = $bindingContext->ValueProvider;

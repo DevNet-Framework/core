@@ -37,23 +37,23 @@ class HttpContextFactory
         }
 
         $files = [];
-        foreach ($_FILES as $name => $input) {
-            foreach ($input as $key => $file) {
-                if (is_array($file)) {
-                    foreach ($file as $index => $file) {
-                        $fileCollection[$name][$index][$key] = $file;
+        foreach ($_FILES as $name => $upload) {
+            foreach ($upload as $key => $info) {
+                if (is_array($info)) {
+                    foreach ($info as $index => $value) {
+                        $files[$name][$index][$key] = $value;
                     }
                 } else {
-                    $fileCollection[$name][0][$key] = $file;
+                    $files[$name][0][$key] = $info;
                 }
             }
         }
 
         $fileCollection = new FileCollection();
-        foreach ($files as $name => $input) {
-            foreach ($input as $file) {
-                $formFile = new FormFile($name, $file['name'], $file['type'], $file['size'], $file['tmp_name'], $file['error']);
-                $fileCollection->add($formFile);
+        foreach ($files as $name => $upload) {
+            foreach ($upload as $file) {
+                $formFile = new FormFile($file['name'], $file['type'], $file['tmp_name'], $file['size'], $file['error']);
+                $fileCollection->addFile($name, $formFile);
             }
         }
 

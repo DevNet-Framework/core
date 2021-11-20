@@ -9,34 +9,30 @@
 
 namespace DevNet\Web\Http;
 
-use DevNet\System\Collections\ArrayList;
-use DevNet\System\Type;
+use DevNet\System\Collections\Enumerator;
+use DevNet\System\Collections\IEnumerable;
 
-class FileCollection extends ArrayList
+class FileCollection implements IEnumerable
 {
-    public function __construct()
+    private array $Files = [];
+
+    public function addFile(string $name,  FormFile $file)
     {
-        parent::__construct(Type::Integer, FormFile::class);
+        $this->Files[$name][] = $file;
     }
 
     public function getFile(string $name): ?FormFile
     {
-        foreach ($this->Array as $file) {
-            if ($file->Name == $name) {
-                return $file;
-            }
-        }
-        return null;
+        return $this->Files[$name][0] ?? null;
     }
 
     public function getFiles(string $name): array
     {
-        $files = [];
-        foreach ($this->Array as $file) {
-            if ($file->Name == $name) {
-                $files[] = $file;
-            }
-        }
-        return $files;
+        return $this->Files[$name] ?? [];
+    }
+
+    public function getIterator(): Enumerator
+    {
+        return new Enumerator($this->Files);
     }
 }

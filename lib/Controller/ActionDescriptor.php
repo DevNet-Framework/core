@@ -17,15 +17,15 @@ class ActionDescriptor
     private string $ControllerName;
     private string $ActionName;
 
-    public function __construct($target, string $actionName)
-    {
-        $this->MethodInfo     = new ReflectionMethod($target, $actionName);
-        $this->ControllerName = substr(strrchr($this->MethodInfo->getDeclaringClass()->getName(), "\\"), 1);
-        $this->ActionName     = $actionName;
-    }
-
     public function __get(string $name)
     {
         return $this->$name;
+    }
+
+    public function __construct($target, string $actionName)
+    {
+        $this->MethodInfo     = new ReflectionMethod($target, $actionName);
+        $this->ControllerName = $this->MethodInfo->getDeclaringClass()->getShortName();
+        $this->ActionName     = $this->MethodInfo->getName();
     }
 }

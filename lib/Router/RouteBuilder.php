@@ -52,7 +52,7 @@ class RouteBuilder implements IRouteBuilder
     public function mapRoute(string $name, string $pattern, string ...$target): void
     {
         if ($this->DefaultHandler) {
-            $routeHandler = $this->DefaultHandler;
+            $routeHandler = clone $this->DefaultHandler;
             $routeHandler->Target = $target;
         } else {
             $routeHandler = new RouteHandler($this->ServiceProvider, $target[0] ?? null);

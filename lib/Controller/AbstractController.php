@@ -41,7 +41,7 @@ abstract class AbstractController extends ControllerBase
             $controllerName = $this->ActionContext->ActionDescriptor->ControllerName;
             $controllerName = str_replace('Controller', '', $this->ActionContext->ActionDescriptor->ControllerName);
             $actionName     = $this->ActionContext->ActionDescriptor->ActionName;
-            $viewName       = ucwords($prefix . $controllerName . '/' . $actionName, '/');
+            $viewName       = ucwords($prefix . $controllerName, '/') . '/' . $actionName;
         }
 
         $view = $this->ActionContext->HttpContext->RequestServices->getService(ViewManager::class);

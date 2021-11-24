@@ -10,13 +10,12 @@
 namespace DevNet\Web\Middleware;
 
 use DevNet\Web\Http\HttpContext;
-use DevNet\System\Async\Task;
 use DevNet\System\Event\Delegate;
 
 class RequestDelegate extends Delegate
 {
     /** RequestDelegate signature */
-    public function delegate(HttpContext $context): Task
+    public function delegate(HttpContext $context)
     {
     }
 }

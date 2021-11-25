@@ -26,7 +26,7 @@ class RouterMiddleware implements IMiddleware
         $this->RouteBuilder = $routeBuilder;
     }
 
-    public function __invoke(HttpContext $context, RequestDelegate $next): Task
+    public function __invoke(HttpContext $context, RequestDelegate $next)
     {
         $request    = $context->Request;
         $httpMethod = $request->Method;

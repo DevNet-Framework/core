@@ -25,7 +25,7 @@ class ExceptionMiddleware implements IMiddleware
         $this->ErrorHandlingPath = $errorHandlingPath;
     }
 
-    public function __invoke(HttpContext $context, RequestDelegate $next): Task
+    public function __invoke(HttpContext $context, RequestDelegate $next)
     {
         set_error_handler(function (int $severity, string $message, string $file, int $line) {
             throw new \ErrorException($message, 0, $severity, $file, $line);
@@ -46,7 +46,7 @@ class ExceptionMiddleware implements IMiddleware
         }
     }
 
-    public function handel(HttpContext $context): task
+    public function handel(HttpContext $context)
     {
         $error = $context->Error;
         $data  = $this->parse($error);

@@ -13,11 +13,10 @@ use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
 use DevNet\Web\Security\Authorization\Authorization;
-use DevNet\System\Async\Task;
 
 class AuthorizationMiddleware implements IMiddleware
 {
-    public function __invoke(HttpContext $context, RequestDelegate $next): Task
+    public function __invoke(HttpContext $context, RequestDelegate $next)
     {
         if ($context->RequestServices->contains(Authorization::class)) {
             $authorization = $context->RequestServices->getService(Authorization::class);

@@ -10,9 +10,8 @@
 namespace DevNet\Web\Middleware;
 
 use DevNet\Web\Http\HttpContext;
-use DevNet\System\Async\Task;
 
 interface IMiddleware
 {
-    public function __invoke(HttpContext $context, RequestDelegate $next): Task;
+    public function __invoke(HttpContext $context, RequestDelegate $next);
 }

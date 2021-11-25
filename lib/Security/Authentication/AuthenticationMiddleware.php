@@ -14,11 +14,10 @@ use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
 use DevNet\Web\Security\Authentication\Authentication;
 use DevNet\Web\Security\ClaimsPrincipal;
-use DevNet\System\Async\Task;
 
 class AuthenticationMiddleware implements IMiddleware
 {
-    public function __invoke(HttpContext $context, RequestDelegate $next): Task
+    public function __invoke(HttpContext $context, RequestDelegate $next)
     {
         if ($context->RequestServices->contains(Authentication::class)) {
             $authentication = $context->RequestServices->getService(Authentication::class);

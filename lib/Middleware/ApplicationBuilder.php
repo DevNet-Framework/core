@@ -59,7 +59,7 @@ class ApplicationBuilder implements IApplicationBuilder
 
     public function pipe(callable $middleware, RequestDelegate $next)
     {
-        return new RequestDelegate(function (HttpContext $context) use ($middleware, $next): Task {
+        return new RequestDelegate(function (HttpContext $context) use ($middleware, $next) {
             return $middleware($context, $next);
         });
     }

@@ -24,7 +24,7 @@ class AuthorizeFilter implements IActionFilter
         $this->Options = $options;
     }
 
-    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next): Task
+    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next)
     {
         $httpContext   = $context->HttpContext;
         $authorization = $context->HttpContext->Authorization;

@@ -9,10 +9,8 @@
 
 namespace DevNet\Web\Controller;
 
-use DevNet\System\Async\Task;
-
 interface IActionFilter
 {
     //ActionExecutionContext
-    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next): Task;
+    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next);
 }

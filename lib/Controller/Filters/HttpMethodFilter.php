@@ -9,12 +9,10 @@
 
 namespace DevNet\Web\Controller\Filters;
 
-use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Controller\IActionFilter;
 use DevNet\Web\Controller\ActionExecutionDelegate;
 use DevNet\Web\Controller\ActionContext;
 use DevNet\Web\Http\HttpException;
-use DevNet\System\Async\Task;
 
 class HttpMethodFilter implements IActionFilter
 {
@@ -25,7 +23,7 @@ class HttpMethodFilter implements IActionFilter
         $this->Options = $options;
     }
 
-    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next): Task
+    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next)
     {
         $httpContext = $context->HttpContext;
         $httpMethod  = $httpContext->Request->Method;

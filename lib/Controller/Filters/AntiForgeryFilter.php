@@ -9,7 +9,6 @@
 
 namespace DevNet\Web\Controller\Filters;
 
-use DevNet\System\Async\Task;
 use DevNet\Web\Controller\IActionFilter;
 use DevNet\Web\Controller\ActionExecutionDelegate;
 use DevNet\Web\Controller\ActionContext;
@@ -25,7 +24,7 @@ class AntiForgeryFilter implements IActionFilter
         $this->Options = $options;
     }
 
-    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next): Task
+    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next)
     {
         $httpContext = $context->HttpContext;
         $antiforgery = $httpContext->RequestServices->getService(IAntiforgery::class);

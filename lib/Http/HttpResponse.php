@@ -98,12 +98,11 @@ class HttpResponse extends HttpMessage
     }
 
     public function __construct(
-        Headers $headers = null,
-        Cookies $cookies = null,
-        Stream $body = null
+        Stream $body = null,
+        array $headers = []
     ) {
-        $this->Headers      = $headers;
-        $this->Cookies      = $cookies;
+        $this->Headers      = new Headers($headers);
+        $this->Cookies      = new Cookies($this->Headers);
         $this->Body         = $body;
         $this->StatusCode   = 200;
         $this->ReasonPhrase = 'OK';

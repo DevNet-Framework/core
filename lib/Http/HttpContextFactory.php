@@ -64,10 +64,8 @@ class HttpContextFactory
 
     public static function createResponse(): HttpResponse
     {
-        $headers  = new Headers();
-        $cookies  = new Cookies($headers);
         $body     = new Stream('php://temp', 'r+');
-        $response = new HttpResponse($headers, $cookies, $body);
+        $response = new HttpResponse($body);
         return $response;
     }
 }

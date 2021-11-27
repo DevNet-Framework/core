@@ -15,7 +15,7 @@ class HttpRequest extends HttpMessage
 {
     private string $Method;
     private Uri $Uri;
-    private Form $Form;
+    private ?Form $Form;
 
     public function __get(string $name)
     {
@@ -24,16 +24,15 @@ class HttpRequest extends HttpMessage
 
     public function __construct(
         string $method,
-        Uri $uri,
-        Headers $headers,
-        Cookies $cookies,
-        Stream $body,
-        Form $form
+        string $uri,
+        array $headers = [],
+        Stream $body = null,
+        Form $form = null
     ) {
         $this->Method  = $method;
-        $this->Uri     = $uri;
-        $this->Headers = $headers;
-        $this->Cookies = $cookies;
+        $this->Uri     = new Uri($uri);
+        $this->Headers = new Headers($headers);
+        $this->Cookies = new Cookies($this->Headers);
         $this->Body    = $body;
         $this->Form    = $form;
         

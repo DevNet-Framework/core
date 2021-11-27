@@ -16,7 +16,7 @@ abstract class HttpMessage
     protected string $Protocol;
     protected Headers $Headers;
     protected Cookies $Cookies;
-    protected Stream $Body;
+    protected ?Stream $Body;
 
     public function setProtocol(string $protocol = null)
     {

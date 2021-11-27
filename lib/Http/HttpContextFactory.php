@@ -22,18 +22,17 @@ class HttpContextFactory
 
     public static function createRequest(): HttpRequest
     {
-        $uri         = new Uri();
-        $uri->Scheme = isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) ? 'https' : 'http';
-        $uri->Host   = isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST']) ? (explode(':', $_SERVER['HTTP_HOST']))[0] : 'localhost';
-        $uri->Port   = isset($_SERVER['SERVER_PORT']) && !empty($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : ($uri->Scheme == 'https' ? '443' : '80');
-        $uri->Path   = isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI']) ? strstr($_SERVER['REQUEST_URI'] . '?', '?', true) : '/';
-        $uri->Query  = $_SERVER['QUERY_STRING'] ?? null;
-        $method      = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+        $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+
+        $uri = isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) ? 'https://' : 'http://';
+        $uri .= isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+        $uri .= isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI']) ? strstr($_SERVER['REQUEST_URI'] . '?', '?', true) : '/';
+        $uri .= isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : null;
 
         try {
-            $headers = new Headers(getallheaders());
+            $headers = getallheaders();
         } catch (\Throwable $th) {
-            $headers = new Headers([]);
+            $headers = [];
         }
 
         $files = [];
@@ -57,10 +56,9 @@ class HttpContextFactory
             }
         }
 
-        $cookies = new Cookies($headers);
         $body    = new Stream('php://input', 'r');
         $form    = new Form($_POST, $fileCollection);
-        $request = new HttpRequest($method, $uri, $headers, $cookies, $body, $form);
+        $request = new HttpRequest($method, $uri, $headers, $body, $form);
         return $request;
     }
 

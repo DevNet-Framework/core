@@ -13,7 +13,7 @@ use DevNet\Web\Router\IRouteHandler;
 use DevNet\Web\Router\RouteContext;
 use DevNet\Web\Controller\Providers\RouteValueProvider;
 use DevNet\System\IServiceProvider;
-use DevNet\System\Async\Task;
+use DevNet\System\Async\Tasks\Task;
 
 class ControllerRouteHandler implements IRouteHandler
 {

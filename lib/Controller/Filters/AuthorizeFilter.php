@@ -13,7 +13,7 @@ use DevNet\Web\Controller\IActionFilter;
 use DevNet\Web\Controller\ActionContext;
 use DevNet\Web\Controller\ActionExecutionDelegate;
 use DevNet\Web\Security\Authentication\AuthenticationDefaults;
-use DevNet\System\Async\Task;
+use DevNet\System\Async\Tasks\Task;
 
 class AuthorizeFilter implements IActionFilter
 {

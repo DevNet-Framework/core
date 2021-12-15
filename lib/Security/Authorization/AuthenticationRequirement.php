@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Security\Authorization;
 
-use DevNet\System\Async\Task;
+use DevNet\System\Async\Tasks\Task;
 
 class AuthenticationRequirement extends AuthorizationHandler implements IAuthorizationRequirement
 {

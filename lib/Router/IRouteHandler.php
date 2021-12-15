@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Router;
 
-use DevNet\System\Async\Task;
+use DevNet\System\Async\Tasks\Task;
 
 interface IRouteHandler
 {

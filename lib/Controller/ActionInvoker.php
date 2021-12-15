@@ -15,7 +15,7 @@ use DevNet\Web\Controller\Binder\IValueProvider;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IRequestHandler;
 use DevNet\System\Activator;
-use DevNet\System\Async\Task;
+use DevNet\System\Async\Tasks\Task;
 use DevNet\System\Exceptions\ClassException;
 
 class ActionInvoker implements IRequestHandler

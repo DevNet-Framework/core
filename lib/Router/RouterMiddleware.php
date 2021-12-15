@@ -15,7 +15,7 @@ use DevNet\Web\Middleware\RequestDelegate;
 use DevNet\Web\Router\RouteBuilder;
 use DevNet\Web\Router\RouteContext;
 use DevNet\Web\Router\RouterException;
-use DevNet\System\Async\Task;
+use DevNet\System\Async\Tasks\Task;
 
 class RouterMiddleware implements IMiddleware
 {

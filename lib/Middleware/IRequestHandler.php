@@ -10,7 +10,7 @@
 namespace DevNet\Web\Middleware;
 
 use DevNet\Web\Http\HttpContext;
-use DevNet\System\Async\Task;
+use DevNet\System\Async\Tasks\Task;
 
 interface IRequestHandler
 {

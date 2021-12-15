@@ -10,7 +10,7 @@
 namespace DevNet\Web\Controller;
 
 use DevNet\System\Event\Delegate;
-use DevNet\System\Async\Task;
+use DevNet\System\Async\Tasks\Task;
 
 class ActionExecutionDelegate extends Delegate
 {

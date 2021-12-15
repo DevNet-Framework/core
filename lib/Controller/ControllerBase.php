@@ -18,7 +18,7 @@ use DevNet\Web\Controller\Results\JsonResult;
 use DevNet\Web\Controller\Results\RedirectResult;
 use DevNet\Web\Controller\Results\ViewResult;
 use DevNet\Web\Middleware\IRequestHandler;
-use DevNet\System\Async\Task;
+use DevNet\System\Async\Tasks\Task;
 
 abstract class ControllerBase implements IRequestHandler
 {

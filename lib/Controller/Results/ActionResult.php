@@ -11,7 +11,7 @@ namespace DevNet\Web\Controller\Results;
 
 use DevNet\Web\Controller\IActionResult;
 use DevNet\Web\Controller\ActionContext;
-use DevNet\System\Async\Task;
+use DevNet\System\Async\Tasks\Task;
 
 abstract class ActionResult implements IActionResult
 {

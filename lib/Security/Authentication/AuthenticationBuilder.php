@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Security\Authentication;
 
-use DevNet\System\Runtime\LauncherProperties;
+use DevNet\System\Loader\LauncherProperties;
 use Closure;
 
 class AuthenticationBuilder

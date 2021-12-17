@@ -15,7 +15,7 @@ use DevNet\Web\Dependency\ServiceCollection;
 use DevNet\Web\Dependency\ServiceProvider;
 use DevNet\Web\Middleware\ApplicationBuilder;
 use DevNet\System\Exceptions\ClassException;
-use DevNet\System\Runtime\LauncherProperties;
+use DevNet\System\Loader\LauncherProperties;
 use Closure;
 
 class WebHostBuilder implements IWebHostBuilder

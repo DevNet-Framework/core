@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Controller;
 
-use DevNet\System\Runtime\LauncherProperties;
+use DevNet\System\Loader\LauncherProperties;
 use DevNet\Web\Controller\Binder\IValueProvider;
 use DevNet\Web\Controller\Binder\IModelBinder;
 use DevNet\Web\Controller\Binder\ModelBinderProvider;

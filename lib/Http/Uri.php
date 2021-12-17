@@ -26,6 +26,14 @@ class Uri
             $this->Path   = parse_url($url, PHP_URL_PATH);
             $this->Query  = parse_url($url, PHP_URL_QUERY);
         }
+
+        if (!$this->Port) {
+            if ($this->Scheme == 'https://') {
+                $this->Port = 443;
+            } else {
+                $this->Port = 80;
+            }
+        }
     }
 
     public function __toString()
@@ -33,7 +41,7 @@ class Uri
         $uri = '';
         $uri .= !empty($this->Scheme) ? $this->Scheme . "://" : null;
         $uri .= $this->Host;
-        $uri .= !empty($this->Port) ? ':' . $this->Port : null;
+        $uri .= ($this->Port != 80 && $this->Port != 443) ? ':' . $this->Port : null;
         $uri .= !empty($this->Path) ? $this->Path : '/';
         $uri .= !empty($this->Query) ? '?' . $this->Query : null;
 

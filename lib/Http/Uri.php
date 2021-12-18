@@ -21,18 +21,21 @@ class Uri
     {
         if (!empty($url)) {
             $this->Scheme = parse_url($url, PHP_URL_SCHEME);
-            $this->Host   = parse_url($url, PHP_URL_HOST);
-            $this->Port   = parse_url($url, PHP_URL_PORT);
-            $this->Path   = parse_url($url, PHP_URL_PATH);
-            $this->Query  = parse_url($url, PHP_URL_QUERY);
-        }
-
-        if (!$this->Port) {
-            if ($this->Scheme == 'https://') {
-                $this->Port = 443;
-            } else {
-                $this->Port = 80;
+            if (!$this->Scheme) {
+                $this->Scheme = 'http';
+                $url = $this->Scheme . '://' . $url;
             }
+            $this->Host = parse_url($url, PHP_URL_HOST);
+            $this->Port = parse_url($url, PHP_URL_PORT);
+            if (!$this->Port) {
+                if ($this->Scheme == 'https') {
+                    $this->Port = 443;
+                } else {
+                    $this->Port = 80;
+                }
+            }
+            $this->Path  = parse_url($url, PHP_URL_PATH);
+            $this->Query = parse_url($url, PHP_URL_QUERY);
         }
     }
 

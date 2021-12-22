@@ -7,10 +7,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller;
+namespace DevNet\Core\Controller;
 
-use DevNet\Web\Controller\Binder\IValueProvider;
-use DevNet\Web\Http\HttpContext;
+use DevNet\Core\Controller\Binder\IValueProvider;
+use DevNet\Core\Http\HttpContext;
 
 class ActionContext
 {

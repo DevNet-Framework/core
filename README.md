@@ -1,5 +1,5 @@
-# DevNet Web
-This dependency is a part of **DevNet Framework**, which includes the following web components:
+# DevNet Core
+This dependency is a part of **DevNet Framework**, which includes the following core components:
 
 - Middleware dispatcher
 - HTTP Messages
@@ -19,13 +19,13 @@ This dependency is a part of **DevNet Framework**, which includes the following 
 
 ## Installation
 
-You can install DevNet Entity Core as a third-party library with any framework or project, using composer by running the following command in your terminal:
+You can install DevNet Core as a third-party library with any framework or project, using composer by running the following command in your terminal:
 ```
-composer require devnet/web
+composer require devnet/core
 ```
 
 ## Documentation
 Full documentation on how to use **DevNet Framework** is available at [devnet-framework.github.io](https://devnet-framework.github.io)
 
 ## License
-This library is licensed under the MIT license. See [License File](https://github.com/DevNet-Framework/web/blob/master/LICENSE) in the root folder for more information.
+This library is licensed under the MIT license. See [License File](https://github.com/DevNet-Framework/core/blob/master/LICENSE) in the root folder for more information.

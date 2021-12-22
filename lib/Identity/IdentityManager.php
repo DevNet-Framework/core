@@ -7,11 +7,11 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Identity;
+namespace DevNet\Core\Identity;
 
-use DevNet\Web\Security\ClaimsPrincipal;
-use DevNet\Web\Security\ClaimsIdentity;
-use DevNet\Web\Security\Claim;
+use DevNet\Core\Security\ClaimsPrincipal;
+use DevNet\Core\Security\ClaimsIdentity;
+use DevNet\Core\Security\Claim;
 use DevNet\System\Linq;
 
 class IdentityManager

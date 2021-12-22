@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Http\Client;
+namespace DevNet\Core\Http\Client;
 
 class HttpRequestContent
 {

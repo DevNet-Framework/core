@@ -7,17 +7,17 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller;
+namespace DevNet\Core\Controller;
 
-use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Controller\ActionContext;
-use DevNet\Web\Controller\Binder\ParameterBinder;
-use DevNet\Web\Controller\Results\ContentResult;
-use DevNet\Web\Controller\Results\ForbidResult;
-use DevNet\Web\Controller\Results\JsonResult;
-use DevNet\Web\Controller\Results\RedirectResult;
-use DevNet\Web\Controller\Results\ViewResult;
-use DevNet\Web\Middleware\IRequestHandler;
+use DevNet\Core\Http\HttpContext;
+use DevNet\Core\Controller\ActionContext;
+use DevNet\Core\Controller\Binder\ParameterBinder;
+use DevNet\Core\Controller\Results\ContentResult;
+use DevNet\Core\Controller\Results\ForbidResult;
+use DevNet\Core\Controller\Results\JsonResult;
+use DevNet\Core\Controller\Results\RedirectResult;
+use DevNet\Core\Controller\Results\ViewResult;
+use DevNet\Core\Middleware\IRequestHandler;
 use DevNet\System\Async\Tasks\Task;
 
 abstract class ControllerBase implements IRequestHandler

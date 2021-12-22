@@ -7,11 +7,11 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Middleware;
+namespace DevNet\Core\Middleware;
 
-use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Middleware\IMiddleware;
-use DevNet\Web\Middleware\RequestDelegate;
+use DevNet\Core\Http\HttpContext;
+use DevNet\Core\Middleware\IMiddleware;
+use DevNet\Core\Middleware\RequestDelegate;
 
 class EndpointMiddleware implements IMiddleware
 {

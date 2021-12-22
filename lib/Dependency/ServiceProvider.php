@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Dependency;
+namespace DevNet\Core\Dependency;
 
 use DevNet\System\Activator;
 use DevNet\System\IServiceProvider;

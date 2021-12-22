@@ -7,12 +7,12 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Middleware;
+namespace DevNet\Core\Middleware;
 
-use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Middleware\IApplicationBuilder;
-use DevNet\Web\Middleware\IMiddleware;
-use DevNet\Web\Middleware\RequestDelegate;
+use DevNet\Core\Http\HttpContext;
+use DevNet\Core\Middleware\IApplicationBuilder;
+use DevNet\Core\Middleware\IMiddleware;
+use DevNet\Core\Middleware\RequestDelegate;
 use DevNet\System\Async\Tasks\Task;
 use DevNet\System\IServiceProvider;
 use Closure;
@@ -46,7 +46,7 @@ class ApplicationBuilder implements IApplicationBuilder
             if ($middleware instanceof Closure) {
                 $middleware = new RequestDelegate($middleware);
             } else if (!$middleware instanceof IMiddleware) {
-                throw new \Exception("invalide type, class must be of type DevNet\Web\Hosting\IMiddleware");
+                throw new \Exception("invalide type, class must be of type DevNet\Core\Hosting\IMiddleware");
             }
         }
 

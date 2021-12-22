@@ -7,10 +7,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller\Features;
+namespace DevNet\Core\Controller\Features;
 
-use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Router\RoutePathContext;
+use DevNet\Core\Http\HttpContext;
+use DevNet\Core\Router\RoutePathContext;
 
 class UrlHelper
 {

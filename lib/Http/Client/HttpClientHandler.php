@@ -7,14 +7,14 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Http\Client;
+namespace DevNet\Core\Http\Client;
 
 use DevNet\System\Async\Tasks\Task;
-use DevNet\Web\Http\Client\Internal\HttpRequestRawBuilder;
-use DevNet\Web\Http\Client\Internal\HttpResponseParser;
-use DevNet\Web\Http\HttpException;
-use DevNet\Web\Http\HttpRequest;
-use DevNet\Web\Http\HttpResponse;
+use DevNet\Core\Http\Client\Internal\HttpRequestRawBuilder;
+use DevNet\Core\Http\Client\Internal\HttpResponseParser;
+use DevNet\Core\Http\HttpException;
+use DevNet\Core\Http\HttpRequest;
+use DevNet\Core\Http\HttpResponse;
 
 abstract class HttpClientHandler
 {

@@ -7,10 +7,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Http\Client\Internal;
+namespace DevNet\Core\Http\Client\Internal;
 
 use DevNet\System\Text\StringBuilder;
-use DevNet\Web\Http\HttpRequest;
+use DevNet\Core\Http\HttpRequest;
 
 class HttpRequestRawBuilder
 {

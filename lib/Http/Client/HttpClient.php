@@ -7,12 +7,12 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Http\Client;
+namespace DevNet\Core\Http\Client;
 
 use DevNet\System\Async\Tasks\Task;
 use DevNet\System\IO\Stream;
-use DevNet\Web\Http\HttpRequest;
-use DevNet\Web\Http\Uri;
+use DevNet\Core\Http\HttpRequest;
+use DevNet\Core\Http\Uri;
 
 class HttpClient extends HttpClientHandler
 {

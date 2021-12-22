@@ -7,10 +7,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Security\Authentication;
+namespace DevNet\Core\Security\Authentication;
 
-use DevNet\Web\Security\ClaimsPrincipal;
-use DevNet\Web\Http\Session;
+use DevNet\Core\Security\ClaimsPrincipal;
+use DevNet\Core\Http\Session;
 use Exception;
 
 class AuthenticationCookieHandler

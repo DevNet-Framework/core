@@ -7,9 +7,9 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Security\Authorization;
+namespace DevNet\Core\Security\Authorization;
 
-use DevNet\Web\Security\ClaimsPrincipal;
+use DevNet\Core\Security\ClaimsPrincipal;
 
 class Authorization
 {

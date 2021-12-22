@@ -7,10 +7,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Http\Client\Internal;
+namespace DevNet\Core\Http\Client\Internal;
 
 use DevNet\System\IO\Stream;
-use DevNet\Web\Http\HttpResponse;
+use DevNet\Core\Http\HttpResponse;
 
 class HttpResponseParser
 {

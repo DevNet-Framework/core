@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Security;
+namespace DevNet\Core\Security;
 
 class ClaimType
 {

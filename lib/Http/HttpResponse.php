@@ -101,7 +101,7 @@ class HttpResponse extends HttpMessage
     public function __construct(?Headers $headers = null, ?Stream $body = null)
     {
         $this->Headers      = $headers ?? new Headers();
-        $this->Cookies      = new Cookies($headers);
+        $this->Cookies      = new Cookies($this->Headers);
         $this->Body         = $body ?? new FileStream('php://temp', 'r+');
         $this->StatusCode   = 200;
         $this->ReasonPhrase = 'OK';

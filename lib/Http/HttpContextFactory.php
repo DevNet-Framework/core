@@ -9,7 +9,7 @@
 
 namespace DevNet\Core\Http;
 
-use DevNet\System\IO\Stream;
+use DevNet\System\IO\FileStream;
 
 class HttpContextFactory
 {
@@ -56,16 +56,25 @@ class HttpContextFactory
             }
         }
 
-        $body    = new Stream('php://input', 'r');
+        $headers = new Headers($headers);
+        $body    = new FileStream('php://input', 'r');
         $form    = new Form($_POST, $fileCollection);
         $request = new HttpRequest($method, $uri, $headers, $body, $form);
+
+        if (isset($_SERVER['SERVER_PROTOCOL'])) {
+            $request->setProtocol($_SERVER['SERVER_PROTOCOL']);
+        }
+
         return $request;
     }
 
     public static function createResponse(): HttpResponse
     {
-        $body     = new Stream('php://temp', 'r+');
-        $response = new HttpResponse($body);
+        $response = new HttpResponse();
+        if (isset($_SERVER['SERVER_PROTOCOL'])) {
+            $response->setProtocol($_SERVER['SERVER_PROTOCOL']);
+        }
+
         return $response;
     }
 }

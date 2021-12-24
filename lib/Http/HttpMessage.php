@@ -13,17 +13,13 @@ use DevNet\System\IO\Stream;
 
 abstract class HttpMessage
 {
-    protected string $Protocol;
+    protected string $Protocol = 'HTTP/1.0';
     protected Headers $Headers;
     protected Cookies $Cookies;
     protected ?Stream $Body;
 
-    public function setProtocol(string $protocol = null)
+    public function setProtocol(string $protocol)
     {
-        if (!$protocol) {
-            $protocol = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : '';
-        }
-
         $this->Protocol = $protocol;
     }
 

@@ -10,6 +10,7 @@
 namespace DevNet\Core\Http;
 
 use DevNet\System\Async\Tasks\Task;
+use DevNet\System\IO\FileStream;
 use DevNet\System\IO\Stream;
 
 class HttpResponse extends HttpMessage
@@ -97,17 +98,13 @@ class HttpResponse extends HttpMessage
         return $this->$name;
     }
 
-    public function __construct(
-        Stream $body = null,
-        array $headers = []
-    ) {
-        $this->Headers      = new Headers($headers);
-        $this->Cookies      = new Cookies($this->Headers);
-        $this->Body         = $body;
+    public function __construct(?Headers $headers = null, ?Stream $body = null)
+    {
+        $this->Headers      = $headers ?? new Headers();
+        $this->Cookies      = new Cookies($headers);
+        $this->Body         = $body ?? new FileStream('php://temp', 'r+');
         $this->StatusCode   = 200;
         $this->ReasonPhrase = 'OK';
-
-        $this->setProtocol();
     }
 
     public function setStatusCode(int $statusCode, string $reasonPhrase = null)

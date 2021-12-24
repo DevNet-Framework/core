@@ -9,13 +9,14 @@
 
 namespace DevNet\Core\Http;
 
+use DevNet\System\IO\FileStream;
 use DevNet\System\IO\Stream;
 
 class HttpRequest extends HttpMessage
 {
     private string $Method;
     private Uri $Uri;
-    private ?Form $Form;
+    private Form $Form;
 
     public function __get(string $name)
     {
@@ -25,17 +26,15 @@ class HttpRequest extends HttpMessage
     public function __construct(
         string $method,
         string $uri,
-        array $headers = [],
-        Stream $body = null,
-        Form $form = null
+        ?Headers $headers = null,
+        ?Stream $body = null,
+        ?Form $form = null
     ) {
-        $this->Method  = $method;
+        $this->Method  = strtoupper($method);
         $this->Uri     = new Uri($uri);
-        $this->Headers = new Headers($headers);
+        $this->Headers = $headers ?? new Headers();
         $this->Cookies = new Cookies($this->Headers);
-        $this->Body    = $body;
-        $this->Form    = $form;
-        
-        $this->setProtocol();
+        $this->Body    = $body ?? new FileStream('php://temp', 'r+');
+        $this->Form    = $form ?? new Form();
     }
 }

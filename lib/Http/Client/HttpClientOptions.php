@@ -22,7 +22,7 @@ class HttpClientOptions
     public string $HttpVersion = 'HTTP/1.0';
 
     /**
-     * the max times to wait in microseconds.
+     * the max times to wait in seconds.
      */
-    public int $Timeout = 0;
+    public float $Timeout = 0;
 }

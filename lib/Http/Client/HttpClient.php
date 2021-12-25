@@ -9,8 +9,8 @@
 
 namespace DevNet\Core\Http\Client;
 
+use DevNet\Core\Http\Headers;
 use DevNet\System\Async\Tasks\Task;
-use DevNet\System\IO\Stream;
 use DevNet\Core\Http\HttpRequest;
 use DevNet\Core\Http\Uri;
 
@@ -38,44 +38,44 @@ class HttpClient extends HttpClientHandler
             $url = $this->Options->BaseAddress . $url;
         }
 
+        $uri     = new Uri($url);
+        $headers = new Headers(['host' => $uri->Host]);
+        $request = new HttpRequest($method, $uri, $headers);
+        
+        $request->setProtocol($this->Options->HttpVersion);
         if ($requestContent) {
-            $stream = new Stream('php://temp', 'r+');
-            $stream->write($requestContent->Content);
-            $request = new HttpRequest($method, new Uri($url), ['content-type' => $requestContent->ContentType], $stream);
-        } else {
-            $request = new HttpRequest($method, new Uri($url));
+            $request->Headers->add('content-type', $requestContent->ContentType);
+            $request->Headers->add('content-length', $requestContent->ContentLength);
+            $request->Body->write($requestContent->Content);
         }
 
-        $request->setProtocol('HTTP/1.0');
-        
         return $this->sendAsync($request);
     }
 
-    public function getStringAsync(string $url, HttpRequestContent $requestContent = null): Task
+    public function getStringAsync(string $url, ?HttpRequestContent $requestContent = null): Task
     {
         $task = $this->getAsync($url, $requestContent);
-        return $task->then(function (Task $precedent)
-        {
-            $response = $precedent->Result;
+        return $task->then(function (Task $antecedent) {
+            $response = $antecedent->Result;
             if ($response->Body->isReadable()) {
                 return $response->Body->Read();
             }
         });
     }
 
-    public function getAsync(string $url, HttpRequestContent $requestContent = null): Task
+    public function getAsync(string $url, ?HttpRequestContent $requestContent = null): Task
     {
-        return $this->requestAsync('GET', $url);
+        return $this->requestAsync('GET', $url, $requestContent);
     }
 
-    public function postAsync(string $url, HttpRequestContent $requestContent): Task
+    public function postAsync(string $url, ?HttpRequestContent $requestContent): Task
     {
-        return $this->requestAsync('POST', $url);
+        return $this->requestAsync('POST', $url, $requestContent);
     }
 
-    public function putAsync(string $url, HttpRequestContent $requestContent): Task
+    public function putAsync(string $url, ?HttpRequestContent $requestContent): Task
     {
-        return $this->requestAsync('PUT', $url);
+        return $this->requestAsync('PUT', $url, $requestContent);
     }
 
     public function deleteAsync(string $url): Task

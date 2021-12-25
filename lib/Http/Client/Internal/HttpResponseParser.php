@@ -9,14 +9,18 @@
 
 namespace DevNet\Core\Http\Client\Internal;
 
-use DevNet\System\IO\Stream;
+use DevNet\Core\Http\Headers;
 use DevNet\Core\Http\HttpResponse;
 
 class HttpResponseParser
 {
-    public static function parse(string $responseHeader, string $responseBody): HttpResponse
+    public static function parse(string $responseRaw): HttpResponse
     {
+        $responseRaw    = explode("\r\n\r\n", $responseRaw, 2);
+        $responseHeader = $responseRaw[0];
+        $responseBody   = $responseRaw[1];
         $responseHeader = trim($responseHeader);
+
         $headers = explode(PHP_EOL, $responseHeader);
         $responseLine = array_shift($headers);
         $responseLine = explode(' ', $responseLine);
@@ -25,11 +29,10 @@ class HttpResponseParser
             explode(":", $header);
         }
 
-        $body = new Stream('php://temp', 'r+');
-        $response = new HttpResponse($body, $headers);
+        $response = new HttpResponse(new Headers($headers));
         $response->setProtocol($responseLine[0]);
         $response->setStatusCode($responseLine[1]);
-        $response->writeAsync($responseBody);
+        $response->Body->write($responseBody);
 
         return $response;
     }

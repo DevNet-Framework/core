@@ -13,10 +13,12 @@ class HttpRequestContent
 {
     protected string $Content;
     protected string $ContentType;
+    protected int $ContentLength;
 
-    public function __construct(string $content, string $contentType)
+    public function __construct(string $contentType, string $content)
     {
-        $this->Content = $content;
-        $this->ContentType = $contentType;
+        $this->Content       = $content;
+        $this->ContentType   = $contentType;
+        $this->ContentLength = strlen($content);
     }
 }

@@ -34,7 +34,7 @@ class HttpRequestRawBuilder
         }
         
         $requestRaw->append("\r\n");
-        if ($request->Body && $request->Body->isReadable()) {
+        if ($request->Body->isReadable()) {
             $requestRaw->appendLine($request->Body->Read());
         }
 

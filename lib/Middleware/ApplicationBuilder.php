@@ -13,6 +13,7 @@ use DevNet\Core\Http\HttpContext;
 use DevNet\Core\Middleware\IApplicationBuilder;
 use DevNet\Core\Middleware\IMiddleware;
 use DevNet\Core\Middleware\RequestDelegate;
+use DevNet\System\Async\AsyncFunction;
 use DevNet\System\Async\Tasks\Task;
 use DevNet\System\IServiceProvider;
 use Closure;
@@ -57,10 +58,11 @@ class ApplicationBuilder implements IApplicationBuilder
         $this->Middlewares[] = $middleware;
     }
 
-    public function pipe(callable $middleware, RequestDelegate $next)
+    public function pipe(callable $middleware, $next): RequestDelegate
     {
         return new RequestDelegate(function (HttpContext $context) use ($middleware, $next) {
-            return $middleware($context, $next);
+            $middlewareAsync = new AsyncFunction($middleware);
+            return $middlewareAsync($context, $next);
         });
     }
 

@@ -32,7 +32,8 @@ class ExceptionMiddleware implements IMiddleware
         });
 
         try {
-            return $next($context);
+            // need to await the async RequestDelegate here to be able to catch the error exception
+            yield $next($context);
         } catch (Throwable $error) {
             if (PHP_SAPI == 'cli') {
                 throw new $error;
@@ -40,7 +41,8 @@ class ExceptionMiddleware implements IMiddleware
             $context->addAttribute('Error', $error);
             if ($this->ErrorHandlingPath) {
                 $context->Request->Uri->Path = $this->ErrorHandlingPath;
-                return $next($context);
+                $context->Response->Body->flush();
+                return yield $next($context);
             }
             return $this->handel($context);
         }

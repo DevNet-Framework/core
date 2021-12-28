@@ -44,15 +44,9 @@ class ViewManager
 
     public function getPath(string $pathName): string
     {
-        if ($pathName) {
+        if (!empty($pathName)) {
             $pathName = trim($pathName, '/');
-            $path = $this->Directory . "/" . $pathName . ".phtml";
-
-            if (file_exists($path)) {
-                return $path;
-            }
-
-            return "";
+            return $this->Directory . "/" . $pathName . ".phtml";
         }
 
         return "";

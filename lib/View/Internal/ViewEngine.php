@@ -102,7 +102,7 @@ class ViewEngine
         ob_start();
         $viewPath = $this->Manager->getPath($viewName);
 
-        if ($viewPath) {
+        if (file_exists($viewPath)) {
             try {
                 include $viewPath;
             } catch (\Throwable $th) {
@@ -110,7 +110,7 @@ class ViewEngine
                 throw $th;
             }
         } else {
-            throw new InvalidArgumentException("Vew name : {$viewName} Not found");
+            throw new InvalidArgumentException("Could not find the view: {$viewPath}");
         }
 
         $this->Body = ob_get_clean();

@@ -15,7 +15,6 @@ use DevNet\Core\Mvc\Binder\IValueProvider;
 use DevNet\Core\Http\HttpContext;
 use DevNet\Core\Middleware\IRequestHandler;
 use DevNet\System\Activator;
-use DevNet\System\Async\Tasks\Task;
 use DevNet\System\Exceptions\ClassException;
 
 class ActionInvoker implements IRequestHandler
@@ -31,7 +30,7 @@ class ActionInvoker implements IRequestHandler
         $this->ValueProvider  = $provider;
     }
 
-    public function __invoke(HttpContext $httpContext): Task
+    public function __invoke(HttpContext $httpContext)
     {
         try {
             $controller = Activator::CreateInstance($this->ControllerName, $httpContext->RequestServices);

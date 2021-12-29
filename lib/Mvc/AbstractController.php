@@ -38,7 +38,7 @@ abstract class AbstractController implements IRequestHandler
         return $this->$name;
     }
 
-    public function __invoke(HttpContext $httpContext): Task
+    public function __invoke(HttpContext $httpContext)
     {
         $this->HttpContext   = $httpContext;
         $this->ActionContext = $httpContext->ActionContext;

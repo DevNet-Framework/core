@@ -10,9 +10,8 @@
 namespace DevNet\Core\Middleware;
 
 use DevNet\Core\Http\HttpContext;
-use DevNet\System\Async\Tasks\Task;
 
 interface IRequestHandler
 {
-    public function __invoke(HttpContext $context): Task;
+    public function __invoke(HttpContext $context);
 }

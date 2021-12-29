@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * @author      Mohammed Moussaoui
+ * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
+ * @license     MIT License. For full license information see LICENSE file in the project root.
+ * @link        https://github.com/DevNet-Framework
+ */
+
+namespace DevNet\Core\Mvc\Binder;
+
+use DevNet\Core\Mvc\ActionContext;
+
+class BindingContext
+{
+    private string $Name;
+    private ?string $Type;
+    private ActionContext $ActionContext;
+    private IValueProvider $ValueProvider;
+    private $Result = null;
+
+    public function __construct(
+        string $name,
+        string $type,
+        ActionContext $actionContext
+    ) {
+        $this->Name = $name;
+        $this->Type = $type;
+        $this->ActionContext = $actionContext;
+        $this->ValueProvider = $actionContext->ValueProvider;
+    }
+
+    /**
+     * Magic method for read-only of all properties.
+     * @return mixed depend on the property type.
+     */
+    public function __get(string $name)
+    {
+        return $this->$name;
+    }
+
+    public function success($model): void
+    {
+        $this->Result = $model;
+    }
+
+    public function failed(): void
+    {
+        $this->Result = null;
+    }
+}

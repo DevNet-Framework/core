@@ -11,6 +11,8 @@ namespace DevNet\Core\Extensions;
 
 use DevNet\Core\Dependency\IServiceCollection;
 use DevNet\Core\Http\HttpContext;
+use DevNet\Core\Http\Client\HttpClient;
+use DevNet\Core\Http\Client\HttpClientOptions;
 use DevNet\Core\Router\RouteBuilder;
 use DevNet\Core\View\ViewManager;
 use DevNet\Core\Mvc\ControllerOptions;
@@ -37,6 +39,16 @@ use Closure;
 
 class ServiceCollectionExtensions
 {
+    public static function addHttpClient(IServiceCollection $services, Closure $configuration = null)
+    {
+        $options = new HttpClientOptions();
+        if ($configuration) {
+            $configuration($options);
+        }
+
+        $services->addSingleton(HttpClient::class, fn () => new HttpClient($options));
+    }
+
     public static function addAntiforgery(IServiceCollection $services, Closure $configuration = null)
     {
         $options = new AntiforgeryOptions();

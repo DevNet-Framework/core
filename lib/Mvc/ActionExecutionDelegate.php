@@ -10,12 +10,11 @@
 namespace DevNet\Core\Mvc;
 
 use DevNet\System\Event\Delegate;
-use DevNet\System\Async\Tasks\Task;
 
 class ActionExecutionDelegate extends Delegate
 {
     /** RequestDelegate signature */
-    public function delegate(ActionContext $context): Task
+    public function delegate(ActionContext $context)
     {
     }
 }

@@ -58,7 +58,7 @@ abstract class AbstractController implements IRequestHandler
         return $action($this->ActionContext);
     }
 
-    public function next(ActionContext $actionContext): Task
+    public function next(ActionContext $actionContext)
     {
         $actionFilter = array_shift($this->ActionFilters);
         if ($actionFilter) {

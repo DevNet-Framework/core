@@ -9,7 +9,7 @@
 
 namespace DevNet\Core\Mvc;
 
-use DevNet\System\Event\Delegate;
+use DevNet\System\Delegate;
 
 class ActionExecutionDelegate extends Delegate
 {

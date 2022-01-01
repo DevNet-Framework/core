@@ -11,8 +11,8 @@ namespace DevNet\Core\Hosting;
 
 use DevNet\Core\Configuration\IConfiguration;
 use DevNet\Core\Configuration\ConfigurationBuilder;
-use DevNet\Core\Dependency\ServiceCollection;
-use DevNet\Core\Dependency\ServiceProvider;
+use DevNet\System\Dependency\ServiceCollection;
+use DevNet\System\Dependency\ServiceProvider;
 use DevNet\Core\Middleware\ApplicationBuilder;
 use DevNet\System\Exceptions\ClassException;
 use DevNet\System\Loader\LauncherProperties;

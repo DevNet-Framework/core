@@ -9,7 +9,7 @@
 
 namespace DevNet\Core\Extensions;
 
-use DevNet\Core\Dependency\IServiceCollection;
+use DevNet\System\Dependency\IServiceCollection;
 use DevNet\Core\Http\HttpContext;
 use DevNet\Core\Http\Client\HttpClient;
 use DevNet\Core\Http\Client\HttpClientOptions;

@@ -7,13 +7,13 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Mvc\Filters;
+namespace DevNet\Web\Mvc\Filters;
 
-use DevNet\Core\Mvc\IActionFilter;
-use DevNet\Core\Mvc\ActionExecutionDelegate;
-use DevNet\Core\Mvc\ActionContext;
-use DevNet\Core\Security\Antiforgery\IAntiforgery;
-use DevNet\Core\Security\Antiforgery\AntiforgeryException;
+use DevNet\Web\Mvc\IActionFilter;
+use DevNet\Web\Mvc\ActionExecutionDelegate;
+use DevNet\Web\Mvc\ActionContext;
+use DevNet\Web\Security\Antiforgery\IAntiforgery;
+use DevNet\Web\Security\Antiforgery\AntiforgeryException;
 
 class AntiForgeryFilter implements IActionFilter
 {

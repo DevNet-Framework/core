@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Router\Internal;
+namespace DevNet\Web\Router\Internal;
 
 class RouteGenerator
 {

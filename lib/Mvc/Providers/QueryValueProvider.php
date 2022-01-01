@@ -7,9 +7,9 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Mvc\Providers;
+namespace DevNet\Web\Mvc\Providers;
 
-use DevNet\Core\Mvc\Binder\ValueProvider;
+use DevNet\Web\Mvc\Binder\ValueProvider;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.

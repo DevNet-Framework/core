@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Configuration;
+namespace DevNet\Web\Configuration;
 
 class ConfigurationBuilder
 {

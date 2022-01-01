@@ -7,9 +7,9 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Mvc\Results;
+namespace DevNet\Web\Mvc\Results;
 
-use DevNet\Core\Mvc\ActionContext;
+use DevNet\Web\Mvc\ActionContext;
 
 class JsonResult extends ActionResult
 {

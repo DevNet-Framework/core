@@ -7,12 +7,12 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Exception;
+namespace DevNet\Web\Exception;
 
-use DevNet\Core\Http\HttpContext;
-use DevNet\Core\Middleware\IMiddleware;
-use DevNet\Core\Middleware\RequestDelegate;
-use DevNet\Core\View\ViewManager;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Middleware\IMiddleware;
+use DevNet\Web\Middleware\RequestDelegate;
+use DevNet\Web\View\ViewManager;
 use DevNet\System\Async\Tasks\Task;
 use Throwable;
 

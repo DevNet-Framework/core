@@ -7,9 +7,9 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Security\Antiforgery;
+namespace DevNet\Web\Security\Antiforgery;
 
-use DevNet\Core\Http\CookieOptions;
+use DevNet\Web\Http\CookieOptions;
 
 class AntiforgeryOptions
 {

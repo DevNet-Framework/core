@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Router;
+namespace DevNet\Web\Router;
 
 use DevNet\System\Async\Tasks\Task;
 

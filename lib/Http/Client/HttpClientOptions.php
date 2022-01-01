@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Http\Client;
+namespace DevNet\Web\Http\Client;
 
 class HttpClientOptions
 {

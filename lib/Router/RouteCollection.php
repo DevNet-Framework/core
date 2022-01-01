@@ -7,9 +7,9 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Router;
+namespace DevNet\Web\Router;
 
-use DevNet\Core\Router\Internal\RouteLogger;
+use DevNet\Web\Router\Internal\RouteLogger;
 
 /**
  * Collection of routes

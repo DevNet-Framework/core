@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Http;
+namespace DevNet\Web\Http;
 
 use DevNet\System\IO\FileStream;
 use DevNet\System\IO\Stream;

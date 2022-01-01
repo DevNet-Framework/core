@@ -7,14 +7,14 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Mvc;
+namespace DevNet\Web\Mvc;
 
-use DevNet\Core\Mvc\ActionContext;
-use DevNet\Core\Mvc\ControllerException;
-use DevNet\Core\Mvc\Binder\IValueProvider;
-use DevNet\Core\Http\HttpContext;
-use DevNet\Core\Middleware\IRequestHandler;
-use DevNet\System\Activator;
+use DevNet\Web\Mvc\ActionContext;
+use DevNet\Web\Mvc\ControllerException;
+use DevNet\Web\Mvc\Binder\IValueProvider;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Middleware\IRequestHandler;
+use DevNet\System\Dependency\Activator;
 use DevNet\System\Exceptions\ClassException;
 
 class ActionInvoker implements IRequestHandler

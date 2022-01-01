@@ -7,16 +7,16 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Mvc;
+namespace DevNet\Web\Mvc;
 
-use DevNet\Core\View\ViewManager;
-use DevNet\Core\Mvc\Results\ContentResult;
-use DevNet\Core\Mvc\Results\ForbidResult;
-use DevNet\Core\Mvc\Results\JsonResult;
-use DevNet\Core\Mvc\Results\RedirectResult;
-use DevNet\Core\Mvc\Results\ViewResult;
-use DevNet\Core\Mvc\Features\HtmlHelper;
-use DevNet\Core\Mvc\Features\UrlHelper;
+use DevNet\Web\View\ViewManager;
+use DevNet\Web\Mvc\Results\ContentResult;
+use DevNet\Web\Mvc\Results\ForbidResult;
+use DevNet\Web\Mvc\Results\JsonResult;
+use DevNet\Web\Mvc\Results\RedirectResult;
+use DevNet\Web\Mvc\Results\ViewResult;
+use DevNet\Web\Mvc\Features\HtmlHelper;
+use DevNet\Web\Mvc\Features\UrlHelper;
 use DevNet\System\Exceptions\ArgumentException;
 
 abstract class Controller extends AbstractController

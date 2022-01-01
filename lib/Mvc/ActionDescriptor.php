@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Mvc;
+namespace DevNet\Web\Mvc;
 
 use ReflectionMethod;
 

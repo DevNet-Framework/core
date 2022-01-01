@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Security\Authentication;
+namespace DevNet\Web\Security\Authentication;
 
 use DevNet\System\Loader\LauncherProperties;
 use Closure;

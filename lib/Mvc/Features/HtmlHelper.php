@@ -7,10 +7,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Mvc\Features;
+namespace DevNet\Web\Mvc\Features;
 
-use DevNet\Core\Http\HttpContext;
-use DevNet\Core\Security\Antiforgery\IAntiforgery;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Security\Antiforgery\IAntiforgery;
 
 class HtmlHelper
 {

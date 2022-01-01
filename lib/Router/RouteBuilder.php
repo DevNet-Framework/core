@@ -7,9 +7,9 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Router;
+namespace DevNet\Web\Router;
 
-use DevNet\System\IServiceProvider;
+use DevNet\System\Dependency\IServiceProvider;
 
 class RouteBuilder implements IRouteBuilder
 {

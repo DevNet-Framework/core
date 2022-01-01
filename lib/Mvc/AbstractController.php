@@ -7,17 +7,17 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Mvc;
+namespace DevNet\Web\Mvc;
 
-use DevNet\Core\Http\HttpContext;
-use DevNet\Core\Mvc\ActionContext;
-use DevNet\Core\Mvc\Binder\ParameterBinder;
-use DevNet\Core\Mvc\Results\ContentResult;
-use DevNet\Core\Mvc\Results\ForbidResult;
-use DevNet\Core\Mvc\Results\JsonResult;
-use DevNet\Core\Mvc\Results\RedirectResult;
-use DevNet\Core\Mvc\Results\ViewResult;
-use DevNet\Core\Middleware\IRequestHandler;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Mvc\ActionContext;
+use DevNet\Web\Mvc\Binder\ParameterBinder;
+use DevNet\Web\Mvc\Results\ContentResult;
+use DevNet\Web\Mvc\Results\ForbidResult;
+use DevNet\Web\Mvc\Results\JsonResult;
+use DevNet\Web\Mvc\Results\RedirectResult;
+use DevNet\Web\Mvc\Results\ViewResult;
+use DevNet\Web\Middleware\IRequestHandler;
 use DevNet\System\Async\Tasks\Task;
 use DevNet\System\Action;
 

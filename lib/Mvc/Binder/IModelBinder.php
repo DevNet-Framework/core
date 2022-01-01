@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Mvc\Binder;
+namespace DevNet\Web\Mvc\Binder;
 
 interface IModelBinder
 {

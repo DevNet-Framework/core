@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Router;
+namespace DevNet\Web\Router;
 
 /**
  * Collection of informations about the result of the routing proccess.

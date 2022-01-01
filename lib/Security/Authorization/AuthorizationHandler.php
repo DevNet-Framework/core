@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Security\Authorization;
+namespace DevNet\Web\Security\Authorization;
 
 use DevNet\System\Async\Tasks\Task;
 

@@ -7,13 +7,13 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Http\Client;
+namespace DevNet\Web\Http\Client;
 
 use DevNet\System\Async\Tasks\Task;
-use DevNet\Core\Http\Client\Internal\HttpRequestRawBuilder;
-use DevNet\Core\Http\Client\Internal\HttpResponseParser;
-use DevNet\Core\Http\HttpRequest;
-use DevNet\Core\Http\HttpResponse;
+use DevNet\Web\Http\Client\Internal\HttpRequestRawBuilder;
+use DevNet\Web\Http\Client\Internal\HttpResponseParser;
+use DevNet\Web\Http\HttpRequest;
+use DevNet\Web\Http\HttpResponse;
 use DevNet\System\Net\Socket;
 
 abstract class HttpClientHandler

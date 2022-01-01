@@ -7,17 +7,17 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Mvc;
+namespace DevNet\Web\Mvc;
 
 use DevNet\System\Loader\LauncherProperties;
-use DevNet\Core\Mvc\Binder\IValueProvider;
-use DevNet\Core\Mvc\Binder\IModelBinder;
-use DevNet\Core\Mvc\Binder\ModelBinderProvider;
-use DevNet\Core\Mvc\Binder\CompositeValueProvider;
-use DevNet\Core\Mvc\Providers\FileValueProvider;
-use DevNet\Core\Mvc\Providers\FormValueProvider;
-use DevNet\Core\Mvc\Providers\QueryValueProvider;
-use DevNet\Core\Mvc\Providers\RouteValueProvider;
+use DevNet\Web\Mvc\Binder\IValueProvider;
+use DevNet\Web\Mvc\Binder\IModelBinder;
+use DevNet\Web\Mvc\Binder\ModelBinderProvider;
+use DevNet\Web\Mvc\Binder\CompositeValueProvider;
+use DevNet\Web\Mvc\Providers\FileValueProvider;
+use DevNet\Web\Mvc\Providers\FormValueProvider;
+use DevNet\Web\Mvc\Providers\QueryValueProvider;
+use DevNet\Web\Mvc\Providers\RouteValueProvider;
 
 class ControllerOptions
 {

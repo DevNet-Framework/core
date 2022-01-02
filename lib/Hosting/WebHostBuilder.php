@@ -11,11 +11,11 @@ namespace DevNet\Web\Hosting;
 
 use DevNet\Web\Configuration\IConfiguration;
 use DevNet\Web\Configuration\ConfigurationBuilder;
+use DevNet\Web\Middleware\ApplicationBuilder;
 use DevNet\System\Dependency\ServiceCollection;
 use DevNet\System\Dependency\ServiceProvider;
-use DevNet\Web\Middleware\ApplicationBuilder;
+use DevNet\System\Runtime\LauncherProperties;
 use DevNet\System\Exceptions\ClassException;
-use DevNet\System\Loader\LauncherProperties;
 use Closure;
 
 class WebHostBuilder implements IWebHostBuilder

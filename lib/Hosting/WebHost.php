@@ -10,11 +10,11 @@
 namespace DevNet\Web\Hosting;
 
 use Closure;
-use DevNet\Web\Configuration\IConfiguration;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Http\HttpContextFactory;
 use DevNet\Web\Middleware\IApplicationBuilder;
 use DevNet\Web\Router\RouteBuilder;
+use DevNet\System\Configuration\IConfiguration;
 use DevNet\System\Dependency\IServiceProvider;
 use DevNet\System\Runtime\LauncherProperties;
 use DevNet\System\Runtime\Launcher;

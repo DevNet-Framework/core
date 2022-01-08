@@ -11,6 +11,7 @@ namespace DevNet\Web\Mvc\Binder;
 
 use IteratorAggregate;
 use ArrayIterator;
+use Traversable;
 
 class ModelBinderProvider implements IteratorAggregate
 {
@@ -29,7 +30,7 @@ class ModelBinderProvider implements IteratorAggregate
         return $this;
     }
 
-    public function getIterator(): iterable
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->ModelBinders);
     }

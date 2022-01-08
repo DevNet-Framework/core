@@ -11,6 +11,7 @@ namespace DevNet\Web\Http;
 
 use DevNet\System\Collections\Enumerator;
 use DevNet\System\Collections\IEnumerable;
+use Traversable;
 
 class FileCollection implements IEnumerable
 {
@@ -31,7 +32,7 @@ class FileCollection implements IEnumerable
         return $this->Files[$name] ?? [];
     }
 
-    public function getIterator(): Enumerator
+    public function getIterator(): Traversable
     {
         return new Enumerator($this->Files);
     }

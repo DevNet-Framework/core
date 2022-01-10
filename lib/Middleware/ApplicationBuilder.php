@@ -20,7 +20,7 @@ use Closure;
 
 class ApplicationBuilder implements IApplicationBuilder
 {
-    use \DevNet\System\Extension\ExtensionTrait;
+    use \DevNet\System\Extension\ExtenderTrait;
 
     private IserviceProvider $Provider;
     private MiddlewareFactory $MiddlewareFactoty;

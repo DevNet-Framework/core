@@ -9,7 +9,8 @@
 
 namespace DevNet\Web\Extensions;
 
-use DevNet\System\Dependency\IServiceCollection;
+use DevNet\Entity\EntityContext;
+use DevNet\Entity\EntityOptions;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Http\Client\HttpClient;
 use DevNet\Web\Http\Client\HttpClientOptions;
@@ -33,12 +34,18 @@ use DevNet\Web\Identity\RoleManager;
 use DevNet\Web\Identity\User;
 use DevNet\Web\Identity\Role;
 use DevNet\System\Database\DbConnection;
-use DevNet\Entity\EntityContext;
-use DevNet\Entity\EntityOptions;
+use DevNet\System\Dependency\IServiceCollection;
+use DevNet\System\Logging\ILoggerFactory;
+use DevNet\System\Logging\LoggerFactory;
 use Closure;
 
 class ServiceCollectionExtensions
 {
+    public static function addLogging(IServiceCollection $services, Closure $configuration = null)
+    {
+        $services->addSingleton(ILoggerFactory::class, fn () => LoggerFactory::Create($configuration));
+    }
+
     public static function addHttpClient(IServiceCollection $services, Closure $configuration = null)
     {
         $options = new HttpClientOptions();

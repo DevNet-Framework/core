@@ -16,14 +16,16 @@ use InvalidArgumentException;
 class ViewEngine
 {
     private ViewManager $Manager;
+    private ?object $Model;
     private string $Body;
     private string $LayoutName  = '';
     private string $SectionName = '';
     private array $Sections     = [];
 
-    public function __construct(ViewManager $manager, array $viewData = [])
+    public function __construct(ViewManager $manager)
     {
         $this->Manager = $manager;
+        stream_filter_register("view.opentag", ViewFilter::class);
     }
 
     public function __get(string $name)
@@ -87,9 +89,11 @@ class ViewEngine
     public function renderPartial(string $partialName): void
     {
         $partialPath = $this->Manager->getPath($partialName);
-        if (file_exists($partialPath)) {
-            include $partialPath;
+        if (!file_exists($partialPath)) {
+            throw new InvalidArgumentException("Could not find the template: {$partialName}");
         }
+
+        include 'php://filter/read=view.opentag/resource=' . $partialPath;
     }
 
     public function renderBody(): void
@@ -99,28 +103,23 @@ class ViewEngine
 
     public function renderView(string $viewName, ?object $model = null): string
     {
-        ob_start();
-        $viewPath = $this->Manager->getPath($viewName);
+        $this->Model = $model;
 
-        if (file_exists($viewPath)) {
-            try {
-                include $viewPath;
-            } catch (\Throwable $th) {
-                ob_clean();
-                throw $th;
-            }
-        } else {
-            throw new InvalidArgumentException("Could not find the view: {$viewPath}");
+        ob_start();
+        try {
+            $this->renderPartial($viewName);
+        } catch (\Throwable $th) {
+            ob_clean();
+            throw $th;
         }
 
         $this->Body = ob_get_clean();
 
         ob_start();
         $layoutPath = $this->Manager->getPath($this->LayoutName);
-
         if ($layoutPath) {
             try {
-                include $layoutPath;
+                include 'php://filter/read=view.opentag/resource=' . $layoutPath;
             } catch (\Throwable $th) {
                 ob_clean();
                 throw $th;

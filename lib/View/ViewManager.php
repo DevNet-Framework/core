@@ -37,11 +37,6 @@ class ViewManager
         $this->Directory = rtrim($directory, '/');
     }
 
-    public function setData(array $viewData)
-    {
-        $this->ViewData = $viewData;
-    }
-
     public function getPath(string $pathName): string
     {
         if (!empty($pathName)) {
@@ -59,7 +54,7 @@ class ViewManager
 
     public function render(string $viewName, ?object $model = null): string
     {
-        $engine = new ViewEngine($this, $this->ViewData);
+        $engine = new ViewEngine($this);
         return $engine->renderView($viewName, $model);
     }
 

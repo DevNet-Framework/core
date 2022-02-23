@@ -19,7 +19,7 @@ use DevNet\Web\Controller\Features\HtmlHelper;
 use DevNet\Web\Controller\Features\UrlHelper;
 use DevNet\System\Exceptions\ArgumentException;
 
-abstract class Controller extends ControllerBase
+abstract class ActionController extends ControllerBase
 {
     protected array $ViewData = [];
 

@@ -16,15 +16,17 @@ use InvalidArgumentException;
 class ViewEngine
 {
     private ViewManager $Manager;
-    private ?object $Model;
-    private string $Body;
+    private string $Body        = '';
     private string $LayoutName  = '';
     private string $SectionName = '';
     private array $Sections     = [];
+    private array $ViewData;
+    private ?object $Model;
 
     public function __construct(ViewManager $manager)
     {
-        $this->Manager = $manager;
+        $this->Manager  = $manager;
+        $this->ViewData = $manager->ViewData;
         stream_filter_register("view.opentag", ViewFilter::class);
     }
 
@@ -114,6 +116,8 @@ class ViewEngine
         }
 
         $this->Body = ob_get_clean();
+
+        //$this->ViewData['Title'] = 'Home';
 
         ob_start();
         $layoutPath = $this->Manager->getPath($this->LayoutName);

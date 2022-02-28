@@ -47,6 +47,11 @@ class ViewManager
         return "";
     }
 
+    public function setData(array $viewData): void
+    {
+        $this->ViewData = $viewData;
+    }
+
     public function inject(string $Name, $Value): void
     {
         $this->Container->set($Name, $Value);

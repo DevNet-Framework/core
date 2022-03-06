@@ -21,7 +21,7 @@ use DevNet\Web\Middleware\IRequestHandler;
 use DevNet\System\Async\Tasks\Task;
 use DevNet\System\Action;
 
-abstract class ControllerBase implements IRequestHandler
+abstract class AbstractController implements IRequestHandler
 {
     protected HttpContext $HttpContext;
     protected ActionContext $ActionContext;

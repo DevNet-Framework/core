@@ -13,19 +13,9 @@ use DevNet\Entity\IEntity;
 
 class UserRole implements IEntity
 {
-    protected int $UserId;
-    protected int $RoleId;
+    public int $UserId;
+    public int $RoleId;
 
-    protected User $User;
-    protected Role $Role;
-
-    public function __get(string $name)
-    {
-        return $this->$name;
-    }
-
-    public function __set(string $name, $value)
-    {
-        $this->$name = $value;
-    }
+    public User $User;
+    public Role $Role;
 }

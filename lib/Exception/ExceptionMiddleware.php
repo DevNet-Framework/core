@@ -53,7 +53,8 @@ class ExceptionMiddleware implements IMiddleware
         $error = $context->Error;
         $data  = $this->parse($error);
         $view  = new ViewManager(__DIR__ . '/Views');
-        $view->inject('ViewData', $data);
+
+        $view->setData($data);
         $context->Response->Body->write($view->render('ExceptionView'));
         return Task::completedTask();
     }

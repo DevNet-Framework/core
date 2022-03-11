@@ -14,25 +14,15 @@ use DevNet\System\Collections\IList;
 
 class Role implements IEntity
 {
-    protected int $Id;
-    protected string $Name;
+    public int $Id;
+    public string $Name;
 
-    protected IList $UserRole;
+    public IList $UserRole;
 
     public function __construct(string $roleName = null)
     {
         if ($roleName) {
             $this->Name = $roleName;
         }
-    }
-
-    public function __get(string $name)
-    {
-        return $this->$name;
-    }
-
-    public function __set(string $name, $value)
-    {
-        $this->$name = $value;
     }
 }

@@ -14,26 +14,16 @@ use DevNet\System\Collections\IList;
 
 class User implements IEntity
 {
-    protected int $Id;
-    protected string $Username;
-    protected string $Password;
+    public int $Id;
+    public string $Username;
+    public string $Password;
 
-    protected IList $UserRole;
+    public IList $UserRole;
 
     public function __construct(string $username = null)
     {
         if ($username) {
             $this->Username = $username;
         }
-    }
-
-    public function __get(string $name)
-    {
-        return $this->$name;
-    }
-
-    public function __set(string $name, $value)
-    {
-        $this->$name = $value;
     }
 }

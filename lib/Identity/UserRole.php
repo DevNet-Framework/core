@@ -9,9 +9,7 @@
 
 namespace DevNet\Web\Identity;
 
-use DevNet\Entity\IEntity;
-
-class UserRole implements IEntity
+class UserRole
 {
     public int $UserId;
     public int $RoleId;

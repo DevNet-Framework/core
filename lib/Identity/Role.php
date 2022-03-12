@@ -9,10 +9,9 @@
 
 namespace DevNet\Web\Identity;
 
-use DevNet\Entity\IEntity;
 use DevNet\System\Collections\IList;
 
-class Role implements IEntity
+class Role
 {
     public int $Id;
     public string $Name;

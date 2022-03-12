@@ -9,8 +9,6 @@
 
 namespace DevNet\Web\Identity;
 
-use DevNet\Data\Entity\IEntity;
-
 class IdentityResult
 {
     const Succeeded  = 1;
@@ -20,14 +18,14 @@ class IdentityResult
 
     private int $Status = 0;
 
-    public function __construct(int $code = 0)
-    {
-        $this->Status = $code;
-    }
-
     public function __get(string $name)
     {
         return $this->$name;
+    }
+
+    public function __construct(int $code = 0)
+    {
+        $this->Status = $code;
     }
 
     public function isSucceeded(): bool

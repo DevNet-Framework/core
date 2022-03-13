@@ -75,7 +75,7 @@ class WebHost
         if ($size > 0) {
             $response->Body->seek(0);
             while (!$response->Body->eof()) {
-                echo $response->Body->read(1024);
+                echo $response->Body->read(1024 * 4);
             }
         }
         exit;

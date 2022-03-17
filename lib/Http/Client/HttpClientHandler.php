@@ -37,8 +37,7 @@ abstract class HttpClientHandler
 
             $responseRaw = '';
             while (!$socket->eof()) {
-                $responseRaw .= $socket->read(1024);
-                yield;
+                $responseRaw .= yield $socket->read(1024 * 4);
             }
 
             $response = HttpResponseParser::parse($responseRaw);

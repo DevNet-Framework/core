@@ -21,72 +21,72 @@ use DevNet\Web\Controller\Providers\RouteValueProvider;
 
 class ControllerOptions
 {
-    private string $ControllerNamespace;
-    private string $ViewDirectory = '../Views/';
-    private array $ActionFilters = [];
-    private ?IModelBinder $ModelBinder = null;
-    private CompositeValueProvider $ValueProviders;
+    private string $controllerNamespace;
+    private string $viewDirectory = '../Views/';
+    private array $actionFilters = [];
+    private ?IModelBinder $modelBinder = null;
+    private CompositeValueProvider $valueProviders;
 
     public function __construct()
     {
-        $this->ControllerNamespace = LauncherProperties::getNamespace() . '\\Controllers';
-        $this->ValueProviders = new CompositeValueProvider();
-        $this->ValueProviders->add(new RouteValueProvider());
-        $this->ValueProviders->add(new QueryValueProvider());
-        $this->ValueProviders->add(new FormValueProvider());
-        $this->ValueProviders->add(new FileValueProvider());
+        $this->controllerNamespace = LauncherProperties::getNamespace() . '\\Controllers';
+        $this->valueProviders = new CompositeValueProvider();
+        $this->valueProviders->add(new RouteValueProvider());
+        $this->valueProviders->add(new QueryValueProvider());
+        $this->valueProviders->add(new FormValueProvider());
+        $this->valueProviders->add(new FileValueProvider());
     }
 
     public function setControllerNamespace(string $namespace)
     {
-        $this->ControllerNamespace = $namespace;
+        $this->controllerNamespace = $namespace;
     }
 
     public function getControllerNamespace(): string
     {
-        return $this->ControllerNamespace;
+        return $this->controllerNamespace;
     }
 
     public function setViewDirectory(string $directory)
     {
-        $this->ViewDirectory = $directory;
+        $this->viewDirectory = $directory;
     }
 
     public function getViewDirectory(): string
     {
-        return $this->ViewDirectory;
+        return $this->viewDirectory;
     }
 
     public function addFilter(IActionFilter $actionFilter)
     {
-        $this->ActionFilters[get_class($actionFilter)] = $actionFilter;
+        $this->actionFilters[get_class($actionFilter)] = $actionFilter;
         return $this;
     }
 
     public function getFilters(): array
     {
-        return $this->ActionFilters;
+        return $this->actionFilters;
     }
 
     public function addValueProvider(IValueProvider $valueProvider)
     {
-        $this->ValueProviders->add($valueProvider);
+        $this->valueProviders->add($valueProvider);
         return $this;
     }
 
     public function addModelBinder(IModelBinder $modelBinder)
     {
-        $this->ModelBinder = $modelBinder;
+        $this->modelBinder = $modelBinder;
         return $this;
     }
 
     public function getValueProviders(): CompositeValueProvider
     {
-        return $this->ValueProviders;
+        return $this->valueProviders;
     }
 
     public function getModelBinderProvider(): ModelBinderProvider
     {
-        return new ModelBinderProvider($this->ModelBinder);
+        return new ModelBinderProvider($this->modelBinder);
     }
 }

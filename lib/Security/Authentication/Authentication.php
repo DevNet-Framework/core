@@ -9,44 +9,53 @@
 
 namespace DevNet\Web\Security\Authentication;
 
+use DevNet\System\Exceptions\PropertyException;
 use DevNet\Web\Security\ClaimsPrincipal;
 use Exception;
 
 class Authentication
 {
-    private array $Handlers;
-
-    public function __construct(array $handlers)
-    {
-        $this->Handlers = $handlers;
-    }
+    private array $handlers;
 
     public function __get(string $name)
     {
-        return $this->$name;
+        if ($name == 'Handlers') {
+            return $this->handlers;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
     }
 
-    public function SignIn(ClaimsPrincipal $user, ?bool $isPersistent = null)
+    public function __construct(array $handlers)
     {
-        $handler = $this->Handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
+        $this->handlers = $handlers;
+    }
+
+    public function signIn(ClaimsPrincipal $user, ?bool $isPersistent = null)
+    {
+        $handler = $this->handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
 
         if ($handler) {
-            $handler->SignIn($user, $isPersistent);
+            $handler->signIn($user, $isPersistent);
         }
     }
 
-    public function SignOut()
+    public function signOut()
     {
-        $handler = $this->Handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
+        $handler = $this->handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
 
         if ($handler) {
-            $handler->SignOut();
+            $handler->signOut();
         }
     }
 
     public function authenticate(): AuthenticationResult
     {
-        $handler = $this->Handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
+        $handler = $this->handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
 
         if ($handler) {
             return $handler->authenticate();

@@ -18,11 +18,11 @@ use Throwable;
 
 class ExceptionMiddleware implements IMiddleware
 {
-    private ?string $ErrorHandlingPath;
+    private ?string $errorHandlingPath;
 
     public function __construct(?string $errorHandlingPath = null)
     {
-        $this->ErrorHandlingPath = $errorHandlingPath;
+        $this->errorHandlingPath = $errorHandlingPath;
     }
 
     public function __invoke(HttpContext $context, RequestDelegate $next)
@@ -39,8 +39,8 @@ class ExceptionMiddleware implements IMiddleware
                 throw new $error;
             }
             $context->addAttribute('Error', $error);
-            if ($this->ErrorHandlingPath) {
-                $context->Request->Uri->Path = $this->ErrorHandlingPath;
+            if ($this->errorHandlingPath) {
+                $context->Request->Uri->Path = $this->errorHandlingPath;
                 $context->Response->Body->flush();
                 return yield $next($context);
             }

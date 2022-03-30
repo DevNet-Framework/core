@@ -14,7 +14,7 @@ use Closure;
 
 class AuthenticationBuilder
 {
-    private array $Authentications;
+    private array $authentications;
 
     public function addCookie(string $authenticationSchem, Closure $configuration = null)
     {
@@ -25,11 +25,11 @@ class AuthenticationBuilder
             $configuration($options);
         }
 
-        $this->Authentications[$authenticationSchem] = new AuthenticationCookieHandler($options);
+        $this->authentications[$authenticationSchem] = new AuthenticationCookieHandler($options);
     }
 
     public function build()
     {
-        return new Authentication($this->Authentications);
+        return new Authentication($this->authentications);
     }
 }

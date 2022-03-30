@@ -10,19 +10,28 @@
 namespace DevNet\Web\Security\Authorization;
 
 use DevNet\System\Async\Tasks\Task;
+use DevNet\System\Exceptions\PropertyException;
 
 class RoleRequirement extends AuthorizationHandler implements IAuthorizationRequirement
 {
-    private array $AllowedRoles;
-
-    public function __construct(array $allowedRoles)
-    {
-        $this->AllowedRoles = $allowedRoles;
-    }
+    private array $allowedRoles;
 
     public function __get(string $name)
     {
-        return $this->$name;
+        if ($name == 'AllowedRoles') {
+            return $this->allowedRoles;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+    }
+
+    public function __construct(array $allowedRoles)
+    {
+        $this->allowedRoles = $allowedRoles;
     }
 
     public function getHandlerName(): string
@@ -34,9 +43,9 @@ class RoleRequirement extends AuthorizationHandler implements IAuthorizationRequ
     {
         $user = $context->User;
         if ($user) {
-            if ($this->AllowedValues) {
+            if ($this->allowedValues) {
                 $found = $user->findClaims(fn ($claim) => $claim->Type == 'Role'
-                    && in_array($claim->Value, $this->AllowedValues));
+                    && in_array($claim->Value, $this->allowedValues));
             }
 
             if ($found) {

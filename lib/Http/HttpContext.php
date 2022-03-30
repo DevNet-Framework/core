@@ -9,48 +9,54 @@
 
 namespace DevNet\Web\Http;
 
+use DevNet\System\Exceptions\PropertyException;
+
 class HttpContext
 {
-    private HttpRequest $Request;
-    private HttpResponse $Response;
-    private FeatureCollection $Features;
-    private array $Attributes = [];
+    private HttpRequest $request;
+    private HttpResponse $response;
+    private FeatureCollection $features;
+    private array $attributes = [];
 
     public function __get(string $name)
     {
-        switch ($name) {
-            case 'Request':
-            case 'Response':
-            case 'Features':
-                return $this->$name;
-                break;
-            default:
-                return $this->Attributes[$name] ?? null;
-                break;
+        if (in_array($name, ['Request', 'Response', 'Features'])) {
+            $property = lcfirst($name);
+            return $this->$property;
         }
+
+        if (isset($this->attributes[$name])) {
+            return $this->attributes[$name];
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
     }
 
     public function __construct(HttpRequest $request, HttpResponse $response)
     {
-        $this->Request = $request;
-        $this->Response = $response;
-        $this->Features = new FeatureCollection();
+        $this->request = $request;
+        $this->response = $response;
+        $this->features = new FeatureCollection();
     }
 
     public function addAttribute(string $name, $value): void
     {
-        $this->Attributes[$name] = $value;
+        $this->attributes[$name] = $value;
     }
 
     public function getAttribute(string $name)
     {
-        return $this->Attributes[$name] ?? null;
+        return $this->attributes[$name] ?? null;
     }
 
     public function removeAttribute(string $name): bool
     {
-        if (isset($this->Attributes[$name])) {
-            unset($this->Attributes[$name]);
+        if (isset($this->attributes[$name])) {
+            unset($this->attributes[$name]);
             return true;
         }
 

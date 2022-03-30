@@ -14,56 +14,56 @@ use DevNet\System\Linq;
 
 class UserManager
 {
-    private IdentityContext $IdentityContext;
-    private EntitySet $Users;
+    private IdentityContext $identityContext;
+    private EntitySet $users;
 
     public function __construct(IdentityContext $identityContext)
     {
-        $this->IdentityContext = $identityContext;
-        $this->Users           = $identityContext->Users;
+        $this->identityContext = $identityContext;
+        $this->users = $identityContext->Users;
     }
 
     public function create(User $user): int
     {
         $result = null;
-        preg_match("%" . $this->IdentityContext->Options->UsernameFormat . "%", $user->Username, $result);
+        preg_match("%" . $this->identityContext->Options->UsernameFormat . "%", $user->Username, $result);
 
         if (!$result) {
-            throw new IdentityException("Username doesn't meet the format requirements: {$this->IdentityContext->Options->UsernameFormat}");
+            throw new IdentityException("Username doesn't meet the format requirements: {$this->identityContext->Options->UsernameFormat}");
         }
 
         $result = null;
-        preg_match("%" . $this->IdentityContext->Options->PasswordFormat . "%", $user->Password, $result);
+        preg_match("%" . $this->identityContext->Options->PasswordFormat . "%", $user->Password, $result);
 
         if (!$result) {
-            throw new IdentityException("Password doesn't meet the format requirements: {$this->IdentityContext->Options->PasswordFormat}");
+            throw new IdentityException("Password doesn't meet the format requirements: {$this->identityContext->Options->PasswordFormat}");
         }
 
         $user->Password = password_hash($user->Password, PASSWORD_DEFAULT);
 
-        $this->Users->add($user);
-        return $this->IdentityContext->save();
+        $this->users->add($user);
+        return $this->identityContext->save();
     }
 
     public function delete(User $User): int
     {
-        $this->Users->remove($User);
-        return $this->IdentityContext->save();
+        $this->users->remove($User);
+        return $this->identityContext->save();
     }
 
     public function update(): int
     {
-        return $this->IdentityContext->save();
+        return $this->identityContext->save();
     }
 
     public function getUser(): ?User
     {
-        $user  = $this->IdentityContext->HttpContext->User;
+        $user  = $this->identityContext->HttpContext->User;
         $claim = $user->findClaim(fn ($claim) => $claim->Type == 'UserId');
 
         if ($claim) {
             $claim->Value;
-            return $this->Users->find(intval($claim->Value));
+            return $this->users->find(intval($claim->Value));
         }
 
         return null;
@@ -71,15 +71,15 @@ class UserManager
 
     public function isInRole(User $user, string $roleName): bool
     {
-        $role = $this->IdentityContext->Roles->where(fn ($x) => $x->Name == $roleName)->first();
+        $role = $this->identityContext->Roles->where(fn ($role) => $role->Name == $roleName)->first();
         if (!$role) {
             return false;
         }
 
         $userId = $user->Id;
         $roleId = $role->Id;
-        $userRole = $this->IdentityContext->UserRole
-            ->where(fn ($x) => $x->UserId == $userId && $x->RoleId == $roleId)->first();
+        $userRole = $this->identityContext->UserRole
+            ->where(fn ($userRole) => $userRole->UserId == $userId && $userRole->RoleId == $roleId)->first();
 
         if (!$userRole) {
             return false;
@@ -94,7 +94,7 @@ class UserManager
             return new IdentityResult(0);
         }
 
-        $role = $this->IdentityContext->Roles->where(fn ($x) => $x->Name == $roleName)->first();
+        $role = $this->identityContext->Roles->where(fn ($role) => $role->Name == $roleName)->first();
         if (!$role) {
             return new IdentityResult(-1);
         }
@@ -103,8 +103,8 @@ class UserManager
         $userRole->UserId = $user->Id;
         $userRole->RoleId = $role->Id;
 
-        $this->IdentityContext->UserRole->add($userRole);
-        $this->IdentityContext->Save();
+        $this->identityContext->UserRole->add($userRole);
+        $this->identityContext->Save();
 
         return new IdentityResult(1);
     }
@@ -115,18 +115,18 @@ class UserManager
             return new IdentityResult(0);
         }
 
-        $role = $this->IdentityContext->Roles->where(fn ($x) => $x->Name == $roleName)->first();
+        $role = $this->identityContext->Roles->where(fn ($role) => $role->Name == $roleName)->first();
         if (!$role) {
             return new IdentityResult(-1);
         }
 
         $userId = $user->Id;
         $roleId = $role->Id;
-        $userRole = $this->IdentityContext->UserRole
-            ->where(fn ($x) => $x->UserId == $userId && $x->RoleId == $roleId)->first();
+        $userRole = $this->identityContext->UserRole
+            ->where(fn ($userRole) => $userRole->UserId == $userId && $userRole->RoleId == $roleId)->first();
 
-        $this->IdentityContext->UserRole->remove($userRole);
-        $this->IdentityContext->Save();
+        $this->identityContext->UserRole->remove($userRole);
+        $this->identityContext->Save();
 
         return new IdentityResult(1);
     }

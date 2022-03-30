@@ -16,9 +16,4 @@ class RouteData
 {
     public array $Routers = [];
     public array $Values = [];
-
-    public function __get(string $name)
-    {
-        return $this->$name;
-    }
 }

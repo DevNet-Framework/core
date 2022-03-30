@@ -15,9 +15,9 @@ use DevNet\System\IO\Stream;
 
 class HttpResponse extends HttpMessage
 {
-    private int $StatusCode;
-    private string $ReasonPhrase;
-    private array $Messages = [
+    protected string $ReasonPhrase;
+    protected int $StatusCode;
+    private array $messages = [
         // Informational 1xx
         100 => "Continue",
         101 => "Switching Protocols",
@@ -95,7 +95,15 @@ class HttpResponse extends HttpMessage
 
     public function __get(string $name)
     {
-        return $this->$name;
+        if ($name == 'ReasonPhrase') {
+            return $this->ReasonPhrase;
+        }
+
+        if ($name == 'StatusCode') {
+            return $this->StatusCode;
+        }
+
+        return parent::__get($name);
     }
 
     public function __construct(?Headers $headers = null, ?Stream $body = null)
@@ -110,8 +118,8 @@ class HttpResponse extends HttpMessage
     public function setStatusCode(int $statusCode, string $reasonPhrase = null)
     {
         if (!$reasonPhrase) {
-            if (isset($this->Messages[$statusCode])) {
-                $reasonPhrase = $this->Messages[$statusCode];
+            if (isset($this->messages[$statusCode])) {
+                $reasonPhrase = $this->messages[$statusCode];
             }
         }
 

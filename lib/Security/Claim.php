@@ -19,9 +19,4 @@ class Claim
         $this->Type = $Type;
         $this->Value = $Value;
     }
-
-    public function __get(string $Name)
-    {
-        return $this->$Name;
-    }
 }

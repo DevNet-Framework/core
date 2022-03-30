@@ -21,35 +21,35 @@ use DevNet\System\Runtime\Launcher;
 
 class WebHost
 {
-    private IApplicationBuilder $AppBuilder;
-    private IserviceProvider $Provider;
-    private WebServer $Server;
+    private IApplicationBuilder $appBuilder;
+    private IserviceProvider $provider;
+    private WebServer $server;
 
     public function __construct(IApplicationBuilder $AppBuilder, IServiceProvider $provider)
     {
-        $this->AppBuilder = $AppBuilder;
-        $this->Provider   = $provider;
-        $this->Server     = new WebServer();
+        $this->appBuilder = $AppBuilder;
+        $this->provider   = $provider;
+        $this->server     = new WebServer();
 
         $launcher = Launcher::getLauncher();
-        $launcher->Provider($provider);
+        $launcher->provider($provider);
     }
 
     public function start(Closure $configure): void
     {
-        $configure($this->AppBuilder);
+        $configure($this->appBuilder);
         $this->run();
     }
 
     public function run(): void
     {
-        $config = $this->Provider->getService(IConfiguration::class);
+        $config = $this->provider->getService(IConfiguration::class);
         $args   = $config->Settings['args'] ?? [];
 
-        $this->Server->start($args);
+        $this->server->start($args);
 
-        $context    = $this->Provider->getService(HttpContext::class);
-        $applicaion = $this->AppBuilder->build();
+        $context    = $this->provider->getService(HttpContext::class);
+        $applicaion = $this->appBuilder->build();
 
         if (PHP_SAPI == 'cli') {
             return;

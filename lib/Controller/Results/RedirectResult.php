@@ -13,13 +13,13 @@ use DevNet\Web\Controller\ActionContext;
 
 class RedirectResult extends ActionResult
 {
-    protected string $Path;
-    protected int $StatusCode;
+    private string $path;
+    private int $statusCode;
 
     public function __construct(string $path, int $statusCode = 302)
     {
-        $this->Path = $path;
-        $this->StatusCode = $statusCode;
+        $this->path = $path;
+        $this->statusCode = $statusCode;
     }
 
     public function execute(ActionContext $actionContext): void
@@ -30,11 +30,11 @@ class RedirectResult extends ActionResult
         $port        = $httpContext->Request->Uri->Port;
         $port        = $port != 80 && $port != '' ? ":" . $port : '';
 
-        if (strpos($this->Path, "/") !== 0) {
-            $this->Path = "/{$this->Path}";
+        if (strpos($this->path, "/") !== 0) {
+            $this->path = "/{$this->path}";
         }
 
-        $url = $scheme . '://' . $host . $port . $this->Path;
+        $url = $scheme . '://' . $host . $port . $this->path;
         $httpContext->Response->Headers->add("Location", $url);
     }
 }

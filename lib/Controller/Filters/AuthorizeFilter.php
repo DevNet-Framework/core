@@ -17,11 +17,11 @@ use DevNet\System\Async\Tasks\Task;
 
 class AuthorizeFilter implements IActionFilter
 {
-    private array $Options;
+    private array $options;
 
     public function __construct(array $options = [])
     {
-        $this->Options = $options;
+        $this->options = $options;
     }
 
     public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next)
@@ -31,7 +31,7 @@ class AuthorizeFilter implements IActionFilter
 
         if ($authorization) {
             $user   = $httpContext->User;
-            $policy = $this->Options['Policy'] ?? 'Authentication';
+            $policy = $this->options['Policy'] ?? 'Authentication';
             $result = $authorization->Authorize($policy, $user);
 
             if (!$result->isSucceeded()) {

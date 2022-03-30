@@ -16,11 +16,11 @@ use DevNet\Web\Http\HttpException;
 
 class HttpMethodFilter implements IActionFilter
 {
-    private array $Options;
+    private array $options;
 
     public function __construct(array $options = [])
     {
-        $this->Options = $options;
+        $this->options = $options;
     }
 
     public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next)
@@ -28,11 +28,11 @@ class HttpMethodFilter implements IActionFilter
         $httpContext = $context->HttpContext;
         $httpMethod  = $httpContext->Request->Method;
 
-        foreach ($this->Options as &$option) {
+        foreach ($this->options as &$option) {
             $option = strtoupper($option);
         }
 
-        if (!in_array($httpMethod, $this->Options)) {
+        if (!in_array($httpMethod, $this->options)) {
             $httpContext->Response->setStatusCode(405);
             throw new HttpException("\"{$httpMethod}\" Method Not Allowed", 405);
         }

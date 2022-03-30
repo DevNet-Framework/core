@@ -14,21 +14,21 @@ use DevNet\Web\Security\Antiforgery\IAntiforgery;
 
 class HtmlHelper
 {
-    private HttpContext $HttpContext;
+    private HttpContext $httpContext;
 
     public function __construct(HttpContext $httpContext)
     {
-        $this->HttpContext = $httpContext;
+        $this->httpContext = $httpContext;
     }
 
     public function antiForgeryToken(): ?string
     {
-        $antiForgery = $this->HttpContext->RequestServices->getService(IAntiforgery::class);
+        $antiForgery = $this->httpContext->RequestServices->getService(IAntiforgery::class);
         if (!$antiForgery) {
             return null;
         }
 
-        $tokens = $antiForgery->storeTokens($this->HttpContext);
+        $tokens = $antiForgery->storeTokens($this->httpContext);
         return "<input type=\"hidden\" name=\"{$tokens->FormFieldName}\" value=\"{$tokens->RequestToken}\">";
     }
 }

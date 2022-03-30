@@ -9,19 +9,33 @@
 
 namespace DevNet\Web\Security\Authorization;
 
+use DevNet\System\Exceptions\PropertyException;
+
 class AuthorizationPolicy
 {
-    private string $Name;
-    private array $Requirements;
-
-    public function __construct(string $Name, array $requirements)
-    {
-        $this->Name = $Name;
-        $this->Requirements = $requirements;
-    }
+    private string $name;
+    private array $requirements;
 
     public function __get(string $name)
     {
-        return $this->$name;
+        if ($name == 'Name') {
+            return $this->name;
+        }
+
+        if ($name == 'Requirements') {
+            return $this->requirements;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+    }
+
+    public function __construct(string $name, array $requirements)
+    {
+        $this->name = $name;
+        $this->requirements = $requirements;
     }
 }

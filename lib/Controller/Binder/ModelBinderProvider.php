@@ -15,23 +15,23 @@ use Traversable;
 
 class ModelBinderProvider implements IteratorAggregate
 {
-    private array $ModelBinders = [];
+    private array $modelBinders = [];
 
     public function __construct(IModelBinder $modelBinder = null)
     {
         if ($modelBinder) {
-            $this->ModelBinders[] = $modelBinder;
+            $this->modelBinders[] = $modelBinder;
         }
     }
 
     public function add(IModelBinder $modelBinder)
     {
-        $this->ModelBinders[] = $modelBinder;
+        $this->modelBinders[] = $modelBinder;
         return $this;
     }
 
     public function getIterator(): Traversable
     {
-        return new ArrayIterator($this->ModelBinders);
+        return new ArrayIterator($this->modelBinders);
     }
 }

@@ -19,11 +19,11 @@ use DevNet\System\Async\Tasks\Task;
 
 class RouterMiddleware implements IMiddleware
 {
-    private RouteBuilder $RouteBuilder;
+    private RouteBuilder $routeBuilder;
 
     public function __construct(RouteBuilder $routeBuilder)
     {
-        $this->RouteBuilder = $routeBuilder;
+        $this->routeBuilder = $routeBuilder;
     }
 
     public function __invoke(HttpContext $context, RequestDelegate $next)
@@ -41,7 +41,7 @@ class RouterMiddleware implements IMiddleware
             });
         }
 
-        $router = $this->RouteBuilder->build();
+        $router = $this->routeBuilder->build();
         $routeContext = new RouteContext($httpMethod, $urlPath);
         if ($router->matchRoute($routeContext)) {
             $context->addAttribute('RouteContext', $routeContext);

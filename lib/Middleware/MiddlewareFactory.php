@@ -19,7 +19,7 @@ class MiddlewareFactory
 
     public function __construct(IServiceProvider $provider)
     {
-        $this->Provider = $provider;
+        $this->provider = $provider;
     }
 
     public function create(string $middleware): IMiddleware
@@ -30,12 +30,11 @@ class MiddlewareFactory
             }
 
             $interfaceNames = class_implements($middleware);
-
             if (!in_array("DevNet\Web\Hosting\IMiddleware", $interfaceNames)) {
                 throw new \Exception("invalide type, class must be of type DevNet\Web\Hosting\IMiddleware");
             }
         }
 
-        return new $middleware($this->Provider);
+        return new $middleware($this->provider);
     }
 }

@@ -17,11 +17,11 @@ use DevNet\Web\Security\Antiforgery\AntiforgeryException;
 
 class AntiForgeryFilter implements IActionFilter
 {
-    private array $Options;
+    private array $options;
 
     public function __construct(array $options = [])
     {
-        $this->Options = $options;
+        $this->options = $options;
     }
 
     public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next)

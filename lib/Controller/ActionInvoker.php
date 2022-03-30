@@ -19,31 +19,31 @@ use DevNet\System\Exceptions\ClassException;
 
 class ActionInvoker implements IRequestHandler
 {
-    protected string $ControllerName;
-    protected string $ActionName;
-    protected IValueProvider $ValueProvider;
+    private string $controllerName;
+    private string $actionName;
+    private IValueProvider $valueProvider;
 
     public function __construct(string $controllerName, string $actionName, IValueProvider $provider)
     {
-        $this->ControllerName = $controllerName;
-        $this->ActionName     = $actionName;
-        $this->ValueProvider  = $provider;
+        $this->controllerName = $controllerName;
+        $this->actionName     = $actionName;
+        $this->valueProvider  = $provider;
     }
 
     public function __invoke(HttpContext $httpContext)
     {
         try {
-            $controller = Activator::CreateInstance($this->ControllerName, $httpContext->RequestServices);
+            $controller = Activator::CreateInstance($this->controllerName, $httpContext->RequestServices);
         } catch (ClassException $exception) {
-            throw new ControllerException("Not found Controller : {$this->ControllerName}", 404);
+            throw new ControllerException("Not found Controller : {$this->controllerName}", 404);
         }
 
-        if (!method_exists($this->ControllerName, $this->ActionName)) {
-            throw new ControllerException("Undefined method : {$this->ControllerName}::{$this->ActionName}()", 404);
+        if (!method_exists($this->controllerName, $this->actionName)) {
+            throw new ControllerException("Undefined method : {$this->controllerName}::{$this->actionName}()", 404);
         }
 
-        $actionDescriptor = new ActionDescriptor($controller, $this->ActionName);
-        $actionContext    = new ActionContext($actionDescriptor, $httpContext, $this->ValueProvider);
+        $actionDescriptor = new ActionDescriptor($controller, $this->actionName);
+        $actionContext    = new ActionContext($actionDescriptor, $httpContext, $this->valueProvider);
 
         $httpContext->addAttribute("ActionContext", $actionContext);
         return $controller($httpContext);

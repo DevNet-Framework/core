@@ -9,29 +9,43 @@
 
 namespace DevNet\Web\Security\Authorization;
 
+use DevNet\System\Exceptions\PropertyException;
+
 class AuthorizationResult
 {
-    private int $Status;
-    private array $FailedRequirements;
-
-    public function __construct(int $status = 0, array $failedRequirements = [])
-    {
-        $this->Status             = $status;
-        $this->FailedRequirements = $failedRequirements;
-    }
+    private int $status;
+    private array $failedRequirements;
 
     public function __get(string $name)
     {
-        return $this->$name;
+        if ($name == 'Status') {
+            return $this->status;
+        }
+
+        if ($name == 'FailedRequirements') {
+            return $this->failedRequirements;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+    }
+
+    public function __construct(int $status = 0, array $failedRequirements = [])
+    {
+        $this->status = $status;
+        $this->failedRequirements = $failedRequirements;
     }
 
     public function isSucceeded(): bool
     {
-        return $this->Status == 1 ? true : false;
+        return $this->status == 1 ? true : false;
     }
 
     public function isFailed(): bool
     {
-        return $this->Status == -1 ? true : false;
+        return $this->status == -1 ? true : false;
     }
 }

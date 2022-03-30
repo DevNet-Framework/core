@@ -9,37 +9,34 @@
 
 namespace DevNet\Web\Router;
 
+use DevNet\System\Exceptions\PropertyException;
+
 class RouteContext
 {
-    private string $HttpMethod;
-    private string $UrlPath;
-    private RouteData $RouteData;
+    private string $httpMethod;
+    private string $urlPath;
+    private RouteData $routeData;
     public ?object $Handler;
+
+    public function __get(string $name)
+    {
+        if (in_array($name, ['HttpMethod', 'UrlPath', 'RouteData'])) {
+            $property = lcfirst($name);
+            return $this->$property;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+    }
 
     public function __construct(string $httpMethod, string $urlPath)
     {
-        $this->HttpMethod = $httpMethod;
-        $this->UrlPath    = $urlPath;
-        $this->RouteData  = new RouteData();
+        $this->httpMethod = $httpMethod;
+        $this->urlPath    = $urlPath;
+        $this->routeData  = new RouteData();
         $this->Handler    = null;
-    }
-
-    /**
-     * Magic method read-only for all properties.
-     * @return mixed depend on the property type.
-     */
-    public function __get(string $name)
-    {
-        switch ($name) {
-            case 'UrlPath':
-            case 'HttpMethod':
-            case 'RouteData':
-            case 'RouteHandler':
-                return $this->$name;
-                break;
-            default:
-                throw new \DomainException("Undefined property '$name'");
-                break;
-        }
     }
 }

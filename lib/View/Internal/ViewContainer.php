@@ -11,20 +11,20 @@ namespace DevNet\Web\View\Internal;
 
 class ViewContainer
 {
-    protected array $Items;
+    protected array $items;
 
-    public function set(string $Name, $Value): void
+    public function set(string $name, $value): void
     {
-        $this->Items[$Name] = $Value;
+        $this->items[$name] = $value;
     }
 
-    public function get(string $Name)
+    public function get(string $name)
     {
-        return $this->Items[$Name] ?? null;
+        return $this->items[$name] ?? null;
     }
 
-    public function has(string $Name): bool
+    public function has(string $name): bool
     {
-        return isset($this->Items[$Name]) ? true : false;
+        return isset($this->items[$name]) ? true : false;
     }
 }

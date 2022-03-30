@@ -13,23 +13,23 @@ use Closure;
 
 class ClaimsPrincipal
 {
-    public array $Identities = [];
+    private array $identities = [];
 
-    public function __construct(ClaimsIdentity $Identity = null)
+    public function __construct(ClaimsIdentity $identity = null)
     {
-        if ($Identity != null) {
-            $this->Identities[$Identity->AuthenticationType] = $Identity;
+        if ($identity != null) {
+            $this->identities[$identity->AuthenticationType] = $identity;
         }
     }
 
-    public function addIdentity(ClaimsIdentity $Identity)
+    public function addIdentity(ClaimsIdentity $identity)
     {
-        $this->Identities[$Identity->AuthenticationType] = $Identity;
+        $this->identities[$identity->AuthenticationType] = $identity;
     }
 
     public function findClaim(Closure $predecate): ?Claim
     {
-        foreach ($this->Identities as $identity) {
+        foreach ($this->identities as $identity) {
             $claim = $identity->findClaim($predecate);
             if ($claim != null) {
                 return $claim;
@@ -42,8 +42,7 @@ class ClaimsPrincipal
     public function findClaims(Closure $predecate): array
     {
         $claims = [];
-
-        foreach ($this->Identities as $identity) {
+        foreach ($this->identities as $identity) {
             foreach ($identity->findClaims($predecate) as $claim) {
                 $claims[] = $claim;
             }
@@ -54,7 +53,7 @@ class ClaimsPrincipal
 
     public function isAuthenticated()
     {
-        foreach ($this->Identities as $identity) {
+        foreach ($this->identities as $identity) {
             if ($identity->isAuthenticated()) {
                 return true;
             }
@@ -65,7 +64,7 @@ class ClaimsPrincipal
 
     public function IsInRole(string $role): bool
     {
-        foreach ($this->Identities as $identity) {
+        foreach ($this->identities as $identity) {
             if ($identity->hasClaim(ClaimType::Role, $role)) {
                 return true;
             }

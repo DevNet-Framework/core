@@ -17,19 +17,19 @@ use DevNet\Web\Http\FileCollection;
  */
 class FileValueProvider implements IValueProvider
 {
-    private FileCollection $Files;
+    private FileCollection $files;
 
     public function __construct(FileCollection $files = null)
     {
         if (!$files) {
             $files = new FileCollection();
         }
-        $this->Files = $files;
+        $this->files = $files;
     }
 
     public function getValue(string $key)
     {
-        $files = $this->Files->getFiles($key);
+        $files = $this->files->getFiles($key);
         if (count($files) == 1) {
             return $files[0];
         }
@@ -38,7 +38,7 @@ class FileValueProvider implements IValueProvider
 
     public function contains(string $key): bool
     {
-        $files = $this->Files->getFiles($key);
+        $files = $this->files->getFiles($key);
         if (count($files) > 0) {
             return true;
         }

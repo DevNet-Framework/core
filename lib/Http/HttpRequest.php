@@ -9,18 +9,23 @@
 
 namespace DevNet\Web\Http;
 
+use DevNet\System\Exceptions\PropertyException;
 use DevNet\System\IO\FileStream;
 use DevNet\System\IO\Stream;
 
 class HttpRequest extends HttpMessage
 {
-    private string $Method;
-    private Uri $Uri;
-    private Form $Form;
+    protected string $Method;
+    protected Uri $Uri;
+    protected Form $Form;
 
     public function __get(string $name)
     {
-        return $this->$name;
+        if (in_array($name, ['Method', 'Uri', 'Form'])) {
+            return $this->$name;
+        }
+
+        return parent::__get($name);
     }
 
     public function __construct(

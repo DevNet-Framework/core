@@ -13,16 +13,16 @@ use DevNet\System\Dependency\IServiceProvider;
 
 class RouteBuilder implements IRouteBuilder
 {
-    private IServiceProvider $ServiceProvider;
-    private ?IRouteHandler $DefaultHandler;
-    private array $Routes;
-    private string $Prefix = '';
-    private string $Name   = '';
+    private IServiceProvider $serviceProvider;
+    private ?IRouteHandler $defaultHandler;
+    private array $routes;
+    private string $prefix = '';
+    private string $name   = '';
 
     public function __construct(IServiceProvider $serviceProvider, IRouteHandler $defaultHandler = null)
     {
-        $this->ServiceProvider = $serviceProvider;
-        $this->DefaultHandler  = $defaultHandler;
+        $this->serviceProvider = $serviceProvider;
+        $this->defaultHandler  = $defaultHandler;
     }
 
     /**
@@ -30,11 +30,11 @@ class RouteBuilder implements IRouteBuilder
      */
     public function group(string $prefix, callable $callback): void
     {
-        $this->Prefix = trim($prefix, '/');
+        $this->prefix = trim($prefix, '/');
         $callback($this);
 
         // reset the name for the next route
-        $this->Prefix = '';
+        $this->prefix = '';
     }
 
     /**
@@ -42,7 +42,7 @@ class RouteBuilder implements IRouteBuilder
      */
     public function name(string $name): RouteBuilder
     {
-        $this->Name = $name;
+        $this->name = $name;
         return $this;
     }
 
@@ -51,16 +51,16 @@ class RouteBuilder implements IRouteBuilder
      */
     public function mapRoute(string $name, string $pattern, string ...$target): void
     {
-        if ($this->DefaultHandler) {
-            $routeHandler = clone $this->DefaultHandler;
+        if ($this->defaultHandler) {
+            $routeHandler = clone $this->defaultHandler;
             $routeHandler->Target = $target;
         } else {
-            $routeHandler = new RouteHandler($this->ServiceProvider, $target[0] ?? null);
+            $routeHandler = new RouteHandler($this->serviceProvider, $target[0] ?? null);
         }
 
-        $pattern = $this->Prefix . '/' . trim($pattern, '/');
-        $this->Routes[] = new Route($name, 'ANY', $pattern, $routeHandler);
-        $this->Name = ''; // reset the name for the next route
+        $pattern = $this->prefix . '/' . trim($pattern, '/');
+        $this->routes[] = new Route($name, 'ANY', $pattern, $routeHandler);
+        $this->name = ''; // reset the name for the next route
     }
 
     /**
@@ -100,9 +100,9 @@ class RouteBuilder implements IRouteBuilder
      */
     public function mapVerb(string $verb, string $pattern, $target): void
     {
-        $pattern = $this->Prefix . '/' . trim($pattern, '/');
-        $this->Routes[] = new Route($this->Name, $verb, $pattern, new RouteHandler($this->ServiceProvider, $target));
-        $this->Name = ''; // reset the name for the next route
+        $pattern = $this->prefix . '/' . trim($pattern, '/');
+        $this->routes[] = new Route($this->name, $verb, $pattern, new RouteHandler($this->serviceProvider, $target));
+        $this->name = ''; // reset the name for the next route
     }
 
     /**
@@ -111,7 +111,7 @@ class RouteBuilder implements IRouteBuilder
     public function build(): IRouter
     {
         $routeCollection = new RouteCollection();
-        foreach ($this->Routes as $route) {
+        foreach ($this->routes as $route) {
             $routeCollection->add($route);
         }
         return $routeCollection;

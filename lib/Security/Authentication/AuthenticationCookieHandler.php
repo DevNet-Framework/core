@@ -9,48 +9,61 @@
 
 namespace DevNet\Web\Security\Authentication;
 
+use DevNet\System\Exceptions\PropertyException;
 use DevNet\Web\Security\ClaimsPrincipal;
 use DevNet\Web\Http\Session;
 use Exception;
 
 class AuthenticationCookieHandler
 {
-    private AuthenticationCookieOptions $Options;
-    private Session $Session;
-
-    public function __construct(AuthenticationCookieOptions $options)
-    {
-        $this->Options = $options;
-        $this->Session = new Session($options->CookieName);
-    }
+    private AuthenticationCookieOptions $options;
+    private Session $session;
 
     public function __get(string $name)
     {
-        return $this->$name;
-    }
-
-    public function SignIn(ClaimsPrincipal $user, ?bool $isPersistent = null)
-    {
-        if ($isPersistent) {
-            $this->Session->setOptions(['cookie_lifetime' => $this->Options->TimeSpan]);
-        } else {
-            $this->Session->setOptions(['cookie_lifetime' => 0]);
+        if ($name == 'Options') {
+            return $this->options;
         }
 
-        $this->Session->start();
-        $this->Session->set(ClaimsPrincipal::class, $user);
+        if ($name == 'Session') {
+            return $this->session;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
     }
 
-    public function SignOut()
+    public function __construct(AuthenticationCookieOptions $options)
     {
-        $this->Session->destroy();
+        $this->options = $options;
+        $this->session = new Session($options->CookieName);
+    }
+
+    public function signIn(ClaimsPrincipal $user, ?bool $isPersistent = null)
+    {
+        if ($isPersistent) {
+            $this->session->setOptions(['cookie_lifetime' => $this->options->TimeSpan]);
+        } else {
+            $this->session->setOptions(['cookie_lifetime' => 0]);
+        }
+
+        $this->session->start();
+        $this->session->set(ClaimsPrincipal::class, $user);
+    }
+
+    public function signOut()
+    {
+        $this->session->destroy();
     }
 
     public function authenticate(): AuthenticationResult
     {
-        if ($this->Session->isSet()) {
-            $this->Session->start();
-            $principal = $this->Session->get(ClaimsPrincipal::class);
+        if ($this->session->isSet()) {
+            $this->session->start();
+            $principal = $this->session->get(ClaimsPrincipal::class);
 
             if ($principal) {
                 return new AuthenticationResult($principal);

@@ -9,17 +9,28 @@
 
 namespace DevNet\Web\Http;
 
+use DevNet\System\Exceptions\PropertyException;
+
 class FormFile
 {
-    private ?string $Name;
-    private ?string $Type;
-    private ?string $Temp;
-    private ?int $Size;
-    private ?int $Error;
+    private ?string $name;
+    private ?string $type;
+    private ?string $temp;
+    private ?int $size;
+    private ?int $error;
 
     public function __get(string $name)
     {
-        return $this->$name;
+        if (in_array($name, ['Name', 'Type', 'Temp', 'Size', 'Error'])) {
+            $property = lcfirst($name);
+            return $this->$property;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
     }
 
     public function __construct(
@@ -29,15 +40,15 @@ class FormFile
         int $size,
         int $error
     ) {
-        $this->Name  = $name;
-        $this->Type  = $type;
-        $this->Temp  = $temp;
-        $this->Size  = $size;
-        $this->Error = $error;
+        $this->name  = $name;
+        $this->type  = $type;
+        $this->temp  = $temp;
+        $this->size  = $size;
+        $this->error = $error;
     }
 
     public function copyTo(string $target): bool
     {
-        return copy($this->Temp, $target);
+        return copy($this->temp, $target);
     }
 }

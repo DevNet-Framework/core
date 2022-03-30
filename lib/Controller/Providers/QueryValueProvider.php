@@ -19,7 +19,7 @@ class QueryValueProvider extends ValueProvider
     public function __construct(array $values = null)
     {
         if (!$values) {
-            $this->Values = $_GET;
+            $this->values = $_GET;
         }
     }
 }

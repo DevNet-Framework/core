@@ -9,6 +9,7 @@
 
 namespace DevNet\Web\Router;
 
+use DevNet\System\Exceptions\PropertyException;
 use DevNet\Web\Router\IRouter;
 use DevNet\Web\Router\Internal\RouteParser;
 use DevNet\Web\Router\Internal\RouteMatcher;
@@ -16,26 +17,32 @@ use DevNet\Web\Router\Internal\RouteGenerator;
 
 class Route implements IRouter
 {
-    private string $Name;
-    private string $Verb;
-    private string $Pattern;
-    private IRouteHandler $Handler;
-    private array $Data;
+    private string $name;
+    private string $verb;
+    private string $pattern;
+    private IRouteHandler $handler;
+    private array $data;
+
+    public function __get(string $name)
+    {
+        if (in_array($name, ['Name', 'Verb', 'Pattern', 'Handler', 'Data'])) {
+            $property = lcfirst($name);
+            return $this->$property;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+    }
 
     public function __construct(string $name, string $verb, string $pattern, IRouteHandler $handler)
     {
-        $this->Name = $name;
-        $this->Verb = $verb;
-        $this->Pattern = $pattern;
-        $this->Handler = $handler;
-    }
-
-    /**
-     * read-only for all properties.
-     */
-    public function __get(string $name)
-    {
-        return $this->$name;
+        $this->name = $name;
+        $this->verb = $verb;
+        $this->pattern = $pattern;
+        $this->handler = $handler;
     }
 
     public function matchRoute(RouteContext $routeContext): bool
@@ -43,18 +50,18 @@ class Route implements IRouter
         $urlPath = $routeContext->UrlPath;
         $urlPath = RouteParser::parseUrlPath($urlPath);
 
-        $urlPattern = RouteParser::parseUrlPattern($this->Pattern);
+        $urlPattern = RouteParser::parseUrlPattern($this->pattern);
         $matched = RouteMatcher::matchUrl($urlPattern, $urlPath);
 
         if ($matched) {
             $httpMethod = $routeContext->HttpMethod;
-            $allowed = RouteMatcher::matchMethod($httpMethod, $this->Verb);
+            $allowed = RouteMatcher::matchMethod($httpMethod, $this->verb);
 
             if ($allowed) {
-                $this->Data = RouteParser::parsePlaceholders($matched);
+                $this->data = RouteParser::parsePlaceholders($matched);
                 $routeContext->RouteData->Routers['matched'] = $this;
-                $routeContext->RouteData->Values = $this->Data;
-                $this->Handler->handle($routeContext);
+                $routeContext->RouteData->Values = $this->data;
+                $this->handler->handle($routeContext);
                 return true;
             }
 
@@ -69,7 +76,7 @@ class Route implements IRouter
     public function getRoutePath(RoutePathContext $routePathContext): string
     {
         $parameters = $routePathContext->getParameters();
-        $routePath = RouteGenerator::generatePath($this->Pattern, $parameters);
+        $routePath = RouteGenerator::generatePath($this->pattern, $parameters);
         return $routePath;
     }
 }

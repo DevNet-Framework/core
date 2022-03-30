@@ -9,28 +9,42 @@
 
 namespace DevNet\Web\Security\Antiforgery;
 
+use DevNet\System\Exceptions\PropertyException;
+
 class AntiforgeryToken
 {
-    private string $Value;
-    private bool $IsHashed = false;
+    private string $value;
+    private bool $isHashed = false;
+
+    public function __get(string $name)
+    {
+        if ($name == 'Value') {
+            return $this->value;
+        }
+
+        if ($name == 'IsHashed') {
+            return $this->isHashed;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+    }
 
     public function __construct(string $token = null, string $key = null)
     {
         if ($token) {
             if ($key) {
-                $this->Value = hash_hmac('sha256', $this->Value, $key);
+                $this->value = hash_hmac('sha256', $this->value, $key);
             } else {
-                $this->Value = hash('sha256', $token);
+                $this->value = hash('sha256', $token);
             }
 
-            $this->IsHashed = true;
+            $this->isHashed = true;
         } else {
-            $this->Value = bin2hex(random_bytes(32));
+            $this->value = bin2hex(random_bytes(32));
         }
-    }
-
-    public function __get(string $name)
-    {
-        return $this->$name;
     }
 }

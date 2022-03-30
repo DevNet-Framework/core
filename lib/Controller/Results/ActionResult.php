@@ -15,9 +15,6 @@ use DevNet\System\Async\Tasks\Task;
 
 abstract class ActionResult implements IActionResult
 {
-    protected string $Content;
-    protected int $StatusCode;
-
     public function executeAsync(ActionContext $controllerContext): Task
     {
         $this->execute($controllerContext);

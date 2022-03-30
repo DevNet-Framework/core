@@ -10,21 +10,34 @@
 namespace DevNet\Web\Security\Authorization;
 
 use DevNet\System\Async\Tasks\Task;
+use DevNet\System\Exceptions\PropertyException;
 
 class ClaimRequirement extends AuthorizationHandler implements IAuthorizationRequirement
 {
-    private string $ClamType;
-    private ?array $AllowedValues;
-
-    public function __construct(string $claimType, array $allowedValues = null)
-    {
-        $this->ClaimType     = $claimType;
-        $this->AllowedValues = $allowedValues;
-    }
+    private string $clamType;
+    private ?array $allowedValues;
 
     public function __get(string $name)
     {
-        return $this->$name;
+        if ($name == 'ClamType') {
+            return $this->clamType;
+        }
+
+        if ($name == 'AllowedValues') {
+            return $this->allowedValues;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+    }
+
+    public function __construct(string $claimType, array $allowedValues = null)
+    {
+        $this->claimType     = $claimType;
+        $this->allowedValues = $allowedValues;
     }
 
     public function getHandlerName(): string
@@ -34,11 +47,11 @@ class ClaimRequirement extends AuthorizationHandler implements IAuthorizationReq
 
     public function HandleRequirement(AuthorizationContext $context, IAuthorizationRequirement $requirement): Task
     {
-        $user =  $context->User;
+        $user = $context->User;
         if ($user) {
-            if ($this->AllowedValues) {
+            if ($this->allowedValues) {
                 $found = $user->findClaims(fn ($claim) => $claim->Type == $requirement->ClaimType
-                    && in_array($claim->Value, $this->AllowedValues));
+                    && in_array($claim->Value, $this->allowedValues));
             } else {
                 $found = $user->findClaims(fn ($claim) => $claim->Type == $requirement->ClaimType);
             }

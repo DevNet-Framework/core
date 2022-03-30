@@ -16,7 +16,7 @@ use DevNet\Web\Router\Internal\RouteLogger;
  */
 class RouteCollection implements IRouter
 {
-    private array $Routes;
+    private array $routes;
 
     /**
      * add a route object to the array container
@@ -24,27 +24,27 @@ class RouteCollection implements IRouter
     public function add(Route $route): void
     {
         if ($route->Name != '') {
-            $this->Routes[$route->Name] = $route;
+            $this->routes[$route->Name] = $route;
         } else {
-            $this->Routes[] = $route;
+            $this->routes[] = $route;
         }
     }
 
     public function getRoute(string $name): IRouter
     {
-        return $this->Routes[$name];
+        return $this->routes[$name];
     }
 
     public function getRoutes(): array
     {
-        return $this->Routes;
+        return $this->routes;
     }
 
     public function matchRoute(RouteContext $routeContext): bool
     {
         $routeContext->RouteData->Routers[] = $this;
 
-        foreach ($this->Routes as $route) {
+        foreach ($this->routes as $route) {
             if ($route->matchRoute($routeContext)) {
                 return true;
             }
@@ -57,8 +57,8 @@ class RouteCollection implements IRouter
     {
         $RouteName = $routePathContext->getRouteName();
 
-        if (isset($this->Routes[$RouteName])) {
-            $route = $this->Routes[$RouteName];
+        if (isset($this->routes[$RouteName])) {
+            $route = $this->routes[$RouteName];
             return $route->getRoutePath($routePathContext);
         }
 

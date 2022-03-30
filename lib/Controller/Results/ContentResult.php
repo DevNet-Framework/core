@@ -13,19 +13,19 @@ use DevNet\Web\Controller\ActionContext;
 
 class ContentResult extends ActionResult
 {
-    protected string $Content;
-    protected string $ContentType;
+    private string $content;
+    private string $contentType;
 
     public function __construct(string $content, string $contentType)
     {
-        $this->Content = $content;
-        $this->ContentType = $contentType;
+        $this->content = $content;
+        $this->contentType = $contentType;
     }
 
     public function execute(ActionContext $actionContext): void
     {
         $httpContext = $actionContext->HttpContext;
-        $httpContext->Response->Headers->add('Content-Type', $this->ContentType);
-        $httpContext->Response->Body->write($this->Content);
+        $httpContext->Response->Headers->add('Content-Type', $this->contentType);
+        $httpContext->Response->Body->write($this->content);
     }
 }

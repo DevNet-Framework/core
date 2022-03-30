@@ -10,38 +10,49 @@
 namespace DevNet\Web\View;
 
 use DevNet\System\Dependency\IServiceProvider;
+use DevNet\System\Exceptions\PropertyException;
 use DevNet\Web\View\Internal\ViewEngine;
 use DevNet\Web\View\Internal\ViewContainer;
 
 class ViewManager
 {
-    private string $Directory;
-    private array $ViewData = [];
-    private ViewContainer $Container;
-    private ?IServiceProvider $Provider;
+    private ViewContainer $container;
+    private ?IServiceProvider $provider;
+    private string $directory;
+    private array $viewData = [];
+    private ?object $model = null;
 
-    public function __construct(string $Directory = null, ?IServiceProvider $provider = null)
+    public function __get(string $name)
     {
-        $this->setDirectory($Directory);
-        $this->Provider  = $provider;
-        $this->Container = new ViewContainer();
+        if (in_array($name, ['Container', 'Provider', 'Directory', 'ViewData', 'Model'])) {
+            $property = lcfirst($name);
+            return $this->$property;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . self::class . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . self::class . "::" . $name);
     }
 
-    public function __get(string $Name)
+    public function __construct(string $directory = null, ?IServiceProvider $provider = null)
     {
-        return $this->$Name;
+        $this->setDirectory($directory);
+        $this->provider  = $provider;
+        $this->container = new ViewContainer();
     }
 
     public function setDirectory(string $directory): void
     {
-        $this->Directory = rtrim($directory, '/');
+        $this->directory = rtrim($directory, '/');
     }
 
     public function getPath(string $pathName): string
     {
         if (!empty($pathName)) {
             $pathName = trim($pathName, '/');
-            return $this->Directory . "/" . $pathName . ".phtml";
+            return $this->directory . "/" . $pathName . ".phtml";
         }
 
         return "";
@@ -49,18 +60,19 @@ class ViewManager
 
     public function setData(array $viewData): void
     {
-        $this->ViewData = $viewData;
+        $this->viewData = $viewData;
     }
 
-    public function inject(string $Name, $Value): void
+    public function inject(string $name, $value): void
     {
-        $this->Container->set($Name, $Value);
+        $this->container->set($name, $value);
     }
 
     public function render(string $viewName, ?object $model = null): string
     {
+        $this->model = $model;
         $engine = new ViewEngine($this);
-        return $engine->renderView($viewName, $model);
+        return $engine->renderView($viewName);
     }
 
     public function __invoke(string $viewName, ?object $model = null): string

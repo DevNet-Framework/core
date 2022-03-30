@@ -9,37 +9,50 @@
 
 namespace DevNet\Web\Security\Authentication;
 
+use DevNet\System\Exceptions\PropertyException;
 use DevNet\Web\Security\ClaimsPrincipal;
 use Exception;
 
 class AuthenticationResult
 {
-    private ?ClaimsPrincipal $Principal = null;
-    private ?Exception $Error = null;
+    private ?ClaimsPrincipal $principal = null;
+    private ?Exception $error = null;
+
+    public function __get(string $name)
+    {
+        if ($name == 'Principal') {
+            return $this->principal;
+        }
+
+        if ($name == 'Error') {
+            return $this->error;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+    }
 
     public function __construct(object $result)
     {
         if ($result instanceof ClaimsPrincipal) {
-            $this->Principal = $result;
+            $this->principal = $result;
         }
 
         if ($result instanceof Exception) {
-            $this->Error = $result;
+            $this->error = $result;
         }
-    }
-
-    public function __get(string $name)
-    {
-        return $this->$name;
     }
 
     public function isSucceeded(): bool
     {
-        return $this->Principal ? true : false;
+        return $this->principal ? true : false;
     }
 
     public function isFailed(): bool
     {
-        return $this->Error ? true : false;
+        return $this->error ? true : false;
     }
 }

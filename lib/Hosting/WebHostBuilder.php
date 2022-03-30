@@ -15,47 +15,65 @@ use DevNet\System\Dependency\ServiceCollection;
 use DevNet\System\Dependency\ServiceProvider;
 use DevNet\System\Runtime\LauncherProperties;
 use DevNet\System\Exceptions\ClassException;
+use DevNet\System\Exceptions\PropertyException;
 use DevNet\Web\Middleware\ApplicationBuilder;
 use Closure;
 
 class WebHostBuilder implements IWebHostBuilder
 {
-    private ConfigurationBuilder $ConfigBuilder;
-    private ServiceCollection $Services;
-    private ServiceProvider $Provider;
-    private ApplicationBuilder $AppBuilder;
+    /**
+     * @var ConfigurationBuilder $ConfigBuilder {get}
+     * @var ServiceCollection $Services {get}
+     */
+
+    private ConfigurationBuilder $configBuilder;
+    private ServiceCollection $services;
+    private ServiceProvider $provider;
+    private ApplicationBuilder $appBuilder;
 
     public function __get(string $name)
     {
-        return $this->$name;
+        if ($name == 'ConfigBuilder') {
+            return $this->configBuilder;
+        }
+
+        if ($name == 'Services') {
+            return $this->services;
+        }
+        
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
     }
 
     public function __construct()
     {
-        $this->ConfigBuilder = new ConfigurationBuilder();
-        $this->Services      = new ServiceCollection();
-        $this->Provider      = new ServiceProvider($this->Services);
-        $this->AppBuilder    = new ApplicationBuilder($this->Provider);
+        $this->configBuilder = new ConfigurationBuilder();
+        $this->services      = new ServiceCollection();
+        $this->provider      = new ServiceProvider($this->services);
+        $this->appBuilder    = new ApplicationBuilder($this->provider);
     }
 
     public function useConfiguration(Closure $configure)
     {
         $basePath = LauncherProperties::getWorkspace();
-        $this->ConfigBuilder->setBasePath($basePath);
-        $configure($this->ConfigBuilder);
+        $this->configBuilder->setBasePath($basePath);
+        $configure($this->configBuilder);
 
         return $this;
     }
 
     public function useSetting(string $key, string $value)
     {
-        $this->ConfigBuilder->addSetting($key, $value);
+        $this->configBuilder->addSetting($key, $value);
         return $this;
     }
 
     public function configureServices(Closure $configureServices)
     {
-        $configureServices($this->Services);
+        $configureServices($this->services);
         return $this;
     }
 
@@ -65,18 +83,18 @@ class WebHostBuilder implements IWebHostBuilder
             throw ClassException::classNotFound($startup);
         }
 
-        $config = $this->ConfigBuilder->build();
-        $this->Services->addSingleton(IConfiguration::class, $config);
+        $config = $this->configBuilder->build();
+        $this->services->addSingleton(IConfiguration::class, $config);
 
         $startup = new $startup($config);
-        $startup->configureServices($this->Services);
-        $startup->configure($this->AppBuilder);
+        $startup->configureServices($this->services);
+        $startup->configure($this->appBuilder);
 
         return $this;
     }
 
     public function build(): WebHost
     {
-        return new WebHost($this->AppBuilder, $this->Provider);
+        return new WebHost($this->appBuilder, $this->provider);
     }
 }

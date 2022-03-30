@@ -13,20 +13,20 @@ use DevNet\Web\Http\HttpContext;
 
 class AntiforgeryTokenStore
 {
-    private AntiforgeryOptions $Options;
+    private AntiforgeryOptions $options;
 
     public function __construct(AntiforgeryOptions $options)
     {
-        $this->Options = $options;
+        $this->options = $options;
     }
 
     public function getCookieToken(HttpContext $httpContext): ?string
     {
-        return $httpContext->Request->Cookies->getValue($this->Options->CookieName);
+        return $httpContext->Request->Cookies->getValue($this->options->CookieName);
     }
 
     public function saveCookieToken(HttpContext $httpContext, string $token): void
     {
-        $httpContext->Response->Cookies->Add($this->Options->CookieName, $token, $this->Options->Cookie);
+        $httpContext->Response->Cookies->Add($this->options->CookieName, $token, $this->options->Cookie);
     }
 }

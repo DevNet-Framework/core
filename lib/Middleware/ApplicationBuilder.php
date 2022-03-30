@@ -16,26 +16,35 @@ use DevNet\Web\Middleware\RequestDelegate;
 use DevNet\System\Async\AsyncFunction;
 use DevNet\System\Async\Tasks\Task;
 use DevNet\System\Dependency\IServiceProvider;
+use DevNet\System\Exceptions\PropertyException;
 use Closure;
 
 class ApplicationBuilder implements IApplicationBuilder
 {
     use \DevNet\System\Extension\ExtenderTrait;
 
-    private IserviceProvider $Provider;
-    private MiddlewareFactory $MiddlewareFactoty;
-    private array $Middlewares;
-
-    public function __construct(IServiceProvider $provider)
-    {
-        $this->Provider = $provider;
-        $this->MiddlewareFactoty = new MiddlewareFactory($provider);
-        $this->Middlewares = [];
-    }
+    private IserviceProvider $provider;
+    private MiddlewareFactory $middlewareFactoty;
+    private array $middlewares;
 
     public function __get(string $name)
     {
-        return $this->$name;
+        if ($name == 'Provider') {
+            return $this->provider;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+    }
+
+    public function __construct(IServiceProvider $provider)
+    {
+        $this->provider = $provider;
+        $this->middlewareFactoty = new MiddlewareFactory($provider);
+        $this->middlewares = [];
     }
 
     /**
@@ -52,10 +61,10 @@ class ApplicationBuilder implements IApplicationBuilder
         }
 
         if (is_string($middleware)) {
-            $middleware = $this->MiddlewareFactoty->create($middleware);
+            $middleware = $this->middlewareFactoty->create($middleware);
         }
 
-        $this->Middlewares[] = $middleware;
+        $this->middlewares[] = $middleware;
     }
 
     public function pipe(callable $middleware, $next): RequestDelegate
@@ -71,7 +80,6 @@ class ApplicationBuilder implements IApplicationBuilder
         $app = new RequestDelegate(function (HttpContext $context): Task {
 
             $RequestHandler = $context->Handler;
-
             if ($RequestHandler) {
                 throw new \Exception("The request has reached the end of the pipeline without being executed the endpoint");
             }
@@ -80,7 +88,7 @@ class ApplicationBuilder implements IApplicationBuilder
             return Task::completedTask();
         });
 
-        foreach (array_reverse($this->Middlewares) as $middleware) {
+        foreach (array_reverse($this->middlewares) as $middleware) {
             $app = $this->pipe($middleware, $app);
         }
 

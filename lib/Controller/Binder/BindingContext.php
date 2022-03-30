@@ -9,43 +9,49 @@
 
 namespace DevNet\Web\Controller\Binder;
 
+use DevNet\System\Exceptions\PropertyException;
 use DevNet\Web\Controller\ActionContext;
 
 class BindingContext
 {
-    private string $Name;
-    private ?string $Type;
-    private ActionContext $ActionContext;
-    private IValueProvider $ValueProvider;
-    private $Result = null;
+    private string $name;
+    private ?string $type;
+    private ActionContext $actionContext;
+    private IValueProvider $valueProvider;
+    private $result = null;
+
+    public function __get(string $name)
+    {
+        if (in_array($name, ['Name', 'Type', 'ActionContext', 'ValueProvider', 'Result'])) {
+            $property = lcfirst($name);
+            return $this->$property;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . self::class . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . self::class . "::" . $name);
+    }
 
     public function __construct(
         string $name,
         string $type,
         ActionContext $actionContext
     ) {
-        $this->Name = $name;
-        $this->Type = $type;
-        $this->ActionContext = $actionContext;
-        $this->ValueProvider = $actionContext->ValueProvider;
-    }
-
-    /**
-     * Magic method for read-only of all properties.
-     * @return mixed depend on the property type.
-     */
-    public function __get(string $name)
-    {
-        return $this->$name;
+        $this->name = $name;
+        $this->type = $type;
+        $this->actionContext = $actionContext;
+        $this->valueProvider = $actionContext->ValueProvider;
     }
 
     public function success($model): void
     {
-        $this->Result = $model;
+        $this->result = $model;
     }
 
     public function failed(): void
     {
-        $this->Result = null;
+        $this->result = null;
     }
 }

@@ -9,21 +9,32 @@
 
 namespace DevNet\Web\Security\Antiforgery;
 
+use DevNet\System\Exceptions\PropertyException;
+
 class AntiforgeryTokenSet
 {
-    public ?string $CookieToken;
-    public ?string $RequestToken;
-    public ?string $FormFieldName;
-
-    public function __construct(string $cookieToken = null, string $requestToken = null, string $formFieldName = null)
-    {
-        $this->CookieToken = $cookieToken;
-        $this->RequestToken = $requestToken;
-        $this->FormFieldName = $formFieldName;
-    }
+    public ?string $cookieToken;
+    public ?string $requestToken;
+    public ?string $formFieldName;
 
     public function __get(string $name)
     {
-        return $this->$name;
+        if (in_array($name, ['CookieToken', 'RequestToken', 'FormFieldName'])) {
+            $property = lcfirst($name);
+            return $this->$property;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+    }
+
+    public function __construct(string $cookieToken = null, string $requestToken = null, string $formFieldName = null)
+    {
+        $this->cookieToken = $cookieToken;
+        $this->requestToken = $requestToken;
+        $this->formFieldName = $formFieldName;
     }
 }

@@ -9,26 +9,28 @@
 
 namespace DevNet\Web\Security\Authorization;
 
+use DevNet\System\Collections\Enumerator;
+use DevNet\System\Collections\IEnumerable;
 use Closure;
 
-class AuthorizationOptions
+class AuthorizationOptions implements IEnumerable
 {
-    private array $Policies = [];
-
-    public function __get(string $key)
-    {
-        return $this->$key;
-    }
+    private array $policies = [];
 
     public function addPolicy(string $name, Closure $configurePolicy)
     {
         $builder = new AuthorizationPolicyBuilder($name);
         $configurePolicy($builder);
-        $this->Policies[$name] = $builder->build();
+        $this->policies[$name] = $builder->build();
     }
 
     public function getPolicy(string $name)
     {
-        return $this->Policies[$name] ?? null;
+        return $this->policies[$name] ?? null;
+    }
+
+    public function getIterator(): Enumerator
+    {
+        return new Enumerator($this->policies);
     }
 }

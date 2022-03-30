@@ -11,89 +11,89 @@ namespace DevNet\Web\Http;
 
 class Session
 {
-    private string $Id;
-    private string $Name;
-    private array $Options = [];
+    private string $id;
+    private string $name;
+    private array $options = [];
 
-    public function __construct(string $Name, ?int $lifetime = null, ?string $Path = null)
+    public function __construct(string $name, ?int $lifetime = null, ?string $path = null)
     {
-        $this->Name = $Name;
-        $this->Options['name'] = $Name;
+        $this->name = $name;
+        $this->options['name'] = $name;
 
         if (isset($lifetime)) {
-            $this->Options['cookie_lifetime'] = $lifetime;
+            $this->options['cookie_lifetime'] = $lifetime;
         }
 
-        if (isset($Path)) {
-            $this->Options['cookie_path'] = $Path;
+        if (isset($path)) {
+            $this->options['cookie_path'] = $path;
         }
 
-        if (isset($_COOKIE[$Name])) {
-            $this->Id = $_COOKIE[$Name];
+        if (isset($_COOKIE[$name])) {
+            $this->id = $_COOKIE[$name];
         } else {
-            $this->Id = session_create_id();
+            $this->id = session_create_id();
         }
     }
 
-    public function setOptions(array $Options)
+    public function setOptions(array $options)
     {
-        $this->Options = array_merge($this->Options, $Options);
+        $this->options = array_merge($this->options, $options);
     }
 
     public function start(): void
     {
         $this->close();
-        session_id($this->Id);
-        session_start($this->Options);
+        session_id($this->id);
+        session_start($this->options);
 
         if ($this->has('SessionOptions')) {
-            $this->Options = array_merge($this->get('SessionOptions'), $this->Options);
+            $this->options = array_merge($this->get('SessionOptions'), $this->options);
             $this->close();
-            session_start($this->Options);
+            session_start($this->options);
         }
 
-        $_COOKIE[$this->Name] = $this->Id;
+        $_COOKIE[$this->name] = $this->id;
         //setcookie(session_name(), session_id(), time()+$lifetime);
-        $this->set('SessionOptions', $this->Options);
+        $this->set('SessionOptions', $this->options);
     }
 
     public function isSet()
     {
-        return isset($_COOKIE[$this->Name]) ? true : false;
+        return isset($_COOKIE[$this->name]) ? true : false;
     }
 
-    public function regenerate(bool $DeleteOldSession = true): void
+    public function regenerate(bool $deleteOldSession = true): void
     {
-        session_regenerate_id($DeleteOldSession);
-        $this->Id = session_id();
-        $_COOKIE[$this->Name] = $this->Id;
+        session_regenerate_id($deleteOldSession);
+        $this->id = session_id();
+        $_COOKIE[$this->name] = $this->id;
     }
 
-    public function set(string $Name, $value)
+    public function set(string $name, $value)
     {
-        $_SESSION[$Name] = $value;
+        $_SESSION[$name] = $value;
     }
 
-    public function get(string $Name)
+    public function get(string $name)
     {
-        return $_SESSION[$Name] ?? null;
+        return $_SESSION[$name] ?? null;
     }
 
-    public function has(string $Name): bool
+    public function has(string $name): bool
     {
-        return isset($_SESSION[$Name]);
+        return isset($_SESSION[$name]);
     }
 
-    public function remove(string $Name)
+    public function remove(string $name)
     {
-        if (isset($_SESSION[$Name])) {
-            unset($_SESSION[$Name]);
+        if (isset($_SESSION[$name])) {
+            unset($_SESSION[$name]);
         }
     }
 
     public function getName()
     {
-        return $this->Options['name'] ?? 'PHPSESSID';
+        return $this->options['name'] ?? 'PHPSESSID';
     }
 
     public function getId(): string

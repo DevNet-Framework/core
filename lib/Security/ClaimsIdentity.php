@@ -9,38 +9,51 @@
 
 namespace DevNet\Web\Security;
 
+use DevNet\System\Exceptions\PropertyException;
 use Closure;
 
 class ClaimsIdentity
 {
-    private ?string $AuthenticationType;
-    private array $Claims = [];
+    private ?string $authenticationType;
+    private array $claims = [];
+
+    public function __get(string $name)
+    {
+        if ($name == 'AuthenticationType') {
+            return $this->authenticationType;
+        }
+
+        if ($name == 'Claims') {
+            return $this->claims;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+    }
 
     public function __construct(string $authenticationType = null, array $claims = [])
     {
-        $this->AuthenticationType = $authenticationType;
-        $this->Claims = $claims;
-    }
-
-    public function __get(string $Name)
-    {
-        return $this->$Name;
+        $this->authenticationType = $authenticationType;
+        $this->claims = $claims;
     }
 
     public function isAuthenticated(): bool
     {
-        return $this->AuthenticationType ? true : false;
+        return $this->authenticationType ? true : false;
     }
 
-    public function addClaim(Claim $Claim)
+    public function addClaim(Claim $claim)
     {
-        $this->Claims[spl_object_id($Claim)] = $Claim;
+        $this->claims[spl_object_id($claim)] = $claim;
     }
 
-    public function removeClaim(Claim $Claim): bool
+    public function removeClaim(Claim $claim): bool
     {
-        if (isset($this->Claims[spl_object_id($Claim)])) {
-            unset($this->Claims[spl_object_id($Claim)]);
+        if (isset($this->claims[spl_object_id($claim)])) {
+            unset($this->claims[spl_object_id($claim)]);
             return true;
         }
 
@@ -49,7 +62,7 @@ class ClaimsIdentity
 
     public function hasClaim(string $type, string $value): bool
     {
-        foreach ($this->Claims as $claim) {
+        foreach ($this->claims as $claim) {
             if ($claim->Type == $type && $claim->Value == $value) {
                 return true;
             }
@@ -60,7 +73,7 @@ class ClaimsIdentity
 
     public function findClaim(Closure $predecate): ?Claim
     {
-        foreach ($this->Claims as $claim) {
+        foreach ($this->claims as $claim) {
             if ($predecate($claim)) {
                 return $claim;
             }
@@ -73,7 +86,7 @@ class ClaimsIdentity
     {
         $claims = [];
 
-        foreach ($this->Claims as $claim) {
+        foreach ($this->claims as $claim) {
             if ($predecate($claim)) {
                 $claims[] = $claim;
             }

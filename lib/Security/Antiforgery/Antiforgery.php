@@ -9,12 +9,30 @@
 
 namespace DevNet\Web\Security\Antiforgery;
 
+use DevNet\System\Exceptions\PropertyException;
 use DevNet\Web\Http\HttpContext;
 
 class Antiforgery implements IAntiforgery
 {
-    private AntiforgeryOptions $Options;
-    private AntiforgeryTokenStore $Store;
+    private AntiforgeryOptions $options;
+    private AntiforgeryTokenStore $store;
+
+    public function __get(string $name)
+    {
+        if ($name == 'Options') {
+            return $this->options;
+        }
+
+        if ($name == 'Store') {
+            return $this->store;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+    }
 
     public function __construct(AntiforgeryOptions $options)
     {
@@ -22,44 +40,38 @@ class Antiforgery implements IAntiforgery
             $options->Cookie->HttpOnly = true;
         }
 
-        $this->Options   = $options;
-        $this->Generator = new AntiforgeryTokenGenerator();
-        $this->Store     = new AntiforgeryTokenStore($options);
-    }
-
-    public function __get(string $name)
-    {
-        return $this->$name;
+        $this->options   = $options;
+        $this->generator = new AntiforgeryTokenGenerator();
+        $this->store     = new AntiforgeryTokenStore($options);
     }
 
     public function storeTokens(HttpContext $httpContext): AntiforgeryTokenSet
     {
         $tokens = $this->getTokens($httpContext);
-        $this->Store->saveCookieToken($httpContext, $tokens->CookieToken);
+        $this->store->saveCookieToken($httpContext, $tokens->CookieToken);
         return $tokens;
     }
 
     public function getTokens(HttpContext $httpContext): AntiforgeryTokenSet
     {
         $tokens = $httpContext->Features->get(AntiforgeryTokenSet::class);
-
         if (!$tokens) {
             $tokens = new AntiforgeryTokenSet();
-            $token  = $this->Store->getCookieToken($httpContext);
+            $token  = $this->store->getCookieToken($httpContext);
 
             if (!$token) {
-                $tokens->CookieToken = $this->Generator->GenerateCookieToken()->Value;
+                $tokens->CookieToken = $this->generator->GenerateCookieToken()->Value;
             } else {
                 $tokens->CookieToken = $token;
             }
 
-            $tokens->FormFieldName = $this->Options->FormFieldName;
+            $tokens->FormFieldName = $this->options->FormFieldName;
             $httpContext->Features->set($tokens);
         }
 
         if (!$tokens->RequestToken) {
             $cookieToken = $tokens->CookieToken;
-            $tokens->RequestToken = $this->Generator->GenerateRequestToken($cookieToken)->Value;
+            $tokens->RequestToken = $this->generator->GenerateRequestToken($cookieToken)->Value;
         }
 
         return $tokens;
@@ -68,13 +80,11 @@ class Antiforgery implements IAntiforgery
     public function validateTokens(HttpContext $httpContext): bool
     {
         $method = $httpContext->Request->Method;
-
         if (!in_array($method, ["POST", "PUT", "UPDATE", "DELETE"])) {
             return true;
         }
 
         $tokens = $this->getTokens($httpContext);
-
-        return $this->Generator->matchTokens($httpContext, $tokens);
+        return $this->generator->matchTokens($httpContext, $tokens);
     }
 }

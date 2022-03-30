@@ -19,21 +19,21 @@ use DevNet\System\IO\Console;
 
 class WebServer
 {
-    public string $Host = 'localhost';
-    public int $Port    = 8000;
-    public string $Root;
-    public CommandLine $Command;
+    private string $host = 'localhost';
+    private int $port    = 8000;
+    private string $root;
+    private CommandLine $command;
 
     public function __construct()
     {
-        $this->Root = LauncherProperties::getWorkspace() . "/webroot";
-        $this->Command = new CommandLine();
-        $this->Command->addArgument(new CommandArgument('serve'));
-        $this->Command->addOption(new CommandOption('--host'));
-        $this->Command->addOption(new CommandOption('--port'));
-        $this->Command->addOption(new CommandOption('--root'));
-        $this->Command->addOption(new CommandOption('--help', '-h'));
-        $this->Command->Handler->add($this, 'serve');
+        $this->root = LauncherProperties::getWorkspace() . "/webroot";
+        $this->command = new CommandLine();
+        $this->command->addArgument(new CommandArgument('serve'));
+        $this->command->addOption(new CommandOption('--host'));
+        $this->command->addOption(new CommandOption('--port'));
+        $this->command->addOption(new CommandOption('--root'));
+        $this->command->addOption(new CommandOption('--help', '-h'));
+        $this->command->Handler->add($this, 'serve');
     }
 
     public function serve(object $sender, CommandEventArgs $args): void
@@ -68,7 +68,7 @@ class WebServer
                 exit;
             }
 
-            $this->Host = $host->Value;
+            $this->host = $host->Value;
         }
 
         if ($port) {
@@ -79,7 +79,7 @@ class WebServer
                 exit;
             }
 
-            $this->Port = $port->Value;
+            $this->port = $port->Value;
         }
 
         if ($root) {
@@ -90,7 +90,7 @@ class WebServer
                 exit;
             }
 
-            $this->Root = $root->Value;
+            $this->root = $root->Value;
         }
 
         if ($help) {
@@ -107,7 +107,7 @@ class WebServer
             }
         }
 
-        shell_exec("php -S {$this->Host}:{$this->Port} -t {$this->Root}");
+        shell_exec("php -S {$this->host}:{$this->port} -t {$this->root}");
     }
 
     public function start(array $args = [])
@@ -115,6 +115,6 @@ class WebServer
         if (!$args) {
             return;
         }
-        $this->Command->invoke($args);
+        $this->command->invoke($args);
     }
 }

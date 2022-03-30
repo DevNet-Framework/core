@@ -18,6 +18,7 @@ use DevNet\Web\Controller\Results\JsonResult;
 use DevNet\Web\Controller\Results\RedirectResult;
 use DevNet\Web\Controller\Results\ViewResult;
 use DevNet\Web\Middleware\IRequestHandler;
+use DevNet\System\Exceptions\PropertyException;
 use DevNet\System\Async\Tasks\Task;
 use DevNet\System\Action;
 
@@ -25,44 +26,35 @@ abstract class AbstractController implements IRequestHandler
 {
     protected HttpContext $HttpContext;
     protected ActionContext $ActionContext;
-    protected ActionExecutionDelegate $Action;
-    protected array $FilterAttributes = [];
-    protected array $ActionFilters = [];
-
-    /**
-     * Read-only for all properties.
-     * @return mixed same as the type of requested property.
-     */
-    public function __get(string $name)
-    {
-        return $this->$name;
-    }
+    private ActionExecutionDelegate $action;
+    private array $filterAttributes = [];
+    private array $actionFilters = [];
 
     public function __invoke(HttpContext $httpContext)
     {
         $this->HttpContext   = $httpContext;
         $this->ActionContext = $httpContext->ActionContext;
 
-        $controllerFilters   = $this->FilterAttributes[$this->ActionContext->ActionDescriptor->MethodInfo->getDeclaringClass()->getName()] ?? [];
-        $actionFilters       = $this->FilterAttributes[strtolower($this->ActionContext->ActionDescriptor->ActionName)] ?? [];
+        $controllerFilters   = $this->filterAttributes[$this->ActionContext->ActionDescriptor->MethodInfo->getDeclaringClass()->getName()] ?? [];
+        $actionFilters       = $this->filterAttributes[strtolower($this->ActionContext->ActionDescriptor->ActionName)] ?? [];
         $filterAttributes    = array_merge($controllerFilters, $actionFilters);
 
         foreach ($filterAttributes as $filterAttribute) {
             $actionFilter           = $filterAttribute[0];
             $options                = $filterAttribute[1];
-            $this->ActionFilters[]  = new $actionFilter($options);
+            $this->actionFilters[]  = new $actionFilter($options);
         }
 
-        $this->Action = $action = new ActionExecutionDelegate($this, 'next');
+        $this->action = $action = new ActionExecutionDelegate($this, 'next');
 
         return $action($this->ActionContext);
     }
 
     public function next(ActionContext $actionContext)
     {
-        $actionFilter = array_shift($this->ActionFilters);
+        $actionFilter = array_shift($this->actionFilters);
         if ($actionFilter) {
-            return $actionFilter->onActionExecution($actionContext, $this->Action);
+            return $actionFilter->onActionExecution($actionContext, $this->action);
         }
 
         return $this->execute($actionContext);
@@ -88,7 +80,7 @@ abstract class AbstractController implements IRequestHandler
             strtolower($target);
         }
 
-        $this->FilterAttributes[$target][] = [$filter, $options];
+        $this->filterAttributes[$target][] = [$filter, $options];
     }
 
     abstract public function view($parameter, object $model = null): ViewResult;

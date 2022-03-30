@@ -11,8 +11,8 @@ namespace DevNet\Web\Http;
 
 class Headers
 {
-    private array $HeaderNames = [];
-    private array $HeaderValues = [];
+    private array $headerNames = [];
+    private array $headerValues = [];
 
     public function __construct(array $headerValues = [])
     {
@@ -23,31 +23,31 @@ class Headers
 
     public function contains(string $name): bool
     {
-        return isset($this->HeaderNames[strtolower($name)]);
+        return isset($this->headerNames[strtolower($name)]);
     }
 
     public function add(string $name, string $value, bool $replace = true)
     {
         $normalized = strtolower($name);
-        $this->HeaderNames[$normalized] = $name;
-        $this->HeaderValues[$name][] = $value;
+        $this->headerNames[$normalized] = $name;
+        $this->headerValues[$name][] = $value;
     }
 
     public function remove(string $name)
     {
         $normalized = strtolower($name);
-        if (isset($this->HeaderNames[$normalized])) {
-            $name = $this->HeaderNames[$normalized];
-            unset($this->HeaderValues[$name]);
+        if (isset($this->headerNames[$normalized])) {
+            $name = $this->headerNames[$normalized];
+            unset($this->headerValues[$name]);
         }
     }
 
     public function getValues(string $name): array
     {
         $normalized = strtolower($name);
-        if (isset($this->HeaderNames[$normalized])) {
-            $name = $this->HeaderNames[$normalized];
-            return $this->HeaderValues[$name];
+        if (isset($this->headerNames[$normalized])) {
+            $name = $this->headerNames[$normalized];
+            return $this->headerValues[$name];
         }
 
         return [];
@@ -55,6 +55,6 @@ class Headers
 
     public function getAll()
     {
-        return $this->HeaderValues;
+        return $this->headerValues;
     }
 }

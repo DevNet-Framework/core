@@ -15,25 +15,25 @@ use Traversable;
 
 class FileCollection implements IEnumerable
 {
-    private array $Files = [];
+    private array $files = [];
 
     public function addFile(string $name,  FormFile $file)
     {
-        $this->Files[$name][] = $file;
+        $this->files[$name][] = $file;
     }
 
     public function getFile(string $name): ?FormFile
     {
-        return $this->Files[$name][0] ?? null;
+        return $this->files[$name][0] ?? null;
     }
 
     public function getFiles(string $name): array
     {
-        return $this->Files[$name] ?? [];
+        return $this->files[$name] ?? [];
     }
 
     public function getIterator(): Traversable
     {
-        return new Enumerator($this->Files);
+        return new Enumerator($this->files);
     }
 }

@@ -14,28 +14,28 @@ use DevNet\Entity\EntitySet;
 class RoleManager
 {
     private IdentityContext $identityContext;
-    private EntitySet $Roles;
+    private EntitySet $roles;
 
     public function __construct(IdentityContext $identityContext)
     {
-        $this->IdentityContext  = $identityContext;
-        $this->Roles            = $identityContext->Roles;
+        $this->identityContext = $identityContext;
+        $this->roles = $identityContext->Roles;
     }
 
     public function create(Role $role): int
     {
-        $this->Roles->add($role);
-        return $this->IdentityContext->save();
+        $this->roles->add($role);
+        return $this->identityContext->save();
     }
 
     public function delete(Role $role): int
     {
-        $this->Users->remove($role);
-        return $this->IdentityContext->save();
+        $this->users->remove($role);
+        return $this->identityContext->save();
     }
 
     public function update(): int
     {
-        return $this->IdentityContext->save();
+        return $this->identityContext->save();
     }
 }

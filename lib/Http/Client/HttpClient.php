@@ -11,6 +11,7 @@ namespace DevNet\Web\Http\Client;
 
 use DevNet\Web\Http\Headers;
 use DevNet\System\Async\Tasks\Task;
+use DevNet\System\Exceptions\PropertyException;
 use DevNet\Web\Http\HttpRequest;
 use DevNet\Web\Http\Uri;
 
@@ -20,7 +21,15 @@ class HttpClient extends HttpClientHandler
 
     public function __get(string $name)
     {
-        return $this->$name;
+        if ($name == 'Options') {
+            return $this->Options;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
     }
 
     public function __construct(?HttpClientOptions $options = null)

@@ -10,8 +10,6 @@
 namespace DevNet\Web\Http;
 
 use DevNet\System\Collections\Enumerator;
-use DevNet\System\Collections\IDictionary;
-use DateTime;
 
 class Cookies
 {
@@ -21,7 +19,6 @@ class Cookies
     public function __construct(Headers $headers)
     {
         $this->Headers = $headers;
-
         if ($headers->contains('cookie')) {
             $cookieString = $headers->getValues('cookie')[0];
             $cookieString = str_replace(' ', '', $cookieString);
@@ -45,7 +42,6 @@ class Cookies
     public function add(String $name, string $value, CookieOptions $options = null): void
     {
         $cookie = "{$name}={$value};";
-
         if ($options) {
             $cookie .= "{$options->__toString()}";
         }

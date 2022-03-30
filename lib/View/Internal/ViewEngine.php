@@ -15,82 +15,80 @@ use InvalidArgumentException;
 
 class ViewEngine
 {
-    private ViewManager $Manager;
-    private string $Body        = '';
-    private string $LayoutName  = '';
-    private string $SectionName = '';
-    private array $Sections     = [];
-    private array $ViewData;
-    private ?object $Model;
+    private ViewManager $manager;
+    private string $body        = '';
+    private string $layoutName  = '';
+    private string $sectionName = '';
+    private array $sections     = [];
 
     public function __construct(ViewManager $manager)
     {
-        $this->Manager  = $manager;
-        $this->ViewData = $manager->ViewData;
+        $this->manager = $manager;
         stream_filter_register("view.opentag", ViewFilter::class);
     }
 
     public function __get(string $name)
     {
-        if ($this->Manager->Container->has($name)) {
-            return $this->Manager->Container->get($name);
+        if ($name == 'ViewData') {
+            return $this->manager->ViewData;
         }
 
-        if (!property_exists($this, $name)) {
-            $class = get_class($this);
-            throw new PropertyException("Undefined property: {$class}::\${$name}");
+        if ($name == 'Model') {
+            return $this->manager->Model;
         }
 
-        $rp = new \ReflectionProperty($this, $name);
-        if ($rp->isPrivate() || $rp->isProtected()) {
-            $class = get_class($this);
-            throw new PropertyException("Cannot access private or protected property {$class}::\${$name}");
+        if ($this->manager->Container->has($name)) {
+            return $this->manager->Container->get($name);
         }
 
-        return $this->$name;
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . self::class . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . self::class . "::" . $name);
     }
 
     public function inject(string $serviceName, string $serviceType): void
     {
-        $provider = $this->Manager->Provider;
+        $provider = $this->manager->Provider;
         if ($provider) {
             if ($provider->contains($serviceType)) {
-                $this->Manager->inject($serviceName, $provider->getService($serviceType));
+                $this->manager->inject($serviceName, $provider->getService($serviceType));
             }
         } else {
             $service = new $serviceType;
-            $this->Manager->inject($serviceName, $service);
+            $this->manager->inject($serviceName, $service);
         }
     }
 
     public function layout(string $layoutName): void
     {
-        if (!$this->LayoutName) {
-            $this->LayoutName = $layoutName;
+        if (!$this->layoutName) {
+            $this->layoutName = $layoutName;
         }
     }
 
     public function section(string $sectionName): void
     {
         ob_start();
-        $this->SectionName = $sectionName;
+        $this->sectionName = $sectionName;
     }
 
     public function endSection(): void
     {
-        $this->Sections[$this->SectionName] = ob_get_clean();
+        $this->sections[$this->sectionName] = ob_get_clean();
     }
 
     public function renderSection(string $sectionName): void
     {
-        if (isset($this->Sections[$sectionName])) {
-            echo $this->Sections[$sectionName];
+        if (isset($this->sections[$sectionName])) {
+            echo $this->sections[$sectionName];
         }
     }
 
     public function renderPartial(string $partialName): void
     {
-        $partialPath = $this->Manager->getPath($partialName);
+        $partialPath = $this->manager->getPath($partialName);
         if (!file_exists($partialPath)) {
             throw new InvalidArgumentException("Could not find the template: {$partialName}");
         }
@@ -100,13 +98,11 @@ class ViewEngine
 
     public function renderBody(): void
     {
-        echo $this->Body;
+        echo $this->body;
     }
 
-    public function renderView(string $viewName, ?object $model = null): string
+    public function renderView(string $viewName): string
     {
-        $this->Model = $model;
-
         ob_start();
         try {
             $this->renderPartial($viewName);
@@ -115,12 +111,10 @@ class ViewEngine
             throw $th;
         }
 
-        $this->Body = ob_get_clean();
-
-        //$this->ViewData['Title'] = 'Home';
+        $this->body = ob_get_clean();
 
         ob_start();
-        $layoutPath = $this->Manager->getPath($this->LayoutName);
+        $layoutPath = $this->manager->getPath($this->layoutName);
         if ($layoutPath) {
             try {
                 include 'php://filter/read=view.opentag/resource=' . $layoutPath;

@@ -13,7 +13,7 @@ use DevNet\Web\Controller\ActionContext;
 
 class ParameterBinder
 {
-    private ModelBinderProvider $ModelBinderProvider;
+    private ModelBinderProvider $modelBinderProvider;
 
     public function __construct(ModelBinderProvider $modelBinderProvider = null)
     {
@@ -21,7 +21,7 @@ class ParameterBinder
             $modelBinderProvider = new ModelBinderProvider(new ModelBinder());
         }
 
-        $this->ModelBinderProvider = $modelBinderProvider;
+        $this->modelBinderProvider = $modelBinderProvider;
     }
 
     public function resolveArguments(ActionContext $actionContext)
@@ -36,7 +36,7 @@ class ParameterBinder
                 $modelType = $parameter->getType()->getName();
             }
 
-            foreach ($this->ModelBinderProvider as $modelBinder) {
+            foreach ($this->modelBinderProvider as $modelBinder) {
                 $bindingContext = new BindingContext(
                     $modelName,
                     $modelType,

@@ -11,11 +11,11 @@ namespace DevNet\Web\Controller\Binder;
 
 class CompositeValueProvider implements IValueProvider
 {
-    protected array $Providers = [];
+    private array $providers = [];
 
     public function add(IValueProvider $provider)
     {
-        $this->Providers[get_class($provider)] = $provider;
+        $this->providers[get_class($provider)] = $provider;
     }
 
     /**
@@ -23,7 +23,7 @@ class CompositeValueProvider implements IValueProvider
      */
     public function getValue(string $key)
     {
-        foreach ($this->Providers as $provider) {
+        foreach ($this->providers as $provider) {
             if ($provider->contains($key)) {
                 return $provider->getValue($key);
             }
@@ -38,7 +38,7 @@ class CompositeValueProvider implements IValueProvider
      */
     public function contains(string $key): bool
     {
-        foreach ($this->Providers as $provider) {
+        foreach ($this->providers as $provider) {
             if ($provider->contains($key)) {
                 return true;
             }

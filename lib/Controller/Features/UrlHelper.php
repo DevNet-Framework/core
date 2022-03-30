@@ -14,21 +14,21 @@ use DevNet\Web\Router\RoutePathContext;
 
 class UrlHelper
 {
-    private HttpContext $HttpContext;
+    private HttpContext $httpContext;
 
     public function __construct(HttpContext $httpContext)
     {
-        $this->HttpContext = $httpContext;
+        $this->httpContext = $httpContext;
     }
 
     public function route(string $routeName, array $values = []): string
     {
         if (!$values) {
-            $values = $this->HttpContext->RouteValues;
+            $values = $this->httpContext->RouteValues;
         }
 
         $path = new RoutePathContext($routeName, $values);
-        $router = $this->HttpContext->RouteContext->RouteData->Routers[0];
+        $router = $this->httpContext->RouteContext->RouteData->Routers[0];
 
         return $router->getRoutePath($path);
     }

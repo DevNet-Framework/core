@@ -13,17 +13,32 @@ use DevNet\Web\Http\HttpContext;
 use DevNet\Entity\EntityContext;
 use DevNet\Entity\EntitySet;
 use DevNet\Entity\EntityModelBuilder;
+use DevNet\System\Exceptions\PropertyException;
 
 class IdentityContext
 {
-    private HttpContext $HttpContext;
-    private EntityContext $EntityContext;
-    private string $UserType;
-    private string $RoleType;
-    private IdentityOptions $Options;
-    private EntitySet $Users;
-    private EntitySet $Roles;
-    private EntitySet $UserRole;
+    private HttpContext $httpContext;
+    private EntityContext $entityContext;
+    private IdentityOptions $options;
+    private string $userType;
+    private string $roleType;
+    private EntitySet $users;
+    private EntitySet $roles;
+    private EntitySet $userRole;
+
+    public function __get(string $name)
+    {
+        if (in_array($name, ['HttpContext', 'EntityContext', 'Options', 'Users', 'Roles', 'UserRole'])) {
+            $property = lcfirst($name);
+            return $this->$property;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+    }
 
     public function __construct(
         HttpContext $httpContext,
@@ -32,37 +47,32 @@ class IdentityContext
         string $roleType,
         IdentityOptions $identityOptions
     ) {
-        $this->HttpContext   = $httpContext;
-        $this->EntityContext = $entityContext;
-        $this->UserType      = $userType;
-        $this->RoleType      = $roleType;
-        $this->Options       = $identityOptions;
-        $this->Users         = $entityContext->set($userType);
-        $this->Roles         = $entityContext->set($roleType);
-        $this->UserRole      = $entityContext->set(UserRole::class);
+        $this->httpContext   = $httpContext;
+        $this->entityContext = $entityContext;
+        $this->userType      = $userType;
+        $this->roleType      = $roleType;
+        $this->options       = $identityOptions;
+        $this->users         = $entityContext->set($userType);
+        $this->roles         = $entityContext->set($roleType);
+        $this->userRole      = $entityContext->set(UserRole::class);
 
         $this->onModelCreate($entityContext->Model->Builder);
-    }
-
-    public function __get(string $name)
-    {
-        return $this->$name;
     }
 
     public function onModelCreate(EntityModelBuilder $builder)
     {
         $builder->entity(UserRole::class)
-            ->hasForeignKey('UserId', $this->UserType)
-            ->hasForeignKey('RoleId', $this->RoleType)
-            ->hasOne('User', $this->UserType)
-            ->hasOne('Role', $this->RoleType);
+            ->hasForeignKey('UserId', $this->userType)
+            ->hasForeignKey('RoleId', $this->roleType)
+            ->hasOne('User', $this->userType)
+            ->hasOne('Role', $this->roleType);
 
-        $builder->entity($this->UserType)->hasMany('UserRole', UserRole::class);
-        $builder->entity($this->RoleType)->hasMany('UserRole', UserRole::class);
+        $builder->entity($this->userType)->hasMany('UserRole', UserRole::class);
+        $builder->entity($this->roleType)->hasMany('UserRole', UserRole::class);
     }
 
     public function save(): int
     {
-        return $this->EntityContext->save();
+        return $this->entityContext->save();
     }
 }

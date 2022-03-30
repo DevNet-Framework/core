@@ -14,22 +14,43 @@ use DevNet\Web\Router\RouteContext;
 use DevNet\Web\Controller\Providers\RouteValueProvider;
 use DevNet\System\Dependency\IServiceProvider;
 use DevNet\System\Async\Tasks\Task;
+use DevNet\System\Exceptions\PropertyException;
 
 class ControllerRouteHandler implements IRouteHandler
 {
-    private IServiceProvider $Provider;
-    private ControllerOptions $Options;
-    private array $Target = [];
+    private IServiceProvider $provider;
+    private array $target = [];
 
-    public function __construct(IServiceProvider $provider)
+    public function __get(string $name)
     {
-        $this->Provider = $provider;
-        $this->Options  = $provider->getService(ControllerOptions::class);
+        if ($name == 'Target') {
+            return $this->target;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
     }
 
     public function __set(string $name, $value)
     {
-        $this->$name = $value;
+        if ($name == 'Target') {
+            $this->target = $value;
+            return;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . self::class . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . self::class . "::" . $name);
+    }
+
+    public function __construct(IServiceProvider $provider)
+    {
+        $this->provider = $provider;
     }
 
     public function handle(RouteContext $routeContext): Task
@@ -41,10 +62,10 @@ class ControllerRouteHandler implements IRouteHandler
         }
 
         $prefix         = null;
-        $options        = $this->Provider->getService(ControllerOptions::class);
+        $options        = $this->provider->getService(ControllerOptions::class);
         $routeData      = $routeContext->RouteData;
-        $controllerName = $this->Target[0] ?? null;
-        $actionName     = $this->Target[1] ?? null;
+        $controllerName = $this->target[0] ?? null;
+        $actionName     = $this->target[1] ?? null;
 
         if (!$controllerName) {
             $namespace      = $options->getControllerNamespace();

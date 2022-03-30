@@ -13,11 +13,6 @@ use DevNet\System\Async\Tasks\Task;
 
 class AuthenticationRequirement extends AuthorizationHandler implements IAuthorizationRequirement
 {
-    public function __get(string $name)
-    {
-        return $this->$name;
-    }
-
     public function getHandlerName(): string
     {
         return get_class($this);

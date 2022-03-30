@@ -13,20 +13,20 @@ use DevNet\Web\Controller\ActionContext;
 
 class JsonResult extends ActionResult
 {
-    protected string $Content;
-    protected int $StatusCode;
+    private string $content;
+    private int $statusCode;
 
     public function __construct($data, int $statusCode = 200)
     {
-        $this->Content    = json_encode($data);
-        $this->StatusCode = $statusCode;
+        $this->content = json_encode($data);
+        $this->statusCode = $statusCode;
     }
 
     public function execute(ActionContext $actionContext): void
     {
         $httpContext = $actionContext->HttpContext;
         $httpContext->Response->Headers->add("Content-Type", "application/json");
-        $httpContext->Response->Body->write($this->Content);
-        $httpContext->Response->setStatusCode($this->StatusCode);
+        $httpContext->Response->Body->write($this->content);
+        $httpContext->Response->setStatusCode($this->statusCode);
     }
 }

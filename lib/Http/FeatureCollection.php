@@ -11,25 +11,23 @@ namespace DevNet\Web\Http;
 
 use DevNet\System\Collections\Enumerator;
 use DevNet\System\Collections\IEnumerable;
-use DevNet\System\Type;
-use stdClass;
 
 class FeatureCollection implements IEnumerable
 {
-    private array $Items;
+    private array $items;
 
     public function set(object $feature)
     {
-        $this->Items[get_class($feature)] = $feature;
+        $this->items[get_class($feature)] = $feature;
     }
 
     public function get(string $type): ?object
     {
-        return $this->Items[$type] ?? null;
+        return $this->items[$type] ?? null;
     }
 
     public function getIterator(): Enumerator
     {
-        return new Enumerator($this->Items);
+        return new Enumerator($this->items);
     }
 }

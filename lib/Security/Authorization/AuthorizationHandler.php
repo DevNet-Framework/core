@@ -17,7 +17,7 @@ abstract class AuthorizationHandler implements IAuthorizationHandler
     {
         foreach ($context->Requirements as $requirement) {
             if (get_class($this) == $requirement->getHandlerName()) {
-                $this->handleRequirement($context, $requirement)->wait();
+                $this->handlerequirement($context, $requirement)->wait();
             }
         }
 

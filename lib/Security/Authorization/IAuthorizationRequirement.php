@@ -11,7 +11,5 @@ namespace DevNet\Web\Security\Authorization;
 
 interface IAuthorizationRequirement
 {
-    public function __get(string $name);
-
     public function getHandlerName(): string;
 }

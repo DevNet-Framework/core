@@ -11,9 +11,9 @@ namespace DevNet\Web\Http\Client;
 
 class HttpRequestContent
 {
-    protected string $Content;
-    protected string $ContentType;
-    protected int $ContentLength;
+    public string $Content;
+    public string $ContentType;
+    public int $ContentLength;
 
     public function __construct(string $contentType, string $content)
     {

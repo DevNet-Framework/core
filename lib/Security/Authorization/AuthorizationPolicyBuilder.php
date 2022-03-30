@@ -11,34 +11,34 @@ namespace DevNet\Web\Security\Authorization;
 
 class AuthorizationPolicyBuilder
 {
-    private string $Name;
-    private array $Requirements = [];
+    private string $name;
+    private array $requirements = [];
 
     public function __construct(string $name)
     {
-        $this->Name = $name;
+        $this->name = $name;
     }
 
     public function requireAuthentication()
     {
         $requirement = new AuthenticationRequirement();
-        $this->Requirements[spl_object_id($requirement)] = $requirement;
+        $this->requirements[spl_object_id($requirement)] = $requirement;
     }
 
     public function requireClaim(string $claimType, array $allowedValues = null)
     {
         $requirement = new ClaimRequirement($claimType, $allowedValues);
-        $this->Requirements[spl_object_id($requirement)] = $requirement;
+        $this->requirements[spl_object_id($requirement)] = $requirement;
     }
 
     public function requireRole(array $roles)
     {
         $requirement = new RoleRequirement($roles);
-        $this->Requirements[spl_object_id($requirement)] = $requirement;
+        $this->requirements[spl_object_id($requirement)] = $requirement;
     }
 
     public function build()
     {
-        return new AuthorizationPolicy($this->Name, $this->Requirements);
+        return new AuthorizationPolicy($this->name, $this->requirements);
     }
 }

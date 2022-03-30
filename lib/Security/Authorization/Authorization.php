@@ -13,16 +13,16 @@ use DevNet\Web\Security\ClaimsPrincipal;
 
 class Authorization
 {
-    private AuthorizationOptions $Options;
+    private AuthorizationOptions $options;
 
     public function __construct(AuthorizationOptions $options)
     {
-        $this->Options = $options;
+        $this->options = $options;
     }
 
     public function Authorize(string $policyName, ?ClaimsPrincipal $user): AuthorizationResult
     {
-        $policy = $this->Options->getPolicy($policyName);
+        $policy = $this->options->getPolicy($policyName);
 
         if (!$policy) {
             throw new \Exception("Policy {$policyName} dose not exist");

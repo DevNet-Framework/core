@@ -9,10 +9,29 @@
 
 namespace DevNet\Web\Http;
 
+use DevNet\System\Exceptions\PropertyException;
+
 class Form
 {
-    public array $Fields;
-    public FileCollection $Files;
+    private array $fields;
+    private FileCollection $files;
+
+    public function __get(string $name)
+    {
+        if ($name == 'Fields') {
+            return $this->fields;
+        }
+        
+        if ($name == 'Files') {
+            return $this->files;
+        }
+
+        if (property_exists($this, $name)) {
+            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+        }
+
+        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+    }
 
     public function __construct(array $fields = null, FileCollection $files = null)
     {
@@ -24,22 +43,17 @@ class Form
             $files = new FileCollection();
         }
 
-        $this->Fields = $fields;
-        $this->Files  = $files;
-    }
-
-    public function __get(string $name)
-    {
-        return $this->$name;
+        $this->fields = $fields;
+        $this->files  = $files;
     }
 
     public function getValue(string $name)
     {
-        return $this->Fields[$name] ?? null;
+        return $this->fields[$name] ?? null;
     }
 
     public function count()
     {
-        return count($this->Fields);
+        return count($this->fields);
     }
 }

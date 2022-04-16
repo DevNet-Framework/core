@@ -10,7 +10,7 @@
 namespace DevNet\Web\Middleware;
 
 use DevNet\Web\Http\HttpContext;
-use DevNet\System\Delegate;
+use DevNet\System\Event\Delegate;
 
 class RequestDelegate extends Delegate
 {

@@ -14,14 +14,9 @@ use DevNet\Web\Http\HttpResponse;
 
 class HttpResponseParser
 {
-    public static function parse(string $responseRaw): HttpResponse
+    public static function parse(string $responseHeaderRaw): HttpResponse
     {
-        $responseRaw    = explode("\r\n\r\n", $responseRaw, 2);
-        $responseHeader = $responseRaw[0];
-        $responseBody   = $responseRaw[1];
-        $responseHeader = trim($responseHeader);
-
-        $headers = explode(PHP_EOL, $responseHeader);
+        $headers = explode(PHP_EOL, $responseHeaderRaw);
         $responseLine = array_shift($headers);
         $responseLine = explode(' ', $responseLine);
 
@@ -32,7 +27,6 @@ class HttpResponseParser
         $response = new HttpResponse(new Headers($headers));
         $response->setProtocol($responseLine[0]);
         $response->setStatusCode($responseLine[1]);
-        $response->Body->write($responseBody);
 
         return $response;
     }

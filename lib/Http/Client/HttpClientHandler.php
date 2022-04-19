@@ -35,12 +35,17 @@ abstract class HttpClientHandler
             $socket = new Socket($request->Uri->Host, $request->Uri->Port, $timeout, false);
             $socket->write(HttpRequestRawBuilder::build($request));
 
-            $responseRaw = '';
+            $responseHeaderRaw = '';
+            do {
+                $responseHeaderRaw .= yield $socket->readLine();
+            } while (strpos($responseHeaderRaw, "\r\n\r\n") === false);
+
+            $response = HttpResponseParser::parse($responseHeaderRaw);
             while (!$socket->eof()) {
-                $responseRaw .= yield $socket->read(1024 * 4);
+                $responseBodyChunk = yield $socket->read(1024 * 4);
+                $response->Body->write($responseBodyChunk);
             }
 
-            $response = HttpResponseParser::parse($responseRaw);
             return $response;
         });
     }

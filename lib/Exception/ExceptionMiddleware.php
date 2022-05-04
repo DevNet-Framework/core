@@ -41,7 +41,7 @@ class ExceptionMiddleware implements IMiddleware
             $context->addAttribute('Error', $error);
             if ($this->errorHandlingPath) {
                 $context->Request->Uri->Path = $this->errorHandlingPath;
-                $context->Response->Body->flush();
+                $context->Response->Body->truncate(0);
                 return yield $next($context);
             }
             return $this->handel($context);

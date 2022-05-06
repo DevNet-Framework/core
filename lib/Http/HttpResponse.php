@@ -142,10 +142,14 @@ class HttpResponse extends HttpMessage
         $this->Headers->add('Location', $location);
     }
 
-    public function writeAsync(string $string): Task
+    public function writeAsync(string $content): Task
     {
-        $result = $this->Body->write($string);
-        return Task::fromResult($result);
+        $body = $this->Body;
+        return Task::run(function() use($body, $content)
+        {
+            $body->write($content);
+            return yield $body->flush();
+        });
     }
 
     public function writeJsonAsync($value): Task

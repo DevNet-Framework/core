@@ -154,9 +154,15 @@ class HttpResponse extends HttpMessage
 
     public function writeJsonAsync($value): Task
     {
-        $content = json_encode($value);
-        $this->Headers->add("Content-Type", "application/json");
-        $result = $this->Body->write($content);
-        return Task::fromResult($result);
+        $headers = $this->Headers;
+        $body = $this->Body;
+        
+        return Task::run(function() use($headers, $body, $value)
+        {
+            $headers->add("Content-Type", "application/json");
+            $content = json_encode($value);
+            $body->write($content);
+            return yield $body->flush();
+        });
     }
 }

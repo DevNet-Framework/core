@@ -27,10 +27,6 @@ class ExceptionMiddleware implements IMiddleware
 
     public function __invoke(HttpContext $context, RequestDelegate $next)
     {
-        set_error_handler(function (int $severity, string $message, string $file, int $line) {
-            throw new \ErrorException($message, 0, $severity, $file, $line);
-        });
-
         try {
             // need to await the async RequestDelegate here to be able to catch the error exception
             yield $next($context);

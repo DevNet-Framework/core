@@ -17,6 +17,7 @@ use DevNet\System\Runtime\LauncherProperties;
 use DevNet\System\Exceptions\ClassException;
 use DevNet\System\Exceptions\PropertyException;
 use DevNet\Web\Middleware\ApplicationBuilder;
+use DevNet\Web\Http\HttpContext;
 use Closure;
 
 class WebHostBuilder implements IWebHostBuilder
@@ -73,7 +74,18 @@ class WebHostBuilder implements IWebHostBuilder
 
     public function configureServices(Closure $configureServices)
     {
-        $configureServices($this->services);
+        if (PHP_SAPI == 'cli') {
+            $configureServices($this->services);
+            return $this;
+        }
+    
+        try {
+            $configureServices($this->services);
+        } catch (\Throwable $error) {
+            $context = $this->provider->getService(HttpContext::class);
+            $context->addAttribute('Error', $error);
+        }
+        
         return $this;
     }
 

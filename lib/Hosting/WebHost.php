@@ -37,7 +37,19 @@ class WebHost
 
     public function start(Closure $configure): void
     {
-        $configure($this->appBuilder);
+        if (PHP_SAPI == 'cli') {
+            $configure($this->appBuilder);
+            $this->run();
+            return;
+        }
+
+        try {
+            $configure($this->appBuilder);
+        } catch (\Throwable $error) {
+            $context = $this->provider->getService(HttpContext::class);
+            $context->addAttribute('Error', $error);
+        }
+        
         $this->run();
     }
 

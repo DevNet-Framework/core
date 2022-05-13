@@ -27,6 +27,15 @@ class ExceptionMiddleware implements IMiddleware
 
     public function __invoke(HttpContext $context, RequestDelegate $next)
     {
+        if ($context->getAttribute('Error')) {
+            if ($this->errorHandlingPath) {
+                $context->Request->Uri->Path = $this->errorHandlingPath;
+                $context->Response->Body->truncate(0);
+                return yield $next($context);
+            }
+            return yield $this->handel($context);
+        }
+        
         try {
             // need to await the async RequestDelegate here to be able to catch the error exception
             yield $next($context);
@@ -40,7 +49,7 @@ class ExceptionMiddleware implements IMiddleware
                 $context->Response->Body->truncate(0);
                 return yield $next($context);
             }
-            return $this->handel($context);
+            return yield $this->handel($context);
         }
     }
 

@@ -79,7 +79,7 @@ class ApplicationBuilder implements IApplicationBuilder
     {
         $app = new RequestDelegate(function (HttpContext $context): Task {
 
-            $RequestHandler = $context->Handler;
+            $RequestHandler = $context->getAttribute('Handler');
             if ($RequestHandler) {
                 throw new \Exception("The request has reached the end of the pipeline without being executed the endpoint");
             }

@@ -25,15 +25,15 @@ class HttpContext
             return $this->$property;
         }
 
+        if (in_array($name, ['request', 'response', 'features', 'attributes'])) {
+            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
+        }
+
         if (isset($this->attributes[$name])) {
             return $this->attributes[$name];
         }
 
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+        return null;
     }
 
     public function __construct(HttpRequest $request, HttpResponse $response)

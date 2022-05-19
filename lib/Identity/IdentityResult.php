@@ -27,10 +27,10 @@ class IdentityResult
         }
 
         if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
         }
 
-        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
     }
 
     public function __construct(int $code = 0)

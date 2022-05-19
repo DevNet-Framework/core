@@ -42,10 +42,10 @@ class ViewEngine
         }
 
         if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property" . self::class . "::" . $name);
+            throw new PropertyException("access to private property " . self::class . "::" . $name);
         }
 
-        throw new PropertyException("access to undefined property" . self::class . "::" . $name);
+        throw new PropertyException("access to undefined property " . self::class . "::" . $name);
     }
 
     public function inject(string $serviceName, string $serviceType): void

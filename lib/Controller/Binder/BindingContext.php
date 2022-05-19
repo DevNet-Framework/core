@@ -28,10 +28,10 @@ class BindingContext
         }
 
         if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property" . self::class . "::" . $name);
+            throw new PropertyException("access to private property " . self::class . "::" . $name);
         }
 
-        throw new PropertyException("access to undefined property" . self::class . "::" . $name);
+        throw new PropertyException("access to undefined property " . self::class . "::" . $name);
     }
 
     public function __construct(

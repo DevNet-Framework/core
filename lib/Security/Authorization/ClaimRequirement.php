@@ -28,10 +28,10 @@ class ClaimRequirement extends AuthorizationHandler implements IAuthorizationReq
         }
 
         if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property" . get_class($this) . "::" . $name);
+            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
         }
 
-        throw new PropertyException("access to undefined property" . get_class($this) . "::" . $name);
+        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
     }
 
     public function __construct(string $claimType, array $allowedValues = null)

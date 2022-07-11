@@ -18,6 +18,7 @@ class RouteBuilder implements IRouteBuilder
     private array $routes;
     private string $prefix = '';
     private string $name   = '';
+    private array $filters = [];
 
     public function __construct(IServiceProvider $serviceProvider, IRouteHandler $defaultHandler = null)
     {
@@ -46,6 +47,12 @@ class RouteBuilder implements IRouteBuilder
         return $this;
     }
 
+    public function filter(callable $filter): RouteBuilder
+    {
+        $this->filters[] = $filter;
+        return $this;
+    }
+
     /**
      * mape the route
      */
@@ -61,6 +68,18 @@ class RouteBuilder implements IRouteBuilder
         $pattern = $this->prefix . '/' . trim($pattern, '/');
         $this->routes[] = new Route($name, 'ANY', $pattern, $routeHandler);
         $this->name = ''; // reset the name for the next route
+        $this->filters = []; // reset the filters for the next route
+    }
+
+    /**
+     * mape the route using Http Verb.
+     */
+    public function mapVerb(string $verb, string $pattern, $target): void
+    {
+        $pattern = $this->prefix . '/' . trim($pattern, '/');
+        $this->routes[] = new Route($this->name, $verb, $pattern, new RouteHandler($this->serviceProvider, $target, $this->filters));
+        $this->name = ''; // reset the name for the next route
+        $this->filters = []; // reset the filters for the next route
     }
 
     /**
@@ -93,16 +112,6 @@ class RouteBuilder implements IRouteBuilder
     public function mapDelete(string $pattern, $target): void
     {
         $this->mapVerb('DELETE', $pattern, $target);
-    }
-
-    /**
-     * mape the route using Http Verb.
-     */
-    public function mapVerb(string $verb, string $pattern, $target): void
-    {
-        $pattern = $this->prefix . '/' . trim($pattern, '/');
-        $this->routes[] = new Route($this->name, $verb, $pattern, new RouteHandler($this->serviceProvider, $target));
-        $this->name = ''; // reset the name for the next route
     }
 
     /**

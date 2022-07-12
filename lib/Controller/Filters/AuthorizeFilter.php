@@ -9,13 +9,13 @@
 
 namespace DevNet\Web\Controller\Filters;
 
-use DevNet\Web\Controller\IActionFilter;
-use DevNet\Web\Controller\ActionContext;
-use DevNet\Web\Controller\ActionExecutionDelegate;
-use DevNet\Web\Security\Authentication\AuthenticationDefaults;
 use DevNet\System\Async\Tasks\Task;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Middleware\IMiddleware;
+use DevNet\Web\Middleware\RequestDelegate;
+use DevNet\Web\Security\Authentication\AuthenticationDefaults;
 
-class AuthorizeFilter implements IActionFilter
+class AuthorizeFilter implements IMiddleware
 {
     private array $options;
 
@@ -24,19 +24,18 @@ class AuthorizeFilter implements IActionFilter
         $this->options = $options;
     }
 
-    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next)
+    public function __invoke(HttpContext $context, RequestDelegate $next)
     {
-        $httpContext   = $context->HttpContext;
-        $authorization = $context->HttpContext->Authorization;
+        $authorization = $context->Authorization;
 
         if ($authorization) {
-            $user   = $httpContext->User;
+            $user   = $context->User;
             $policy = $this->options['Policy'] ?? 'Authentication';
             $result = $authorization->Authorize($policy, $user);
 
             if (!$result->isSucceeded()) {
                 if ($policy == 'Authentication') {
-                    $authentication = $httpContext->getAttribute('Authentication');
+                    $authentication = $context->getAttribute('Authentication');
                     $loginPath      = "/account/login";
 
                     if ($authentication) {
@@ -44,9 +43,9 @@ class AuthorizeFilter implements IActionFilter
                         $loginPath = $handler->Options->LoginPath;
                     }
 
-                    $httpContext->Response->redirect($loginPath);
+                    $context->Response->redirect($loginPath);
                 } else {
-                    $httpContext->Response->setStatusCode(403);
+                    $context->Response->setStatusCode(403);
                 }
 
                 return Task::completedTask();

@@ -9,13 +9,13 @@
 
 namespace DevNet\Web\Controller\Filters;
 
-use DevNet\Web\Controller\IActionFilter;
-use DevNet\Web\Controller\ActionExecutionDelegate;
-use DevNet\Web\Controller\ActionContext;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Middleware\IMiddleware;
+use DevNet\Web\Middleware\RequestDelegate;
 use DevNet\Web\Security\Antiforgery\IAntiforgery;
 use DevNet\Web\Security\Antiforgery\AntiforgeryException;
 
-class AntiForgeryFilter implements IActionFilter
+class AntiForgeryFilter implements IMiddleware
 {
     private array $options;
 
@@ -24,12 +24,11 @@ class AntiForgeryFilter implements IActionFilter
         $this->options = $options;
     }
 
-    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next)
+    public function __invoke(HttpContext $context, RequestDelegate $next)
     {
-        $httpContext = $context->HttpContext;
-        $antiforgery = $httpContext->RequestServices->getService(IAntiforgery::class);
+        $antiforgery = $context->RequestServices->getService(IAntiforgery::class);
 
-        $result = $antiforgery->validateTokens($httpContext);
+        $result = $antiforgery->validateTokens($context);
 
         if (!$result) {
             throw new AntiforgeryException("Invalid AntiForgery Token.");

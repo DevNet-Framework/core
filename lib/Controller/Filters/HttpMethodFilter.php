@@ -9,12 +9,12 @@
 
 namespace DevNet\Web\Controller\Filters;
 
-use DevNet\Web\Controller\IActionFilter;
-use DevNet\Web\Controller\ActionExecutionDelegate;
-use DevNet\Web\Controller\ActionContext;
+use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Http\HttpException;
+use DevNet\Web\Middleware\IMiddleware;
+use DevNet\Web\Middleware\RequestDelegate;
 
-class HttpMethodFilter implements IActionFilter
+class HttpMethodFilter implements IMiddleware
 {
     private array $options;
 
@@ -23,17 +23,16 @@ class HttpMethodFilter implements IActionFilter
         $this->options = $options;
     }
 
-    public function onActionExecution(ActionContext $context, ActionExecutionDelegate $next)
+    public function __invoke(HttpContext $context, RequestDelegate $next)
     {
-        $httpContext = $context->HttpContext;
-        $httpMethod  = $httpContext->Request->Method;
+        $httpMethod  = $context->Request->Method;
 
         foreach ($this->options as &$option) {
             $option = strtoupper($option);
         }
 
         if (!in_array($httpMethod, $this->options)) {
-            $httpContext->Response->setStatusCode(405);
+            $context->Response->setStatusCode(405);
             throw new HttpException("\"{$httpMethod}\" Method Not Allowed", 405);
         }
 

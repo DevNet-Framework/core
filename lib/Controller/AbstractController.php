@@ -9,78 +9,23 @@
 
 namespace DevNet\Web\Controller;
 
-use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Controller\ActionContext;
-use DevNet\Web\Controller\Binder\ParameterBinder;
 use DevNet\Web\Controller\Results\ContentResult;
 use DevNet\Web\Controller\Results\ForbidResult;
 use DevNet\Web\Controller\Results\JsonResult;
 use DevNet\Web\Controller\Results\RedirectResult;
 use DevNet\Web\Controller\Results\ViewResult;
-use DevNet\Web\Middleware\IRequestHandler;
-use DevNet\System\Exceptions\PropertyException;
-use DevNet\System\Async\Tasks\Task;
-use DevNet\System\Action;
+use DevNet\Web\Http\HttpContext;
 
-abstract class AbstractController implements IRequestHandler
+abstract class AbstractController
 {
-    protected HttpContext $HttpContext;
-    protected ActionContext $ActionContext;
-    private ActionExecutionDelegate $action;
-    private array $filterAttributes = [];
-    private array $actionFilters = [];
+    public HttpContext $HttpContext;
+    public ActionDescriptor $ActionDescriptor;
+    public array $ActionFilters = [];
 
-    public function __invoke(HttpContext $httpContext)
+    public function filter(string $target, string $filter, array $options = []): void
     {
-        $this->HttpContext   = $httpContext;
-        $this->ActionContext = $httpContext->ActionContext;
-
-        $controllerFilters   = $this->filterAttributes[$this->ActionContext->ActionDescriptor->MethodInfo->getDeclaringClass()->getName()] ?? [];
-        $actionFilters       = $this->filterAttributes[strtolower($this->ActionContext->ActionDescriptor->ActionName)] ?? [];
-        $filterAttributes    = array_merge($controllerFilters, $actionFilters);
-
-        foreach ($filterAttributes as $filterAttribute) {
-            $actionFilter           = $filterAttribute[0];
-            $options                = $filterAttribute[1];
-            $this->actionFilters[]  = new $actionFilter($options);
-        }
-
-        $this->action = $action = new ActionExecutionDelegate($this, 'next');
-
-        return $action($this->ActionContext);
-    }
-
-    public function next(ActionContext $actionContext)
-    {
-        $actionFilter = array_shift($this->actionFilters);
-        if ($actionFilter) {
-            return $actionFilter->onActionExecution($actionContext, $this->action);
-        }
-
-        return $this->execute($actionContext);
-    }
-
-    public function execute(ActionContext $actionContext): Task
-    {
-        $parameterBinder = new ParameterBinder();
-        $arguments = $parameterBinder->resolveArguments($actionContext);
-
-        return Task::run(function () use ($actionContext, $arguments)
-        {
-            $action = new Action([$this, $actionContext->ActionDescriptor->ActionName]);
-            $actionResult = yield $action->invokeArgs($arguments);
-            $result = yield $actionResult->executeAsync($this->ActionContext);
-            return $result;
-        });
-    }
-
-    public function filter(string $target, string $filter, array $options = [])
-    {
-        if ($target) {
-            strtolower($target);
-        }
-
-        $this->filterAttributes[$target][] = [$filter, $options];
+        $target = strtolower($target);
+        $this->ActionFilters[$target][] = [$filter, $options];
     }
 
     abstract public function view($parameter, object $model = null): ViewResult;

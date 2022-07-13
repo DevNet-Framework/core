@@ -38,13 +38,13 @@ abstract class ActionController extends AbstractController
 
         if (!$viewName) {
             $prefix         = $this->HttpContext->RouteContext->RouteData->Values['prefix'];
-            $controllerName = $this->ActionContext->ActionDescriptor->ControllerName;
-            $controllerName = str_replace('Controller', '', $this->ActionContext->ActionDescriptor->ControllerName);
-            $actionName     = $this->ActionContext->ActionDescriptor->ActionName;
+            $controllerName = $this->ActionDescriptor->ControllerName;
+            $controllerName = str_replace('Controller', '', $this->ActionDescriptor->ControllerName);
+            $actionName     = $this->ActionDescriptor->ActionName;
             $viewName       = ucwords($prefix . $controllerName, '/') . '/' . $actionName;
         }
 
-        $view = $this->ActionContext->HttpContext->RequestServices->getService(ViewManager::class);
+        $view = $this->HttpContext->RequestServices->getService(ViewManager::class);
         $view->setData($this->ViewData);
         $view->inject('Html', new HtmlHelper($this->HttpContext));
         $view->inject('Url', new UrlHelper($this->HttpContext));

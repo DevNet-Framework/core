@@ -10,17 +10,19 @@
 namespace DevNet\Web\Controller;
 
 use DevNet\System\Exceptions\PropertyException;
+use ReflectionClass;
 use ReflectionMethod;
 
 class ActionDescriptor
 {
+    private ReflectionClass $classInfo;
     private ReflectionMethod $methodInfo;
     private string $controllerName;
     private string $actionName;
 
     public function __get(string $name)
     {
-        if (in_array($name, ['MethodInfo', 'ControllerName', 'ActionName'])) {
+        if (in_array($name, ['ClassInfo', 'MethodInfo', 'ControllerName', 'ActionName'])) {
             $property = lcfirst($name);
             return $this->$property;
         }
@@ -34,6 +36,7 @@ class ActionDescriptor
 
     public function __construct($target, string $actionName)
     {
+        $this->classInfo      = new ReflectionClass($target);
         $this->methodInfo     = new ReflectionMethod($target, $actionName);
         $this->controllerName = $this->methodInfo->getDeclaringClass()->getShortName();
         $this->actionName     = $this->methodInfo->getName();

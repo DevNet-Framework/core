@@ -106,7 +106,7 @@ class ServiceCollectionExtensions
         $viewDirectory = $options->getViewDirectory();
         $services->addView($viewDirectory);
         $services->addSingleton(ControllerOptions::class, $options);
-        $services->addSingleton(RouteBuilder::class, fn ($provider) => new RouteBuilder($provider, new ControllerRouteHandler($provider)));
+        $services->addSingleton(RouteBuilder::class, fn () => new RouteBuilder(new ControllerRouteHandler()));
     }
 
     public static function addEntityContext(IServiceCollection $services, string $entityConext, Closure $configuration = null)

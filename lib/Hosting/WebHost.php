@@ -111,7 +111,7 @@ class WebHost
             return $httpContext;
         });
 
-        $builder->Services->addSingleton(RouteBuilder::class, fn ($provider) => new RouteBuilder($provider));
+        $builder->Services->addSingleton(RouteBuilder::class, fn () => new RouteBuilder());
 
         return $builder;
     }

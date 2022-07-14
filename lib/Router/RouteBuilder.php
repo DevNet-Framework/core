@@ -9,20 +9,16 @@
 
 namespace DevNet\Web\Router;
 
-use DevNet\System\Dependency\IServiceProvider;
-
 class RouteBuilder implements IRouteBuilder
 {
-    private IServiceProvider $serviceProvider;
     private ?IRouteHandler $defaultHandler;
     private array $routes;
     private string $prefix = '';
     private string $name   = '';
     private array $filters = [];
 
-    public function __construct(IServiceProvider $serviceProvider, IRouteHandler $defaultHandler = null)
+    public function __construct(?IRouteHandler $defaultHandler = null)
     {
-        $this->serviceProvider = $serviceProvider;
         $this->defaultHandler  = $defaultHandler;
     }
 
@@ -62,7 +58,7 @@ class RouteBuilder implements IRouteBuilder
             $routeHandler = clone $this->defaultHandler;
             $routeHandler->Target = $target;
         } else {
-            $routeHandler = new RouteHandler($this->serviceProvider, $target[0] ?? null);
+            $routeHandler = new RouteHandler($target[0] ?? null, $this->filters);
         }
 
         $pattern = $this->prefix . '/' . trim($pattern, '/');
@@ -77,7 +73,7 @@ class RouteBuilder implements IRouteBuilder
     public function mapVerb(string $verb, string $pattern, $target): void
     {
         $pattern = $this->prefix . '/' . trim($pattern, '/');
-        $this->routes[] = new Route($this->name, $verb, $pattern, new RouteHandler($this->serviceProvider, $target, $this->filters));
+        $this->routes[] = new Route($this->name, $verb, $pattern, new RouteHandler($target, $this->filters));
         $this->name = ''; // reset the name for the next route
         $this->filters = []; // reset the filters for the next route
     }

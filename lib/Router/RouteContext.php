@@ -10,17 +10,19 @@
 namespace DevNet\Web\Router;
 
 use DevNet\System\Exceptions\PropertyException;
+use DevNet\Web\Http\HttpContext;
 
 class RouteContext
 {
+    private HttpContext $httpContext;
+    private RouteData $routeData;
     private string $httpMethod;
     private string $urlPath;
-    private RouteData $routeData;
     public ?object $Handler;
 
     public function __get(string $name)
     {
-        if (in_array($name, ['HttpMethod', 'UrlPath', 'RouteData'])) {
+        if (in_array($name, ['HttpContext', 'HttpMethod', 'UrlPath', 'RouteData'])) {
             $property = lcfirst($name);
             return $this->$property;
         }
@@ -32,11 +34,12 @@ class RouteContext
         throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
     }
 
-    public function __construct(string $httpMethod, string $urlPath)
+    public function __construct(HttpContext $httpContext)
     {
-        $this->httpMethod = $httpMethod;
-        $this->urlPath    = $urlPath;
-        $this->routeData  = new RouteData();
-        $this->Handler    = null;
+        $this->httpContext = $httpContext;
+        $this->httpMethod  = $httpContext->Request->Method;
+        $this->urlPath     = $httpContext->Request->Uri->Path;
+        $this->routeData   = new RouteData();
+        $this->Handler     = null;
     }
 }

@@ -28,21 +28,16 @@ class RouterMiddleware implements IMiddleware
 
     public function __invoke(HttpContext $context, RequestDelegate $next)
     {
-        $request    = $context->Request;
-        $httpMethod = $request->Method;
-        $urlPath    = $request->Uri->Path;
-
+        $urlPath     = $context->Request->Uri->Path;
         $trimmedPath = $this->trimDuplicateSlashes($urlPath);
 
         if ($trimmedPath) {
-            return new Task(function () use ($context, $trimmedPath) {
-                $context->Response->setStatusCode(302);
-                $context->Response->Headers->add('Location', $trimmedPath);
-            });
+            $context->Response->Headers->add('Location', $trimmedPath);
+            return Task::completedTask();
         }
 
         $router = $this->routeBuilder->build();
-        $routeContext = new RouteContext($httpMethod, $urlPath);
+        $routeContext = new RouteContext($context);
         if ($router->matchRoute($routeContext)) {
             $context->addAttribute('RouteContext', $routeContext);
             $context->addAttribute('RouteValues', $routeContext->RouteData->Values);

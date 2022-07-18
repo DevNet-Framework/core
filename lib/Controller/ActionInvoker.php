@@ -9,43 +9,102 @@
 
 namespace DevNet\Web\Controller;
 
+use DevNet\System\Action;
+use DevNet\System\Async\AsyncFunction;
+use DevNet\System\Async\Tasks\Task;
 use DevNet\Web\Controller\ActionContext;
-use DevNet\Web\Controller\ControllerException;
-use DevNet\Web\Controller\Binder\IValueProvider;
+use DevNet\Web\Controller\Binder\ParameterBinder;
 use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\IRequestHandler;
-use DevNet\System\Dependency\Activator;
-use DevNet\System\Exceptions\ClassException;
+use DevNet\Web\Middleware\RequestDelegate;
 
 class ActionInvoker implements IRequestHandler
 {
-    private string $controllerName;
-    private string $actionName;
-    private IValueProvider $valueProvider;
+    private ActionContext $actionContext;
+    private RequestDelegate $action;
+    private array $filters = [];
 
-    public function __construct(string $controllerName, string $actionName, IValueProvider $provider)
+    public function __construct(ActionContext $actionContext)
     {
-        $this->controllerName = $controllerName;
-        $this->actionName     = $actionName;
-        $this->valueProvider  = $provider;
+        $this->actionContext = $actionContext;
+    }
+
+    public function createController(): object
+    {
+        $classInfo   = $this->actionContext->ActionDescriptor->ClassInfo;
+        $constructor = $classInfo->getConstructor();
+        $controller  = $classInfo->newInstanceWithoutConstructor();
+
+        $controller->HttpContext = $this->actionContext->HttpContext;
+        $controller->ActionDescriptor = $this->actionContext->ActionDescriptor;
+
+        if (!$constructor) {
+            return $controller;
+        }
+
+        $services   = $this->actionContext->HttpContext->RequestServices;
+        $parameters = $constructor->getParameters();
+        $arguments  = [];
+
+        foreach ($parameters as $parameter) {
+            $parameterType = '';
+            if ($parameter->getType()) {
+                $parameterType = $parameter->getType()->getName();
+            }
+
+            if (!$services->contains($parameterType)) {
+                break;
+            }
+
+            $arguments[] = $services->getService($parameterType);
+        }
+
+        $constructor->invokeArgs($controller, $arguments);
+
+        return $controller;
+    }
+
+    public function getNextfilter(): ?IMiddleware
+    {
+        $filter = array_shift($this->filters);
+        if (!$filter) {
+            return null;
+        }
+
+        $actionFilter = $filter[0];
+        $options      = $filter[1];
+
+        return new $actionFilter($options);
     }
 
     public function __invoke(HttpContext $httpContext)
     {
-        try {
-            $controller = Activator::CreateInstance($this->controllerName, $httpContext->RequestServices);
-        } catch (ClassException $exception) {
-            throw new ControllerException("Not found Controller : {$this->controllerName}", 404);
-        }
+        $controller        = $this->createController();
+        $controllerFilters = $controller->ActionFilters[$this->actionContext->ActionDescriptor->ClassInfo->getName()] ?? [];
+        $actionFilters     = $controller->ActionFilters[strtolower($this->actionContext->ActionDescriptor->ActionName)] ?? [];
+        $this->filters     = array_merge($controllerFilters, $actionFilters);
 
-        if (!method_exists($this->controllerName, $this->actionName)) {
-            throw new ControllerException("Undefined method : {$this->controllerName}::{$this->actionName}()", 404);
-        }
+        $this->action = new RequestDelegate(function(HttpContext $httpContext) use($controller)
+        {
+            $actionFilter = $this->getNextFilter();
+            if ($actionFilter) {
+                $asyncFilter = new AsyncFunction($actionFilter);
+                return $asyncFilter($httpContext, $this->action);
+            }
 
-        $actionDescriptor = new ActionDescriptor($controller, $this->actionName);
-        $actionContext    = new ActionContext($actionDescriptor, $httpContext, $this->valueProvider);
+            $parameterBinder = new ParameterBinder();
+            $arguments = $parameterBinder->resolveArguments($this->actionContext);
+            $action = new Action([$controller, $this->actionContext->ActionDescriptor->ActionName]);
 
-        $httpContext->addAttribute("ActionContext", $actionContext);
-        return $controller($httpContext);
+            return Task::run(function () use ($action, $arguments)
+            {
+                $actionResult = yield $action->invokeArgs($arguments);
+                $result = yield $actionResult->executeAsync($this->actionContext);
+                return $result;
+            });
+        });
+
+        return $this->action->invoke($httpContext);
     }
 }

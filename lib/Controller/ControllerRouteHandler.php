@@ -12,13 +12,11 @@ namespace DevNet\Web\Controller;
 use DevNet\Web\Router\IRouteHandler;
 use DevNet\Web\Router\RouteContext;
 use DevNet\Web\Controller\Providers\RouteValueProvider;
-use DevNet\System\Dependency\IServiceProvider;
 use DevNet\System\Async\Tasks\Task;
 use DevNet\System\Exceptions\PropertyException;
 
 class ControllerRouteHandler implements IRouteHandler
 {
-    private IServiceProvider $provider;
     private array $target = [];
 
     public function __get(string $name)
@@ -48,11 +46,6 @@ class ControllerRouteHandler implements IRouteHandler
         throw new PropertyException("access to undefined property " . self::class . "::" . $name);
     }
 
-    public function __construct(IServiceProvider $provider)
-    {
-        $this->provider = $provider;
-    }
-
     public function handle(RouteContext $routeContext): Task
     {
         $handler = $routeContext->Handler;
@@ -62,7 +55,7 @@ class ControllerRouteHandler implements IRouteHandler
         }
 
         $prefix         = null;
-        $options        = $this->provider->getService(ControllerOptions::class);
+        $options        = $routeContext->HttpContext->RequestServices->getService(ControllerOptions::class);
         $routeData      = $routeContext->RouteData;
         $controllerName = $this->target[0] ?? null;
         $actionName     = $this->target[1] ?? null;
@@ -80,10 +73,20 @@ class ControllerRouteHandler implements IRouteHandler
             $actionName = $routeData->Values['action'] ?? null;
         }
 
+        if (!class_exists($controllerName)) {
+            throw new ControllerException("Not found Controller : {$this->controllerName}", 404);
+        }
+
+        if (!method_exists($controllerName, $actionName)) {
+            throw new ControllerException("Undefined method : {$this->controllerName}::{$this->actionName}()", 404);
+        }
+
         $valueProvider = $options->getValueProviders();
         $valueProvider->add(new RouteValueProvider($routeContext->RouteData->Values));
-
-        $invoker = new ActionInvoker($controllerName, $actionName, $valueProvider);
+        
+        $actionDescriptor  = new ActionDescriptor($controllerName, $actionName);
+        $actionContext = new ActionContext($actionDescriptor, $routeContext->HttpContext, $valueProvider);
+        $invoker = new ActionInvoker($actionContext);
         $routeContext->Handler = $invoker;
 
         return Task::completedTask();

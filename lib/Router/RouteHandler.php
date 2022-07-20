@@ -9,15 +9,17 @@
 
 namespace DevNet\Web\Router;
 
+use DevNet\System\Async\AsyncFunction;
 use DevNet\System\Async\Tasks\Task;
 use DevNet\System\Dependency\Activator;
 use DevNet\System\Dependency\IServiceProvider;
 use DevNet\System\Exceptions\PropertyException;
+use DevNet\Web\Middleware\RequestDelegate;
 
 class RouteHandler implements IRouteHandler
 {
-    private IServiceProvider $serviceProvider;
     private $target;
+    private array $filters;
 
     public function __get(string $name)
     {
@@ -46,26 +48,29 @@ class RouteHandler implements IRouteHandler
         throw new PropertyException("access to undefined property " . self::class . "::" . $name);
     }
 
-    public function __construct(IServiceProvider $serviceProvider, $target)
+    public function __construct($target, array $filters)
     {
-        $this->serviceProvider = $serviceProvider;
         $this->target = $target;
+        $this->filters = $filters;
     }
 
     public function handle(RouteContext $routeContext): Task
     {
-        $target = null;
-
-        if (is_string($this->target)) {
-            $target = $this->target;
-        } else if (is_object($this->target)) {
+        if (is_callable($this->target)) {
             $handler = $this->target;
+        } else if (is_string($this->target)) {
+            $handler = Activator::CreateInstance($this->target, $routeContext->httpContext->serviceProvider);
         } else {
             throw new RouterException("Invalid Argument Type, route endpoint must be of type callable|string");
         }
 
-        if ($target) {
-            $handler = Activator::CreateInstance($target, $this->serviceProvider);
+        $handler = new RequestDelegate($handler);
+
+        foreach (array_reverse($this->filters) as $filter) {
+            $handler = new RequestDelegate(function ($context) use ($filter, $handler) {
+                $AsyncFilter = new AsyncFunction($filter);
+                return $AsyncFilter($context, $handler);
+            });
         }
 
         $routeContext->Handler = $handler;

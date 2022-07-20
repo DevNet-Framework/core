@@ -9,6 +9,9 @@
 
 namespace DevNet\Web\Router;
 
+use DevNet\Web\Middleware\IMiddleware;
+use DevNet\Web\Middleware\MiddlewareDelegate;
+
 class RouteBuilder implements IRouteBuilder
 {
     private ?IRouteHandler $defaultHandler;
@@ -45,7 +48,12 @@ class RouteBuilder implements IRouteBuilder
 
     public function filter(callable $filter): RouteBuilder
     {
-        $this->filters[] = $filter;
+        if (is_object($filter instanceof IMiddleware)) {
+            $this->filters[] = $filter;
+            return $this;
+        }
+
+        $this->filters[] = new MiddlewareDelegate($filter);
         return $this;
     }
 

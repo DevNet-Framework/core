@@ -9,23 +9,22 @@
 
 namespace DevNet\Web\Middleware;
 
+use DevNet\System\Async\AsyncFunction;
+use DevNet\System\Async\Tasks\Task;
+use DevNet\System\Dependency\IServiceProvider;
+use DevNet\System\Exceptions\ClassException;
+use DevNet\System\Exceptions\PropertyException;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IApplicationBuilder;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
-use DevNet\System\Async\AsyncFunction;
-use DevNet\System\Async\Tasks\Task;
-use DevNet\System\Dependency\IServiceProvider;
-use DevNet\System\Exceptions\PropertyException;
-use Closure;
 
 class ApplicationBuilder implements IApplicationBuilder
 {
     use \DevNet\System\Extension\ExtenderTrait;
 
     private IserviceProvider $provider;
-    private MiddlewareFactory $middlewareFactoty;
-    private array $middlewares;
+    private array $middlewares = [];
 
     public function __get(string $name)
     {
@@ -43,28 +42,30 @@ class ApplicationBuilder implements IApplicationBuilder
     public function __construct(IServiceProvider $provider)
     {
         $this->provider = $provider;
-        $this->middlewareFactoty = new MiddlewareFactory($provider);
-        $this->middlewares = [];
     }
 
-    /**
-     * @param IMiddleware | Closure | string $middleware
-     */
-    public function use($middleware)
+    public function use(callable $middleware): void
     {
-        if (is_object($middleware)) {
-            if ($middleware instanceof Closure) {
-                $middleware = new RequestDelegate($middleware);
-            } else if (!$middleware instanceof IMiddleware) {
-                throw new \Exception("invalide type, class must be of type DevNet\Web\Hosting\IMiddleware");
-            }
+        if ($middleware instanceof IMiddleware) {
+            $this->middlewares[] = $middleware;
+            return;
         }
 
-        if (is_string($middleware)) {
-            $middleware = $this->middlewareFactoty->create($middleware);
+        $this->middlewares[] = new MiddlewareDelegate($middleware);
+    }
+
+    public function useMiddleware(string $middleware, array $args = []): void
+    {
+        $interfaces = class_implements($middleware);
+        if ($interfaces === false) {
+            throw new ClassException("Could not find middleware {$middleware}");
         }
 
-        $this->middlewares[] = $middleware;
+        if (!in_array(IMiddleware::class, $interfaces)) {
+            throw new ClassException("{$middleware} must implements IMiddleware inteface");
+        }
+
+        $this->middlewares[] = new $middleware($args);
     }
 
     public function pipe(callable $middleware, $next): RequestDelegate

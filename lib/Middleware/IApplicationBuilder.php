@@ -14,7 +14,7 @@ interface IApplicationBuilder
     /**
      * @param IMiddleware | Closure | string $middleware
      */
-    public function use($middleware);
+    public function use(callable $middleware): void;
 
     public function build(): RequestDelegate;
 }

@@ -14,6 +14,7 @@ use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
 use DevNet\Web\Security\Authentication\AuthenticationDefaults;
+use DevNet\Web\Security\Authorization\Authorization;
 
 class AuthorizeFilter implements IMiddleware
 {
@@ -26,30 +27,32 @@ class AuthorizeFilter implements IMiddleware
 
     public function __invoke(HttpContext $context, RequestDelegate $next)
     {
-        $authorization = $context->Authorization;
+        $authorization = $context->RequestServices->getService(Authorization::class);
 
-        if ($authorization) {
-            $user   = $context->User;
-            $policy = $this->options['Policy'] ?? 'Authentication';
-            $result = $authorization->Authorize($policy, $user);
+        if (!$authorization) {
+            throw new \Exception("Could not find service: ". Authorization::class);
+        }
 
-            if (!$result->isSucceeded()) {
-                if ($policy == 'Authentication') {
-                    $authentication = $context->getAttribute('Authentication');
-                    $loginPath      = "/account/login";
+        $user   = $context->User;
+        $policy = $this->options['Policy'] ?? 'Authentication';
+        $result = $authorization->Authorize($policy, $user);
 
-                    if ($authentication) {
-                        $handler   = $authentication->Handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
-                        $loginPath = $handler->Options->LoginPath;
-                    }
+        if (!$result->isSucceeded()) {
+            if ($policy == 'Authentication') {
+                $authentication = $context->getAttribute('Authentication');
+                $loginPath      = "/account/login";
 
-                    $context->Response->redirect($loginPath);
-                } else {
-                    $context->Response->setStatusCode(403);
+                if ($authentication) {
+                    $handler   = $authentication->Handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
+                    $loginPath = $handler->Options->LoginPath;
                 }
 
-                return Task::completedTask();
+                $context->Response->redirect($loginPath);
+            } else {
+                $context->Response->setStatusCode(403);
             }
+
+            return Task::completedTask();
         }
 
         return $next($context);

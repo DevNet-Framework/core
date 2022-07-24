@@ -12,20 +12,10 @@ namespace DevNet\Web\Router;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
-use DevNet\Web\Router\RouteBuilder;
-use DevNet\Web\Router\RouteContext;
-use DevNet\Web\Router\RouterException;
 use DevNet\System\Async\Tasks\Task;
 
 class RouterMiddleware implements IMiddleware
 {
-    private RouteBuilder $routeBuilder;
-
-    public function __construct(RouteBuilder $routeBuilder)
-    {
-        $this->routeBuilder = $routeBuilder;
-    }
-
     public function __invoke(HttpContext $context, RequestDelegate $next)
     {
         $urlPath     = $context->Request->Uri->Path;
@@ -36,8 +26,10 @@ class RouterMiddleware implements IMiddleware
             return Task::completedTask();
         }
 
-        $router = $this->routeBuilder->build();
+        $routeBuilder = $context->RequestServices->getService(RouteBuilder::class);
+        $router       = $routeBuilder->build();
         $routeContext = new RouteContext($context);
+
         if ($router->matchRoute($routeContext)) {
             $context->addAttribute('RouteContext', $routeContext);
             $context->addAttribute('RouteValues', $routeContext->RouteData->Values);

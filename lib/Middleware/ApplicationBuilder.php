@@ -12,7 +12,6 @@ namespace DevNet\Web\Middleware;
 use DevNet\System\Async\AsyncFunction;
 use DevNet\System\Async\Tasks\Task;
 use DevNet\System\Dependency\IServiceProvider;
-use DevNet\System\Exceptions\ClassException;
 use DevNet\System\Exceptions\PropertyException;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IApplicationBuilder;
@@ -52,20 +51,6 @@ class ApplicationBuilder implements IApplicationBuilder
         }
 
         $this->middlewares[] = new MiddlewareDelegate($middleware);
-    }
-
-    public function useMiddleware(string $middleware, array $args = []): void
-    {
-        $interfaces = class_implements($middleware);
-        if ($interfaces === false) {
-            throw new ClassException("Could not find middleware {$middleware}");
-        }
-
-        if (!in_array(IMiddleware::class, $interfaces)) {
-            throw new ClassException("{$middleware} must implements IMiddleware inteface");
-        }
-
-        $this->middlewares[] = new $middleware($args);
     }
 
     public function pipe(callable $middleware, $next): RequestDelegate

@@ -23,11 +23,11 @@ class ApplicationBuilderExtensions
 {
     public static function useMiddleware(IApplicationBuilder $app, string $middlewareName, array $args = []): void
     {
-        $interfaces = class_implements($middlewareName);
-        if ($interfaces === false) {
+        if (!class_exists($middlewareName)) {
             throw new ClassException("Could not find middleware {$middlewareName}");
         }
-
+        
+        $interfaces = class_implements($middlewareName);
         if (!in_array(IMiddleware::class, $interfaces)) {
             throw new ClassException("{$middlewareName} must implements IMiddleware inteface");
         }

@@ -7,10 +7,8 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller\Filters;
+namespace DevNet\Web\Http;
 
-use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Http\HttpException;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
 

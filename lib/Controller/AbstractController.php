@@ -29,19 +29,19 @@ abstract class AbstractController
     public array $ActionFilters = [];
     protected array $ViewData = [];
 
-    public function filter(string $target, string $filter, array $options = []): void
+    public function filter(string $target, string $filterName, array $options = []): void
     {
-        $interfaces = class_implements($filter);
-        if ($interfaces === false) {
-            throw new ClassException("Could not find middleware {$filter}");
+        if (!class_exists($filterName)) {
+            throw new ClassException("Could not find middleware {$filterName}");
         }
-
+        
+        $interfaces = class_implements($filterName);
         if (!in_array(IMiddleware::class, $interfaces)) {
-            throw new ClassException("{$filter} must implements IMiddleware inteface");
+            throw new ClassException("{$filterName} must implements IMiddleware inteface");
         }
 
         $target = strtolower($target);
-        $this->ActionFilters[$target][] = [$filter, $options];
+        $this->ActionFilters[$target][] = [$filterName, $options];
     }
 
     public function view($parameter = null, object $model = null): ViewResult

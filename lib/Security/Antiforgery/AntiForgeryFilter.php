@@ -7,13 +7,11 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller\Filters;
+namespace DevNet\Web\Security\Antiforgery;
 
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
-use DevNet\Web\Security\Antiforgery\IAntiforgery;
-use DevNet\Web\Security\Antiforgery\AntiforgeryException;
 
 class AntiForgeryFilter implements IMiddleware
 {

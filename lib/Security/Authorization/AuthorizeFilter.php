@@ -7,14 +7,13 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller\Filters;
+namespace DevNet\Web\Security\Authorization;
 
 use DevNet\System\Async\Tasks\Task;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
 use DevNet\Web\Security\Authentication\AuthenticationDefaults;
-use DevNet\Web\Security\Authorization\Authorization;
 
 class AuthorizeFilter implements IMiddleware
 {

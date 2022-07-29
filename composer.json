@@ -1,6 +1,6 @@
 {
     "name": "devnet/web",
-    "description": "The DevNet Web components",
+    "description": "The DevNet Web Components",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": ">=7.4.0",
+        "php": "7.4 - 8.0",
         "devnet/core": "1.0.*"
     },
     "autoload": {

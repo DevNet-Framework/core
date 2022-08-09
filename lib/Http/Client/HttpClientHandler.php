@@ -32,7 +32,7 @@ abstract class HttpClientHandler
         $timeout = $this->Options->Timeout;
 
         return Task::Run(function () use ($request, $timeout) {
-            $socket = new Socket($request->Uri->Host, $request->Uri->Port, $timeout, false);
+            $socket = new Socket($request->Uri->Host, $request->Uri->Port, false, $timeout);
             $socket->write(HttpRequestRawBuilder::build($request));
 
             $responseHeaderRaw = '';

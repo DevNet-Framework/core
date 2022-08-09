@@ -46,7 +46,7 @@ class RouteBuilder implements IRouteBuilder
         return $this;
     }
 
-    public function filter(callable $filter): RouteBuilder
+    public function addFilter(callable $filter): RouteBuilder
     {
         if (is_object($filter instanceof IMiddleware)) {
             $this->filters[] = $filter;

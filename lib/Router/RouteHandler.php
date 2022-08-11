@@ -9,10 +9,8 @@
 
 namespace DevNet\Web\Router;
 
-use DevNet\System\Async\AsyncFunction;
 use DevNet\System\Async\Tasks\Task;
 use DevNet\System\Dependency\Activator;
-use DevNet\System\Dependency\IServiceProvider;
 use DevNet\System\Exceptions\PropertyException;
 use DevNet\Web\Middleware\RequestDelegate;
 
@@ -68,8 +66,7 @@ class RouteHandler implements IRouteHandler
 
         foreach (array_reverse($this->filters) as $filter) {
             $handler = new RequestDelegate(function ($context) use ($filter, $handler) {
-                $AsyncFilter = new AsyncFunction($filter);
-                return $AsyncFilter($context, $handler);
+                return $filter($context, $handler);
             });
         }
 

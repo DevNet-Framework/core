@@ -74,11 +74,11 @@ class ControllerRouteHandler implements IRouteHandler
         }
 
         if (!class_exists($controllerName)) {
-            throw new ControllerException("Not found Controller : {$this->controllerName}", 404);
+            throw new ControllerException("Could not find controller {$controllerName}", 404);
         }
 
         if (!method_exists($controllerName, $actionName)) {
-            throw new ControllerException("Undefined method : {$this->controllerName}::{$this->actionName}()", 404);
+            throw new ControllerException("Call to undefined method {$controllerName}::{$actionName}()", 404);
         }
 
         $valueProvider = $options->getValueProviders();

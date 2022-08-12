@@ -18,6 +18,8 @@ use Throwable;
 
 class ExceptionMiddleware implements IMiddleware
 {
+    use \DevNet\System\Async\AsyncTrait;
+
     private ?string $errorHandlingPath;
 
     public function __construct(?string $errorHandlingPath = null)
@@ -25,7 +27,12 @@ class ExceptionMiddleware implements IMiddleware
         $this->errorHandlingPath = $errorHandlingPath;
     }
 
-    public function __invoke(HttpContext $context, RequestDelegate $next)
+    public function __invoke(HttpContext $context, RequestDelegate $next): task
+    {
+        return $this->invokeAsync($context, $next);
+    }
+
+    public function async_invokeAsync(HttpContext $context, RequestDelegate $next): iterable
     {
         if ($context->getAttribute('Error')) {
             if ($this->errorHandlingPath) {

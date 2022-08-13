@@ -11,5 +11,5 @@ namespace DevNet\Web\Security\Authorization;
 
 interface IAuthorizationRequirement
 {
-    public function getHandlerName(): string;
+    public function getHandler(): IAuthorizationHandler;
 }

@@ -11,20 +11,20 @@ namespace DevNet\Web\Security\Authorization;
 
 use DevNet\System\Async\Tasks\Task;
 
-class AuthenticationRequirement extends AuthorizationHandler implements IAuthorizationRequirement
+class AuthenticationRequirement implements IAuthorizationRequirement, IAuthorizationHandler
 {
-    public function getHandlerName(): string
+    public function getHandler(): IAuthorizationHandler
     {
-        return get_class($this);
+        return $this;
     }
 
-    public function HandleRequirement(AuthorizationContext $context, IAuthorizationRequirement $requirement): Task
+    public function Handle(AuthorizationContext $context): Task
     {
         $user = $context->User;
 
         if ($user) {
             if ($user->isAuthenticated()) {
-                $context->success($requirement);
+                $context->success($this);
             }
         }
 

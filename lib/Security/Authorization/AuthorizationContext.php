@@ -39,7 +39,9 @@ class AuthorizationContext
     public function __construct(array $requirements = [], ?ClaimsPrincipal $user = null)
     {
         $this->user = $user;
-        $this->requirements = $requirements;
+        foreach ($requirements as $requirement) {
+            $this->requirements[spl_object_id($requirement)] = $requirement;
+        }
     }
 
     public function fail()

@@ -19,25 +19,27 @@ class AuthorizationPolicyBuilder
         $this->name = $name;
     }
 
-    public function requireAuthentication()
+    public function addRequirement(IAuthorizationRequirement $requirement): void
     {
-        $requirement = new AuthenticationRequirement();
-        $this->requirements[spl_object_id($requirement)] = $requirement;
+        $this->requirements[] = $requirement;
     }
 
-    public function requireClaim(string $claimType, array $allowedValues = null)
+    public function requireAuthentication(): void
     {
-        $requirement = new ClaimRequirement($claimType, $allowedValues);
-        $this->requirements[spl_object_id($requirement)] = $requirement;
+        $this->requirements[] = new AuthenticationRequirement();
     }
 
-    public function requireRole(array $roles)
+    public function requireClaim(string $claimType, array $allowedValues = []): void
     {
-        $requirement = new RoleRequirement($roles);
-        $this->requirements[spl_object_id($requirement)] = $requirement;
+        $this->requirements[] = new ClaimsRequirement($claimType, $allowedValues);
     }
 
-    public function build()
+    public function requireRole(array $roles): void
+    {
+        $this->requirements[] = new RolesRequirement($roles);
+    }
+
+    public function build(): AuthorizationPolicy
     {
         return new AuthorizationPolicy($this->name, $this->requirements);
     }

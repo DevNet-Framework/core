@@ -20,19 +20,19 @@ class Authorization
         $this->options = $options;
     }
 
-    public function Authorize(string $policyName, ?ClaimsPrincipal $user): AuthorizationResult
+    public function Authorize(ClaimsPrincipal $user, string $policyName): AuthorizationResult
     {
         $policy = $this->options->getPolicy($policyName);
 
         if (!$policy) {
-            throw new \Exception("Policy {$policyName} dose not exist");
+            throw new AuthorizationException("Undefined Policy: {$policyName}");
         }
 
-        $handlers = $requirements = $policy->Requirements;
+        $requirements = $policy->Requirements;
         $context = new AuthorizationContext($requirements, $user);
 
-        foreach ($handlers as $handler) {
-            $handler->handle($context);
+        foreach ($requirements as $requirement) {
+            $requirement->getHandler()->handle($context)->wait();
         }
 
         return $context->getResult();

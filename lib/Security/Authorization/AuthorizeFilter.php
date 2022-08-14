@@ -17,41 +17,52 @@ use DevNet\Web\Security\Authentication\AuthenticationDefaults;
 
 class AuthorizeFilter implements IMiddleware
 {
-    private array $options;
+    private ?string $policy;
+    private array $roles;
 
     public function __construct(array $options = [])
     {
-        $this->options = $options;
+        $this->policy = $options['policy'] ?? null;
+        $this->roles  = $options['roles'] ?? [];
     }
 
     public function __invoke(HttpContext $context, RequestDelegate $next)
     {
-        $authorization = $context->RequestServices->getService(Authorization::class);
-
-        if (!$authorization) {
-            throw new \Exception("Could not find service: ". Authorization::class);
-        }
-
-        $user   = $context->User;
-        $policy = $this->options['Policy'] ?? 'Authentication';
-        $result = $authorization->Authorize($policy, $user);
-
-        if (!$result->isSucceeded()) {
-            if ($policy == 'Authentication') {
-                $authentication = $context->getAttribute('Authentication');
-                $loginPath      = "/account/login";
-
-                if ($authentication) {
-                    $handler   = $authentication->Handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
-                    $loginPath = $handler->Options->LoginPath;
-                }
-
-                $context->Response->redirect($loginPath);
-            } else {
-                $context->Response->setStatusCode(403);
+        $user = $context->User;
+        if (!$user->isAuthenticated()) {
+            if (!$context->Authentication) {
+                throw new AuthenticationException("the authentication service missing or not handled by the AuthenticationMiddleware!", 401);
             }
 
+            $handler = $context->Authentication->Handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
+            $loginPath = $handler->Options->LoginPath;
+
+            $context->Response->redirect($loginPath);
             return Task::completedTask();
+        }
+
+        if ($this->policy) {
+            $authorization = $context->RequestServices->getService(Authorization::class);
+            if (!$authorization) {
+                throw new AuthorizationException("The Authorization service is missing!");
+            }
+
+            $result = $authorization->Authorize($user, $this->policy);
+            if (!$result->isSucceeded()) {
+                throw new AuthorizationException("Current user claims do not meet the authorization policy required!", 403);
+                return Task::completedTask();
+            }
+        }
+
+        if ($this->roles) {
+            $requirement = new RolesRequirement($this->roles);
+            $autorizeContext = new AuthorizationContext([$requirement], $user);
+            $requirement->getHandler()->handle($autorizeContext)->wait();
+            $result = $autorizeContext->getResult();
+            if (!$result->isSucceeded()) {
+                throw new AuthorizationException("Current user claims do not meet the authorization roles required!", 403);
+                return Task::completedTask();
+            }
         }
 
         return $next($context);

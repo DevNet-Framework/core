@@ -19,7 +19,7 @@ use DevNet\Web\Middleware\RequestDelegate;
 
 class ApplicationBuilder implements IApplicationBuilder
 {
-    use \DevNet\System\Extension\ExtenderTrait;
+    use \DevNet\System\Extension\ExtensionTrait;
 
     private IserviceProvider $provider;
     private array $middlewares = [];

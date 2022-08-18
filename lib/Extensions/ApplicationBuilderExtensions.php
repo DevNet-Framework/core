@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Extensions;
 
-use DevNet\Web\Middleware\IApplicationBuilder;
+use DevNet\Web\Hosting\IApplicationBuilder;
 use DevNet\Web\Exception\ExceptionMiddleware;
 use DevNet\Web\Router\RouterMiddleware;
 use DevNet\Web\Security\Authentication\AuthenticationMiddleware;
@@ -50,10 +50,10 @@ class ApplicationBuilderExtensions
         $app->use(new AuthenticationMiddleware());
     }
 
-    public static function useEndpoint(IApplicationBuilder $app, Closure $routeConfig): void
+    public static function useEndpoint(IApplicationBuilder $app, Closure $configure): void
     {
         $routeBuilder = $app->Provider->getService(RouteBuilder::class);
-        $routeConfig($routeBuilder);
+        $configure($routeBuilder);
         $app->use(new EndpointMiddleware());
     }
 }

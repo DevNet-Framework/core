@@ -33,7 +33,7 @@ class WebServer
         $this->command->addOption(new CommandOption('--port'));
         $this->command->addOption(new CommandOption('--root'));
         $this->command->addOption(new CommandOption('--help', '-h'));
-        $this->command->Handler->add($this, 'serve');
+        $this->command->Handler->add([$this, 'serve']);
     }
 
     public function serve(object $sender, CommandEventArgs $args): void

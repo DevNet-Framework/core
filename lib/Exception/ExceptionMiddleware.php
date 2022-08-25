@@ -14,11 +14,12 @@ use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
 use DevNet\Web\View\ViewManager;
 use DevNet\System\Async\Tasks\Task;
+use DevNet\System\ObjectTrait;
 use Throwable;
 
 class ExceptionMiddleware implements IMiddleware
 {
-    use \DevNet\System\Async\AsyncTrait;
+    use ObjectTrait;
 
     private ?string $errorHandlingPath;
 

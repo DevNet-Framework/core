@@ -7,9 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Hosting;
-
-use DevNet\Web\Middleware\RequestDelegate;
+namespace DevNet\Web\Middleware;
 
 interface IApplicationBuilder
 {

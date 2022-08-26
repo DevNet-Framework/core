@@ -7,16 +7,13 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Hosting;
+namespace DevNet\Web\Middleware;
 
 use DevNet\System\Async\Tasks\Task;
 use DevNet\System\Dependency\IServiceProvider;
 use DevNet\System\Exceptions\PropertyException;
 use DevNet\System\ObjectTrait;
 use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Middleware\IMiddleware;
-use DevNet\Web\Middleware\MiddlewareDelegate;
-use DevNet\Web\Middleware\RequestDelegate;
 
 class ApplicationBuilder implements IApplicationBuilder
 {

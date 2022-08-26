@@ -13,10 +13,11 @@ use DevNet\System\Configuration\IConfiguration;
 use DevNet\System\Configuration\ConfigurationBuilder;
 use DevNet\System\Dependency\ServiceCollection;
 use DevNet\System\Dependency\ServiceProvider;
-use DevNet\System\Runtime\LauncherProperties;
 use DevNet\System\Exceptions\ClassException;
 use DevNet\System\Exceptions\PropertyException;
+use DevNet\System\Runtime\LauncherProperties;
 use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Middleware\ApplicationBuilder;
 use Closure;
 
 class WebHostBuilder implements IWebHostBuilder

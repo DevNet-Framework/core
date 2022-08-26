@@ -9,14 +9,14 @@
 
 namespace DevNet\Web\Extensions;
 
-use DevNet\Web\Hosting\IApplicationBuilder;
+use DevNet\System\Exceptions\ClassException;
 use DevNet\Web\Exception\ExceptionMiddleware;
+use DevNet\Web\Middleware\IApplicationBuilder;
+use DevNet\Web\Middleware\IMiddleware;
+use DevNet\Web\Router\EndpointMiddleware;
+use DevNet\Web\Router\RouteBuilder;
 use DevNet\Web\Router\RouterMiddleware;
 use DevNet\Web\Security\Authentication\AuthenticationMiddleware;
-use DevNet\Web\Middleware\EndpointMiddleware;
-use DevNet\Web\Middleware\IMiddleware;
-use DevNet\Web\Router\RouteBuilder;
-use DevNet\System\Exceptions\ClassException;
 use Closure;
 
 class ApplicationBuilderExtensions
@@ -26,7 +26,7 @@ class ApplicationBuilderExtensions
         if (!class_exists($middlewareName)) {
             throw new ClassException("Could not find middleware {$middlewareName}");
         }
-        
+
         $interfaces = class_implements($middlewareName);
         if (!in_array(IMiddleware::class, $interfaces)) {
             throw new ClassException("{$middlewareName} must implements IMiddleware inteface");

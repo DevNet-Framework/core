@@ -11,45 +11,30 @@ namespace DevNet\Web\Router;
 
 use DevNet\System\Async\Tasks\Task;
 use DevNet\System\Dependency\Activator;
-use DevNet\System\Exceptions\PropertyException;
+use DevNet\System\ObjectTrait;
 use DevNet\Web\Middleware\RequestDelegate;
 
 class RouteHandler implements IRouteHandler
 {
+    use ObjectTrait;
+
     private $target;
     private array $filters;
-
-    public function __get(string $name)
-    {
-        if ($name == 'Target') {
-            return $this->target;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
-    }
-
-    public function __set(string $name, $value)
-    {
-        if ($name == 'Target') {
-            $this->target = $value;
-            return;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . self::class . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . self::class . "::" . $name);
-    }
 
     public function __construct($target, array $filters)
     {
         $this->target = $target;
         $this->filters = $filters;
+    }
+
+    public function get_Target()
+    {
+        return $this->target;
+    }
+
+    public function set_Target($value)
+    {
+        $this->target = $value;
     }
 
     public function handle(RouteContext $routeContext): Task

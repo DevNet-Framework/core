@@ -9,41 +9,26 @@
 
 namespace DevNet\Web\Controller;
 
+use DevNet\System\Async\Tasks\Task;
+use DevNet\System\ObjectTrait;
+use DevNet\Web\Controller\Providers\RouteValueProvider;
 use DevNet\Web\Router\IRouteHandler;
 use DevNet\Web\Router\RouteContext;
-use DevNet\Web\Controller\Providers\RouteValueProvider;
-use DevNet\System\Async\Tasks\Task;
-use DevNet\System\Exceptions\PropertyException;
 
 class ControllerRouteHandler implements IRouteHandler
 {
+    use ObjectTrait;
+
     private array $target = [];
 
-    public function __get(string $name)
+    public function get_Target(): array
     {
-        if ($name == 'Target') {
-            return $this->target;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
+        return $this->target;
     }
 
-    public function __set(string $name, $value)
+    public function set_Target(array $value): void
     {
-        if ($name == 'Target') {
-            $this->target = $value;
-            return;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . self::class . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . self::class . "::" . $name);
+        $this->target = $value;
     }
 
     public function handle(RouteContext $routeContext): Task
@@ -83,7 +68,7 @@ class ControllerRouteHandler implements IRouteHandler
 
         $valueProvider = $options->getValueProviders();
         $valueProvider->add(new RouteValueProvider($routeContext->RouteData->Values));
-        
+
         $actionDescriptor  = new ActionDescriptor($controllerName, $actionName);
         $actionContext = new ActionContext($actionDescriptor, $routeContext->HttpContext, $valueProvider);
         $invoker = new ActionInvoker($actionContext);

@@ -11,26 +11,15 @@ namespace DevNet\Web\Http\Client;
 
 use DevNet\Web\Http\Headers;
 use DevNet\System\Async\Tasks\Task;
-use DevNet\System\Exceptions\PropertyException;
+use DevNet\System\ObjectTrait;
 use DevNet\Web\Http\HttpRequest;
 use DevNet\Web\Http\Uri;
 
 class HttpClient extends HttpClientHandler
 {
-    protected HttpClientOptions $Options;
+    use ObjectTrait;
 
-    public function __get(string $name)
-    {
-        if ($name == 'Options') {
-            return $this->Options;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
-    }
+    protected HttpClientOptions $options;
 
     public function __construct(?HttpClientOptions $options = null)
     {
@@ -39,6 +28,11 @@ class HttpClient extends HttpClientHandler
         }
 
         $this->Options = $options;
+    }
+
+    public function get_Options(): HttpClientOptions
+    {
+        return $this->options;
     }
 
     public function requestAsync(string $method, string $url, ?HttpRequestContent $requestContent = null): Task
@@ -50,7 +44,7 @@ class HttpClient extends HttpClientHandler
         $uri     = new Uri($url);
         $headers = new Headers(['host' => $uri->Host]);
         $request = new HttpRequest($method, $uri, $headers);
-        
+
         $request->setProtocol($this->Options->HttpVersion);
         if ($requestContent) {
             $request->Headers->add('content-type', $requestContent->ContentType);

@@ -9,31 +9,40 @@
 
 namespace DevNet\Web\Http;
 
-use DevNet\System\Exceptions\PropertyException;
 use DevNet\System\IO\Stream;
+use DevNet\System\ObjectTrait;
 
 abstract class HttpMessage
 {
-    protected string $Protocol = 'HTTP/1.0';
-    protected Headers $Headers;
-    protected Cookies $Cookies;
-    protected ?Stream $Body;
+    use ObjectTrait;
 
-    public function __get(string $name)
+    protected string $protocol = 'HTTP/1.0';
+    protected Headers $headers;
+    protected Cookies $cookies;
+    protected ?Stream $body;
+
+    public function get_Protocol(): string
     {
-        if (in_array($name, ['Protocol', 'Headers', 'Cookies', 'Body'])) {
-            return $this->$name;
-        }
+        return $this->protocol;
+    }
 
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
-        }
+    public function get_Headers(): Headers
+    {
+        return $this->headers;
+    }
 
-        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
+    public function get_Cookies(): Cookies
+    {
+        return $this->cookies;
+    }
+
+    public function get_Body(): ?Stream
+    {
+        return $this->body;
     }
 
     public function setProtocol(string $protocol)
     {
-        $this->Protocol = $protocol;
+        $this->protocol = $protocol;
     }
 }

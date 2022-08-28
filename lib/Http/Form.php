@@ -9,29 +9,14 @@
 
 namespace DevNet\Web\Http;
 
-use DevNet\System\Exceptions\PropertyException;
+use DevNet\System\ObjectTrait;
 
 class Form
 {
+    use ObjectTrait;
+
     private array $fields;
     private FileCollection $files;
-
-    public function __get(string $name)
-    {
-        if ($name == 'Fields') {
-            return $this->fields;
-        }
-        
-        if ($name == 'Files') {
-            return $this->files;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
-    }
 
     public function __construct(array $fields = null, FileCollection $files = null)
     {
@@ -45,6 +30,16 @@ class Form
 
         $this->fields = $fields;
         $this->files  = $files;
+    }
+
+    public function get_Fields(): array
+    {
+        return $this->fields;
+    }
+
+    public function get_Files(): FileCollection
+    {
+        return $this->files;
     }
 
     public function getValue(string $name)

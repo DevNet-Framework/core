@@ -9,14 +9,16 @@
 
 namespace DevNet\Web\Identity;
 
-use DevNet\Web\Http\HttpContext;
 use DevNet\Entity\EntityContext;
-use DevNet\Entity\EntitySet;
 use DevNet\Entity\EntityModelBuilder;
-use DevNet\System\Exceptions\PropertyException;
+use DevNet\Entity\EntitySet;
+use DevNet\System\ObjectTrait;
+use DevNet\Web\Http\HttpContext;
 
 class IdentityContext
 {
+    use ObjectTrait;
+
     private HttpContext $httpContext;
     private EntityContext $entityContext;
     private IdentityOptions $options;
@@ -25,20 +27,6 @@ class IdentityContext
     private EntitySet $users;
     private EntitySet $roles;
     private EntitySet $userRole;
-
-    public function __get(string $name)
-    {
-        if (in_array($name, ['HttpContext', 'EntityContext', 'Options', 'Users', 'Roles', 'UserRole'])) {
-            $property = lcfirst($name);
-            return $this->$property;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
-    }
 
     public function __construct(
         HttpContext $httpContext,
@@ -57,6 +45,36 @@ class IdentityContext
         $this->userRole      = $entityContext->set(UserRole::class);
 
         $this->onModelCreate($entityContext->Model->Builder);
+    }
+
+    public function get_HttpContext(): HttpContext
+    {
+        return $this->httpContext;
+    }
+
+    public function get_EntityContext(): EntityContext
+    {
+        return $this->entityContext;
+    }
+
+    public function get_Options(): IdentityOptions
+    {
+        return $this->options;
+    }
+
+    public function get_Users(): EntitySet
+    {
+        return $this->users;
+    }
+
+    public function get_Roles(): EntitySet
+    {
+        return $this->roles;
+    }
+
+    public function get_UserRole(): EntitySet
+    {
+        return $this->userRole;
     }
 
     public function onModelCreate(EntityModelBuilder $builder)

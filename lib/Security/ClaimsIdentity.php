@@ -9,35 +9,30 @@
 
 namespace DevNet\Web\Security;
 
-use DevNet\System\Exceptions\PropertyException;
 use Closure;
+use DevNet\System\ObjectTrait;
 
 class ClaimsIdentity
 {
+    use ObjectTrait;
+
     private ?string $authenticationType;
     private array $claims = [];
-
-    public function __get(string $name)
-    {
-        if ($name == 'AuthenticationType') {
-            return $this->authenticationType;
-        }
-
-        if ($name == 'Claims') {
-            return $this->claims;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
-    }
 
     public function __construct(string $authenticationType = null, array $claims = [])
     {
         $this->authenticationType = $authenticationType;
         $this->claims = $claims;
+    }
+
+    public function get_AuthenticationType(): ?string
+    {
+        return $this->authenticationType;
+    }
+
+    public function get_Claims(): array
+    {
+        return $this->claims;
     }
 
     public function isAuthenticated(): bool

@@ -11,7 +11,6 @@ namespace DevNet\Web\Middleware;
 
 use DevNet\System\Async\Tasks\Task;
 use DevNet\System\Dependency\IServiceProvider;
-use DevNet\System\Exceptions\PropertyException;
 use DevNet\System\ObjectTrait;
 use DevNet\Web\Http\HttpContext;
 
@@ -22,22 +21,14 @@ class ApplicationBuilder implements IApplicationBuilder
     private IserviceProvider $provider;
     private array $middlewares = [];
 
-    public function __get(string $name)
-    {
-        if ($name == 'Provider') {
-            return $this->provider;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
-    }
-
     public function __construct(IServiceProvider $provider)
     {
         $this->provider = $provider;
+    }
+
+    public function get_Provider(): IserviceProvider
+    {
+        return $this->provider;
     }
 
     public function use(callable $middleware): void

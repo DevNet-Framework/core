@@ -9,30 +9,24 @@
 
 namespace DevNet\Web\Security\Authentication;
 
-use DevNet\System\Exceptions\PropertyException;
+use DevNet\System\ObjectTrait;
 use DevNet\Web\Security\ClaimsPrincipal;
 use Exception;
 
 class Authentication
 {
+    use ObjectTrait;
+
     private array $handlers;
-
-    public function __get(string $name)
-    {
-        if ($name == 'Handlers') {
-            return $this->handlers;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
-    }
 
     public function __construct(array $handlers)
     {
         $this->handlers = $handlers;
+    }
+
+    public function get_Handlers(): array
+    {
+        return $this->handlers;
     }
 
     public function signIn(ClaimsPrincipal $user, ?bool $isPersistent = null)

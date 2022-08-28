@@ -15,8 +15,6 @@ use DevNet\System\IO\Stream;
 
 class HttpResponse extends HttpMessage
 {
-    protected string $ReasonPhrase;
-    protected int $StatusCode;
     private array $messages = [
         // Informational 1xx
         100 => "Continue",
@@ -93,26 +91,26 @@ class HttpResponse extends HttpMessage
         511 => "Network Authentication Required",
     ];
 
-    public function __get(string $name)
-    {
-        if ($name == 'ReasonPhrase') {
-            return $this->ReasonPhrase;
-        }
-
-        if ($name == 'StatusCode') {
-            return $this->StatusCode;
-        }
-
-        return parent::__get($name);
-    }
+    private string $reasonPhrase;
+    private int $statusCode;
 
     public function __construct(?Headers $headers = null, ?Stream $body = null)
     {
-        $this->Headers      = $headers ?? new Headers();
-        $this->Cookies      = new Cookies($this->Headers);
-        $this->Body         = $body ?? new FileStream('php://temp', 'r+');
-        $this->StatusCode   = 200;
-        $this->ReasonPhrase = 'OK';
+        $this->headers      = $headers ?? new Headers();
+        $this->cookies      = new Cookies($this->headers);
+        $this->body         = $body ?? new FileStream('php://temp', 'r+');
+        $this->statusCode   = 200;
+        $this->reasonPhrase = 'OK';
+    }
+
+    public function get_ReasonPhrase(): string
+    {
+        return $this->reasonPhrase;
+    }
+
+    public function get_StatusCode(): string
+    {
+        return $this->statusCode;
     }
 
     public function setStatusCode(int $statusCode, string $reasonPhrase = null)
@@ -123,13 +121,13 @@ class HttpResponse extends HttpMessage
             }
         }
 
-        $this->StatusCode = $statusCode;
-        $this->ReasonPhrase = $reasonPhrase;
+        $this->statusCode = $statusCode;
+        $this->reasonPhrase = $reasonPhrase;
     }
 
     public function getStatusLine(): string
     {
-        return "{$this->Protocol} {$this->StatusCode} {$this->ReasonPhrase}";
+        return "{$this->protocol} {$this->statusCode} {$this->reasonPhrase}";
     }
 
     public function redirect(string $location, bool $permanent = false)
@@ -139,12 +137,12 @@ class HttpResponse extends HttpMessage
         } else {
             $this->setStatusCode(302);
         }
-        $this->Headers->add('Location', $location);
+        $this->headers->add('Location', $location);
     }
 
     public function writeAsync(string $content): Task
     {
-        $body = $this->Body;
+        $body = $this->body;
         return Task::run(function() use($body, $content)
         {
             $body->write($content);
@@ -154,8 +152,8 @@ class HttpResponse extends HttpMessage
 
     public function writeJsonAsync($value): Task
     {
-        $headers = $this->Headers;
-        $body = $this->Body;
+        $headers = $this->headers;
+        $body = $this->body;
         
         return Task::run(function() use($headers, $body, $value)
         {

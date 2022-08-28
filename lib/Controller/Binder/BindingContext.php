@@ -9,30 +9,18 @@
 
 namespace DevNet\Web\Controller\Binder;
 
-use DevNet\System\Exceptions\PropertyException;
+use DevNet\System\ObjectTrait;
 use DevNet\Web\Controller\ActionContext;
 
 class BindingContext
 {
+    use ObjectTrait;
+
     private string $name;
     private ?string $type;
     private ActionContext $actionContext;
     private IValueProvider $valueProvider;
     private $result = null;
-
-    public function __get(string $name)
-    {
-        if (in_array($name, ['Name', 'Type', 'ActionContext', 'ValueProvider', 'Result'])) {
-            $property = lcfirst($name);
-            return $this->$property;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . self::class . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . self::class . "::" . $name);
-    }
 
     public function __construct(
         string $name,
@@ -43,6 +31,31 @@ class BindingContext
         $this->type = $type;
         $this->actionContext = $actionContext;
         $this->valueProvider = $actionContext->ValueProvider;
+    }
+
+    public function get_Name(): string
+    {
+        return $this->name;
+    }
+
+    public function get_Type(): string
+    {
+        return $this->type;
+    }
+
+    public function get_ActionContext(): ActionContext
+    {
+        return $this->actionContext;
+    }
+
+    public function get_ValueProvider(): IValueProvider
+    {
+        return $this->valueProvider;
+    }
+
+    public function get_Result()
+    {
+        return $this->result;
     }
 
     public function success($model): void

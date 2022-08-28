@@ -9,30 +9,18 @@
 
 namespace DevNet\Web\Controller;
 
-use DevNet\System\Exceptions\PropertyException;
+use DevNet\System\ObjectTrait;
 use ReflectionClass;
 use ReflectionMethod;
 
 class ActionDescriptor
 {
+    use ObjectTrait;
+
     private ReflectionClass $classInfo;
     private ReflectionMethod $methodInfo;
     private string $controllerName;
     private string $actionName;
-
-    public function __get(string $name)
-    {
-        if (in_array($name, ['ClassInfo', 'MethodInfo', 'ControllerName', 'ActionName'])) {
-            $property = lcfirst($name);
-            return $this->$property;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
-    }
 
     public function __construct($target, string $actionName)
     {
@@ -40,5 +28,25 @@ class ActionDescriptor
         $this->methodInfo     = new ReflectionMethod($target, $actionName);
         $this->controllerName = $this->methodInfo->getDeclaringClass()->getShortName();
         $this->actionName     = $this->methodInfo->getName();
+    }
+
+    public function get_ClassInfo(): ReflectionClass
+    {
+        return $this->classInfo;
+    }
+
+    public function get_MethodInfo(): ReflectionMethod
+    {
+        return $this->methodInfo;
+    }
+
+    public function get_ControllerName(): string
+    {
+        return $this->controllerName;
+    }
+
+    public function get_ActionName(): string
+    {
+        return $this->actionName;
     }
 }

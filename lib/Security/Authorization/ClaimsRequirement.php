@@ -10,34 +10,29 @@
 namespace DevNet\Web\Security\Authorization;
 
 use DevNet\System\Async\Tasks\Task;
-use DevNet\System\Exceptions\PropertyException;
+use DevNet\System\ObjectTrait;
 
 class ClaimsRequirement implements IAuthorizationRequirement, IAuthorizationHandler
 {
-    protected string $ClaimType;
-    protected array $AllowedValues;
+    use ObjectTrait;
 
-    public function __get(string $name)
-    {
-        if ($name == 'ClaimType') {
-            return $this->ClaimType;
-        }
-
-        if ($name == 'AllowedValues') {
-            return $this->AllowedValues;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("Access to non-public property " . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("Access to undefined property " . get_class($this) . "::" . $name);
-    }
+    protected string $claimType;
+    protected array $allowedValues;
 
     public function __construct(string $claimType, array $allowedValues = [])
     {
-        $this->ClaimType = $claimType;
-        $this->AllowedValues = $allowedValues;
+        $this->claimType = $claimType;
+        $this->allowedValues = $allowedValues;
+    }
+
+    public function get_ClaimType(): string
+    {
+        return $this->claimType;
+    }
+
+    public function get_AllowedValues(): array
+    {
+        return $this->allowedValues;
     }
 
     public function getHandler(): IAuthorizationHandler
@@ -49,11 +44,11 @@ class ClaimsRequirement implements IAuthorizationRequirement, IAuthorizationHand
     {
         $user = $context->User;
         if ($user) {
-            if ($this->AllowedValues) {
-                $found = $user->findClaims(fn ($claim) => $claim->Type == $this->ClaimType
-                    && in_array($claim->Value, $this->AllowedValues));
+            if ($this->allowedValues) {
+                $found = $user->findClaims(fn ($claim) => $claim->Type == $this->claimType
+                    && in_array($claim->Value, $this->allowedValues));
             } else {
-                $found = $user->findClaims(fn ($claim) => $claim->Type == $this->ClaimType);
+                $found = $user->findClaims(fn ($claim) => $claim->Type == $this->claimType);
             }
 
             if ($found) {

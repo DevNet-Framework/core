@@ -9,28 +9,31 @@
 
 namespace DevNet\Web\Controller;
 
-use DevNet\System\Exceptions\PropertyException;
+use DevNet\System\ObjectTrait;
 use DevNet\Web\Controller\Binder\IValueProvider;
 use DevNet\Web\Http\HttpContext;
 
 class ActionContext
 {
+    use ObjectTrait;
+
     private ActionDescriptor $actionDescriptor;
     private HttpContext $httpContext;
     private IValueProvider $valueProvider;
 
-    public function __get(string $name)
+    public function get_ActionDescriptor(): ActionDescriptor
     {
-        if (in_array($name, ['ActionDescriptor', 'HttpContext', 'ValueProvider'])) {
-            $property = lcfirst($name);
-            return $this->$property;
-        }
+        return $this->actionDescriptor;
+    }
 
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
-        }
+    public function get_HttpContext(): HttpContext
+    {
+        return $this->httpContext;
+    }
 
-        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
+    public function get_ValueProvider(): IValueProvider
+    {
+        return $this->valueProvider;
     }
 
     public function __construct(ActionDescriptor $actionDescriptor, HttpContext $httpConext, IValueProvider $provider)

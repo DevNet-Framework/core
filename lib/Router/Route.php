@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Router;
 
-use DevNet\System\Exceptions\PropertyException;
+use DevNet\System\ObjectTrait;
 use DevNet\Web\Router\IRouter;
 use DevNet\Web\Router\Internal\RouteParser;
 use DevNet\Web\Router\Internal\RouteMatcher;
@@ -17,25 +17,13 @@ use DevNet\Web\Router\Internal\RouteGenerator;
 
 class Route implements IRouter
 {
+    use ObjectTrait;
+
     private string $name;
     private string $verb;
     private string $pattern;
     private IRouteHandler $handler;
     private array $data;
-
-    public function __get(string $name)
-    {
-        if (in_array($name, ['Name', 'Verb', 'Pattern', 'Handler', 'Data'])) {
-            $property = lcfirst($name);
-            return $this->$property;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
-    }
 
     public function __construct(string $name, string $verb, string $pattern, IRouteHandler $handler)
     {
@@ -43,6 +31,31 @@ class Route implements IRouter
         $this->verb = $verb;
         $this->pattern = $pattern;
         $this->handler = $handler;
+    }
+
+    public function get_Name(): string
+    {
+        return $this->name;
+    }
+
+    public function get_Verb(): string
+    {
+        return $this->verb;
+    }
+
+    public function get_Pattern(): string
+    {
+        return $this->pattern;
+    }
+
+    public function get_Handler(): IRouteHandler
+    {
+        return $this->handler;
+    }
+
+    public function get_Data(): array
+    {
+        return $this->data;
     }
 
     public function matchRoute(RouteContext $routeContext): bool

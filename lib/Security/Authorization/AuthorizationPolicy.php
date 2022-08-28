@@ -9,33 +9,28 @@
 
 namespace DevNet\Web\Security\Authorization;
 
-use DevNet\System\Exceptions\PropertyException;
+use DevNet\System\ObjectTrait;
 
 class AuthorizationPolicy
 {
+    use ObjectTrait;
+
     private string $name;
     private array $requirements;
-
-    public function __get(string $name)
-    {
-        if ($name == 'Name') {
-            return $this->name;
-        }
-
-        if ($name == 'Requirements') {
-            return $this->requirements;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
-    }
 
     public function __construct(string $name, array $requirements)
     {
         $this->name = $name;
         $this->requirements = $requirements;
+    }
+
+    public function get_Name(): string
+    {
+        return $this->name;
+    }
+
+    public function get_Requirements(): array
+    {
+        return $this->requirements;
     }
 }

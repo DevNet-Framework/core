@@ -9,30 +9,16 @@
 
 namespace DevNet\Web\Security\Antiforgery;
 
-use DevNet\System\Exceptions\PropertyException;
+use DevNet\System\ObjectTrait;
 use DevNet\Web\Http\HttpContext;
 
 class Antiforgery implements IAntiforgery
 {
+    use ObjectTrait;
+
     private AntiforgeryOptions $options;
+    private AntiforgeryTokenGenerator $generator;
     private AntiforgeryTokenStore $store;
-
-    public function __get(string $name)
-    {
-        if ($name == 'Options') {
-            return $this->options;
-        }
-
-        if ($name == 'Store') {
-            return $this->store;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
-    }
 
     public function __construct(AntiforgeryOptions $options)
     {
@@ -43,6 +29,16 @@ class Antiforgery implements IAntiforgery
         $this->options   = $options;
         $this->generator = new AntiforgeryTokenGenerator();
         $this->store     = new AntiforgeryTokenStore($options);
+    }
+
+    public function get_Options(): AntiforgeryOptions
+    {
+        return $this->options;
+    }
+    
+    public function get_Store(): AntiforgeryTokenStore
+    {
+        return $this->store;
     }
 
     public function storeTokens(HttpContext $httpContext): AntiforgeryTokenSet

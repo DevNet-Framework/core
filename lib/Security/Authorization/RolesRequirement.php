@@ -9,24 +9,10 @@
 
 namespace DevNet\Web\Security\Authorization;
 
-use DevNet\System\Exceptions\PropertyException;
 use DevNet\Web\Security\ClaimType;
 
 class RolesRequirement extends ClaimsRequirement
-{
-    public function __get(string $name)
-    {
-        if ($name == 'AllowedRoles') {
-            return $this->AllowedValues;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("Access to non-public property " . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("Access to undefined property " . get_class($this) . "::" . $name);
-    }
-    
+{    
     public function __construct(array $allowedRoles)
     {
         if (!$allowedRoles) {

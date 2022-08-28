@@ -9,24 +9,14 @@
 
 namespace DevNet\Web\Http;
 
-use DevNet\System\Exceptions\PropertyException;
 use DevNet\System\IO\FileStream;
 use DevNet\System\IO\Stream;
 
 class HttpRequest extends HttpMessage
 {
-    protected string $Method;
-    protected Uri $Uri;
-    protected Form $Form;
-
-    public function __get(string $name)
-    {
-        if (in_array($name, ['Method', 'Uri', 'Form'])) {
-            return $this->$name;
-        }
-
-        return parent::__get($name);
-    }
+    private string $method;
+    private Uri $uri;
+    private Form $form;
 
     public function __construct(
         string $method,
@@ -35,11 +25,26 @@ class HttpRequest extends HttpMessage
         ?Stream $body = null,
         ?Form $form = null
     ) {
-        $this->Method  = strtoupper($method);
-        $this->Uri     = new Uri($uri);
-        $this->Headers = $headers ?? new Headers();
-        $this->Cookies = new Cookies($this->Headers);
-        $this->Body    = $body ?? new FileStream('php://temp', 'r+');
-        $this->Form    = $form ?? new Form();
+        $this->method  = strtoupper($method);
+        $this->uri     = new Uri($uri);
+        $this->headers = $headers ?? new Headers();
+        $this->cookies = new Cookies($this->Headers);
+        $this->body    = $body ?? new FileStream('php://temp', 'r+');
+        $this->form    = $form ?? new Form();
+    }
+
+    public function get_Method(): string
+    {
+        return $this->method;
+    }
+
+    public function get_Uri(): Uri
+    {
+        return $this->uri;
+    }
+    
+    public function get_Form(): Form
+    {
+        return $this->form;
     }
 }

@@ -9,32 +9,17 @@
 
 namespace DevNet\Web\Security\Authorization;
 
-use DevNet\System\Exceptions\PropertyException;
+use DevNet\System\ObjectTrait;
 use DevNet\Web\Security\ClaimsPrincipal;
 
 class AuthorizationContext
 {
+    use ObjectTrait;
+
     private array $requirements;
     private ?ClaimsPrincipal $user;
     private bool $failCalled    = false;
     private bool $successCalled = false;
-
-    public function __get(string $name)
-    {
-        if ($name == 'Requirements') {
-            return $this->requirements;
-        }
-
-        if ($name == 'User') {
-            return $this->user;
-        }
-
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
-    }
 
     public function __construct(array $requirements = [], ?ClaimsPrincipal $user = null)
     {
@@ -42,6 +27,16 @@ class AuthorizationContext
         foreach ($requirements as $requirement) {
             $this->requirements[spl_object_id($requirement)] = $requirement;
         }
+    }
+
+    public function get_Requirements(): array
+    {
+        return $this->requirements;
+    }
+
+    public function get_User(): ?ClaimsPrincipal
+    {
+        return $this->user;
     }
 
     public function fail()

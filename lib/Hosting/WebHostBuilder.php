@@ -14,40 +14,20 @@ use DevNet\System\Configuration\ConfigurationBuilder;
 use DevNet\System\Dependency\ServiceCollection;
 use DevNet\System\Dependency\ServiceProvider;
 use DevNet\System\Exceptions\ClassException;
-use DevNet\System\Exceptions\PropertyException;
 use DevNet\System\Runtime\LauncherProperties;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\ApplicationBuilder;
 use Closure;
+use DevNet\System\ObjectTrait;
 
 class WebHostBuilder implements IWebHostBuilder
 {
-    /**
-     * @var ConfigurationBuilder $ConfigBuilder {get}
-     * @var ServiceCollection $Services {get}
-     */
+    use ObjectTrait;
 
     private ConfigurationBuilder $configBuilder;
     private ServiceCollection $services;
     private ServiceProvider $provider;
     private ApplicationBuilder $appBuilder;
-
-    public function __get(string $name)
-    {
-        if ($name == 'ConfigBuilder') {
-            return $this->configBuilder;
-        }
-
-        if ($name == 'Services') {
-            return $this->services;
-        }
-        
-        if (property_exists($this, $name)) {
-            throw new PropertyException("access to private property " . get_class($this) . "::" . $name);
-        }
-
-        throw new PropertyException("access to undefined property " . get_class($this) . "::" . $name);
-    }
 
     public function __construct()
     {
@@ -55,6 +35,16 @@ class WebHostBuilder implements IWebHostBuilder
         $this->services      = new ServiceCollection();
         $this->provider      = new ServiceProvider($this->services);
         $this->appBuilder    = new ApplicationBuilder($this->provider);
+    }
+
+    public function get_ConfigBuilder(): ConfigurationBuilder
+    {
+        return $this->configBuilder;
+    }
+
+    public function get_Services(): ServiceCollection
+    {
+        return $this->services;
     }
 
     public function useConfiguration(Closure $configure)
@@ -78,21 +68,21 @@ class WebHostBuilder implements IWebHostBuilder
             $configureServices($this->services);
             return $this;
         }
-    
+
         try {
             $configureServices($this->services);
         } catch (\Throwable $error) {
             $context = $this->provider->getService(HttpContext::class);
             $context->addAttribute('Error', $error);
         }
-        
+
         return $this;
     }
 
     public function useStartup(string $startup)
     {
         if (!class_exists($startup)) {
-            throw ClassException::classNotFound($startup);
+            throw new ClassException("Cound nit find class: {$startup}", 0, 1);
         }
 
         $config = $this->configBuilder->build();

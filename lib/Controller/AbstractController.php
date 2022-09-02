@@ -27,17 +27,17 @@ abstract class AbstractController
     public HttpContext $HttpContext;
     public ActionDescriptor $ActionDescriptor;
     public array $ActionFilters = [];
-    protected array $ViewData = [];
+    public array $ViewData = [];
 
     public function filter(string $target, string $filterName, array $options = []): void
     {
         if (!class_exists($filterName)) {
-            throw new ClassException("Could not find middleware {$filterName}");
+            throw new ClassException("Could not find middleware class {$filterName}", 0, 1);
         }
-        
+
         $interfaces = class_implements($filterName);
         if (!in_array(IMiddleware::class, $interfaces)) {
-            throw new ClassException("{$filterName} must implements IMiddleware inteface");
+            throw new ClassException("{$filterName} must implement " . IMiddleware::class, 0, 1);
         }
 
         $target = strtolower($target);
@@ -54,7 +54,7 @@ abstract class AbstractController
             $viewName = null;
             $model    = $parameter;
         } else {
-            throw new \Exception("Invalide argument type, parameter 1 must be string or object");
+            throw new ArgumentException(static::class . "::view(): The argument 1# must be of type string or object", 0, 1);
         }
 
         if (!$viewName) {
@@ -80,8 +80,7 @@ abstract class AbstractController
     public function json($data, $statusCode = 200): JsonResult
     {
         if (!is_array($data) && !is_object($data)) {
-            $class = get_class($this);
-            throw new ArgumentException("Argument 1 passed to {$class}::json() must be of the type object | array.");
+            throw new ArgumentException(static::class . "::json(): The argument 1# must be of the type object or array.", 0, 1);
         }
 
         return new JsonResult($data, $statusCode);

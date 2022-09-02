@@ -9,9 +9,10 @@
 
 namespace DevNet\Web\Middleware;
 
-use DevNet\Web\Middleware\IMiddleware;
-use DevNet\System\Exceptions\ClassException;
 use DevNet\System\Dependency\IServiceProvider;
+use DevNet\System\Exceptions\ClassException;
+use DevNet\System\Exceptions\TypeException;
+use DevNet\Web\Middleware\IMiddleware;
 
 class MiddlewareFactory
 {
@@ -26,12 +27,12 @@ class MiddlewareFactory
     {
         if (is_string($middleware)) {
             if (!class_exists($middleware)) {
-                throw ClassException::classNotFound($middleware);
+                throw new ClassException("Could not find middleware class {$middleware}", 0, 1);
             }
 
             $interfaceNames = class_implements($middleware);
-            if (!in_array("DevNet\Web\Hosting\IMiddleware", $interfaceNames)) {
-                throw new \Exception("invalide type, class must be of type DevNet\Web\Hosting\IMiddleware");
+            if (!in_array(IMiddleware::class, $interfaceNames)) {
+                throw new TypeException("Middleware class must implement DevNet\Web\Hosting\IMiddleware", 0, 1);
             }
         }
 

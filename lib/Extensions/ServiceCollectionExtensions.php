@@ -43,7 +43,7 @@ class ServiceCollectionExtensions
 {
     public static function addLogging(IServiceCollection $services, Closure $configuration = null)
     {
-        $services->addSingleton(ILoggerFactory::class, fn () => LoggerFactory::Create($configuration));
+        $services->addSingleton(fn (): ILoggerFactory => LoggerFactory::Create($configuration));
     }
 
     public static function addHttpClient(IServiceCollection $services, Closure $configuration = null)
@@ -53,46 +53,7 @@ class ServiceCollectionExtensions
             $configuration($options);
         }
 
-        $services->addSingleton(HttpClient::class, fn () => new HttpClient($options));
-    }
-
-    public static function addAntiforgery(IServiceCollection $services, Closure $configuration = null)
-    {
-        $options = new AntiforgeryOptions();
-        if ($configuration) {
-            $configuration($options);
-        }
-
-        $services->addSingleton(IAntiforgery::class, fn () => new Antiforgery($options));
-    }
-
-    public static function addAuthentication(IServiceCollection $services, Closure $configuration = null)
-    {
-        $builder = new AuthenticationBuilder();
-        $builder->addCookie(AuthenticationDefaults::AuthenticationScheme, $configuration);
-        $services->addSingleton(Authentication::class, fn () => $builder->build());
-    }
-
-    public static function addAuthorisation(IServiceCollection $services, Closure $configuration = null)
-    {
-        $options = new AuthorizationOptions();
-        $options->addPolicy("Authentication", fn ($policy) => $policy->requireAuthentication());
-
-        if ($configuration) {
-            $configuration($options);
-        }
-
-        $services->addSingleton(Authorization::class, fn () => new Authorization($options));
-    }
-
-    public static function addDbConnection(IServiceCollection $services, string $connection)
-    {
-        $services->addSingleton(DbConnection::class, fn () => new DbConnection($connection));
-    }
-
-    public static function addView(IServiceCollection $services, string $directory)
-    {
-        $services->addSingleton(ViewManager::class, fn ($provider) => new ViewManager($directory, $provider));
+        $services->addSingleton(fn (): HttpClient => new HttpClient($options));
     }
 
     public static function addMvc(IServiceCollection $services, Closure $configuration = null)
@@ -105,8 +66,47 @@ class ServiceCollectionExtensions
 
         $viewDirectory = $options->getViewDirectory();
         $services->addView($viewDirectory);
-        $services->addSingleton(ControllerOptions::class, $options);
-        $services->addSingleton(RouteBuilder::class, fn () => new RouteBuilder(new ControllerRouteHandler()));
+        $services->addSingleton($options);
+        $services->addSingleton(fn (): RouteBuilder => new RouteBuilder(new ControllerRouteHandler()));
+    }
+
+    public static function addView(IServiceCollection $services, string $directory)
+    {
+        $services->addSingleton(fn ($provider): ViewManager => new ViewManager($directory, $provider));
+    }
+
+    public static function addAntiforgery(IServiceCollection $services, Closure $configuration = null)
+    {
+        $options = new AntiforgeryOptions();
+        if ($configuration) {
+            $configuration($options);
+        }
+
+        $services->addSingleton(fn (): IAntiforgery => new Antiforgery($options));
+    }
+
+    public static function addAuthentication(IServiceCollection $services, Closure $configuration = null)
+    {
+        $builder = new AuthenticationBuilder();
+        $builder->addCookie(AuthenticationDefaults::AuthenticationScheme, $configuration);
+        $services->addSingleton(fn (): Authentication => $builder->build());
+    }
+
+    public static function addAuthorisation(IServiceCollection $services, Closure $configuration = null)
+    {
+        $options = new AuthorizationOptions();
+        $options->addPolicy("Authentication", fn ($policy) => $policy->requireAuthentication());
+
+        if ($configuration) {
+            $configuration($options);
+        }
+
+        $services->addSingleton(fn (): Authorization => new Authorization($options));
+    }
+
+    public static function addDbConnection(IServiceCollection $services, string $connection)
+    {
+        $services->addSingleton(fn (): DbConnection => new DbConnection($connection));
     }
 
     public static function addEntityContext(IServiceCollection $services, string $entityConext, Closure $configuration = null)
@@ -117,8 +117,7 @@ class ServiceCollectionExtensions
             $configuration($entityOptions);
         }
 
-        $services->addSingleton($entityConext, fn () => new $entityConext($entityOptions));
-        $services->addSingleton(EntityContext::class, fn ($provider) => $provider->getService($entityConext));
+        $services->addSingleton(fn (): EntityContext => new $entityConext($entityOptions));
     }
 
     public static function addIdentity(IServiceCollection $services, string $userType = User::class, string $roleType = Role::class, Closure $configuration = null)
@@ -129,7 +128,7 @@ class ServiceCollectionExtensions
             $configuration($identityOptions);
         }
 
-        $services->addSingleton(IdentityContext::class, function ($provider) use ($services, $userType, $roleType, $identityOptions): IdentityContext {
+        $services->addSingleton(function ($provider) use ($services, $userType, $roleType, $identityOptions): IdentityContext {
             if (!$provider->contains(Authentication::class)) {
                 self::addAuthentication($services);
             }
@@ -139,17 +138,17 @@ class ServiceCollectionExtensions
             return new IdentityContext($httpContext, $entityContext, $userType, $roleType, $identityOptions);
         });
 
-        $services->addSingleton(IdentityManager::class, function ($provider): IdentityManager {
+        $services->addSingleton(function ($provider): IdentityManager {
             $identityContext = $provider->getService(IdentityContext::class);
             return new IdentityManager($identityContext);
         });
 
-        $services->addSingleton(UserManager::class, function ($provider): UserManager {
+        $services->addSingleton(function ($provider): UserManager {
             $identityContext = $provider->getService(IdentityContext::class);
             return new UserManager($identityContext);
         });
 
-        $services->addSingleton(RoleManager::class, function ($provider): RoleManager {
+        $services->addSingleton(function ($provider): RoleManager {
             $identityContext = $provider->getService(IdentityContext::class);
             return new RoleManager($identityContext);
         });

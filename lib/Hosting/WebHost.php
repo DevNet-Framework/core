@@ -102,10 +102,11 @@ class WebHost
         $builder->ConfigBuilder->addJsonFile("/settings.json");
         $builder->ConfigBuilder->addSetting('args', $args);
 
-        $config = $builder->ConfigBuilder->build();
-        $builder->Services->addSingleton(IConfiguration::class, $config);
-
-        $builder->Services->addSingleton(HttpContext::class, function ($provider): HttpContext {
+        $builder->Services->addSingleton(function () use ($builder): IConfiguration {
+            return $builder->ConfigBuilder->build();
+        });
+        
+        $builder->Services->addSingleton(function ($provider): HttpContext {
             $httpContext = HttpContextFactory::create();
             $httpContext->addAttribute('RequestServices', $provider);
             return $httpContext;

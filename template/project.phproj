@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<project>
+  <properties>
+    <namespace>Application</namespace>
+    <entrypoint>Program</entrypoint>
+  </properties>
+  <dependencies>
+    <package include="vendor/autoload.php"/>
+  </dependencies>
+</project>

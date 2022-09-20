@@ -1,0 +1,7 @@
+{
+    "database": {
+        "connection": "//username:password@127.0.0.1/database",
+        "charset": "utf-8"
+    },
+    "environment" : "production"
+}

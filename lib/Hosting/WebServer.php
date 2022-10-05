@@ -9,10 +9,8 @@
 
 namespace DevNet\Web\Hosting;
 
-use DevNet\System\Command\CommandArgument;
 use DevNet\System\Command\CommandEventArgs;
 use DevNet\System\Command\CommandLine;
-use DevNet\System\Command\CommandOption;
 use DevNet\System\Runtime\LauncherProperties;
 use DevNet\System\IO\ConsoleColor;
 use DevNet\System\IO\Console;
@@ -27,13 +25,12 @@ class WebServer
     public function __construct()
     {
         $this->root = LauncherProperties::getWorkspace() . "/webroot";
-        $this->command = new CommandLine();
-        $this->command->addArgument(new CommandArgument('serve'));
-        $this->command->addOption(new CommandOption('--host'));
-        $this->command->addOption(new CommandOption('--port'));
-        $this->command->addOption(new CommandOption('--root'));
-        $this->command->addOption(new CommandOption('--help', '-h'));
-        $this->command->Handler->add([$this, 'serve']);
+        $this->command = new CommandLine('serve');
+        $this->command->addArgument('serve', 'Run the web server');
+        $this->command->addOption('--host', 'the server host name or IP');
+        $this->command->addOption('--port', 'The server port');
+        $this->command->addOption('--root', 'The web root directory');
+        $this->command->setHandler([$this, 'serve']);
     }
 
     public function serve(object $sender, CommandEventArgs $args): void
@@ -42,69 +39,55 @@ class WebServer
             return;
         }
 
-        $server = $args->get('serve');
+        $server = $args->getParameter('serve');
 
         if (!$server) {
             return;
         }
 
-        if ($server->Value != 'serve' || $args->Residual) {
+        if ($server->getValue() != 'serve') {
             Console::foregroundColor(ConsoleColor::Red);
             Console::writeline("The specified argument or option is not valid.");
             Console::resetColor();
             exit;
         }
 
-        $host = $args->get('--host');
-        $port = $args->get('--port');
-        $root = $args->get('--root');
-        $help = $args->get('--help');
+        $host = $args->getParameter('--host');
+        $port = $args->getParameter('--port');
+        $root = $args->getParameter('--root');
+        $help = $args->getParameter('--help');
 
         if ($host) {
-            if (!$host->Value) {
+            if (!$host->getValue()) {
                 Console::foregroundColor(ConsoleColor::Red);
                 Console::writeline("The option --host is missing a value.");
                 Console::resetColor();
-                exit;
+                return;
             }
 
-            $this->host = $host->Value;
+            $this->host = $host->getValue();
         }
 
         if ($port) {
-            if (!$port->Value) {
+            if (!$port->getValue()) {
                 Console::foregroundColor(ConsoleColor::Red);
                 Console::writeline("The option --port is missing a value.");
                 Console::resetColor();
-                exit;
+                return;
             }
 
-            $this->port = $port->Value;
+            $this->port = $port->getValue();
         }
 
         if ($root) {
-            if (!$root->Value) {
+            if (!$root->getValue()) {
                 Console::foregroundColor(ConsoleColor::Red);
                 Console::writeline("The option --root is missing a value.");
                 Console::resetColor();
-                exit;
+                return;
             }
 
-            $this->root = $root->Value;
-        }
-
-        if ($help) {
-            if (!$help->Value) {
-                Console::writeline("Usage: devnet run serve [options]");
-                Console::writeline();
-                Console::writeline("Options:");
-                Console::writeline("  --help, -h  Show the command-line's help.");
-                Console::writeline("  --host      Set the server host name or IP.");
-                Console::writeline("  --port      Set the server port.");
-                Console::writeline("  --root      Set the web root directory.");
-                Console::writeline();
-                exit;
-            }
+            $this->root = $root->getValue();
         }
 
         shell_exec("php -S {$this->host}:{$this->port} -t {$this->root}");

@@ -10,6 +10,7 @@
 namespace DevNet\Web\Controller;
 
 use DevNet\System\ObjectTrait;
+use DevNet\Web\Middleware\IMiddleware;
 use ReflectionClass;
 use ReflectionMethod;
 
@@ -21,6 +22,7 @@ class ActionDescriptor
     private ReflectionMethod $methodInfo;
     private string $controllerName;
     private string $actionName;
+    private array $filterAttributes = [];
 
     public function __construct($target, string $actionName)
     {
@@ -28,6 +30,21 @@ class ActionDescriptor
         $this->methodInfo     = new ReflectionMethod($target, $actionName);
         $this->controllerName = $this->methodInfo->getDeclaringClass()->getShortName();
         $this->actionName     = $this->methodInfo->getName();
+
+        /**
+         * in the case of a method attribute having the same name as a class attribute,
+         * the method attribute has precedence and must override the class attribute configurations.
+         */
+        $classAttributes = $this->classInfo->getAttributes();
+        $methodAttributes = $this->methodInfo->getAttributes();
+        $attributes = array_merge($classAttributes, $methodAttributes);
+
+        foreach ($attributes as $attribute) {
+            $interfaces = class_implements($attribute->getName());
+            if (in_array(IMiddleware::class, $interfaces)) {
+                $this->filterAttributes[$attribute->getName()] = $attribute;
+            }
+        }
     }
 
     public function get_ClassInfo(): ReflectionClass
@@ -48,5 +65,10 @@ class ActionDescriptor
     public function get_ActionName(): string
     {
         return $this->actionName;
+    }
+
+    public function get_FilterAttributes(): array
+    {
+        return $this->filterAttributes;
     }
 }

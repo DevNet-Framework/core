@@ -12,7 +12,6 @@ namespace DevNet\Web\Hosting;
 use DevNet\System\Configuration\IConfiguration;
 use DevNet\System\Dependency\IServiceProvider;
 use DevNet\System\Runtime\LauncherProperties;
-use DevNet\System\Runtime\Launcher;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Http\HttpContextFactory;
 use DevNet\Web\Middleware\IApplicationBuilder;
@@ -30,9 +29,6 @@ class WebHost
         $this->appBuilder = $AppBuilder;
         $this->provider   = $provider;
         $this->server     = new WebServer();
-
-        $launcher = Launcher::getLauncher();
-        $launcher->provider($provider);
     }
 
     public function start(Closure $configure): void
@@ -62,8 +58,10 @@ class WebHost
 
         $context    = $this->provider->getService(HttpContext::class);
         $applicaion = $this->appBuilder->build();
-
+        
         if (PHP_SAPI == 'cli') {
+            // some command-lines need a particular services to work
+            $GLOBALS['ServiceProvider'] = $this->provider;
             return;
         }
 
@@ -95,7 +93,7 @@ class WebHost
 
     public static function createDefaultBuilder(array $args = []): WebHostBuilder
     {
-        $basePath = LauncherProperties::getWorkspace();
+        $basePath = LauncherProperties::getRootDirectory();
         $builder  = new WebHostBuilder();
 
         $builder->ConfigBuilder->setBasePath($basePath);

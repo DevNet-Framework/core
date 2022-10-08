@@ -18,13 +18,13 @@ use DevNet\System\IO\Console;
 class WebServer
 {
     private string $host = 'localhost';
-    private int $port    = 8000;
+    private int $port = 8000;
     private string $root;
     private CommandLine $command;
 
     public function __construct()
     {
-        $this->root = LauncherProperties::getWorkspace() . "/webroot";
+        $this->root = LauncherProperties::getRootDirectory() . "/webroot";
         $this->command = new CommandLine('serve');
         $this->command->addArgument('serve', 'Run the web server');
         $this->command->addOption('--host', 'the server host name or IP');

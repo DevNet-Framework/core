@@ -19,7 +19,7 @@ class AuthenticationBuilder
     public function addCookie(string $authenticationSchem, Closure $configuration = null)
     {
         $options = new AuthenticationCookieOptions();
-        $options->CookieName .= "-" . md5(LauncherProperties::getWorkspace());
+        $options->CookieName .= "-" . md5(LauncherProperties::getRootDirectory());
 
         if ($configuration) {
             $configuration($options);

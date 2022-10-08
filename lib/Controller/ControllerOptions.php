@@ -9,7 +9,6 @@
 
 namespace DevNet\Web\Controller;
 
-use DevNet\System\Runtime\LauncherProperties;
 use DevNet\Web\Controller\Binder\IValueProvider;
 use DevNet\Web\Controller\Binder\IModelBinder;
 use DevNet\Web\Controller\Binder\ModelBinderProvider;
@@ -18,10 +17,11 @@ use DevNet\Web\Controller\Providers\FileValueProvider;
 use DevNet\Web\Controller\Providers\FormValueProvider;
 use DevNet\Web\Controller\Providers\QueryValueProvider;
 use DevNet\Web\Controller\Providers\RouteValueProvider;
+use DevNet\Web\Middleware\IMiddleware;
 
 class ControllerOptions
 {
-    private string $controllerNamespace;
+    private string $controllerNamespace = 'Application\\Controllers';
     private string $viewDirectory = '../Views/';
     private array $actionFilters = [];
     private ?IModelBinder $modelBinder = null;
@@ -29,7 +29,6 @@ class ControllerOptions
 
     public function __construct()
     {
-        $this->controllerNamespace = LauncherProperties::getNamespace() . '\\Controllers';
         $this->valueProviders = new CompositeValueProvider();
         $this->valueProviders->add(new RouteValueProvider());
         $this->valueProviders->add(new QueryValueProvider());
@@ -57,7 +56,7 @@ class ControllerOptions
         return $this->viewDirectory;
     }
 
-    public function addFilter(IActionFilter $actionFilter)
+    public function addFilter(IMiddleware $actionFilter)
     {
         $this->actionFilters[get_class($actionFilter)] = $actionFilter;
         return $this;

@@ -28,6 +28,7 @@ class ActionInvoker implements IRequestHandler
     public function __construct(ActionContext $actionContext)
     {
         $this->actionContext = $actionContext;
+        $this->filters = $actionContext->ActionDescriptor->FilterAttributes;
     }
 
     public function createController(): object
@@ -65,28 +66,20 @@ class ActionInvoker implements IRequestHandler
         return $controller;
     }
 
-    public function getNextfilter(): ?IMiddleware
+    public function getNextFilter(): ?IMiddleware
     {
-        $filter = array_shift($this->filters);
-        if (!$filter) {
-            return null;
+        $attribute = array_shift($this->filters);
+        if ($attribute) {
+            return $attribute->newInstance();
         }
 
-        $actionFilter = $filter[0];
-        $options      = $filter[1];
-
-        return new $actionFilter($options);
+        return null;
     }
 
     public function __invoke(HttpContext $httpContext)
     {
-        $controller        = $this->createController();
-        $controllerFilters = $controller->ActionFilters[$this->actionContext->ActionDescriptor->ClassInfo->getName()] ?? [];
-        $actionFilters     = $controller->ActionFilters[strtolower($this->actionContext->ActionDescriptor->ActionName)] ?? [];
-        $this->filters     = array_merge($controllerFilters, $actionFilters);
-
-        $this->action = new RequestDelegate(function(HttpContext $httpContext) use($controller)
-        {
+        $controller = $this->createController();
+        $this->action = new RequestDelegate(function (HttpContext $httpContext) use ($controller) {
             $actionFilter = $this->getNextFilter();
             if ($actionFilter) {
                 $asyncFilter = new AsyncFunction($actionFilter);
@@ -97,8 +90,7 @@ class ActionInvoker implements IRequestHandler
             $arguments = $parameterBinder->resolveArguments($this->actionContext);
             $action = new Action([$controller, $this->actionContext->ActionDescriptor->ActionName]);
 
-            return Task::run(function () use ($action, $arguments)
-            {
+            return Task::run(function () use ($action, $arguments) {
                 $actionResult = yield $action->invokeArgs($arguments);
                 $result = yield $actionResult->executeAsync($this->actionContext);
                 return $result;

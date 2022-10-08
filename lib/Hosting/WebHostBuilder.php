@@ -49,7 +49,7 @@ class WebHostBuilder implements IWebHostBuilder
 
     public function useConfiguration(Closure $configure)
     {
-        $basePath = LauncherProperties::getWorkspace();
+        $basePath = LauncherProperties::getRootDirectory();
         $this->configBuilder->setBasePath($basePath);
         $configure($this->configBuilder);
 

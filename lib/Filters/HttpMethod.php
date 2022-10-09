@@ -7,29 +7,36 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Http;
+namespace DevNet\Web\Filters;
 
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Http\HttpException;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
+use Attribute;
 
-class HttpMethodFilter implements IMiddleware
+#[Attribute]
+class HttpMethod implements IMiddleware
 {
-    private array $options;
+    private array $verbes;
 
-    public function __construct(array $options = [])
+    public function __construct(string ...$verbes)
     {
-        $this->options = $options;
+        $this->verbes = $verbes;
     }
 
     public function __invoke(HttpContext $context, RequestDelegate $next)
     {
-        $httpMethod  = $context->Request->Method;
-
-        foreach ($this->options as &$option) {
-            $option = strtoupper($option);
+        $allwoed = false;
+        $httpMethod = $context->Request->Method;
+        foreach ($this->verbes as $verbe) {
+            if ($httpMethod == strtoupper($verbe)) {
+                $allwoed = true;
+                break;
+            }
         }
 
-        if (!in_array($httpMethod, $this->options)) {
+        if (!$allwoed) {
             $context->Response->setStatusCode(405);
             throw new HttpException("\"{$httpMethod}\" Method Not Allowed", 405);
         }

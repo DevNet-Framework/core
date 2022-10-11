@@ -15,6 +15,9 @@
     "autoload": {
         "psr-4": {
             "DevNet\\Web\\": "lib/"
-        }
+        },
+        "files": [
+            "global.php"
+        ]
     }
 }

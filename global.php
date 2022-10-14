@@ -7,7 +7,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
+use DevNet\Cli\Templating\CodeGeneratorRegistry;
 use DevNet\Cli\Templating\TemplateRegistry;
+use DevNet\Web\Tools\ControllerGeneratorProvider;
 use DevNet\Web\Tools\WebTemplateProvider;
 
+CodeGeneratorRegistry::register('controller', ControllerGeneratorProvider::class);
 TemplateRegistry::register('web', WebTemplateProvider::class);

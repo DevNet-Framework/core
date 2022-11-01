@@ -55,13 +55,10 @@ class WebHost
         $args   = $config->Settings['args'] ?? [];
 
         $this->server->start($args);
-
         $context    = $this->provider->getService(HttpContext::class);
         $applicaion = $this->appBuilder->build();
         
         if (PHP_SAPI == 'cli') {
-            // some command-lines need a particular services to work
-            $GLOBALS['ServiceProvider'] = $this->provider;
             return;
         }
 
@@ -88,7 +85,6 @@ class WebHost
                 echo $response->Body->read(1024 * 4);
             }
         }
-        exit;
     }
 
     public static function createDefaultBuilder(array $args = []): WebHostBuilder
@@ -100,17 +96,17 @@ class WebHost
         $builder->ConfigBuilder->addJsonFile("/settings.json");
         $builder->ConfigBuilder->addSetting('args', $args);
 
-        $builder->Services->addSingleton(function () use ($builder): IConfiguration {
+        $builder->Services->addSingleton(IConfiguration::class, function () use ($builder): IConfiguration {
             return $builder->ConfigBuilder->build();
         });
         
-        $builder->Services->addSingleton(function ($provider): HttpContext {
+        $builder->Services->addSingleton(HttpContext::class, function ($provider): HttpContext {
             $httpContext = HttpContextFactory::create();
             $httpContext->addAttribute('RequestServices', $provider);
             return $httpContext;
         });
 
-        $builder->Services->addSingleton(RouteBuilder::class, fn () => new RouteBuilder());
+        $builder->Services->addSingleton(RouteBuilder::class, fn (): RouteBuilder => new RouteBuilder());
 
         return $builder;
     }

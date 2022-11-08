@@ -31,20 +31,18 @@ class IdentityContext
     public function __construct(
         HttpContext $httpContext,
         EntityContext $entityContext,
-        string $userType,
-        string $roleType,
         IdentityOptions $identityOptions
     ) {
         $this->httpContext   = $httpContext;
         $this->entityContext = $entityContext;
-        $this->userType      = $userType;
-        $this->roleType      = $roleType;
+        $this->userType      = $identityOptions->UserType;
+        $this->roleType      = $identityOptions->RoleType;
         $this->options       = $identityOptions;
-        $this->users         = $entityContext->set($userType);
-        $this->roles         = $entityContext->set($roleType);
+        $this->users         = $entityContext->set($this->userType);
+        $this->roles         = $entityContext->set($this->roleType);
         $this->userRole      = $entityContext->set(UserRole::class);
 
-        $this->onModelCreate($entityContext->Model->Builder);
+        $this->onModelCreate($entityContext->Database->Model->Builder);
     }
 
     public function get_HttpContext(): HttpContext

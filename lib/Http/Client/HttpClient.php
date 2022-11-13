@@ -10,7 +10,7 @@
 namespace DevNet\Web\Http\Client;
 
 use DevNet\Web\Http\Headers;
-use DevNet\System\Async\Tasks\Task;
+use DevNet\System\Tasks\Task;
 use DevNet\System\ObjectTrait;
 use DevNet\Web\Http\HttpRequest;
 use DevNet\Web\Http\Uri;

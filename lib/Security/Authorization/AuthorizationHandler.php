@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Security\Authorization;
 
-use DevNet\System\Async\Tasks\Task;
+use DevNet\System\Tasks\Task;
 
 abstract class AuthorizationHandler implements IAuthorizationHandler
 {

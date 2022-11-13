@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Controller;
 
-use DevNet\System\Async\Tasks\Task;
+use DevNet\System\Tasks\Task;
 use DevNet\System\ObjectTrait;
 use DevNet\Web\Controller\Providers\RouteValueProvider;
 use DevNet\Web\Router\IRouteHandler;

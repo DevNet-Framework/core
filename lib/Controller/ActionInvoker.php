@@ -11,7 +11,7 @@ namespace DevNet\Web\Controller;
 
 use DevNet\System\Action;
 use DevNet\System\Async\AsyncFunction;
-use DevNet\System\Async\Tasks\Task;
+use DevNet\System\Tasks\Task;
 use DevNet\Web\Controller\ActionContext;
 use DevNet\Web\Controller\Binder\ParameterBinder;
 use DevNet\Web\Http\HttpContext;

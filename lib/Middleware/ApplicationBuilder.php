@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Middleware;
 
-use DevNet\System\Async\Tasks\Task;
+use DevNet\System\Tasks\Task;
 use DevNet\System\Dependency\IServiceProvider;
 use DevNet\System\ObjectTrait;
 use DevNet\Web\Http\HttpContext;

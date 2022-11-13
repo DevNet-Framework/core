@@ -13,7 +13,7 @@ use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
 use DevNet\Web\View\ViewManager;
-use DevNet\System\Async\Tasks\Task;
+use DevNet\System\Tasks\Task;
 use DevNet\System\ObjectTrait;
 use Throwable;
 

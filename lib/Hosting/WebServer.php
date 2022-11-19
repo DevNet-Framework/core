@@ -25,8 +25,7 @@ class WebServer
     public function __construct()
     {
         $this->root = LauncherProperties::getRootDirectory() . "/webroot";
-        $this->command = new CommandLine('serve');
-        $this->command->addArgument('serve', 'Run the web server');
+        $this->command = new CommandLine('run', 'Run the web server');
         $this->command->addOption('--host', 'the server host name or IP');
         $this->command->addOption('--port', 'The server port');
         $this->command->addOption('--root', 'The web root directory');
@@ -39,23 +38,9 @@ class WebServer
             return;
         }
 
-        $server = $args->getParameter('serve');
-
-        if (!$server) {
-            return;
-        }
-
-        if ($server->getValue() != 'serve') {
-            Console::foregroundColor(ConsoleColor::Red);
-            Console::writeline("The specified argument or option is not valid.");
-            Console::resetColor();
-            exit;
-        }
-
         $host = $args->getParameter('--host');
         $port = $args->getParameter('--port');
         $root = $args->getParameter('--root');
-        $help = $args->getParameter('--help');
 
         if ($host) {
             if (!$host->getValue()) {
@@ -95,9 +80,6 @@ class WebServer
 
     public function start(array $args = [])
     {
-        if (!$args) {
-            return;
-        }
         $this->command->invoke($args);
     }
 }

@@ -28,5 +28,5 @@ $args = $GLOBALS['argv'] ?? [];
 array_shift($args);
 
 // initialize and launch the application
-$launcher = Launcher::initialize($root.'/project.proj');
+$launcher = Launcher::initialize($root.'/devnet.proj');
 $launcher->launch($args);

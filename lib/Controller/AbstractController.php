@@ -10,7 +10,6 @@
 namespace DevNet\Web\Controller;
 
 use DevNet\System\Exceptions\ArgumentException;
-use DevNet\System\Exceptions\ClassException;
 use DevNet\Web\Controller\Features\HtmlHelper;
 use DevNet\Web\Controller\Features\UrlHelper;
 use DevNet\Web\Controller\Results\ContentResult;
@@ -19,30 +18,13 @@ use DevNet\Web\Controller\Results\JsonResult;
 use DevNet\Web\Controller\Results\RedirectResult;
 use DevNet\Web\Controller\Results\ViewResult;
 use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\View\ViewManager;
 
 abstract class AbstractController
 {
     public HttpContext $HttpContext;
     public ActionDescriptor $ActionDescriptor;
-    public array $ActionFilters = [];
     public array $ViewData = [];
-
-    public function filter(string $target, string $filterName, array $options = []): void
-    {
-        if (!class_exists($filterName)) {
-            throw new ClassException("Could not find middleware class {$filterName}", 0, 1);
-        }
-
-        $interfaces = class_implements($filterName);
-        if (!in_array(IMiddleware::class, $interfaces)) {
-            throw new ClassException("{$filterName} must implement " . IMiddleware::class, 0, 1);
-        }
-
-        $target = strtolower($target);
-        $this->ActionFilters[$target][] = [$filterName, $options];
-    }
 
     public function view($parameter = null, object $model = null): ViewResult
     {

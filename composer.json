@@ -10,6 +10,7 @@
         }
     ],
     "require": {
+        "php": "^8.0",
         "devnet/core": "1.0.*"
     },
     "autoload": {

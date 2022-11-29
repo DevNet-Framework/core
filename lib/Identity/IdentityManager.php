@@ -9,9 +9,9 @@
 
 namespace DevNet\Web\Identity;
 
-use DevNet\Web\Security\ClaimsPrincipal;
-use DevNet\Web\Security\ClaimsIdentity;
-use DevNet\Web\Security\Claim;
+use DevNet\Web\Security\Claims\ClaimsPrincipal;
+use DevNet\Web\Security\Claims\ClaimsIdentity;
+use DevNet\Web\Security\Claims\Claim;
 use DevNet\System\Linq;
 
 class IdentityManager

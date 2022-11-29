@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Security\Authorization;
 
-use DevNet\Web\Security\ClaimsPrincipal;
+use DevNet\Web\Security\Claims\ClaimsPrincipal;
 
 class Authorization
 {

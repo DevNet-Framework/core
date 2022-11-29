@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Security\Authorization;
 
-use DevNet\Web\Security\ClaimType;
+use DevNet\Web\Security\Claims\ClaimType;
 
 class RolesRequirement extends ClaimsRequirement
 {    

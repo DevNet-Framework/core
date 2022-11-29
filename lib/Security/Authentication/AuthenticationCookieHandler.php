@@ -10,7 +10,7 @@
 namespace DevNet\Web\Security\Authentication;
 
 use DevNet\System\ObjectTrait;
-use DevNet\Web\Security\ClaimsPrincipal;
+use DevNet\Web\Security\Claims\ClaimsPrincipal;
 use DevNet\Web\Http\Session;
 use Exception;
 

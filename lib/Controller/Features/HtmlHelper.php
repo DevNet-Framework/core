@@ -10,7 +10,7 @@
 namespace DevNet\Web\Controller\Features;
 
 use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Security\Antiforgery\IAntiforgery;
+use DevNet\Web\Security\Tokens\Csrf\IAntiforgery;
 
 class HtmlHelper
 {
@@ -21,14 +21,14 @@ class HtmlHelper
         $this->httpContext = $httpContext;
     }
 
-    public function antiForgeryToken(): ?string
+    public function AntiforgeryToken(): ?string
     {
-        $antiForgery = $this->httpContext->RequestServices->getService(IAntiforgery::class);
-        if (!$antiForgery) {
+        $antiforgery = $this->httpContext->RequestServices->getService(IAntiforgery::class);
+        if (!$antiforgery) {
             return null;
         }
 
-        $tokens = $antiForgery->storeTokens($this->httpContext);
+        $tokens = $antiforgery->storeTokens($this->httpContext);
         return "<input type=\"hidden\" name=\"{$tokens->FormFieldName}\" value=\"{$tokens->RequestToken}\">";
     }
 }

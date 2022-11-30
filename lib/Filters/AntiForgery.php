@@ -12,12 +12,12 @@ namespace DevNet\Web\Filters;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
-use DevNet\Web\Security\Antiforgery\AntiforgeryException;
-use DevNet\Web\Security\Antiforgery\IAntiforgery;
+use DevNet\Web\Security\Tokens\Csrf\AntiforgeryException;
+use DevNet\Web\Security\Tokens\Csrf\IAntiforgery;
 use Attribute;
 
 #[Attribute]
-class AntiForgery implements IMiddleware
+class Antiforgery implements IMiddleware
 {
     public function __invoke(HttpContext $context, RequestDelegate $next)
     {
@@ -29,7 +29,7 @@ class AntiForgery implements IMiddleware
         $result = $antiforgery->validateTokens($context);
 
         if (!$result) {
-            throw new AntiforgeryException("Invalid AntiForgery Token!");
+            throw new AntiforgeryException("Invalid Antiforgery Token!");
         }
 
         return $next($context);

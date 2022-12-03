@@ -10,9 +10,11 @@
 namespace DevNet\Web\Security\Claims;
 
 use Closure;
+use DevNet\System\Collections\Enumerator;
+use DevNet\System\Collections\IEnumerable;
 use DevNet\System\ObjectTrait;
 
-class ClaimsIdentity
+class ClaimsIdentity implements IEnumerable
 {
     use ObjectTrait;
 
@@ -93,5 +95,10 @@ class ClaimsIdentity
     public function getObjectData(): string
     {
         return serialize($this);
+    }
+
+    public function getIterator(): Enumerator
+    {
+        return new Enumerator($this->claims);
     }
 }

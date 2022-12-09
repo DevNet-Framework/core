@@ -9,10 +9,10 @@
 
 namespace DevNet\Web\Security\Claims;
 
-use Closure;
 use DevNet\System\Collections\Enumerator;
 use DevNet\System\Collections\IEnumerable;
 use DevNet\System\ObjectTrait;
+use Closure;
 
 class ClaimsIdentity implements IEnumerable
 {
@@ -71,7 +71,7 @@ class ClaimsIdentity implements IEnumerable
     public function findClaim(Closure $predecate): ?Claim
     {
         foreach ($this->claims as $claim) {
-            if ($predecate($claim)) {
+            if ($predecate($claim) === true) {
                 return $claim;
             }
         }
@@ -84,7 +84,7 @@ class ClaimsIdentity implements IEnumerable
         $claims = [];
 
         foreach ($this->claims as $claim) {
-            if ($predecate($claim)) {
+            if ($predecate($claim) === true) {
                 $claims[] = $claim;
             }
         }

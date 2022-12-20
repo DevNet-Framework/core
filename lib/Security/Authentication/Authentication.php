@@ -29,27 +29,30 @@ class Authentication
         return $this->handlers;
     }
 
-    public function signIn(ClaimsPrincipal $user, ?bool $isPersistent = null)
+    public function signIn(ClaimsPrincipal $user, bool $isPersistent = false, ?string $scheme = null)
     {
-        $handler = $this->handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
+        // get handler by scheme else get the first handler or return false.
+        $handler = $this->handlers[$scheme] ?? reset($this->handlers);
 
         if ($handler) {
             $handler->signIn($user, $isPersistent);
         }
     }
 
-    public function signOut()
+    public function signOut(?string $scheme = null)
     {
-        $handler = $this->handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
+        // get handler by scheme else get the first handler or return false.
+        $handler = $this->handlers[$scheme] ?? reset($this->handlers);
 
         if ($handler) {
             $handler->signOut();
         }
     }
 
-    public function authenticate(): AuthenticationResult
+    public function authenticate(?string $scheme = null): AuthenticationResult
     {
-        $handler = $this->handlers[AuthenticationDefaults::AuthenticationScheme] ?? null;
+        // get handler by scheme else get the first handler or return false.
+        $handler = $this->handlers[$scheme] ?? reset($this->handlers);
 
         if ($handler) {
             return $handler->authenticate();

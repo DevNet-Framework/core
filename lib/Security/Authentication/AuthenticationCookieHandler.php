@@ -14,7 +14,7 @@ use DevNet\Web\Security\Claims\ClaimsPrincipal;
 use DevNet\Web\Http\Session;
 use Exception;
 
-class AuthenticationCookieHandler implements IAuthenticationHandler
+class AuthenticationCookieHandler implements IAuthenticationHandler, IAuthenticationSigningHandler
 {
     use ObjectTrait;
 
@@ -37,23 +37,6 @@ class AuthenticationCookieHandler implements IAuthenticationHandler
         return $this->session;
     }
 
-    public function signIn(ClaimsPrincipal $user, bool $isPersistent = false)
-    {
-        if ($isPersistent) {
-            $this->session->setOptions(['cookie_lifetime' => $this->options->TimeSpan]);
-        } else {
-            $this->session->setOptions(['cookie_lifetime' => 0]);
-        }
-
-        $this->session->start();
-        $this->session->set(ClaimsPrincipal::class, $user);
-    }
-
-    public function signOut()
-    {
-        $this->session->destroy();
-    }
-
     public function authenticate(): AuthenticationResult
     {
         if ($this->session->isSet()) {
@@ -66,5 +49,22 @@ class AuthenticationCookieHandler implements IAuthenticationHandler
         }
 
         return new AuthenticationResult(new Exception("Session cookie dose not have ClaimsPrincipal data"));
+    }
+
+    public function signIn(ClaimsPrincipal $user, bool $isPersistent = false): void
+    {
+        if ($isPersistent) {
+            $this->session->setOptions(['cookie_lifetime' => $this->options->TimeSpan]);
+        } else {
+            $this->session->setOptions(['cookie_lifetime' => 0]);
+        }
+
+        $this->session->start();
+        $this->session->set(ClaimsPrincipal::class, $user);
+    }
+
+    public function signOut(): void
+    {
+        $this->session->destroy();
     }
 }

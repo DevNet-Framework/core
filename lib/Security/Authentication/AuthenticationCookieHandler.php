@@ -14,7 +14,7 @@ use DevNet\Web\Security\Claims\ClaimsPrincipal;
 use DevNet\Web\Http\Session;
 use Exception;
 
-class AuthenticationCookieHandler
+class AuthenticationCookieHandler implements IAuthenticationHandler
 {
     use ObjectTrait;
 
@@ -37,7 +37,7 @@ class AuthenticationCookieHandler
         return $this->session;
     }
 
-    public function signIn(ClaimsPrincipal $user, ?bool $isPersistent = null)
+    public function signIn(ClaimsPrincipal $user, bool $isPersistent = false)
     {
         if ($isPersistent) {
             $this->session->setOptions(['cookie_lifetime' => $this->options->TimeSpan]);

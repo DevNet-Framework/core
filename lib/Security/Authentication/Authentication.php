@@ -29,26 +29,6 @@ class Authentication
         return $this->handlers;
     }
 
-    public function signIn(ClaimsPrincipal $user, bool $isPersistent = false, ?string $scheme = null)
-    {
-        // get handler by scheme else get the first handler or return false.
-        $handler = $this->handlers[$scheme] ?? reset($this->handlers);
-
-        if ($handler) {
-            $handler->signIn($user, $isPersistent);
-        }
-    }
-
-    public function signOut(?string $scheme = null)
-    {
-        // get handler by scheme else get the first handler or return false.
-        $handler = $this->handlers[$scheme] ?? reset($this->handlers);
-
-        if ($handler) {
-            $handler->signOut();
-        }
-    }
-
     public function authenticate(?string $scheme = null): AuthenticationResult
     {
         // get handler by scheme else get the first handler or return false.
@@ -58,6 +38,30 @@ class Authentication
             return $handler->authenticate();
         }
 
-        return new AuthenticationResult(new Exception("Missing Authentication Handler"));
+        return new AuthenticationResult(new Exception("The authentication handler is missing!"));
+    }
+
+    public function signIn(ClaimsPrincipal $user, bool $isPersistent = false, ?string $scheme = null): void
+    {
+        // get handler by scheme else get the first handler or return false.
+        $handler = $this->handlers[$scheme] ?? reset($this->handlers);
+
+        if (!$handler instanceof IAuthenticationSigningHandler) {
+            throw new Exception("The authentication signing handler is missing!");
+        }
+
+        $handler->signIn($user, $isPersistent);
+    }
+
+    public function signOut(?string $scheme = null): void
+    {
+        // get handler by scheme else get the first handler or return false.
+        $handler = $this->handlers[$scheme] ?? reset($this->handlers);
+
+        if (!$handler instanceof IAuthenticationSigningHandler) {
+            throw new Exception("The authentication signing handler is missing!");
+        }
+
+        $handler->signOut();
     }
 }

@@ -14,7 +14,11 @@ namespace DevNet\Web\Router;
  */
 interface IRouteBuilder
 {
-    public function mapRoute(string $name, string $pattern, string ...$target);
+    public function name(string $name): IRouteBuilder;
+
+    public function addFilter(callable $filter): IRouteBuilder;
+
+    public function mapRoute(string $pattern, string|callable $handler): void;
 
     public function build(): IRouter;
 }

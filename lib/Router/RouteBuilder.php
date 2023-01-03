@@ -11,18 +11,19 @@ namespace DevNet\Web\Router;
 
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\MiddlewareDelegate;
+use Closure;
 
 class RouteBuilder implements IRouteBuilder
 {
-    private ?IRouteHandler $defaultHandler;
+    private ?IRouteHandler $routeHandler;
     private array $routes;
     private string $prefix = '';
     private string $name   = '';
     private array $filters = [];
 
-    public function __construct(?IRouteHandler $defaultHandler = null)
+    public function __construct(?IRouteHandler $routeHandler = null)
     {
-        $this->defaultHandler  = $defaultHandler;
+        $this->routeHandler  = $routeHandler;
     }
 
     /**
@@ -60,17 +61,17 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route
      */
-    public function mapRoute(string $name, string $pattern, string ...$target): void
+    public function mapRoute(string $pattern, string|callable $handler = null): void
     {
-        if ($this->defaultHandler) {
-            $routeHandler = clone $this->defaultHandler;
-            $routeHandler->Target = $target;
+        if ($this->routeHandler && (!$handler instanceof Closure)) {
+            $routeHandler = clone $this->routeHandler;
+            $routeHandler->Target = $handler;
         } else {
-            $routeHandler = new RouteHandler($target[0] ?? null, $this->filters);
+            $routeHandler = new RouteHandler($handler, $this->filters);
         }
 
         $pattern = $this->prefix . '/' . trim($pattern, '/');
-        $this->routes[] = new Route($name, 'ANY', $pattern, $routeHandler);
+        $this->routes[] = new Route($this->name, 'ANY', $pattern, $routeHandler);
         $this->name = ''; // reset the name for the next route
         $this->filters = []; // reset the filters for the next route
     }
@@ -78,10 +79,10 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route using Http Verb.
      */
-    public function mapVerb(string $verb, string $pattern, $target): void
+    public function mapVerb(string $verb, string $pattern, Closure $handler): void
     {
         $pattern = $this->prefix . '/' . trim($pattern, '/');
-        $this->routes[] = new Route($this->name, $verb, $pattern, new RouteHandler($target, $this->filters));
+        $this->routes[] = new Route($this->name, $verb, $pattern, new RouteHandler($handler, $this->filters));
         $this->name = ''; // reset the name for the next route
         $this->filters = []; // reset the filters for the next route
     }
@@ -89,33 +90,33 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route using the Http Verb GET.
      */
-    public function mapGet(string $pattern, $target): void
+    public function mapGet(string $pattern, Closure $handler): void
     {
-        $this->mapVerb('GET', $pattern, $target);
+        $this->mapVerb('GET', $pattern, $handler);
     }
 
     /**
      * mape the route using the Http Verb POST.
      */
-    public function mapPost(string $pattern, $target): void
+    public function mapPost(string $pattern, Closure $handler): void
     {
-        $this->mapVerb('POST', $pattern, $target);
+        $this->mapVerb('POST', $pattern, $handler);
     }
 
     /**
      * mape the route using the Http Verb PUT.
      */
-    public function mapPut(string $pattern, $target): void
+    public function mapPut(string $pattern, Closure $handler): void
     {
-        $this->mapVerb('PUT', $pattern, $target);
+        $this->mapVerb('PUT', $pattern, $handler);
     }
 
     /**
      * mape the route using the Http Verb DELETE.
      */
-    public function mapDelete(string $pattern, $target): void
+    public function mapDelete(string $pattern, Closure $handler): void
     {
-        $this->mapVerb('DELETE', $pattern, $target);
+        $this->mapVerb('DELETE', $pattern, $handler);
     }
 
     /**

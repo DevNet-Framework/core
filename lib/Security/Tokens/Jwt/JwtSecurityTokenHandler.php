@@ -17,11 +17,11 @@ use DateTime;
 
 class JwtSecurityTokenHandler
 {
-    private JwtValidationParameters $validation;
+    private string $SecurityKey;
 
-    public function __construct(JwtValidationParameters $validation)
+    public function __construct(string $securityKey)
     {
-        $this->validation = $validation;
+        $this->SecurityKey = $securityKey;
     }
 
     public function createToken(array $payload, string $algorithm = 'HS256', ?DateTime $expires = null): JwtSecurityToken
@@ -47,13 +47,13 @@ class JwtSecurityTokenHandler
     {
         switch ($token->Header->Alg) {
             case 'HS256':
-                $signature = hash_hmac('sha256', $token->toString(), $this->validation->SecurityKey, true);
+                $signature = hash_hmac('sha256', $token->toString(), $this->SecurityKey, true);
                 break;
             case 'HS384':
-                $signature = hash_hmac('sha834', $token->toString(), $this->validation->SecurityKey, true);
+                $signature = hash_hmac('sha834', $token->toString(), $this->SecurityKey, true);
                 break;
             case 'HS512':
-                $signature = hash_hmac('sha512', $token->toString(), $this->validation->SecurityKey, true);
+                $signature = hash_hmac('sha512', $token->toString(), $this->SecurityKey, true);
                 break;
             default:
                 throw new JwtException("Insupported Encription Algorithm!");
@@ -86,20 +86,20 @@ class JwtSecurityTokenHandler
     /**
      * Reads and validates JWT string
      */
-    public function validateToken(string $token): JwtSecurityToken
+    public function validateToken(string $token, ?string $issuer = null, ?string $audience = null): JwtSecurityToken
     {
         $segments = explode('.', $token);
         $token = $this->readToken($token);
 
         switch ($token->Header->Alg) {
             case 'HS256':
-                $signature = hash_hmac('sha256', $segments[0] . "." . $segments[1], $this->validation->SecurityKey, true);
+                $signature = hash_hmac('sha256', $segments[0] . "." . $segments[1], $this->SecurityKey, true);
                 break;
             case 'HS384':
-                $signature = hash_hmac('sha834', $segments[0] . "." . $segments[1], $this->validation->SecurityKey, true);
+                $signature = hash_hmac('sha834', $segments[0] . "." . $segments[1], $this->SecurityKey, true);
                 break;
             case 'HS512':
-                $signature = hash_hmac('sha512', $segments[0] . "." . $segments[1], $this->validation->SecurityKey, true);
+                $signature = hash_hmac('sha512', $segments[0] . "." . $segments[1], $this->SecurityKey, true);
                 break;
             default:
                 throw new JwtException("Insupported Encription Algorithm!");
@@ -112,22 +112,21 @@ class JwtSecurityTokenHandler
             throw new JwtException("Invalide JWT signature!", 1);
         }
 
-        if ($this->validation->Issuer) {
+        if ($issuer) {
             $issuer = $token->Payload->Claims->findClaim(fn($claim) => $claim->Type == 'iss');
             var_dump($issuer); exit;
-            if ($issuer != null && $issuer->Value != $this->validation->Issuer) {
+            if ($issuer != null && $issuer->Value != $issuer) {
                 throw new JwtException("Invalide JWT Issuer!", 2);
             }
         }
 
-        if ($this->validation->Audience) {
+        if ($audience) {
             $audience = $token->Payload->Claims->findClaim(fn($claim) => $claim->Type == 'aud');
-            if ($audience != null && $audience->Value != $this->validation->Audience) {
+            if ($audience != null && $audience->Value != $audience) {
                 throw new JwtException("Invalide JWT Audience!", 3);
             }
         }
 
         return $token;
-
     }
 }

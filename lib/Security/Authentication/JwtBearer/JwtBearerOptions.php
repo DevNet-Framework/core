@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
- namespace DevNet\Web\Security\Authentication\JwtBearer;
+namespace DevNet\Web\Security\Authentication\JwtBearer;
 
 class JwtBearerOptions
 {
@@ -19,8 +19,7 @@ class JwtBearerOptions
         ?string $securityKey = null,
         ?string $issuer = null,
         ?string $audience = null
-        )
-    {
+    ) {
         $this->SecurityKey = $securityKey;
         $this->Issuer = $issuer;
         $this->Audience = $audience;

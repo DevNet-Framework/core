@@ -22,7 +22,6 @@ use DevNet\Web\Security\Tokens\Csrf\Antiforgery;
 use DevNet\Web\Security\Tokens\Csrf\AntiforgeryOptions;
 use DevNet\Web\Security\Authentication\Authentication;
 use DevNet\Web\Security\Authentication\AuthenticationBuilder;
-use DevNet\Web\Security\Authentication\AuthenticationDefaults;
 use DevNet\Web\Security\Authorization\Authorization;
 use DevNet\Web\Security\Authorization\AuthorizationOptions;
 use DevNet\Web\Identity\IdentityContext;
@@ -82,11 +81,13 @@ class ServiceCollectionExtensions
         $services->addSingleton(IAntiforgery::class, fn (): IAntiforgery => new Antiforgery($options));
     }
 
-    public static function addAuthentication(IServiceCollection $services, Closure $configuration = null)
+    public static function addAuthentication(IServiceCollection $services, Closure $configuration)
     {
-        $builder = new AuthenticationBuilder();
-        $builder->addCookie(AuthenticationDefaults::AuthenticationScheme, $configuration);
-        $services->addSingleton(Authentication::class, fn (): Authentication => $builder->build());
+        $services->addSingleton(Authentication::class, function ($provider) use ($configuration) {
+            $builder = new AuthenticationBuilder($provider->getService(HttpContext::class));
+            $configuration($builder);
+            return $builder->build();
+        });
     }
 
     public static function addAuthorisation(IServiceCollection $services, Closure $configuration = null)

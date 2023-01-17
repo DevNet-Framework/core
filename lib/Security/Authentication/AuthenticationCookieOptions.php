@@ -11,11 +11,10 @@ namespace DevNet\Web\Security\Authentication;
 
 class AuthenticationCookieOptions
 {
-    const DefaultScheme = 'AuthenticationCookie';
-
-    public string $CookieName = 'Devnet-Identity';
-    public string $CookiePath = '/';
-    public string $LoginPath  = '/account/login';
-    public string $DeniedPath = '';
-    public int $TimeSpan      = 3600 * 24 * 7;
+    public string $AuthenticationScheme = AuthenticationCookieDefaults::AuthenticationScheme;
+    public string $CookieName           = AuthenticationCookieDefaults::CookieName;
+    public string $CookiePath           = AuthenticationCookieDefaults::CookiePath;
+    public string $LoginPath            = AuthenticationCookieDefaults::LoginPath;
+    public string $DeniedPath           = '';
+    public int $TimeSpan                = AuthenticationCookieDefaults::TimeSpan;
 }

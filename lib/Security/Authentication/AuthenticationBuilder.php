@@ -10,13 +10,22 @@
 namespace DevNet\Web\Security\Authentication;
 
 use DevNet\System\Runtime\LauncherProperties;
+use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Security\Authentication\JwtBearer\JwtBearerHandler;
+use DevNet\Web\Security\Authentication\JwtBearer\JwtBearerOptions;
 use Closure;
 
 class AuthenticationBuilder
 {
     private array $authentications;
+    private HttpContext $httpContext;
 
-    public function addCookie(string $authenticationSchem, Closure $configuration = null)
+    public function __construct(HttpContext $httpContext)
+    {
+        $this->httpContext = $httpContext;
+    }
+
+    public function addCookie(Closure $configuration = null): void
     {
         $options = new AuthenticationCookieOptions();
         $options->CookieName .= "-" . md5(LauncherProperties::getRootDirectory());
@@ -25,10 +34,20 @@ class AuthenticationBuilder
             $configuration($options);
         }
 
-        $this->authentications[$authenticationSchem] = new AuthenticationCookieHandler($options);
+        $this->authentications[$options->AuthenticationScheme] = new AuthenticationCookieHandler($options);
     }
 
-    public function build()
+    public function addJwtBearer(Closure $configuration = null): void
+    {
+        $options = new JwtBearerOptions();
+        if ($configuration) {
+            $configuration($options);
+        }
+
+        $this->authentications[$options->AuthenticationScheme] = new JwtBearerHandler($this->httpContext, $options);
+    }
+
+    public function build(): Authentication
     {
         return new Authentication($this->authentications);
     }

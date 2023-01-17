@@ -9,11 +9,11 @@
 
 namespace DevNet\Web\Security\Authentication;
 
-class AuthenticationDefaults
+class AuthenticationCookieDefaults
 {
-    const AuthenticationScheme          = 'AuthenticationCookie';
-
-    public string $AuthenticationScheme = 'AuthenticationCookie';
-    public string $SignInScheme         = 'AuthenticationCookie';
-    public string $ChallengeScheme      = 'AuthenticationCookie';
+    public const AuthenticationScheme = 'Cookies';
+    public const CookieName           = 'Devnet-Identity';
+    public const CookiePath           = '/';
+    public const LoginPath            = '/account/login';
+    public const TimeSpan             = 3600 * 24 * 7;
 }

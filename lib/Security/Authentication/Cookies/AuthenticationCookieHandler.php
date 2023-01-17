@@ -7,11 +7,14 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Security\Authentication;
+namespace DevNet\Web\Security\Authentication\Cookies;
 
 use DevNet\System\ObjectTrait;
-use DevNet\Web\Security\Claims\ClaimsPrincipal;
 use DevNet\Web\Http\Session;
+use DevNet\Web\Security\Authentication\AuthenticationResult;
+use DevNet\Web\Security\Authentication\IAuthenticationHandler;
+use DevNet\Web\Security\Authentication\IAuthenticationSigningHandler;
+use DevNet\Web\Security\Claims\ClaimsPrincipal;
 use Exception;
 
 class AuthenticationCookieHandler implements IAuthenticationHandler, IAuthenticationSigningHandler

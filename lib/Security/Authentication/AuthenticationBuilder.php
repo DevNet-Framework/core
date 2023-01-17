@@ -13,6 +13,8 @@ use DevNet\System\Runtime\LauncherProperties;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Security\Authentication\JwtBearer\JwtBearerHandler;
 use DevNet\Web\Security\Authentication\JwtBearer\JwtBearerOptions;
+use DevNet\Web\Security\Authentication\Cookies\AuthenticationCookieHandler;
+use DevNet\Web\Security\Authentication\Cookies\AuthenticationCookieOptions;
 use Closure;
 
 class AuthenticationBuilder

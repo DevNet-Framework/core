@@ -11,6 +11,7 @@ namespace DevNet\Web\Security\Authentication\JwtBearer;
 
 class JwtBearerOptions
 {
+    public string $AuthenticationScheme = JwtBearerDefaults::AuthenticationScheme;
     public ?string $SecurityKey = null;
     public ?string $Issuer = null;
     public ?string $Audience = null;

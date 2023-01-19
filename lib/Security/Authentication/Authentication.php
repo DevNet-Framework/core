@@ -24,6 +24,11 @@ class Authentication
         $this->handlers = $handlers;
     }
 
+    public function get_Schemes(): array
+    {
+        return array_keys($this->handlers);
+    }
+
     public function get_Handlers(): array
     {
         return $this->handlers;
@@ -31,7 +36,7 @@ class Authentication
 
     public function authenticate(?string $scheme = null): AuthenticationResult
     {
-        // get handler by scheme else get the first handler or return false.
+        // get handler by scheme else get the first handler.
         $handler = $this->handlers[$scheme] ?? reset($this->handlers);
 
         if ($handler) {

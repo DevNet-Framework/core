@@ -9,10 +9,13 @@
 
 namespace DevNet\Web\Security\Claims;
 
+use DevNet\System\ObjectTrait;
 use Closure;
 
 class ClaimsPrincipal
 {
+    use ObjectTrait;
+
     private array $identities = [];
 
     public function __construct(ClaimsIdentity $identity = null)
@@ -20,6 +23,11 @@ class ClaimsPrincipal
         if ($identity != null) {
             $this->identities[$identity->AuthenticationType] = $identity;
         }
+    }
+
+    public function get_Identities(): array
+    {
+        return $this->identities;
     }
 
     public function addIdentity(ClaimsIdentity $identity)

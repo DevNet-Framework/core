@@ -10,30 +10,28 @@
 namespace DevNet\Web\Security\Authentication;
 
 use DevNet\System\ObjectTrait;
-use DevNet\Web\Security\Claims\ClaimsPrincipal;
+use DevNet\Web\Security\Claims\ClaimsIdentity;
 use Exception;
 
 class AuthenticationResult
 {
     use ObjectTrait;
     
-    private ?ClaimsPrincipal $principal = null;
+    private ?ClaimsIdentity $identity = null;
     private ?Exception $error = null;
 
     public function __construct(object $result)
     {
-        if ($result instanceof ClaimsPrincipal) {
+        if ($result instanceof ClaimsIdentity) {
             $this->principal = $result;
-        }
-
-        if ($result instanceof Exception) {
+        } else if ($result instanceof Exception) {
             $this->error = $result;
         }
     }
 
-    public function get_Principal(): ?ClaimsPrincipal
+    public function get_Identity(): ?ClaimsIdentity
     {
-        return $this->principal;
+        return $this->identity;
     }
 
     public function get_Error(): ?Exception
@@ -43,7 +41,7 @@ class AuthenticationResult
 
     public function isSucceeded(): bool
     {
-        return $this->principal ? true : false;
+        return $this->identity ? true : false;
     }
 
     public function isFailed(): bool

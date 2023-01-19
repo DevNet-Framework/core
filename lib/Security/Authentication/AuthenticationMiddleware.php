@@ -21,9 +21,13 @@ class AuthenticationMiddleware implements IMiddleware
     {
         if ($context->RequestServices->contains(Authentication::class)) {
             $authentication = $context->RequestServices->getService(Authentication::class);
-            $result = $authentication->authenticate();
-
-            $user = $result->isSucceeded() ? $result->Principal : new ClaimsPrincipal();
+            $user = new ClaimsPrincipal();
+            foreach ($authentication->Schemes as $scheme) {
+                $result = $authentication->authenticate($scheme);
+                if ($result->isSucceeded()) {
+                    $user->addIdentity($result->Identity);
+                }
+            }
 
             $context->addAttribute('Authentication', $authentication);
             $context->addAttribute('User', $user);

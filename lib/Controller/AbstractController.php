@@ -16,6 +16,7 @@ use DevNet\Web\Controller\Results\ContentResult;
 use DevNet\Web\Controller\Results\ForbidResult;
 use DevNet\Web\Controller\Results\JsonResult;
 use DevNet\Web\Controller\Results\RedirectResult;
+use DevNet\Web\Controller\Results\UnauthorizedResult;
 use DevNet\Web\Controller\Results\ViewResult;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\View\ViewManager;
@@ -73,7 +74,12 @@ abstract class AbstractController
         return new RedirectResult($path);
     }
 
-    public function forbidResult(): ForbidResult
+    public function unauthorized(): UnauthorizedResult
+    {
+        return new UnauthorizedResult();
+    }
+
+    public function forbid(): ForbidResult
     {
         return new ForbidResult();
     }

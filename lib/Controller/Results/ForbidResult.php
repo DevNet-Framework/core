@@ -16,6 +16,6 @@ class ForbidResult extends ActionResult
     public function execute(ActionContext $actionContext): void
     {
         $httpContext = $actionContext->HttpContext;
-        $httpContext->response->setStatusCode(403);
+        $httpContext->Response->setStatusCode(403);
     }
 }

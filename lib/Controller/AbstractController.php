@@ -15,6 +15,7 @@ use DevNet\Web\Controller\Features\UrlHelper;
 use DevNet\Web\Controller\Results\ContentResult;
 use DevNet\Web\Controller\Results\ForbidResult;
 use DevNet\Web\Controller\Results\JsonResult;
+use DevNet\Web\Controller\Results\NotFoundResult;
 use DevNet\Web\Controller\Results\RedirectResult;
 use DevNet\Web\Controller\Results\UnauthorizedResult;
 use DevNet\Web\Controller\Results\ViewResult;
@@ -83,4 +84,10 @@ abstract class AbstractController
     {
         return new ForbidResult();
     }
+
+    public function notFound(): NotFoundResult
+    {
+        return new NotFoundResult();
+    }
+
 }

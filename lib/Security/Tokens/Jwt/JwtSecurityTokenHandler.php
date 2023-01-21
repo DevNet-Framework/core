@@ -105,19 +105,22 @@ class JwtSecurityTokenHandler
             throw new JwtException("Invalide JWT signature!", 1);
         }
 
+        $expires = $token->Payload->Claims->findClaim(fn ($claim) => $claim->Type == 'exp');
+        if ($expires != null && $expires->Value <= time()) {
+            throw new JwtException("Expired JWT token!", 2);
+        }
+
         if ($issuer) {
             $issuer = $token->Payload->Claims->findClaim(fn ($claim) => $claim->Type == 'iss');
-            var_dump($issuer);
-            exit;
             if ($issuer != null && $issuer->Value != $issuer) {
-                throw new JwtException("Invalide JWT Issuer!", 2);
+                throw new JwtException("Invalide JWT Issuer!", 3);
             }
         }
 
         if ($audience) {
             $audience = $token->Payload->Claims->findClaim(fn ($claim) => $claim->Type == 'aud');
             if ($audience != null && $audience->Value != $audience) {
-                throw new JwtException("Invalide JWT Audience!", 3);
+                throw new JwtException("Invalide JWT Audience!", 4);
             }
         }
 

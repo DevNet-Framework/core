@@ -13,12 +13,9 @@ use DevNet\System\Exceptions\ArgumentException;
 use DevNet\Web\Controller\Features\HtmlHelper;
 use DevNet\Web\Controller\Features\UrlHelper;
 use DevNet\Web\Controller\Results\ContentResult;
-use DevNet\Web\Controller\Results\ForbidResult;
 use DevNet\Web\Controller\Results\JsonResult;
-use DevNet\Web\Controller\Results\NotFoundResult;
-use DevNet\Web\Controller\Results\OkResult;
 use DevNet\Web\Controller\Results\RedirectResult;
-use DevNet\Web\Controller\Results\UnauthorizedResult;
+use DevNet\Web\Controller\Results\StatusCodeResult;
 use DevNet\Web\Controller\Results\ViewResult;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\View\ViewManager;
@@ -76,23 +73,28 @@ abstract class AbstractController
         return new RedirectResult($path);
     }
 
-    public function unauthorized(): UnauthorizedResult
+    public function statusCode(int $code): StatusCodeResult
     {
-        return new UnauthorizedResult();
+        return new StatusCodeResult($code);
     }
 
-    public function forbid(): ForbidResult
+    public function unauthorized(): StatusCodeResult
     {
-        return new ForbidResult();
+        return $this->statusCode(401);
     }
 
-    public function notFound(): NotFoundResult
+    public function forbid(): StatusCodeResult
     {
-        return new NotFoundResult();
+        return $this->statusCode(403);
     }
 
-    public function ok(): OkResult
+    public function notFound(): StatusCodeResult
     {
-        return new OkResult();
+        return $this->statusCode(404);
+    }
+
+    public function ok(): StatusCodeResult
+    {
+        return $this->statusCode(200);
     }
 }

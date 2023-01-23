@@ -19,14 +19,14 @@ class ControllerRouteHandler implements IRouteHandler
 {
     use ObjectTrait;
 
-    private array $target = [];
+    private mixed $target = null;
 
-    public function get_Target(): array
+    public function get_Target()
     {
         return $this->target;
     }
 
-    public function set_Target(array $value): void
+    public function set_Target(string|callable|null $value): void
     {
         $this->target = $value;
     }

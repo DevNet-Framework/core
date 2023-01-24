@@ -13,7 +13,7 @@ use DevNet\System\Tasks\Task;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
-use DevNet\Web\Security\Authorization\AuthenticationException;
+use DevNet\Web\Security\Authentication\AuthenticationException;
 use DevNet\Web\Security\Authorization\AuthorizationContext;
 use DevNet\Web\Security\Authorization\AuthorizationException;
 use DevNet\Web\Security\Authorization\RolesRequirement;

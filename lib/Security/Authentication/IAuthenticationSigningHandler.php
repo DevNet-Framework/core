@@ -9,11 +9,11 @@
 
 namespace DevNet\Web\Security\Authentication;
 
-use DevNet\Web\Security\Claims\ClaimsPrincipal;
+use DevNet\Web\Security\Claims\ClaimsIdentity;
 
 interface IAuthenticationSigningHandler
 {
-    public function signIn(ClaimsPrincipal $user, bool $isPersistent = false): void;
+    public function signIn(ClaimsIdentity $user, bool $isPersistent = false): void;
 
     public function signOut(): void;
 }

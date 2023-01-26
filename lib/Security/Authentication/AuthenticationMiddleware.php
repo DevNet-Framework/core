@@ -13,7 +13,7 @@ use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
 use DevNet\Web\Security\Authentication\Authentication;
-use DevNet\Web\Security\Claims\ClaimsPrincipal;
+use DevNet\Web\Security\Claims\ClaimsIdentity;
 
 class AuthenticationMiddleware implements IMiddleware
 {
@@ -21,11 +21,12 @@ class AuthenticationMiddleware implements IMiddleware
     {
         if ($context->RequestServices->contains(Authentication::class)) {
             $authentication = $context->RequestServices->getService(Authentication::class);
-            $user = new ClaimsPrincipal();
+            $user = new ClaimsIdentity();
             foreach ($authentication->Schemes as $scheme) {
                 $result = $authentication->authenticate($scheme);
                 if ($result->isSucceeded()) {
-                    $user->addIdentity($result->Identity);
+                    $user = $result->Identity;
+                    break;
                 }
             }
 

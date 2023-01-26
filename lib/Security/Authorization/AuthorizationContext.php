@@ -10,18 +10,18 @@
 namespace DevNet\Web\Security\Authorization;
 
 use DevNet\System\ObjectTrait;
-use DevNet\Web\Security\Claims\ClaimsPrincipal;
+use DevNet\Web\Security\Claims\ClaimsIdentity;
 
 class AuthorizationContext
 {
     use ObjectTrait;
 
     private array $requirements;
-    private ?ClaimsPrincipal $user;
+    private ?ClaimsIdentity $user;
     private bool $failCalled    = false;
     private bool $successCalled = false;
 
-    public function __construct(array $requirements = [], ?ClaimsPrincipal $user = null)
+    public function __construct(array $requirements = [], ?ClaimsIdentity $user = null)
     {
         $this->user = $user;
         foreach ($requirements as $requirement) {
@@ -34,7 +34,7 @@ class AuthorizationContext
         return $this->requirements;
     }
 
-    public function get_User(): ?ClaimsPrincipal
+    public function get_User(): ?ClaimsIdentity
     {
         return $this->user;
     }

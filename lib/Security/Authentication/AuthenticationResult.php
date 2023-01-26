@@ -23,7 +23,7 @@ class AuthenticationResult
     public function __construct(object $result)
     {
         if ($result instanceof ClaimsIdentity) {
-            $this->principal = $result;
+            $this->identity = $result;
         } else if ($result instanceof Exception) {
             $this->error = $result;
         }

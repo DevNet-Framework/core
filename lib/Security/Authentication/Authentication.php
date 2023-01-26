@@ -10,7 +10,7 @@
 namespace DevNet\Web\Security\Authentication;
 
 use DevNet\System\ObjectTrait;
-use DevNet\Web\Security\Claims\ClaimsPrincipal;
+use DevNet\Web\Security\Claims\ClaimsIdentity;
 use Exception;
 
 class Authentication
@@ -46,7 +46,7 @@ class Authentication
         return new AuthenticationResult(new Exception("The authentication handler is missing!"));
     }
 
-    public function signIn(ClaimsPrincipal $user, bool $isPersistent = false, ?string $scheme = null): void
+    public function signIn(ClaimsIdentity $user, bool $isPersistent = false, ?string $scheme = null): void
     {
         // get handler by scheme else get the first handler or return false.
         $handler = $this->handlers[$scheme] ?? reset($this->handlers);

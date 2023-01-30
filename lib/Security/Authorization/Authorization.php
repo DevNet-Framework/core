@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Security\Authorization;
 
-use DevNet\Web\Security\Claims\ClaimsPrincipal;
+use DevNet\Web\Security\Claims\ClaimsIdentity;
 
 class Authorization
 {
@@ -20,7 +20,7 @@ class Authorization
         $this->options = $options;
     }
 
-    public function Authorize(ClaimsPrincipal $user, string $policyName): AuthorizationResult
+    public function authorize(ClaimsIdentity $user, string $policyName): AuthorizationResult
     {
         $policy = $this->options->getPolicy($policyName);
 

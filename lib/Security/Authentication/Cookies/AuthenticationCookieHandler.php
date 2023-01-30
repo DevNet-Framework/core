@@ -51,7 +51,7 @@ class AuthenticationCookieHandler implements IAuthenticationHandler, IAuthentica
             }
         }
 
-        return new AuthenticationResult(new Exception("Session cookie dose not have ClaimsPrincipal data"));
+        return new AuthenticationResult(new Exception("Session cookie dose not have ClaimsIdentity data"));
     }
 
     public function signIn(ClaimsIdentity $user, bool $isPersistent = false): void

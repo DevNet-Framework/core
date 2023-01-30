@@ -13,7 +13,6 @@ use DevNet\System\ObjectTrait;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Security\Authentication\AuthenticationResult;
 use DevNet\Web\Security\Authentication\IAuthenticationHandler;
-use DevNet\Web\Security\Claims\ClaimsPrincipal;
 use DevNet\Web\Security\Tokens\Jwt\JwtSecurityTokenHandler;
 use Exception;
 
@@ -56,7 +55,7 @@ class JwtBearerHandler implements IAuthenticationHandler
         try {
             $token = $this->readToken();
             $jwtToken = $this->handler->validateToken($token, $this->SecurityKey, $this->Options->Issuer, $this->Options->Audiance);
-            return new AuthenticationResult(new ClaimsPrincipal($jwtToken->Payload->Claims));
+            return new AuthenticationResult($jwtToken->Payload->Claims);
         } catch (\Throwable $exception) {
             return new AuthenticationResult($exception);
         }

@@ -9,7 +9,6 @@
 
 namespace DevNet\Web\Identity;
 
-use DevNet\Web\Security\Claims\ClaimsPrincipal;
 use DevNet\Web\Security\Claims\ClaimsIdentity;
 use DevNet\Web\Security\Claims\Claim;
 use DevNet\System\Linq;
@@ -41,8 +40,7 @@ class IdentityManager
         $identity = new ClaimsIdentity('IdentityUser');
         $identity->addClaim(new Claim('UserId', strval($user->Id)));
 
-        $userPrincipale = new ClaimsPrincipal($identity);
-        $this->identityContext->HttpContext->Authentication->signIn($userPrincipale, $isPersistent);
+        $this->identityContext->HttpContext->Authentication->signIn($identity, $isPersistent);
 
         return new IdentityResult(1);
     }

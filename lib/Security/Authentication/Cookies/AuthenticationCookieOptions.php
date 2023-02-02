@@ -14,7 +14,5 @@ class AuthenticationCookieOptions
     public string $AuthenticationScheme = AuthenticationCookieDefaults::AuthenticationScheme;
     public string $CookieName           = AuthenticationCookieDefaults::CookieName;
     public string $CookiePath           = AuthenticationCookieDefaults::CookiePath;
-    public string $LoginPath            = AuthenticationCookieDefaults::LoginPath;
-    public string $DeniedPath           = '';
     public int $TimeSpan                = AuthenticationCookieDefaults::TimeSpan;
 }

@@ -26,11 +26,12 @@ class ControllerGenerator implements ICodeGenerator
     {
         $output    = $parameters['--output'] ?? 'Controllers';
         $namespace = str_replace('/', '\\', $output);
-        $namespace = 'Application\\' . $namespace;       
+        $namespace = 'Application\\' . $namespace;
         $namespace = trim($namespace, '\\');
         $namespace = ucwords($namespace, '\\');
-        $name      = $parameters['--name'] ?? 'MyController';
+        $name      = $parameters['--name'] ?? 'My';
         $name      = ucfirst($name);
+        $name      = $name . "Controller";
 
         $this->content->clear();
         $this->content->appendLine('<?php');

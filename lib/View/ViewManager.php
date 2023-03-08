@@ -22,7 +22,7 @@ class ViewManager
     private array $viewData = [];
     private ?object $model = null;
 
-    public function __get(string $name)
+    public function &__get(string $name)
     {
         if (in_array($name, ['Container', 'Provider', 'Directory', 'ViewData', 'Model'])) {
             $property = lcfirst($name);

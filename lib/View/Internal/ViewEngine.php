@@ -27,7 +27,7 @@ class ViewEngine
         stream_filter_register("view.opentag", ViewFilter::class);
     }
 
-    public function __get(string $name)
+    public function &__get(string $name)
     {
         if ($name == 'ViewData') {
             return $this->manager->ViewData;
@@ -37,8 +37,9 @@ class ViewEngine
             return $this->manager->Model;
         }
 
-        if ($this->manager->Container->has($name)) {
-            return $this->manager->Container->get($name);
+        $service = $this->manager->Container->get($name);
+        if ($service) {
+            return $service;
         }
 
         if (property_exists($this, $name)) {

@@ -7,12 +7,12 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Filters;
+namespace DevNet\Web\Action\Filters;
 
 use DevNet\System\Tasks\Task;
-use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Middleware\IMiddleware;
-use DevNet\Web\Middleware\RequestDelegate;
+use DevNet\Web\Action\ActionContext;
+use DevNet\Web\Action\ActionDelegate;
+use DevNet\Web\Action\IActionFilter;
 use DevNet\Web\Security\Authentication\AuthenticationException;
 use DevNet\Web\Security\Authorization\AuthorizationContext;
 use DevNet\Web\Security\Authorization\AuthorizationException;
@@ -20,7 +20,7 @@ use DevNet\Web\Security\Authorization\RolesRequirement;
 use Attribute;
 
 #[Attribute]
-class Authorize implements IMiddleware
+class Authorize implements IActionFilter
 {
     private ?string $scheme;
     private ?string $policy;
@@ -33,14 +33,14 @@ class Authorize implements IMiddleware
         $this->scheme = $scheme;
     }
 
-    public function __invoke(HttpContext $context, RequestDelegate $next)
+    public function __invoke(ActionContext $context, ActionDelegate $next): Task
     {
         // Allow anonymous Authorization
         if (!$this->policy && !$this->roles) {
             return $next($context);
         }
 
-        $user = $context->User;
+        $user = $context->HttpContext->User;
 
         if ($this->scheme) {
             $identity = $user->Identities[$this->scheme] ?? null;
@@ -54,7 +54,7 @@ class Authorize implements IMiddleware
         }
 
         if ($this->policy) {
-            $authorization = $context->RequestServices->getService(Authorization::class);
+            $authorization = $context->HttpContext->RequestServices->getService(Authorization::class);
             if (!$authorization) {
                 throw new AuthorizationException("Unable to get the Authorization service, make sure if it's already registered!");
             }

@@ -7,26 +7,27 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Filters;
+namespace DevNet\Web\Action\Filters;
 
-use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Middleware\IMiddleware;
-use DevNet\Web\Middleware\RequestDelegate;
+use DevNet\System\Tasks\Task;
+use DevNet\Web\Action\ActionContext;
+use DevNet\Web\Action\ActionDelegate;
+use DevNet\Web\Action\IActionFilter;
 use DevNet\Web\Security\Tokens\Csrf\AntiforgeryException;
 use DevNet\Web\Security\Tokens\Csrf\IAntiforgery;
 use Attribute;
 
 #[Attribute]
-class Antiforgery implements IMiddleware
+class Antiforgery implements IActionFilter
 {
-    public function __invoke(HttpContext $context, RequestDelegate $next)
+    public function __invoke(ActionContext $context, ActionDelegate $next): Task
     {
-        $antiforgery = $context->RequestServices->getService(IAntiforgery::class);
+        $antiforgery = $context->HttpContext->RequestServices->getService(IAntiforgery::class);
         if (!$antiforgery) {
             throw new AntiforgeryException("Unable to get IAntiforger service, make sure to register it as a service!");
         }
 
-        $result = $antiforgery->validateTokens($context);
+        $result = $antiforgery->validateTokens($context->HttpContext);
 
         if (!$result) {
             throw new AntiforgeryException("Invalid Antiforgery Token!");

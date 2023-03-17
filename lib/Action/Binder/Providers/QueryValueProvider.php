@@ -7,13 +7,17 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller\Providers;
-
-use DevNet\Web\Controller\Binder\ValueProvider;
+namespace DevNet\Web\Action\Binder\Providers;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.
  */
-class RouteValueProvider extends ValueProvider
+class QueryValueProvider extends ValueProvider
 {
+    public function __construct(array $values = null)
+    {
+        if (!$values) {
+            $this->values = $_GET;
+        }
+    }
 }

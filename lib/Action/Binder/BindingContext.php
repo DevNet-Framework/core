@@ -7,10 +7,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller\Binder;
+namespace DevNet\Web\Action\Binder;
 
 use DevNet\System\ObjectTrait;
-use DevNet\Web\Controller\ActionContext;
+use DevNet\Web\Action\ActionContext;
 
 class BindingContext
 {

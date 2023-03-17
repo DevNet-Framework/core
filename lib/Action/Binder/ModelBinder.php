@@ -7,9 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller\Binder;
-
-use DevNet\Web\Http\Form;
+namespace DevNet\Web\Action\Binder;
 
 class ModelBinder implements IModelBinder
 {

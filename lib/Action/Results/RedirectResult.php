@@ -7,22 +7,22 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller\Results;
+namespace DevNet\Web\Action\Results;
 
-use DevNet\Web\Controller\ActionContext;
+use DevNet\System\Tasks\Task;
+use DevNet\Web\Action\ActionContext;
+use DevNet\Web\Action\IActionResult;
 
-class RedirectResult extends ActionResult
+class RedirectResult implements IActionResult
 {
     private string $path;
-    private int $statusCode;
 
     public function __construct(string $path, int $statusCode = 302)
     {
         $this->path = $path;
-        $this->statusCode = $statusCode;
     }
 
-    public function execute(ActionContext $actionContext): void
+    public function __invoke(ActionContext $actionContext): Task
     {
         $httpContext = $actionContext->HttpContext;
         $scheme      = $httpContext->Request->Uri->Scheme;
@@ -36,5 +36,6 @@ class RedirectResult extends ActionResult
 
         $url = $scheme . '://' . $host . $port . $this->path;
         $httpContext->Response->Headers->add("Location", $url);
+        return Task::completedTask();
     }
 }

@@ -7,11 +7,11 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller;
+namespace DevNet\Web\Action;
 
 use DevNet\System\Tasks\Task;
 
 interface IActionResult
 {
-    public function executeAsync(ActionContext $actionContext): Task;
+    public function __invoke(ActionContext $actionContext): Task;
 }

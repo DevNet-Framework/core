@@ -7,13 +7,14 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller\Results;
+namespace DevNet\Web\Action\Results;
 
-use DevNet\Web\Controller\ActionContext;
+use DevNet\System\Tasks\Task;
+use DevNet\Web\Action\ActionContext;
+use DevNet\Web\Action\IActionResult;
 
-class StatusCodeResult extends ActionResult
+class StatusCodeResult implements IActionResult
 {
-
     private int $statusCode;
 
     public function __construct(int $statusCode = 200)
@@ -21,9 +22,10 @@ class StatusCodeResult extends ActionResult
         $this->statusCode = $statusCode;
     }
 
-    public function execute(ActionContext $actionContext): void
+    public function __invoke(ActionContext $actionContext): Task
     {
         $httpContext = $actionContext->HttpContext;
         $httpContext->Response->setStatusCode($this->statusCode);
+        return Task::completedTask();
     }
 }

@@ -7,11 +7,13 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller\Results;
+namespace DevNet\Web\Action\Results;
 
-use DevNet\Web\Controller\ActionContext;
+use DevNet\System\Tasks\Task;
+use DevNet\Web\Action\ActionContext;
+use DevNet\Web\Action\IActionFilter;
 
-class ContentResult extends ActionResult
+class ContentResult implements IActionFilter
 {
     private string $content;
     private string $contentType;
@@ -22,10 +24,11 @@ class ContentResult extends ActionResult
         $this->contentType = $contentType;
     }
 
-    public function execute(ActionContext $actionContext): void
+    public function __invoke(ActionContext $actionContext): Task
     {
         $httpContext = $actionContext->HttpContext;
         $httpContext->Response->Headers->add('Content-Type', $this->contentType);
         $httpContext->Response->Body->write($this->content);
+        return Task::completedTask();
     }
 }

@@ -7,10 +7,9 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller;
+namespace DevNet\Web\Action;
 
 use DevNet\System\ObjectTrait;
-use DevNet\Web\Middleware\IMiddleware;
 use ReflectionClass;
 use ReflectionMethod;
 
@@ -20,28 +19,28 @@ class ActionDescriptor
 
     private ReflectionClass $classInfo;
     private ReflectionMethod $methodInfo;
-    private string $controllerName;
+    private string $className;
     private string $actionName;
     private array $filterAttributes = [];
 
     public function __construct($target, string $actionName)
     {
-        $this->classInfo      = new ReflectionClass($target);
-        $this->methodInfo     = new ReflectionMethod($target, $actionName);
-        $this->controllerName = $this->methodInfo->getDeclaringClass()->getShortName();
-        $this->actionName     = $this->methodInfo->getName();
+        $this->classInfo  = new ReflectionClass($target);
+        $this->methodInfo = new ReflectionMethod($target, $actionName);
+        $this->className  = $this->methodInfo->getDeclaringClass()->getShortName();
+        $this->actionName = $this->methodInfo->getName();
 
         /**
          * in the case of a method attribute having the same name as a class attribute,
          * the method attribute has precedence and must override the class attribute configurations.
          */
-        $classAttributes = $this->classInfo->getAttributes();
+        $classAttributes  = $this->classInfo->getAttributes();
         $methodAttributes = $this->methodInfo->getAttributes();
         $attributes = array_merge($classAttributes, $methodAttributes);
 
         foreach ($attributes as $attribute) {
             $interfaces = class_implements($attribute->getName());
-            if (in_array(IMiddleware::class, $interfaces)) {
+            if (in_array(IActionFilter::class, $interfaces)) {
                 $this->filterAttributes[$attribute->getName()] = $attribute;
             }
         }
@@ -57,9 +56,9 @@ class ActionDescriptor
         return $this->methodInfo;
     }
 
-    public function get_ControllerName(): string
+    public function get_ClassName(): string
     {
-        return $this->controllerName;
+        return $this->className;
     }
 
     public function get_ActionName(): string

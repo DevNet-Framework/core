@@ -11,7 +11,9 @@ namespace DevNet\Web\Controller;
 
 use DevNet\System\Tasks\Task;
 use DevNet\System\ObjectTrait;
-use DevNet\Web\Controller\Providers\RouteValueProvider;
+use DevNet\Web\Action\ActionDescriptor;
+use DevNet\Web\Action\ActionInvoker;
+use DevNet\Web\Action\Binder\Providers\RouteValueProvider;
 use DevNet\Web\Router\IRouteHandler;
 use DevNet\Web\Router\RouteContext;
 
@@ -70,8 +72,7 @@ class ControllerRouteHandler implements IRouteHandler
         $valueProvider->add(new RouteValueProvider($routeContext->RouteData->Values));
 
         $actionDescriptor  = new ActionDescriptor($controllerName, $actionName);
-        $actionContext = new ActionContext($actionDescriptor, $routeContext->HttpContext, $valueProvider);
-        $invoker = new ActionInvoker($actionContext);
+        $invoker = new ActionInvoker($actionDescriptor, $valueProvider);
         $routeContext->Handler = $invoker;
 
         return Task::completedTask();

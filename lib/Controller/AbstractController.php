@@ -10,20 +10,21 @@
 namespace DevNet\Web\Controller;
 
 use DevNet\System\Exceptions\ArgumentException;
+use DevNet\Web\Action\ActionContext;
+use DevNet\Web\Action\Results\ContentResult;
+use DevNet\Web\Action\Results\JsonResult;
+use DevNet\Web\Action\Results\RedirectResult;
+use DevNet\Web\Action\Results\StatusCodeResult;
+use DevNet\Web\Action\Results\ViewResult;
 use DevNet\Web\Controller\Features\HtmlHelper;
 use DevNet\Web\Controller\Features\UrlHelper;
-use DevNet\Web\Controller\Results\ContentResult;
-use DevNet\Web\Controller\Results\JsonResult;
-use DevNet\Web\Controller\Results\RedirectResult;
-use DevNet\Web\Controller\Results\StatusCodeResult;
-use DevNet\Web\Controller\Results\ViewResult;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\View\ViewManager;
 
 abstract class AbstractController
 {
+    public ActionContext $ActionContext;
     public HttpContext $HttpContext;
-    public ActionDescriptor $ActionDescriptor;
     public array $ViewData = [];
 
     public function view($parameter = null, object $model = null): ViewResult
@@ -41,9 +42,9 @@ abstract class AbstractController
 
         if (!$viewName) {
             $prefix         = $this->HttpContext->RouteContext->RouteData->Values['prefix'];
-            $controllerName = $this->ActionDescriptor->ControllerName;
-            $controllerName = str_replace('Controller', '', $this->ActionDescriptor->ControllerName);
-            $actionName     = $this->ActionDescriptor->ActionName;
+            $controllerName = $this->ActionContext->ActionDescriptor->ClassName;
+            $controllerName = str_replace('Controller', '', $this->ActionContext->ActionDescriptor->ClassName);
+            $actionName     = $this->ActionContext->ActionDescriptor->ActionName;
             $viewName       = ucwords($prefix . $controllerName, '/') . '/' . $actionName;
         }
 

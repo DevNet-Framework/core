@@ -9,15 +9,15 @@
 
 namespace DevNet\Web\Controller;
 
-use DevNet\Web\Controller\Binder\IValueProvider;
-use DevNet\Web\Controller\Binder\IModelBinder;
-use DevNet\Web\Controller\Binder\ModelBinderProvider;
-use DevNet\Web\Controller\Binder\CompositeValueProvider;
-use DevNet\Web\Controller\Providers\FileValueProvider;
-use DevNet\Web\Controller\Providers\FormValueProvider;
-use DevNet\Web\Controller\Providers\QueryValueProvider;
-use DevNet\Web\Controller\Providers\RouteValueProvider;
-use DevNet\Web\Middleware\IMiddleware;
+use DevNet\Web\Action\Binder\IModelBinder;
+use DevNet\Web\Action\Binder\IValueProvider;
+use DevNet\Web\Action\Binder\ModelBinderProvider;
+use DevNet\Web\Action\Binder\Providers\CompositeValueProvider;
+use DevNet\Web\Action\Binder\Providers\FileValueProvider;
+use DevNet\Web\Action\Binder\Providers\FormValueProvider;
+use DevNet\Web\Action\Binder\Providers\QueryValueProvider;
+use DevNet\Web\Action\Binder\Providers\RouteValueProvider;
+use DevNet\Web\Action\IActionFilter;
 
 class ControllerOptions
 {
@@ -56,7 +56,7 @@ class ControllerOptions
         return $this->viewDirectory;
     }
 
-    public function addFilter(IMiddleware $actionFilter)
+    public function addFilter(IActionFilter $actionFilter)
     {
         $this->actionFilters[get_class($actionFilter)] = $actionFilter;
         return $this;

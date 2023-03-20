@@ -9,8 +9,8 @@
 
 namespace DevNet\Web\Router;
 
-use DevNet\Web\Middleware\IMiddleware;
-use DevNet\Web\Middleware\MiddlewareDelegate;
+use DevNet\Web\Action\ActionFilterDelegate;
+use DevNet\Web\Action\IActionFilter;
 use Closure;
 
 class RouteBuilder implements IRouteBuilder
@@ -49,12 +49,12 @@ class RouteBuilder implements IRouteBuilder
 
     public function addFilter(callable $filter): RouteBuilder
     {
-        if (is_object($filter instanceof IMiddleware)) {
+        if (is_object($filter instanceof IActionFilter)) {
             $this->filters[] = $filter;
             return $this;
         }
 
-        $this->filters[] = new MiddlewareDelegate($filter);
+        $this->filters[] = new ActionFilterDelegate($filter);
         return $this;
     }
 
@@ -120,7 +120,7 @@ class RouteBuilder implements IRouteBuilder
     }
 
     /**
-     * build the router and retur RouteCollection instance.
+     * build the router and return RouteCollection instance.
      */
     public function build(): IRouter
     {

@@ -12,7 +12,7 @@ namespace DevNet\Web\Router;
 use DevNet\System\Tasks\Task;
 use DevNet\System\Dependency\Activator;
 use DevNet\System\ObjectTrait;
-use DevNet\Web\Middleware\RequestDelegate;
+use DevNet\Web\Action\ActionDelegate;
 
 class RouteHandler implements IRouteHandler
 {
@@ -47,10 +47,10 @@ class RouteHandler implements IRouteHandler
             throw new RouterException("Invalid Argument Type, route endpoint must be of type callable|string");
         }
 
-        $handler = new RequestDelegate($handler);
+        $handler = new ActionDelegate($handler);
 
         foreach (array_reverse($this->filters) as $filter) {
-            $handler = new RequestDelegate(function ($context) use ($filter, $handler) {
+            $handler = new ActionDelegate(function ($context) use ($filter, $handler) {
                 return $filter($context, $handler);
             });
         }

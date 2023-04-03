@@ -10,6 +10,7 @@
 namespace DevNet\Web\Extensions;
 
 use DevNet\Entity\EntityContext;
+use DevNet\Entity\EntityOptions;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Http\Client\HttpClient;
 use DevNet\Web\Http\Client\HttpClientOptions;
@@ -107,14 +108,15 @@ class ServiceCollectionExtensions
         $services->addSingleton(DbConnection::class, fn (): DbConnection => new DbConnection($datasource, $username, $password));
     }
 
-    public static function addEntityContext(IServiceCollection $services, string $connectionString, ?string $contextType = null)
+    public static function addEntityContext(IServiceCollection $services, string $contextType, Closure $configuration = null)
     {
-        if (!$contextType) {
-            $contextType = EntityContext::class;
+        $options = new EntityOptions();
+        if ($configuration) {
+            $configuration($options);
         }
 
-        $services->addSingleton($contextType, fn (): EntityContext => new $contextType($connectionString));
-        $services->addSingleton(EntityContext::class, fn ($provider): EntityContext => $provider->getService($entityConext));
+        $services->addSingleton($contextType, fn (): EntityContext => new $contextType($options));
+        $services->addSingleton(EntityContext::class, fn ($provider): EntityContext => $provider->getService($contextType));
     }
 
     public static function addIdentity(IServiceCollection $services, Closure $configuration = null)

@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Http\Client;
 
-use DevNet\System\Tasks\Task;
+use DevNet\System\Async\Task;
 use DevNet\Web\Http\Client\Internal\HttpRequestRawBuilder;
 use DevNet\Web\Http\Client\Internal\HttpResponseParser;
 use DevNet\Web\Http\HttpRequest;

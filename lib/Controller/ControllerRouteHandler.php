@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Controller;
 
-use DevNet\System\Tasks\Task;
+use DevNet\System\Async\Task;
 use DevNet\System\ObjectTrait;
 use DevNet\Web\Action\ActionDescriptor;
 use DevNet\Web\Action\ActionInvoker;

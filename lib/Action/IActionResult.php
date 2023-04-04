@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Action;
 
-use DevNet\System\Tasks\Task;
+use DevNet\System\Async\Task;
 
 interface IActionResult
 {

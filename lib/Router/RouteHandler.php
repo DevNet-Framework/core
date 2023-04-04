@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Router;
 
-use DevNet\System\Tasks\Task;
+use DevNet\System\Async\Task;
 use DevNet\System\Dependency\Activator;
 use DevNet\System\ObjectTrait;
 use DevNet\Web\Action\ActionDelegate;

@@ -9,10 +9,11 @@
 
 namespace DevNet\Web\Middleware;
 
-use DevNet\System\Tasks\Task;
+use DevNet\System\Async\Task;
 use DevNet\System\Dependency\IServiceProvider;
 use DevNet\System\ObjectTrait;
 use DevNet\Web\Http\HttpContext;
+use Generator;
 
 class ApplicationBuilder implements IApplicationBuilder
 {

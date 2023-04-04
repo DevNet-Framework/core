@@ -10,8 +10,8 @@
 namespace DevNet\Web\Action;
 
 use DevNet\System\Action;
-use DevNet\System\Tasks\AsyncFunction;
-use DevNet\System\Tasks\Task;
+use DevNet\System\Async\AsyncFunction;
+use DevNet\System\Async\Task;
 use DevNet\Web\Action\ActionContext;
 use DevNet\Web\Action\Binder\IValueProvider;
 use DevNet\Web\Action\Binder\ParameterBinder;

@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Http;
 
-use DevNet\System\Tasks\Task;
+use DevNet\System\Async\Task;
 use DevNet\System\IO\FileStream;
 use DevNet\System\IO\Stream;
 

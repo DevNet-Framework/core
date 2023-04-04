@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Security\Authorization;
 
-use DevNet\System\Tasks\Task;
+use DevNet\System\Async\Task;
 use DevNet\System\ObjectTrait;
 
 class ClaimsRequirement implements IAuthorizationRequirement, IAuthorizationHandler

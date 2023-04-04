@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Action\Filters;
 
-use DevNet\System\Tasks\Task;
+use DevNet\System\Async\Task;
 use DevNet\Web\Action\ActionContext;
 use DevNet\Web\Action\ActionDelegate;
 use DevNet\Web\Action\IActionFilter;

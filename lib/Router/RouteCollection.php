@@ -9,14 +9,12 @@
 
 namespace DevNet\Web\Router;
 
-use DevNet\Web\Router\Internal\RouteLogger;
-
 /**
  * Collection of routes
  */
 class RouteCollection implements IRouter
 {
-    private array $routes;
+    private array $routes = [];
 
     /**
      * add a route object to the array container

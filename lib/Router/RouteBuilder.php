@@ -16,9 +16,9 @@ use Closure;
 class RouteBuilder implements IRouteBuilder
 {
     private ?IRouteHandler $routeHandler;
-    private array $routes;
     private string $prefix = '';
     private string $name   = '';
+    private array $routes  = [];
     private array $filters = [];
 
     public function __construct(?IRouteHandler $routeHandler = null)

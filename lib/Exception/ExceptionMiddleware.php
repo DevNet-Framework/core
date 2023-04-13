@@ -10,7 +10,6 @@
 namespace DevNet\Web\Exception;
 
 use DevNet\System\Async\Task;
-use DevNet\System\ObjectTrait;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
@@ -19,8 +18,6 @@ use Throwable;
 
 class ExceptionMiddleware implements IMiddleware
 {
-    use ObjectTrait;
-
     private ?string $errorHandlingPath;
 
     public function __construct(?string $errorHandlingPath = null)
@@ -30,23 +27,17 @@ class ExceptionMiddleware implements IMiddleware
 
     public function __invoke(HttpContext $context, RequestDelegate $next): task
     {
-        return $this->invokeAsync($context, $next);
-    }
-
-    public function async_invokeAsync(HttpContext $context, RequestDelegate $next): iterable
-    {
         if ($context->getAttribute('Error')) {
             if ($this->errorHandlingPath) {
                 $context->Request->Uri->Path = $this->errorHandlingPath;
                 $context->Response->Body->truncate(0);
-                return yield $next($context);
+                return $next($context);
             }
-            return yield $this->handel($context);
+            return $this->handel($context);
         }
         
         try {
-            // need to await the async RequestDelegate here to be able to catch the error exception
-            yield $next($context);
+            return $next($context);
         } catch (Throwable $error) {
             if (PHP_SAPI == 'cli') {
                 throw new $error;
@@ -55,13 +46,13 @@ class ExceptionMiddleware implements IMiddleware
             if ($this->errorHandlingPath) {
                 $context->Request->Uri->Path = $this->errorHandlingPath;
                 $context->Response->Body->truncate(0);
-                return yield $next($context);
+                return $next($context);
             }
-            return yield $this->handel($context);
+            return $this->handel($context);
         }
     }
 
-    public function handel(HttpContext $context)
+    public function handel(HttpContext $context): Task
     {
         $error = $context->Error;
         $data  = $this->parse($error);

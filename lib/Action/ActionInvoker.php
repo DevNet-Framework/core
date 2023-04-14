@@ -89,8 +89,7 @@ class ActionInvoker implements IRequestHandler
         $this->action = new ActionDelegate(function (ActionContext $context) use ($instance) {
             $actionFilter = $this->getNextFilter();
             if ($actionFilter) {
-                $asyncFilter = new AsyncFunction($actionFilter);
-                return $asyncFilter($context, $this->action);
+                return $actionFilter($context, $this->action);
             }
 
             $parameterBinder = new ParameterBinder();

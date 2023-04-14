@@ -9,11 +9,11 @@
 
 namespace DevNet\Web\Http;
 
-use DevNet\System\ObjectTrait;
+use DevNet\System\PropertyTrait;
 
 class FormFile
 {
-    use ObjectTrait;
+    use PropertyTrait;
 
     private ?string $name;
     private ?string $type;

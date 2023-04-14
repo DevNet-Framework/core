@@ -9,12 +9,12 @@
 
 namespace DevNet\Web\Security\Claims;
 
-use DevNet\System\ObjectTrait;
+use DevNet\System\PropertyTrait;
 use Closure;
 
 class ClaimsPrincipal
 {
-    use ObjectTrait;
+    use PropertyTrait;
 
     private array $identities = [];
 

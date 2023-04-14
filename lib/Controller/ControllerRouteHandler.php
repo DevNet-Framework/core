@@ -10,7 +10,7 @@
 namespace DevNet\Web\Controller;
 
 use DevNet\System\Async\Task;
-use DevNet\System\ObjectTrait;
+use DevNet\System\PropertyTrait;
 use DevNet\Web\Action\ActionDescriptor;
 use DevNet\Web\Action\ActionInvoker;
 use DevNet\Web\Action\Binder\Providers\RouteValueProvider;
@@ -19,7 +19,7 @@ use DevNet\Web\Router\RouteContext;
 
 class ControllerRouteHandler implements IRouteHandler
 {
-    use ObjectTrait;
+    use PropertyTrait;
 
     private mixed $target = null;
 

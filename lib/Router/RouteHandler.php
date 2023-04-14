@@ -11,12 +11,12 @@ namespace DevNet\Web\Router;
 
 use DevNet\System\Async\Task;
 use DevNet\System\Dependency\Activator;
-use DevNet\System\ObjectTrait;
+use DevNet\System\PropertyTrait;
 use DevNet\Web\Action\ActionDelegate;
 
 class RouteHandler implements IRouteHandler
 {
-    use ObjectTrait;
+    use PropertyTrait;
 
     private $target;
     private array $filters;

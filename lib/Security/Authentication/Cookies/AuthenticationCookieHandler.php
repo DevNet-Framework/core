@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Security\Authentication\Cookies;
 
-use DevNet\System\ObjectTrait;
+use DevNet\System\PropertyTrait;
 use DevNet\Web\Http\Session;
 use DevNet\Web\Security\Authentication\AuthenticationResult;
 use DevNet\Web\Security\Authentication\IAuthenticationHandler;
@@ -19,7 +19,7 @@ use Exception;
 
 class AuthenticationCookieHandler implements IAuthenticationHandler, IAuthenticationSigningHandler
 {
-    use ObjectTrait;
+    use PropertyTrait;
 
     private AuthenticationCookieOptions $options;
     private Session $session;

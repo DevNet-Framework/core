@@ -9,11 +9,11 @@
 
 namespace DevNet\Web\Security\Tokens\Csrf;
 
-use DevNet\System\ObjectTrait;
+use DevNet\System\PropertyTrait;
 
 class AntiforgeryToken
 {
-    use ObjectTrait;
+    use PropertyTrait;
 
     private string $value;
     private bool $isHashed = false;

@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Router;
 
-use DevNet\System\ObjectTrait;
+use DevNet\System\PropertyTrait;
 use DevNet\Web\Router\IRouter;
 use DevNet\Web\Router\Internal\RouteParser;
 use DevNet\Web\Router\Internal\RouteMatcher;
@@ -17,7 +17,7 @@ use DevNet\Web\Router\Internal\RouteGenerator;
 
 class Route implements IRouter
 {
-    use ObjectTrait;
+    use PropertyTrait;
 
     private string $name;
     private string $verb;

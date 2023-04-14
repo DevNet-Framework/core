@@ -9,12 +9,12 @@
 
 namespace DevNet\Web\Security\Authorization;
 
-use DevNet\System\ObjectTrait;
+use DevNet\System\PropertyTrait;
 use DevNet\Web\Security\Claims\ClaimsIdentity;
 
 class AuthorizationContext
 {
-    use ObjectTrait;
+    use PropertyTrait;
 
     private array $requirements;
     private ?ClaimsIdentity $user;

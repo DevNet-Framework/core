@@ -9,13 +9,13 @@
 
 namespace DevNet\Web\Security\Authentication;
 
-use DevNet\System\ObjectTrait;
+use DevNet\System\PropertyTrait;
 use DevNet\Web\Security\Claims\ClaimsIdentity;
 use Exception;
 
 class Authentication
 {
-    use ObjectTrait;
+    use PropertyTrait;
 
     private array $handlers;
 

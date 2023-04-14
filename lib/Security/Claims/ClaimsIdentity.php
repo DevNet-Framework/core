@@ -11,12 +11,12 @@ namespace DevNet\Web\Security\Claims;
 
 use DevNet\System\Collections\Enumerator;
 use DevNet\System\Collections\IEnumerable;
-use DevNet\System\ObjectTrait;
+use DevNet\System\PropertyTrait;
 use Closure;
 
 class ClaimsIdentity implements IEnumerable
 {
-    use ObjectTrait;
+    use PropertyTrait;
 
     private ?string $authenticationType;
     private array $claims = [];

@@ -15,14 +15,14 @@ use DevNet\System\Dependency\ServiceCollection;
 use DevNet\System\Dependency\ServiceProvider;
 use DevNet\System\Exceptions\ClassException;
 use DevNet\System\Runtime\LauncherProperties;
+use DevNet\System\PropertyTrait;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\ApplicationBuilder;
 use Closure;
-use DevNet\System\ObjectTrait;
 
 class WebHostBuilder implements IWebHostBuilder
 {
-    use ObjectTrait;
+    use PropertyTrait;
 
     private ConfigurationBuilder $configBuilder;
     private ServiceCollection $services;

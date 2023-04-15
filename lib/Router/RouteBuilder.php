@@ -79,7 +79,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route using Http Verb.
      */
-    public function mapVerb(string $verb, string $pattern, Closure $handler): void
+    public function mapVerb(string $verb, string $pattern, callable $handler): void
     {
         $pattern = $this->prefix . '/' . trim($pattern, '/');
         $this->routes[] = new Route($this->name, $verb, $pattern, new RouteHandler($handler, $this->filters));
@@ -90,7 +90,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route using the Http Verb GET.
      */
-    public function mapGet(string $pattern, Closure $handler): void
+    public function mapGet(string $pattern, callable $handler): void
     {
         $this->mapVerb('GET', $pattern, $handler);
     }
@@ -98,7 +98,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route using the Http Verb POST.
      */
-    public function mapPost(string $pattern, Closure $handler): void
+    public function mapPost(string $pattern, callable $handler): void
     {
         $this->mapVerb('POST', $pattern, $handler);
     }
@@ -106,7 +106,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route using the Http Verb PUT.
      */
-    public function mapPut(string $pattern, Closure $handler): void
+    public function mapPut(string $pattern, callable $handler): void
     {
         $this->mapVerb('PUT', $pattern, $handler);
     }
@@ -114,7 +114,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route using the Http Verb DELETE.
      */
-    public function mapDelete(string $pattern, Closure $handler): void
+    public function mapDelete(string $pattern, callable $handler): void
     {
         $this->mapVerb('DELETE', $pattern, $handler);
     }

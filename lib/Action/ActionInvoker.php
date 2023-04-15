@@ -10,7 +10,6 @@
 namespace DevNet\Web\Action;
 
 use DevNet\System\Action;
-use DevNet\System\Async\AsyncFunction;
 use DevNet\System\Async\Task;
 use DevNet\Web\Action\ActionContext;
 use DevNet\Web\Action\Binder\IValueProvider;
@@ -97,12 +96,12 @@ class ActionInvoker implements IRequestHandler
             $action = new Action([$instance, $context->ActionDescriptor->ActionName]);
 
             return Task::run(function () use ($action, $context, $arguments) {
-                $actionResult = yield $action->invokeArgs($arguments);
+                $actionResult = yield $action->invoke($arguments);
                 $result = yield $actionResult($context);
                 return $result;
             });
         });
 
-        return $this->action->invoke($actionContext);
+        return $this->action->invoke([$actionContext]);
     }
 }

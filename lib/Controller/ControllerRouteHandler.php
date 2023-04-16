@@ -65,13 +65,17 @@ class ControllerRouteHandler implements IRouteHandler
         }
 
         if (!method_exists($controllerName, $actionName)) {
-            throw new ControllerException("Call to undefined method {$controllerName}::{$actionName}()", 404);
+            if (!method_exists($controllerName, "async_" . $actionName)) {
+                throw new ControllerException("Call to undefined method {$controllerName}::{$actionName}()", 404);
+            } else {
+                $actionName = "async_" . $actionName;
+            }
         }
 
         $valueProvider = $options->getValueProviders();
         $valueProvider->add(new RouteValueProvider($routeContext->RouteData->Values));
 
-        $actionDescriptor  = new ActionDescriptor($controllerName, $actionName);
+        $actionDescriptor = new ActionDescriptor($controllerName, $actionName);
         $invoker = new ActionInvoker($actionDescriptor, $valueProvider);
         $routeContext->Handler = $invoker;
 

@@ -11,9 +11,9 @@ namespace DevNet\Web\Action\Results;
 
 use DevNet\System\Async\Task;
 use DevNet\Web\Action\ActionContext;
-use DevNet\Web\Action\IActionFilter;
+use DevNet\Web\Action\IActionResult;
 
-class ContentResult implements IActionFilter
+class ContentResult implements IActionResult
 {
     private string $content;
     private string $contentType;

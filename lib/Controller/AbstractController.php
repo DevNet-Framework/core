@@ -45,7 +45,12 @@ abstract class AbstractController
             $controllerName = $this->ActionContext->ActionDescriptor->ClassName;
             $controllerName = str_replace('Controller', '', $this->ActionContext->ActionDescriptor->ClassName);
             $actionName     = $this->ActionContext->ActionDescriptor->ActionName;
-            $viewName       = ucwords($prefix . $controllerName, '/') . '/' . $actionName;
+
+            if (strtolower(strstr($actionName, "_", true)) == "async") {
+                $actionName = substr(strstr($actionName, "_"), 1);
+            }
+
+            $viewName = ucwords($prefix . $controllerName, '/') . '/' . $actionName;
         }
 
         $view = $this->HttpContext->RequestServices->getService(ViewManager::class);

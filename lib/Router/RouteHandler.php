@@ -47,7 +47,31 @@ class RouteHandler implements IRouteHandler
             throw new RouterException("Invalid Argument Type, route endpoint must be of type callable|string");
         }
 
-        $handler = new ActionDelegate($handler);
+        $handler = new ActionDelegate(function ($context) use ($handler) {
+            $result = $handler($context);
+            if ($result instanceof Task) {
+                return $result->then(function ($previous) use ($context) {
+                    $result = $previous->Result;
+                    if (is_object($result) || is_array($result)) {
+                        $context->Response->Headers->add("Content-Type", "application/json");
+                        $content = json_encode($result);
+                        $context->Response->Body->write($content);
+                    } else if (is_string($result)) {
+                        $context->Response->Headers->add("Content-Type", "text/plain");
+                        $context->Response->Body->write($result);
+                    }
+                });
+            } else if (is_object($result) || is_array($result)) {
+                $context->Response->Headers->add("Content-Type", "application/json");
+                $content = json_encode($result);
+                $context->Response->Body->write($content);
+            } else if (is_string($result)) {
+                $context->Response->Headers->add("Content-Type", "text/plain");
+                $context->Response->Body->write($result);
+            }
+
+            return Task::completedTask();
+        });
 
         foreach (array_reverse($this->filters) as $filter) {
             $handler = new ActionDelegate(function ($context) use ($filter, $handler) {

@@ -65,12 +65,8 @@ abstract class AbstractController
         return new ContentResult($content, $contentType);
     }
 
-    public function json($data, $statusCode = 200): JsonResult
+    public function json(object|array $data, $statusCode = 200): JsonResult
     {
-        if (!is_array($data) && !is_object($data)) {
-            throw new ArgumentException(static::class . "::json(): The argument 1# must be of the type object or array.", 0, 1);
-        }
-
         return new JsonResult($data, $statusCode);
     }
 

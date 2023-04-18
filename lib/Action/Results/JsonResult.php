@@ -18,7 +18,7 @@ class JsonResult implements IActionResult
     private string $content;
     private int $statusCode;
 
-    public function __construct($data, int $statusCode = 200)
+    public function __construct(object|array $data, int $statusCode = 200)
     {
         $this->content = json_encode($data);
         $this->statusCode = $statusCode;

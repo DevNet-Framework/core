@@ -10,7 +10,7 @@
 namespace DevNet\Web\Action;
 
 use DevNet\System\Action;
-use DevNet\System\Async\Task;
+use DevNet\System\Async\AsyncFunction;
 use DevNet\Web\Action\ActionContext;
 use DevNet\Web\Action\Binder\IValueProvider;
 use DevNet\Web\Action\Binder\ParameterBinder;
@@ -93,13 +93,24 @@ class ActionInvoker implements IRequestHandler
 
             $parameterBinder = new ParameterBinder();
             $arguments = $parameterBinder->resolveArguments($context);
-            $action = new Action([$instance, $context->ActionDescriptor->ActionName]);
 
-            return Task::run(function () use ($action, $context, $arguments) {
-                $actionResult = yield $action->invoke($arguments);
-                $result = yield $actionResult($context);
-                return $result;
-            });
+            if ((strtolower(strstr($context->ActionDescriptor->ActionName, "_", true)) == "async")) {
+                $action = new AsyncFunction([$instance, $context->ActionDescriptor->ActionName]);
+                $asyncResult = $action->invoke($arguments);
+                return $asyncResult->then(function ($previous) use ($context) {
+                    $actionResult = $previous->Result;
+                    $task = $actionResult($context);
+                    while (!$task->IsCompleted) {
+                        yield;
+                    }
+
+                    return $task->Result;
+                });
+            } else {
+                $action = new Action([$instance, $context->ActionDescriptor->ActionName]);
+                $actionResult = $action->invoke($arguments);
+                return $actionResult($context);
+            }
         });
 
         return $this->action->invoke([$actionContext]);

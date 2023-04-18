@@ -29,7 +29,7 @@ class Program
             $app->useRouter();
             // middlewares
             $app->useEndpoint(function ($routes) {
-                $routes->mapGet("/", fn ($context) => $context->Response->writeAsync("Hello World!"));
+                $routes->mapGet("/", fn () => "Hello World!");
             });
         });
     }

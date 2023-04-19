@@ -10,14 +10,19 @@
 namespace DevNet\Web\Exception;
 
 use DevNet\System\Async\Task;
+use DevNet\System\MethodTrait;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
 use DevNet\Web\View\ViewManager;
 use Throwable;
 
+use function Devnet\System\await;
+
 class ExceptionMiddleware implements IMiddleware
 {
+    use MethodTrait;
+
     private ?string $errorHandlingPath;
 
     public function __construct(?string $errorHandlingPath = null)
@@ -25,19 +30,10 @@ class ExceptionMiddleware implements IMiddleware
         $this->errorHandlingPath = $errorHandlingPath;
     }
 
-    public function __invoke(HttpContext $context, RequestDelegate $next): task
+    public function async_invoke(HttpContext $context, RequestDelegate $next): void
     {
-        if ($context->getAttribute('Error')) {
-            if ($this->errorHandlingPath) {
-                $context->Request->Uri->Path = $this->errorHandlingPath;
-                $context->Response->Body->truncate(0);
-                return $next($context);
-            }
-            return $this->handel($context);
-        }
-        
         try {
-            return $next($context);
+            await($next($context));
         } catch (Throwable $error) {
             if (PHP_SAPI == 'cli') {
                 throw new $error;
@@ -46,9 +42,11 @@ class ExceptionMiddleware implements IMiddleware
             if ($this->errorHandlingPath) {
                 $context->Request->Uri->Path = $this->errorHandlingPath;
                 $context->Response->Body->truncate(0);
-                return $next($context);
+                await($next($context));
+                return;
             }
-            return $this->handel($context);
+            $context->Response->Body->truncate(0);
+            await($this->handel($context));
         }
     }
 

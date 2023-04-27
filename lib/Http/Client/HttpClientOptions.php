@@ -24,5 +24,5 @@ class HttpClientOptions
     /**
      * the max times to wait in seconds.
      */
-    public float $Timeout = 0;
+    public ?float $Timeout = null;
 }

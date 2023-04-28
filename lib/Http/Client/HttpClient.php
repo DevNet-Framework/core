@@ -60,8 +60,12 @@ class HttpClient extends HttpClientHandler
         $task = $this->getAsync($url, $requestContent);
         return $task->then(function (Task $antecedent) {
             $response = $antecedent->Result;
-            if ($response->Body->isReadable()) {
-                return $response->Body->Read();
+            if ($response->Body->IsReadable) {
+                if ($response->Body->Length > 0) {
+                    return $response->Body->read($response->Body->Length);
+                }
+
+                return '';
             }
         });
     }

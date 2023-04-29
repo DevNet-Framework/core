@@ -16,6 +16,9 @@ use DevNet\Web\Http\HttpRequest;
 use DevNet\Web\Http\HttpResponse;
 use DevNet\System\Net\Socket;
 
+use function Devnet\System\async;
+use function Devnet\System\await;
+
 abstract class HttpClientHandler
 {
     protected HttpClientOptions $Options;
@@ -29,24 +32,23 @@ abstract class HttpClientHandler
 
     public function sendAsync(HttpRequest $request): Task
     {
-        $timeout = $this->Options->Timeout;
-
-        return Task::Run(function () use ($request, $timeout) {
-            $socket = new Socket($request->Uri->Host, $request->Uri->Port, false, $timeout);
+        $sendAsync = async(function ($request) {
+            $socket = new Socket($request->Uri->Host, $request->Uri->Port, $this->Options->Timeout);
             $socket->write(HttpRequestRawBuilder::build($request));
-
             $responseHeaderRaw = '';
             do {
-                $responseHeaderRaw .= yield $socket->readLine();
+                $responseHeaderRaw .= await($socket->readLineAsync());
             } while (strpos($responseHeaderRaw, "\r\n\r\n") === false);
 
             $response = HttpResponseParser::parse($responseHeaderRaw);
-            while (!$socket->eof()) {
-                $responseBodyChunk = yield $socket->read(1024 * 4);
+            while (!$socket->EndOfStream) {
+                $responseBodyChunk = await($socket->readAsync(1024 * 4));
                 $response->Body->write($responseBodyChunk);
             }
 
             return $response;
         });
+
+        return $sendAsync($request);
     }
 }

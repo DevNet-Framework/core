@@ -78,8 +78,7 @@ class WebHost
         }
 
         // Output the message body.
-        $size = $context->Response->Body->getSize();
-        if ($size > 0) {
+        if ($context->Response->Body->Length > 0) {
             $response->Body->seek(0);
             while (!$response->Body->EndOfStream) {
                 echo $response->Body->read(1024 * 4);

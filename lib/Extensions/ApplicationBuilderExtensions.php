@@ -17,11 +17,12 @@ use DevNet\Web\Router\EndpointMiddleware;
 use DevNet\Web\Router\RouteBuilder;
 use DevNet\Web\Router\RouterMiddleware;
 use DevNet\Web\Security\Authentication\AuthenticationMiddleware;
+use ReflectionClass;
 use Closure;
 
 class ApplicationBuilderExtensions
 {
-    public static function useMiddleware(IApplicationBuilder $app, string $middlewareName, array $args = []): void
+    public static function useMiddleware(IApplicationBuilder $app, string $middlewareName, ...$args): void
     {
         if (!class_exists($middlewareName)) {
             throw new ClassException("Could not find middleware class {$middlewareName}", 0, 1);
@@ -32,7 +33,10 @@ class ApplicationBuilderExtensions
             throw new ClassException("{$middlewareName} must implements IMiddleware inteface", 0, 1);
         }
 
-        $app->use(new $middlewareName($args));
+        $reflection = new ReflectionClass($middlewareName);
+        $middleware = $reflection->newInstanceArgs($args);
+
+        $app->use($middleware);
     }
 
     public static function UseExceptionHandler(IApplicationBuilder $app, ?string $errorHandlingPath = ''): void

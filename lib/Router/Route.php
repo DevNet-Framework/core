@@ -13,29 +13,21 @@ use DevNet\System\PropertyTrait;
 use DevNet\Web\Router\IRouter;
 use DevNet\Web\Router\Internal\RouteParser;
 use DevNet\Web\Router\Internal\RouteMatcher;
-use DevNet\Web\Router\Internal\RouteGenerator;
 
 class Route implements IRouter
 {
     use PropertyTrait;
 
-    private string $name;
     private string $verb;
     private string $pattern;
     private IRouteHandler $handler;
     private array $data;
 
-    public function __construct(string $name, string $verb, string $pattern, IRouteHandler $handler)
+    public function __construct(string $verb, string $pattern, IRouteHandler $handler)
     {
-        $this->name = $name;
         $this->verb = $verb;
         $this->pattern = $pattern;
         $this->handler = $handler;
-    }
-
-    public function get_Name(): string
-    {
-        return $this->name;
     }
 
     public function get_Verb(): string
@@ -58,7 +50,7 @@ class Route implements IRouter
         return $this->data;
     }
 
-    public function matchRoute(RouteContext $routeContext): bool
+    public function match(RouteContext $routeContext): bool
     {
         $urlPath = $routeContext->UrlPath;
         $urlPath = RouteParser::parseUrlPath($urlPath);
@@ -84,12 +76,5 @@ class Route implements IRouter
 
         $routeContext->RouteData->Routers['unmached'][] = $this;
         return false;
-    }
-
-    public function getRoutePath(RoutePathContext $routePathContext): string
-    {
-        $parameters = $routePathContext->getParameters();
-        $routePath = RouteGenerator::generatePath($this->pattern, $parameters);
-        return $routePath;
     }
 }

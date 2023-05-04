@@ -38,28 +38,16 @@ class RouteCollection implements IRouter
         return $this->routes;
     }
 
-    public function matchRoute(RouteContext $routeContext): bool
+    public function match(RouteContext $routeContext): bool
     {
         $routeContext->RouteData->Routers[] = $this;
 
         foreach ($this->routes as $route) {
-            if ($route->matchRoute($routeContext)) {
+            if ($route->match($routeContext)) {
                 return true;
             }
         }
 
         return false;
-    }
-
-    public function getRoutePath(RoutePathContext $routePathContext): string
-    {
-        $RouteName = $routePathContext->getRouteName();
-
-        if (isset($this->routes[$RouteName])) {
-            $route = $this->routes[$RouteName];
-            return $route->getRoutePath($routePathContext);
-        }
-
-        throw new \Exception("invalide route name");
     }
 }

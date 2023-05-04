@@ -14,10 +14,5 @@ interface IRouter
     /**
      * match the routes against the the HTTP Request, (url path and http method)
      */
-    public function matchRoute(RouteContext $routeContext): bool;
-
-    /**
-     * generate url from routeCollection based on the route name and parameters
-     */
-    public function getRoutePath(RoutePathContext $routePathContext): string;
+    public function match(RouteContext $routeContext): bool;
 }

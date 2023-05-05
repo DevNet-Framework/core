@@ -11,8 +11,12 @@ namespace DevNet\Web\Router;
 
 use DevNet\System\Async\Task;
 use DevNet\System\Dependency\Activator;
+use DevNet\System\Exceptions\ClassException;
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Action\ActionDelegate;
+use DevNet\Web\Action\ActionFilterDelegate;
+use DevNet\Web\Action\IActionFilter;
+use ReflectionClass;
 
 class RouteHandler implements IRouteHandler
 {
@@ -21,10 +25,9 @@ class RouteHandler implements IRouteHandler
     private $target;
     private array $filters;
 
-    public function __construct($target, array $filters)
+    public function __construct($target)
     {
         $this->target = $target;
-        $this->filters = $filters;
     }
 
     public function get_Target()
@@ -35,6 +38,26 @@ class RouteHandler implements IRouteHandler
     public function set_Target($value)
     {
         $this->target = $value;
+    }
+
+    public function addFilter(callable|string $filter, ...$args): static
+    {
+        if (is_string($filter)) {
+            if (!class_exists($filter)) {
+                throw new ClassException("Could not find the class {$filter}", 0, 1);
+            }
+
+            $reflection = new ReflectionClass($filter);
+            $filter = $reflection->newInstanceArgs($args);
+        }
+
+        if (is_object($filter instanceof IActionFilter)) {
+            $this->filters[] = $filter;
+            return $this;
+        }
+
+        $this->filters[] = new ActionFilterDelegate($filter);
+        return $this;
     }
 
     public function handle(RouteContext $routeContext): Task

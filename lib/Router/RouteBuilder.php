@@ -9,17 +9,13 @@
 
 namespace DevNet\Web\Router;
 
-use DevNet\Web\Action\ActionFilterDelegate;
-use DevNet\Web\Action\IActionFilter;
 use Closure;
 
 class RouteBuilder implements IRouteBuilder
 {
     private ?IRouteHandler $routeHandler;
     private string $prefix = '';
-    private string $name   = '';
     private array $routes  = [];
-    private array $filters = [];
 
     public function __construct(?IRouteHandler $routeHandler = null)
     {
@@ -33,90 +29,68 @@ class RouteBuilder implements IRouteBuilder
     {
         $this->prefix = trim($prefix, '/');
         $callback($this);
-
-        // reset the name for the next route
+        // reset the name for the routes outside the group.
         $this->prefix = '';
     }
 
     /**
-     * set route name
+     * mape the route.
      */
-    public function name(string $name): RouteBuilder
-    {
-        $this->name = $name;
-        return $this;
-    }
-
-    public function addFilter(callable $filter): RouteBuilder
-    {
-        if (is_object($filter instanceof IActionFilter)) {
-            $this->filters[] = $filter;
-            return $this;
-        }
-
-        $this->filters[] = new ActionFilterDelegate($filter);
-        return $this;
-    }
-
-    /**
-     * mape the route
-     */
-    public function mapRoute(string $pattern, string|callable $handler = null): void
+    public function map(string $pattern, callable|string $handler = null): void
     {
         if ($this->routeHandler && (!$handler instanceof Closure)) {
             $routeHandler = clone $this->routeHandler;
             $routeHandler->Target = $handler;
         } else {
-            $routeHandler = new RouteHandler($handler, $this->filters);
+            $routeHandler = new RouteHandler($handler);
         }
 
         $pattern = $this->prefix . '/' . trim($pattern, '/');
-        $this->routes[] = new Route($this->name, 'ANY', $pattern, $routeHandler);
-        $this->name = ''; // reset the name for the next route
-        $this->filters = []; // reset the filters for the next route
+        $this->routes[] = new Route('ANY', $pattern, $routeHandler);
     }
 
     /**
      * mape the route using Http Verb.
      */
-    public function mapVerb(string $verb, string $pattern, callable $handler): void
+    public function mapVerb(string $verb, string $pattern, callable $handler): IRouteHandler
     {
-        $pattern = $this->prefix . '/' . trim($pattern, '/');
-        $this->routes[] = new Route($this->name, $verb, $pattern, new RouteHandler($handler, $this->filters));
-        $this->name = ''; // reset the name for the next route
-        $this->filters = []; // reset the filters for the next route
+        $pattern        = $this->prefix . '/' . trim($pattern, '/');
+        $routeHandler   = new RouteHandler($handler);
+        $this->routes[] = new Route($verb, $pattern, $routeHandler);
+
+        return $routeHandler;
     }
 
     /**
      * mape the route using the Http Verb GET.
      */
-    public function mapGet(string $pattern, callable $handler): void
+    public function mapGet(string $pattern, callable $handler): IRouteHandler
     {
-        $this->mapVerb('GET', $pattern, $handler);
+        return $this->mapVerb('GET', $pattern, $handler);
     }
 
     /**
      * mape the route using the Http Verb POST.
      */
-    public function mapPost(string $pattern, callable $handler): void
+    public function mapPost(string $pattern, callable $handler): IRouteHandler
     {
-        $this->mapVerb('POST', $pattern, $handler);
+        return $this->mapVerb('POST', $pattern, $handler);
     }
 
     /**
      * mape the route using the Http Verb PUT.
      */
-    public function mapPut(string $pattern, callable $handler): void
+    public function mapPut(string $pattern, callable $handler): IRouteHandler
     {
-        $this->mapVerb('PUT', $pattern, $handler);
+        return $this->mapVerb('PUT', $pattern, $handler);
     }
 
     /**
      * mape the route using the Http Verb DELETE.
      */
-    public function mapDelete(string $pattern, callable $handler): void
+    public function mapDelete(string $pattern, callable $handler): IRouteHandler
     {
-        $this->mapVerb('DELETE', $pattern, $handler);
+        return $this->mapVerb('DELETE', $pattern, $handler);
     }
 
     /**

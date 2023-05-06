@@ -21,11 +21,7 @@ class RouteCollection implements IRouter
      */
     public function add(Route $route): void
     {
-        if ($route->Name != '') {
-            $this->routes[$route->Name] = $route;
-        } else {
-            $this->routes[] = $route;
-        }
+        $this->routes[] = $route;
     }
 
     public function getRoute(string $name): IRouter

@@ -30,7 +30,7 @@ class RouterMiddleware implements IMiddleware
         $router       = $routeBuilder->build();
         $routeContext = new RouteContext($context);
 
-        if ($router->matchRoute($routeContext)) {
+        if ($router->match($routeContext)) {
             $context->addAttribute('RouteContext', $routeContext);
             $context->addAttribute('RouteValues', $routeContext->RouteData->Values);
             $handler = $routeContext->Handler;

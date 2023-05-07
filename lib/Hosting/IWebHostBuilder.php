@@ -13,7 +13,5 @@ use Closure;
 
 interface IWebHostBuilder
 {
-    public function configureServices(Closure $configureServices);
-
     public function build(): WebHost;
 }

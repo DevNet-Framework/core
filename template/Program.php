@@ -11,9 +11,9 @@ class Program
     public static function main(array $args = [])
     {
         $builder = WebHost::createDefaultBuilder($args);
-        $configuration = $builder->ConfigBuilder->build();
+        $configuration = $builder->Configuration;
 
-        $builder->configureServices(function ($services) {
+        $builder->register(function ($services) {
             // services
         });
 

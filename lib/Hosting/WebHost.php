@@ -9,8 +9,10 @@
 
 namespace DevNet\Web\Hosting;
 
+use DevNet\System\Configuration\ConfigurationBuilder;
 use DevNet\System\Configuration\IConfiguration;
 use DevNet\System\Dependency\IServiceProvider;
+use DevNet\System\Dependency\ServiceCollection;
 use DevNet\System\Runtime\LauncherProperties;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Http\HttpContextFactory;
@@ -24,10 +26,10 @@ class WebHost
     private IserviceProvider $provider;
     private WebServer $server;
 
-    public function __construct(IApplicationBuilder $AppBuilder, IServiceProvider $provider)
+    public function __construct(IApplicationBuilder $AppBuilder)
     {
         $this->appBuilder = $AppBuilder;
-        $this->provider   = $provider;
+        $this->provider   = $AppBuilder->Provider;
         $this->server     = new WebServer();
     }
 
@@ -89,24 +91,25 @@ class WebHost
     public static function createDefaultBuilder(array $args = []): WebHostBuilder
     {
         $basePath = LauncherProperties::getRootDirectory();
-        $builder  = new WebHostBuilder();
+        $configuration = new ConfigurationBuilder();
+        $configuration->setBasePath($basePath);
+        $configuration->addJsonFile("/settings.json");
+        $configuration->addSetting('args', $args);
 
-        $builder->ConfigBuilder->setBasePath($basePath);
-        $builder->ConfigBuilder->addJsonFile("/settings.json");
-        $builder->ConfigBuilder->addSetting('args', $args);
+        $services = new ServiceCollection();
 
-        $builder->Services->addSingleton(IConfiguration::class, function () use ($builder): IConfiguration {
-            return $builder->ConfigBuilder->build();
+        $services->addSingleton(IConfiguration::class, function () use ($configuration): IConfiguration {
+            return $configuration->build();
         });
         
-        $builder->Services->addSingleton(HttpContext::class, function ($provider): HttpContext {
+        $services->addSingleton(HttpContext::class, function ($provider): HttpContext {
             $httpContext = HttpContextFactory::create();
             $httpContext->addAttribute('RequestServices', $provider);
             return $httpContext;
         });
 
-        $builder->Services->addSingleton(RouteBuilder::class, fn (): RouteBuilder => new RouteBuilder());
+        $services->addSingleton(RouteBuilder::class, fn (): RouteBuilder => new RouteBuilder());
 
-        return $builder;
+        return new WebHostBuilder($configuration->build(), $services);
     }
 }

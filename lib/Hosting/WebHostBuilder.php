@@ -11,9 +11,8 @@ namespace DevNet\Web\Hosting;
 
 use DevNet\System\Configuration\IConfiguration;
 use DevNet\System\Configuration\ConfigurationBuilder;
-use DevNet\System\Dependency\ServiceCollection;
+use DevNet\System\Dependency\IServiceCollection;
 use DevNet\System\Dependency\ServiceProvider;
-use DevNet\System\Exceptions\ClassException;
 use DevNet\System\Runtime\LauncherProperties;
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Http\HttpContext;
@@ -24,79 +23,53 @@ class WebHostBuilder implements IWebHostBuilder
 {
     use PropertyTrait;
 
-    private ConfigurationBuilder $configBuilder;
-    private ServiceCollection $services;
+    private IConfiguration $configuration;
+    private IServiceCollection $services;
     private ServiceProvider $provider;
-    private ApplicationBuilder $appBuilder;
 
-    public function __construct()
+    public function __construct(IConfiguration $configuration, IServiceCollection $services)
     {
-        $this->configBuilder = new ConfigurationBuilder();
-        $this->services      = new ServiceCollection();
-        $this->provider      = new ServiceProvider($this->services);
-        $this->appBuilder    = new ApplicationBuilder($this->provider);
+        $this->configuration = $configuration;
+        $this->services      = $services;
+        $this->provider      = new ServiceProvider($services);
     }
 
-    public function get_ConfigBuilder(): ConfigurationBuilder
+    public function get_Configuration(): IConfiguration
     {
-        return $this->configBuilder;
+        return $this->configuration;
     }
 
-    public function get_Services(): ServiceCollection
+    public function get_Services(): IServiceCollection
     {
         return $this->services;
     }
 
-    public function useConfiguration(Closure $configure)
+    public function configure(Closure $configure): void
     {
         $basePath = LauncherProperties::getRootDirectory();
-        $this->configBuilder->setBasePath($basePath);
-        $configure($this->configBuilder);
-
-        return $this;
+        $configuration = new ConfigurationBuilder();
+        $configuration->setBasePath($basePath);
+        $configure($configuration);
+        $this->configuration = $configuration->build();
     }
 
-    public function useSetting(string $key, string $value)
-    {
-        $this->configBuilder->addSetting($key, $value);
-        return $this;
-    }
-
-    public function configureServices(Closure $configureServices)
+    public function register(Closure $register): void
     {
         if (PHP_SAPI == 'cli') {
-            $configureServices($this->services);
-            return $this;
+            $register($this->services);
+            return;
         }
 
         try {
-            $configureServices($this->services);
+            $register($this->services);
         } catch (\Throwable $error) {
             $context = $this->provider->getService(HttpContext::class);
             $context->addAttribute('Error', $error);
         }
-
-        return $this;
-    }
-
-    public function useStartup(string $startup)
-    {
-        if (!class_exists($startup)) {
-            throw new ClassException("Cound nit find class: {$startup}", 0, 1);
-        }
-
-        $config = $this->configBuilder->build();
-        $this->services->addSingleton(IConfiguration::class, $config);
-
-        $startup = new $startup($config);
-        $startup->configureServices($this->services);
-        $startup->configure($this->appBuilder);
-
-        return $this;
     }
 
     public function build(): WebHost
     {
-        return new WebHost($this->appBuilder, $this->provider);
+        return new WebHost(new ApplicationBuilder($this->provider));
     }
 }

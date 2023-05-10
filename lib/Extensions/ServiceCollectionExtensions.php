@@ -108,13 +108,14 @@ class ServiceCollectionExtensions
         $services->addSingleton(DbConnection::class, fn (): DbConnection => new DbConnection($datasource, $username, $password));
     }
 
-    public static function addEntityContext(IServiceCollection $services, string $contextType, Closure $configuration = null)
+    public static function addEntityContext(IServiceCollection $services, Closure $configuration = null)
     {
         $options = new EntityOptions();
         if ($configuration) {
             $configuration($options);
         }
 
+        $contextType = $options->ContextType;
         $services->addSingleton($contextType, fn (): EntityContext => new $contextType($options));
         $services->addSingleton(EntityContext::class, fn ($provider): EntityContext => $provider->getService($contextType));
     }

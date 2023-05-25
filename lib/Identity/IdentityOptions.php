@@ -9,6 +9,8 @@
 
 namespace DevNet\Web\Identity;
 
+use DevNet\Entity\EntityContext;
+
 class IdentityOptions
 {
     public string $ContextType = EntityContext::class;

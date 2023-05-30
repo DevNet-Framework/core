@@ -38,10 +38,10 @@ class ControllerGenerator implements ICodeGenerator
         $this->content->appendLine();
         $this->content->appendLine("namespace {$namespace};");
         $this->content->appendLine();
-        $this->content->appendLine('use DevNet\Web\Controller\AbstractController;');
-        $this->content->appendLine('use DevNet\Web\Controller\IActionResult;');
+        $this->content->appendLine('use DevNet\Web\Action\ActionController;');
+        $this->content->appendLine('use DevNet\Web\Action\IActionResult;');
         $this->content->appendLine();
-        $this->content->appendLine("class {$name} extends AbstractController");
+        $this->content->appendLine("class {$name} extends ActionController");
         $this->content->appendLine('{');
         $this->content->appendLine('    public function index(): IActionResult');
         $this->content->appendLine('    {');

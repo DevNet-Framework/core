@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller;
+namespace DevNet\Web\Action;
 
 use DevNet\Web\Action\Binder\IModelBinder;
 use DevNet\Web\Action\Binder\IValueProvider;
@@ -17,7 +17,6 @@ use DevNet\Web\Action\Binder\Providers\FileValueProvider;
 use DevNet\Web\Action\Binder\Providers\FormValueProvider;
 use DevNet\Web\Action\Binder\Providers\QueryValueProvider;
 use DevNet\Web\Action\Binder\Providers\RouteValueProvider;
-use DevNet\Web\Action\IActionFilter;
 
 class ControllerOptions
 {

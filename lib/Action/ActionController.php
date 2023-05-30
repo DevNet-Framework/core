@@ -7,22 +7,23 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller;
+namespace DevNet\Web\Action;
 
 use DevNet\System\Exceptions\ArgumentException;
-use DevNet\Web\Action\ActionContext;
+use DevNet\System\MethodTrait;
 use DevNet\Web\Action\Results\ContentResult;
 use DevNet\Web\Action\Results\JsonResult;
 use DevNet\Web\Action\Results\RedirectResult;
 use DevNet\Web\Action\Results\StatusCodeResult;
 use DevNet\Web\Action\Results\ViewResult;
-use DevNet\Web\Controller\Features\HtmlHelper;
-use DevNet\Web\Controller\Features\UrlHelper;
+use DevNet\Web\Action\Features\HtmlHelper;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\View\ViewManager;
 
 abstract class ActionController
 {
+    use MethodTrait;
+
     public ActionContext $ActionContext;
     public HttpContext $HttpContext;
     public array $ViewData = [];
@@ -56,7 +57,6 @@ abstract class ActionController
         $view = $this->HttpContext->RequestServices->getService(ViewManager::class);
         $view->setData($this->ViewData);
         $view->inject('Html', new HtmlHelper($this->HttpContext));
-        $view->inject('Url', new UrlHelper($this->HttpContext));
         return new ViewResult($view($viewName, $model), 200);
     }
 

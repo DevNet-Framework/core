@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller\Features;
+namespace DevNet\Web\Action\Features;
 
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Security\Tokens\Csrf\IAntiforgery;

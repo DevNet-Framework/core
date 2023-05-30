@@ -7,12 +7,12 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Controller;
+namespace DevNet\Web\Action;
 
 use DevNet\System\Async\Task;
+use DevNet\System\Exceptions\ClassException;
+use DevNet\System\Exceptions\MethodException;
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Action\ActionDescriptor;
-use DevNet\Web\Action\ActionInvoker;
 use DevNet\Web\Action\Binder\Providers\RouteValueProvider;
 use DevNet\Web\Router\IRouteHandler;
 use DevNet\Web\Router\RouteContext;
@@ -61,12 +61,12 @@ class ControllerRouteHandler implements IRouteHandler
         }
 
         if (!class_exists($controllerName)) {
-            throw new ControllerException("Could not find controller {$controllerName}", 404);
+            throw new ClassException("Could not find controller {$controllerName}", 404);
         }
 
         if (!method_exists($controllerName, $actionName)) {
             if (!method_exists($controllerName, "async_" . $actionName)) {
-                throw new ControllerException("Call to undefined method {$controllerName}::{$actionName}()", 404);
+                throw new MethodException("Call to undefined method {$controllerName}::{$actionName}()", 404);
             } else {
                 $actionName = "async_" . $actionName;
             }

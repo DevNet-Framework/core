@@ -21,7 +21,7 @@ use DevNet\Web\Controller\Features\UrlHelper;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\View\ViewManager;
 
-abstract class AbstractController
+abstract class ActionController
 {
     public ActionContext $ActionContext;
     public HttpContext $HttpContext;

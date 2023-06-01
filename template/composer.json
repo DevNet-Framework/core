@@ -4,5 +4,13 @@
     "type": "project",
     "license": "MIT",
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "require": {
+        "devnet/installer": "1.0.*"
+    },
+    "config": {
+        "allow-plugins": {
+            "devnet/installer": true
+        }
+    }
 }

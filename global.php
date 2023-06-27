@@ -14,9 +14,8 @@ use DevNet\Web\Tools\WebTemplateProvider;
 
 /**
  * DevNet CLI package is not mandatory required by DevNet Web package,
- * so we need to check first if the DevNet CLI is installed before registering the templates.
+ * so we need to check first if the DevNet CLI is installed before registering the command.
  */
-if (class_exists(TemplateRegistry::class)) {
-    TemplateRegistry::register('web', WebTemplateProvider::class);
+if (class_exists(CodeGeneratorRegistry::class)) {
     CodeGeneratorRegistry::register('controller', ControllerGeneratorProvider::class);
 }

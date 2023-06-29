@@ -77,14 +77,10 @@ class IdentityContext
 
     public function onModelCreate(EntityModelBuilder $builder)
     {
-        $builder->entity(UserRole::class)
-            ->hasForeignKey('UserId', $this->userType)
-            ->hasForeignKey('RoleId', $this->roleType)
-            ->hasOne('User', $this->userType)
-            ->hasOne('Role', $this->roleType);
-
-        $builder->entity($this->userType)->hasMany('UserRole', UserRole::class);
-        $builder->entity($this->roleType)->hasMany('UserRole', UserRole::class);
+        $builder->entity(UserRole::class)->navigation('UserId')->hasForeignKey($this->userType);
+        $builder->entity(UserRole::class)->navigation('RoleId')->hasForeignKey($this->roleType);
+        $builder->entity($this->userType)->navigation('UserRole')->hasMany(UserRole::class);
+        $builder->entity($this->roleType)->navigation('UserRole')->hasMany(UserRole::class);
     }
 
     public function save(): int

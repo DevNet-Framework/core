@@ -9,13 +9,13 @@
 
 namespace DevNet\Web\Security\Authentication;
 
-use DevNet\System\PropertyTrait;
+use DevNet\System\Tweak;
 use DevNet\Web\Security\Claims\ClaimsIdentity;
 use Exception;
 
 class AuthenticationResult
 {
-    use PropertyTrait;
+    use Tweak;
     
     private ?ClaimsIdentity $identity = null;
     private ?Exception $error = null;

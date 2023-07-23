@@ -9,11 +9,11 @@
 
 namespace DevNet\Web\Identity;
 
-use DevNet\System\PropertyTrait;
+use DevNet\System\Tweak;
 
 class IdentityResult
 {
-    use PropertyTrait;
+    use Tweak;
 
     public const Succeeded  = 1;
     public const NoAction   = 0;

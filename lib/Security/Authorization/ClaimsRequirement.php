@@ -10,11 +10,11 @@
 namespace DevNet\Web\Security\Authorization;
 
 use DevNet\System\Async\Task;
-use DevNet\System\PropertyTrait;
+use DevNet\System\Tweak;
 
 class ClaimsRequirement implements IAuthorizationRequirement, IAuthorizationHandler
 {
-    use PropertyTrait;
+    use Tweak;
 
     protected string $claimType;
     protected array $allowedValues;

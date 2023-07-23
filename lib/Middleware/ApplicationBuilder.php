@@ -11,14 +11,12 @@ namespace DevNet\Web\Middleware;
 
 use DevNet\System\Async\Task;
 use DevNet\System\Dependency\IServiceProvider;
-use DevNet\System\MethodTrait;
-use DevNet\System\PropertyTrait;
+use DevNet\System\Tweak;
 use DevNet\Web\Http\HttpContext;
 
 class ApplicationBuilder implements IApplicationBuilder
 {
-    use MethodTrait;
-    use PropertyTrait;
+    use Tweak;
 
     private IserviceProvider $provider;
     private array $middlewares = [];

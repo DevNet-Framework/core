@@ -10,11 +10,11 @@
 namespace DevNet\Web\Http;
 
 use DevNet\System\IO\Stream;
-use DevNet\System\PropertyTrait;
+use DevNet\System\Tweak;
 
 abstract class HttpMessage
 {
-    use PropertyTrait;
+    use Tweak;
 
     protected string $protocol = 'HTTP/1.0';
     protected Headers $headers;

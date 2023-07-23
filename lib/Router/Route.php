@@ -9,14 +9,14 @@
 
 namespace DevNet\Web\Router;
 
-use DevNet\System\PropertyTrait;
+use DevNet\System\Tweak;
 use DevNet\Web\Router\IRouter;
 use DevNet\Web\Router\Internal\RouteParser;
 use DevNet\Web\Router\Internal\RouteMatcher;
 
 class Route implements IRouter
 {
-    use PropertyTrait;
+    use Tweak;
 
     private string $verb;
     private string $pattern;

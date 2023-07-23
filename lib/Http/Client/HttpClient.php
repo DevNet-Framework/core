@@ -11,13 +11,13 @@ namespace DevNet\Web\Http\Client;
 
 use DevNet\Web\Http\Headers;
 use DevNet\System\Async\Task;
-use DevNet\System\PropertyTrait;
+use DevNet\System\Tweak;
 use DevNet\Web\Http\HttpRequest;
 use DevNet\Web\Http\Uri;
 
 class HttpClient extends HttpClientHandler
 {
-    use PropertyTrait;
+    use Tweak;
 
     protected HttpClientOptions $options;
 

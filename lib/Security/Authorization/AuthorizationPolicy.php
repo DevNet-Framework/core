@@ -9,11 +9,11 @@
 
 namespace DevNet\Web\Security\Authorization;
 
-use DevNet\System\PropertyTrait;
+use DevNet\System\Tweak;
 
 class AuthorizationPolicy
 {
-    use PropertyTrait;
+    use Tweak;
 
     private string $name;
     private array $requirements;

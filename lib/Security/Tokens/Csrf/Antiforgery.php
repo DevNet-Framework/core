@@ -9,12 +9,12 @@
 
 namespace DevNet\Web\Security\Tokens\Csrf;
 
-use DevNet\System\PropertyTrait;
+use DevNet\System\Tweak;
 use DevNet\Web\Http\HttpContext;
 
 class Antiforgery implements IAntiforgery
 {
-    use PropertyTrait;
+    use Tweak;
 
     private AntiforgeryOptions $options;
     private AntiforgeryTokenGenerator $generator;

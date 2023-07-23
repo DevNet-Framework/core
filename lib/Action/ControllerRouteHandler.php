@@ -12,14 +12,14 @@ namespace DevNet\Web\Action;
 use DevNet\System\Async\Task;
 use DevNet\System\Exceptions\ClassException;
 use DevNet\System\Exceptions\MethodException;
-use DevNet\System\PropertyTrait;
+use DevNet\System\Tweak;
 use DevNet\Web\Action\Binder\Providers\RouteValueProvider;
 use DevNet\Web\Router\IRouteHandler;
 use DevNet\Web\Router\RouteContext;
 
 class ControllerRouteHandler implements IRouteHandler
 {
-    use PropertyTrait;
+    use Tweak;
 
     private mixed $target = null;
 

@@ -10,7 +10,7 @@
 namespace DevNet\Web\Action;
 
 use DevNet\System\Exceptions\ArgumentException;
-use DevNet\System\MethodTrait;
+use DevNet\System\Tweak;
 use DevNet\Web\Action\Results\ContentResult;
 use DevNet\Web\Action\Results\JsonResult;
 use DevNet\Web\Action\Results\RedirectResult;
@@ -22,7 +22,7 @@ use DevNet\Web\View\ViewManager;
 
 abstract class ActionController
 {
-    use MethodTrait;
+    use Tweak;
 
     public ActionContext $ActionContext;
     public HttpContext $HttpContext;

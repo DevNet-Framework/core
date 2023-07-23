@@ -9,12 +9,12 @@
 
 namespace DevNet\Web\Action\Binder;
 
-use DevNet\System\PropertyTrait;
+use DevNet\System\Tweak;
 use DevNet\Web\Action\ActionContext;
 
 class BindingContext
 {
-    use PropertyTrait;
+    use Tweak;
 
     private string $name;
     private ?string $type;

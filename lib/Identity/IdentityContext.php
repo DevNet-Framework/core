@@ -12,12 +12,12 @@ namespace DevNet\Web\Identity;
 use DevNet\Entity\EntityContext;
 use DevNet\Entity\EntityModelBuilder;
 use DevNet\Entity\EntitySet;
-use DevNet\System\PropertyTrait;
+use DevNet\System\Tweak;
 use DevNet\Web\Http\HttpContext;
 
 class IdentityContext
 {
-    use PropertyTrait;
+    use Tweak;
 
     private HttpContext $httpContext;
     private EntityContext $entityContext;

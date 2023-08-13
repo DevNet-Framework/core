@@ -27,7 +27,7 @@ class AuthenticationBuilder
         $this->httpContext = $httpContext;
     }
 
-    public function addCookie(Closure $configuration = null): void
+    public function addCookie(string $authenticationScheme = AuthenticationScheme::CookieSession, Closure $configuration = null): void
     {
         $options = new AuthenticationCookieOptions();
         $options->CookieName .= "-" . md5(LauncherProperties::getRootDirectory());
@@ -36,17 +36,17 @@ class AuthenticationBuilder
             $configuration($options);
         }
 
-        $this->authentications[$options->AuthenticationScheme] = new AuthenticationCookieHandler($options);
+        $this->authentications[$authenticationScheme] = new AuthenticationCookieHandler($options);
     }
 
-    public function addJwtBearer(Closure $configuration = null): void
+    public function addJwtBearer(string $authenticationScheme = AuthenticationScheme::JwtBearer, Closure $configuration = null): void
     {
         $options = new JwtBearerOptions();
         if ($configuration) {
             $configuration($options);
         }
 
-        $this->authentications[$options->AuthenticationScheme] = new JwtBearerHandler($this->httpContext, $options);
+        $this->authentications[$authenticationScheme] = new JwtBearerHandler($this->httpContext, $options);
     }
 
     public function build(): Authentication

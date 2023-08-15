@@ -11,8 +11,7 @@ namespace DevNet\Web\Security\Authentication\Cookies;
 
 class AuthenticationCookieOptions
 {
-    public string $AuthenticationScheme = AuthenticationCookieDefaults::AuthenticationScheme;
-    public string $CookieName           = AuthenticationCookieDefaults::CookieName;
-    public string $CookiePath           = AuthenticationCookieDefaults::CookiePath;
-    public int $TimeSpan                = AuthenticationCookieDefaults::TimeSpan;
+    public string $CookieName = "Identity";
+    public string $CookiePath = "/";
+    public int $ExpireTime    = 3600 * 24 * 7;
 }

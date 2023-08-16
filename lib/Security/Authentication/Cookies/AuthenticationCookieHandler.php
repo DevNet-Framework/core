@@ -44,10 +44,10 @@ class AuthenticationCookieHandler implements IAuthenticationHandler, IAuthentica
     {
         if ($this->session->isSet()) {
             $this->session->start();
-            $principal = $this->session->get(ClaimsIdentity::class);
+            $indentity = $this->session->get(ClaimsIdentity::class);
 
-            if ($principal) {
-                return new AuthenticationResult($principal);
+            if ($indentity) {
+                return new AuthenticationResult($indentity);
             }
         }
 
@@ -57,7 +57,7 @@ class AuthenticationCookieHandler implements IAuthenticationHandler, IAuthentica
     public function signIn(ClaimsIdentity $user, bool $isPersistent = false): void
     {
         if ($isPersistent) {
-            $this->session->setOptions(['cookie_lifetime' => $this->options->TimeSpan]);
+            $this->session->setOptions(['cookie_lifetime' => $this->options->ExpireTime]);
         } else {
             $this->session->setOptions(['cookie_lifetime' => 0]);
         }

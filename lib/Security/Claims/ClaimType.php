@@ -11,19 +11,14 @@ namespace DevNet\Web\Security\Claims;
 
 class ClaimType
 {
-    const Anonymous     = "Anonymous";
-    const Name          = "Name";
-    const BirthDate     = "BirthDate";
-    const Gender        = "Gender";
-    const SerialNumber  = "SerialNumber";
-    const PhoneNumber   = "PhoneNumber";
-    const MobileNumber  = "MobileNumber";
-    const Email         = "Email";
-    const Address       = "Address";
-    const City          = "City";
-    const State         = "State";
-    const Country       = "Country";
-    const PostalCode    = "PostalCode";
-    const Webpage       = "Webpage";
-    const Role          = "Role";
+    const Identifier    = "id";
+    const Name          = "name";
+    const Username      = "username";
+    const Role          = "role";
+    const BirthDate     = "birthdate";
+    const Gender        = "gender";
+    const PhoneNumber   = "phone_number";
+    const Email         = "email";
+    const Website       = "website";
+    const Address       = "address";
 }

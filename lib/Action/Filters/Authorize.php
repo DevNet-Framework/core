@@ -26,17 +26,17 @@ class Authorize implements IActionFilter
     private ?string $policy;
     private array $roles;
 
-    public function __construct(?string $policy = null, array $roles = [], ?string $scheme = null)
+    public function __construct(?string $scheme = null, ?string $policy = null, array $roles = [])
     {
+        $this->scheme = $scheme;
         $this->policy = $policy;
         $this->roles  = $roles;
-        $this->scheme = $scheme;
     }
 
     public function __invoke(ActionContext $context, ActionDelegate $next): Task
     {
-        // Allow anonymous Authorization
-        if (!$this->policy && !$this->roles) {
+        // Allow anonymous authorization
+        if ($this->scheme == "Anonymous") {
             return $next($context);
         }
 

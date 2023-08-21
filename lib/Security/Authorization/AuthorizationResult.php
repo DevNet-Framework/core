@@ -15,32 +15,27 @@ class AuthorizationResult
 {
     use Tweak;
 
-    private int $status;
-    private array $failedRequirements;
+    private bool $isSucceeded = true;
+    private array $failedRequirements = [];
 
-    public function __construct(int $status = 0, array $failedRequirements = [])
+    /**
+     * @param array<IAuthorizationRequirement> $failedRequirements
+     */
+    public function __construct(array $failedRequirements = [])
     {
-        $this->status = $status;
-        $this->failedRequirements = $failedRequirements;
+        if ($failedRequirements) {
+            $this->succeeded = false;
+            $this->failedRequirements = $failedRequirements;
+        }
     }
 
-    public function get_Status(): string
+    public function get_IsSucceeded(): bool
     {
-        return $this->status;
+        return $this->isSucceeded;
     }
 
     public function get_FailedRequirements(): array
     {
         return $this->failedRequirements;
-    }
-
-    public function isSucceeded(): bool
-    {
-        return $this->status == 1 ? true : false;
-    }
-
-    public function isFailed(): bool
-    {
-        return $this->status == -1 ? true : false;
     }
 }

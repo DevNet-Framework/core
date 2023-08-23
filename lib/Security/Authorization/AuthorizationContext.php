@@ -16,20 +16,31 @@ class AuthorizationContext
 {
     use Tweak;
 
-    private array $requirements;
-    private ?ClaimsIdentity $user;
-    private bool $failCalled    = false;
-    private bool $successCalled = false;
+    private ?ClaimsIdentity $user = null;
+    private array $requirements = [];
+    private array $pendingRequirements = [];
+    private array $failedRequirements = [];
 
     public function __construct(array $requirements = [], ?ClaimsIdentity $user = null)
     {
         $this->user = $user;
+        $this->requirements = $requirements;
         foreach ($requirements as $requirement) {
-            $this->requirements[spl_object_id($requirement)] = $requirement;
+            $this->pendingRequirements[spl_object_id($requirement)] = $requirement;
         }
     }
 
     public function get_Requirements(): array
+    {
+        return $this->requirements;
+    }
+
+    public function get_FailedRequirements(): array
+    {
+        return $this->requirements;
+    }
+
+    public function get_PendingRequirements(): array
     {
         return $this->requirements;
     }
@@ -39,29 +50,34 @@ class AuthorizationContext
         return $this->user;
     }
 
-    public function fail()
+    public function fail(?IAuthorizationRequirement $requirement = null): void
     {
-        $this->failCalled = true;
+        if (isset($this->pendingRequirements[spl_object_id($requirement)])) {
+            unset($this->pendingRequirements[spl_object_id($requirement)]);
+            $this->failedRequirements[] = $requirement;
+        }
     }
 
-    public function success(IAuthorizationRequirement $requirement)
+    public function succeed(IAuthorizationRequirement $requirement): void
     {
-        $this->successCalled = true;
-        if (isset($this->requirements[spl_object_id($requirement)])) {
-            unset($this->requirements[spl_object_id($requirement)]);
+        if (isset($this->pendingRequirements[spl_object_id($requirement)])) {
+            unset($this->pendingRequirements[spl_object_id($requirement)]);
         }
     }
 
     public function getResult(): AuthorizationResult
     {
-        $status = 0;
-
-        if (!$this->failCalled && $this->successCalled && !$this->requirements) {
-            $status = 1;
-        } else if ($this->failCalled) {
-            $status = -1;
+        $failedRequirements = $this->failedRequirements;
+        foreach ($this->pendingRequirements as $requirement) {
+            $failedRequirements[] = $requirement;
+        }
+        
+        // Failure result
+        if ($failedRequirements) {
+            return new AuthorizationResult($failedRequirements);
         }
 
-        return new AuthorizationResult($status, $this->requirements);
+        // Succeeded result.
+        return new AuthorizationResult();
     }
 }

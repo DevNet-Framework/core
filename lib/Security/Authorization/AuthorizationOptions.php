@@ -17,6 +17,11 @@ class AuthorizationOptions implements IEnumerable
 {
     private array $policies = [];
 
+    public function __construct()
+    {
+        $this->policies["Authentication"] = new AuthorizationPolicy("Authentication", [new AuthenticationRequirement()]);
+    }
+
     public function addPolicy(string $name, Closure $configurePolicy)
     {
         $builder = new AuthorizationPolicyBuilder($name);

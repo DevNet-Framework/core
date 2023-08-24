@@ -17,16 +17,12 @@ class AuthorizationPolicyBuilder
     public function __construct(string $name)
     {
         $this->name = $name;
+        $this->requirements[] = new AuthenticationRequirement();
     }
 
     public function addRequirement(IAuthorizationRequirement $requirement): void
     {
         $this->requirements[] = $requirement;
-    }
-
-    public function requireAuthentication(): void
-    {
-        $this->requirements[] = new AuthenticationRequirement();
     }
 
     public function requireClaim(string $claimType, array $allowedValues = []): void

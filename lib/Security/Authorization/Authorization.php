@@ -20,8 +20,12 @@ class Authorization
         $this->options = $options;
     }
 
-    public function authorize(ClaimsIdentity $user, string $policyName): AuthorizationResult
+    public function authorize(ClaimsIdentity $user, ?string $policyName = null): AuthorizationResult
     {
+        if ($policyName == null) {
+            $policyName = "Authentication";
+        }
+
         $policy = $this->options->getPolicy($policyName);
 
         if (!$policy) {

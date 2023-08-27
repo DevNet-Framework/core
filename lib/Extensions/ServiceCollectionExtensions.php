@@ -94,8 +94,6 @@ class ServiceCollectionExtensions
     public static function addAuthorization(IServiceCollection $services, Closure $configuration = null)
     {
         $options = new AuthorizationOptions();
-        $options->addPolicy("Authentication", fn ($policy) => $policy->requireAuthentication());
-
         if ($configuration) {
             $configuration($options);
         }

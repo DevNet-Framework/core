@@ -9,8 +9,8 @@ This dependency is a part of **DevNet Framework**, which includes the following 
 - Template engine
 - Error Handler
 - Antiforgery
-- Authentification
-- Authorisation
+- Authentication
+- Authorization
 - Identity Manager
 
 ## Requirements
@@ -19,7 +19,7 @@ This dependency is a part of **DevNet Framework**, which includes the following 
 
 ## Installation
 
-You can install DevNet Web as a third-party library with any framework or project, using composer by running the following command in your terminal:
+You can install DevNet Web to your project or integrate it as a third-party library in your existing framework, using composer by running the following command in your terminal:
 ```
 composer require devnet/web
 ```

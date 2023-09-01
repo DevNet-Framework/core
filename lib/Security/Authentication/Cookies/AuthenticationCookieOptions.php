@@ -9,9 +9,21 @@
 
 namespace DevNet\Web\Security\Authentication\Cookies;
 
+use DevNet\System\TimeSpan;
+
 class AuthenticationCookieOptions
 {
-    public string $CookieName = "Identity";
-    public string $CookiePath = "/";
-    public int $ExpireTime    = 3600 * 24 * 7;
+    public string $CookieName    = "Identity";
+    public string $CookiePath    = "/";
+    public ?TimeSpan $ExpireTime = null;
+
+    public function __construct(string $cookieName = 'Identity', string $cookiePath = '/', ?TimeSpan $expireTime = null)
+    {
+        $this->CookieName = $cookieName;
+        $this->CookiePath = $cookiePath;
+
+        if (!$expireTime) {
+            $this->ExpireTime = TimeSpan::fromDays(7);
+        }
+    }
 }

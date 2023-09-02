@@ -9,6 +9,7 @@
 
 namespace DevNet\Web\Security\Authentication\Cookies;
 
+use DevNet\System\TimeSpan;
 use DevNet\System\Tweak;
 use DevNet\Web\Http\Session;
 use DevNet\Web\Security\Authentication\AuthenticationResult;
@@ -28,6 +29,10 @@ class AuthenticationCookieHandler implements IAuthenticationHandler, IAuthentica
     {
         $this->options = $options;
         $this->session = new Session($options->CookieName);
+
+        if (!$this->options->ExpireTime) {
+            $this->options->ExpireTime = new TimeSpan();
+        }
     }
 
     public function get_Options(): AuthenticationCookieOptions
@@ -57,7 +62,7 @@ class AuthenticationCookieHandler implements IAuthenticationHandler, IAuthentica
     public function signIn(ClaimsIdentity $user, bool $isPersistent = false): void
     {
         if ($isPersistent) {
-            $this->session->setOptions(['cookie_lifetime' => $this->options->ExpireTime]);
+            $this->session->setOptions(['cookie_lifetime' => (int) $this->options->ExpireTime->TotalSeconds]);
         } else {
             $this->session->setOptions(['cookie_lifetime' => 0]);
         }

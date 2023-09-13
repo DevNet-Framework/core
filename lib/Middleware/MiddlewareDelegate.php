@@ -9,13 +9,13 @@
 
 namespace DevNet\Web\Middleware;
 
+use DevNet\System\Delegate;
 use DevNet\Web\Http\HttpContext;
-use DevNet\System\Event\Delegate;
 
 class MiddlewareDelegate extends Delegate
 {
     /** RequestDelegate signature */
-    public function delegate(HttpContext $context, RequestDelegate $next)
+    public function middlewareDelegate(HttpContext $context, RequestDelegate $next)
     {
     }
 }

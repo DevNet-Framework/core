@@ -9,12 +9,12 @@
 
 namespace DevNet\Web\Action;
 
-use DevNet\System\Event\Delegate;
+use DevNet\System\Delegate;
 
 class ActionDelegate extends Delegate
 {
     /** ActionDelegate signature */
-    public function delegate(ActionContext $context)
+    public function actionDelegate(ActionContext $context)
     {
     }
 }

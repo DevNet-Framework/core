@@ -14,14 +14,14 @@ use DevNet\System\Configuration\ConfigurationBuilder;
 use DevNet\System\Dependency\IServiceCollection;
 use DevNet\System\Dependency\ServiceProvider;
 use DevNet\System\Runtime\LauncherProperties;
-use DevNet\System\Tweak;
+use DevNet\System\PropertyTrait;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\ApplicationBuilder;
 use Closure;
 
 class WebHostBuilder implements IWebHostBuilder
 {
-    use Tweak;
+    use PropertyTrait;
 
     private IConfiguration $configuration;
     private IServiceCollection $services;

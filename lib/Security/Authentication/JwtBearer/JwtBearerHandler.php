@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Security\Authentication\JwtBearer;
 
-use DevNet\System\Tweak;
+use DevNet\System\PropertyTrait;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Security\Authentication\AuthenticationResult;
 use DevNet\Web\Security\Authentication\IAuthenticationHandler;
@@ -18,7 +18,7 @@ use Exception;
 
 class JwtBearerHandler implements IAuthenticationHandler
 {
-    use Tweak;
+    use PropertyTrait;
 
     private HttpContext $HttpContext;
     private JwtBearerOptions $options;

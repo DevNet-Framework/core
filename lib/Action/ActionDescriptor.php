@@ -9,13 +9,13 @@
 
 namespace DevNet\Web\Action;
 
-use DevNet\System\Tweak;
+use DevNet\System\PropertyTrait;
 use ReflectionClass;
 use ReflectionMethod;
 
 class ActionDescriptor
 {
-    use Tweak;
+    use PropertyTrait;
 
     private ReflectionClass $classInfo;
     private ReflectionMethod $methodInfo;

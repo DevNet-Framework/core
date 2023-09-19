@@ -12,7 +12,7 @@ namespace DevNet\Web\Router;
 use DevNet\System\Async\Task;
 use DevNet\System\Dependency\Activator;
 use DevNet\System\Exceptions\ClassException;
-use DevNet\System\Tweak;
+use DevNet\System\PropertyTrait;
 use DevNet\Web\Action\ActionDelegate;
 use DevNet\Web\Action\ActionFilterDelegate;
 use DevNet\Web\Action\IActionFilter;
@@ -20,7 +20,7 @@ use ReflectionClass;
 
 class RouteHandler implements IRouteHandler
 {
-    use Tweak;
+    use PropertyTrait;
 
     private $target;
     private array $filters;

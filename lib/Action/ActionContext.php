@@ -9,13 +9,13 @@
 
 namespace DevNet\Web\Action;
 
-use DevNet\System\Tweak;
+use DevNet\System\PropertyTrait;
 use DevNet\Web\Action\Binder\IValueProvider;
 use DevNet\Web\Http\HttpContext;
 
 class ActionContext
 {
-    use Tweak;
+    use PropertyTrait;
 
     private ActionDescriptor $actionDescriptor;
     private HttpContext $httpContext;

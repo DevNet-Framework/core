@@ -9,11 +9,11 @@
 
 namespace DevNet\Web\Security\Authorization;
 
-use DevNet\System\Tweak;
+use DevNet\System\PropertyTrait;
 
 class AuthorizationResult
 {
-    use Tweak;
+    use PropertyTrait;
 
     private bool $isSucceeded = true;
     private array $failedRequirements = [];

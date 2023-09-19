@@ -9,11 +9,11 @@
 
 namespace DevNet\Web\Http;
 
-use DevNet\System\Tweak;
+use DevNet\System\PropertyTrait;
 
 class Form
 {
-    use Tweak;
+    use PropertyTrait;
 
     private array $fields;
     private FileCollection $files;

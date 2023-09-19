@@ -9,12 +9,12 @@
 
 namespace DevNet\Web\Router;
 
-use DevNet\System\Tweak;
+use DevNet\System\PropertyTrait;
 use DevNet\Web\Http\HttpContext;
 
 class RouteContext
 {
-    use Tweak;
+    use PropertyTrait;
 
     private HttpContext $httpContext;
     private RouteData $routeData;

@@ -52,7 +52,7 @@ class ClaimsRequirement implements IAuthorizationRequirement, IAuthorizationHand
             }
 
             if ($found) {
-                $context->success($this);
+                $context->succeed($this);
             }
         }
 

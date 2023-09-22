@@ -18,21 +18,21 @@ class Route implements IRouter
 {
     use PropertyTrait;
 
-    private string $verb;
-    private string $pattern;
     private IRouteHandler $handler;
-    private array $data;
+    private string $pattern;
+    private ?string $verb;
+    private array $data = [];
 
-    public function __construct(string $verb, string $pattern, IRouteHandler $handler)
+    public function __construct(IRouteHandler $handler, string $pattern, ?string $verb = null)
     {
-        $this->verb = $verb;
-        $this->pattern = $pattern;
         $this->handler = $handler;
+        $this->pattern = $pattern;
+        $this->verb = $verb;
     }
 
-    public function get_Verb(): string
+    public function get_Handler(): IRouteHandler
     {
-        return $this->verb;
+        return $this->handler;
     }
 
     public function get_Pattern(): string
@@ -40,9 +40,9 @@ class Route implements IRouter
         return $this->pattern;
     }
 
-    public function get_Handler(): IRouteHandler
+    public function get_Verb(): string
     {
-        return $this->handler;
+        return $this->verb;
     }
 
     public function get_Data(): array

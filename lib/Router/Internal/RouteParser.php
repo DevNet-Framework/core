@@ -11,7 +11,7 @@ namespace DevNet\Web\Router\Internal;
 
 class RouteParser
 {
-    static function parseUrlPath(string $urlPath)
+    static function parseUrlPath(string $urlPath): string
     {
         // remove doublicated slshes
         $urlPath = preg_replace("%\/+%", '/', $urlPath);
@@ -24,7 +24,7 @@ class RouteParser
         return $urlPath;
     }
 
-    static function parseUrlPattern($urlPattern)
+    static function parseUrlPattern(string $urlPattern): string
     {
         $urlPattern = preg_replace('%{([\w]+)}%', '(?<$1>[\w]+)', $urlPattern);
         $urlPattern = preg_replace('%{([\w]+)\?}%', '(?<$1>[\w]*)', $urlPattern);
@@ -34,7 +34,7 @@ class RouteParser
         return $urlPattern;
     }
 
-    static function parsePlaceholders($matches)
+    static function parsePlaceholders(array $matches): array
     {
         $routeData = [];
 

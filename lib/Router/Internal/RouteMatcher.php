@@ -15,7 +15,7 @@ namespace DevNet\Web\Router\Internal;
  */
 class RouteMatcher
 {
-    static function matchUrl($pattern, $urlPath): ?array
+    static function matchUrl(string $pattern, string $urlPath): ?array
     {
         $segments = substr_count($pattern, '/') - substr_count($urlPath, '/');
         if ($segments >= 0) {
@@ -28,12 +28,12 @@ class RouteMatcher
         return null;
     }
 
-    static function matchMethod($httpMethod, $verb): bool
+    static function matchMethod(string $httpMethod, ?string $verb): bool
     {
         $httpMethod = strtoupper($httpMethod);
         $verb = strtoupper($verb);
 
-        if ($verb == $httpMethod || $verb == 'ANY' || $verb == '') {
+        if (!$verb || $verb == $httpMethod) {
             return true;
         }
 

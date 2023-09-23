@@ -9,34 +9,44 @@
 
 namespace DevNet\Web\Router;
 
+use DevNet\System\MethodTrait;
+use DevNet\System\PropertyTrait;
 use Closure;
 
 class RouteBuilder implements IRouteBuilder
 {
-    private ?IRouteHandler $routeHandler;
+    use MethodTrait;
+    use PropertyTrait;
+
     private string $prefix = '';
-    private array $routes  = [];
+    private array $routes = [];
+    private ?IRouteHandler $routeHandler;
 
     public function __construct(?IRouteHandler $routeHandler = null)
     {
-        $this->routeHandler  = $routeHandler;
+        $this->routeHandler = $routeHandler;
+    }
+
+    function get_Routes(): array
+    {
+        return $this->routes;
     }
 
     /**
      * set the route prefix.
      */
-    public function group(string $prefix, callable $callback): void
+    public function mapGroup(string $prefix, callable $callback): void
     {
         $this->prefix = trim($prefix, '/');
         $callback($this);
-        // reset the name for the routes outside the group.
+        // clear the prefix for the routes outside the group.
         $this->prefix = '';
     }
 
     /**
      * mape the route.
      */
-    public function map(string $pattern, callable|string $handler = null): void
+    public function mapRoute(string $pattern, string|callable|array $handler = null): void
     {
         if ($this->routeHandler && (!$handler instanceof Closure)) {
             $routeHandler = clone $this->routeHandler;
@@ -46,17 +56,17 @@ class RouteBuilder implements IRouteBuilder
         }
 
         $pattern = $this->prefix . '/' . trim($pattern, '/');
-        $this->routes[] = new Route('ANY', $pattern, $routeHandler);
+        $this->routes[] = new Route($routeHandler, $pattern);
     }
 
     /**
      * mape the route using Http Verb.
      */
-    public function mapVerb(string $verb, string $pattern, callable $handler): IRouteHandler
+    public function mapVerb(string $verb, string $pattern, string|callable|array $handler): IRouteHandler
     {
         $pattern        = $this->prefix . '/' . trim($pattern, '/');
         $routeHandler   = new RouteHandler($handler);
-        $this->routes[] = new Route($verb, $pattern, $routeHandler);
+        $this->routes[] = new Route($routeHandler, $pattern, $verb);
 
         return $routeHandler;
     }
@@ -64,7 +74,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route using the Http Verb GET.
      */
-    public function mapGet(string $pattern, callable $handler): IRouteHandler
+    public function mapGet(string $pattern, string|callable|array $handler): IRouteHandler
     {
         return $this->mapVerb('GET', $pattern, $handler);
     }
@@ -72,7 +82,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route using the Http Verb POST.
      */
-    public function mapPost(string $pattern, callable $handler): IRouteHandler
+    public function mapPost(string $pattern, string|callable|array $handler): IRouteHandler
     {
         return $this->mapVerb('POST', $pattern, $handler);
     }
@@ -80,7 +90,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route using the Http Verb PUT.
      */
-    public function mapPut(string $pattern, callable $handler): IRouteHandler
+    public function mapPut(string $pattern, string|callable|array $handler): IRouteHandler
     {
         return $this->mapVerb('PUT', $pattern, $handler);
     }
@@ -88,7 +98,7 @@ class RouteBuilder implements IRouteBuilder
     /**
      * mape the route using the Http Verb DELETE.
      */
-    public function mapDelete(string $pattern, callable $handler): IRouteHandler
+    public function mapDelete(string $pattern, string|callable|array $handler): IRouteHandler
     {
         return $this->mapVerb('DELETE', $pattern, $handler);
     }

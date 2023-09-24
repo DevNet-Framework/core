@@ -7,13 +7,12 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Router;
+namespace DevNet\Web\Routing;
 
 /**
- * Collection of informations about the result of the routing proccess.
+ * build a Router instance based on routes maping.
  */
-class RouteData
+interface IRouteBuilder
 {
-    public array $Routers = [];
-    public array $Values = [];
+    public function build(): IRouter;
 }

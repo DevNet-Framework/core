@@ -10,7 +10,7 @@
 namespace DevNet\Web\Action\Features;
 
 use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Router\RoutePathContext;
+use DevNet\Web\Routing\RoutePathContext;
 
 class UrlHelper
 {

@@ -7,12 +7,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Router;
+namespace DevNet\Web\Routing;
 
-interface IRouter
+use Exception;
+
+class RouterException extends Exception
 {
-    /**
-     * match the routes against the the HTTP Request, (url path and http method)
-     */
-    public function match(RouteContext $routeContext): bool;
 }

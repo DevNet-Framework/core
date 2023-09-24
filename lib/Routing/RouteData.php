@@ -7,10 +7,13 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Router;
+namespace DevNet\Web\Routing;
 
-use Exception;
-
-class RouterException extends Exception
+/**
+ * Collection of informations about the result of the routing proccess.
+ */
+class RouteData
 {
+    public array $Routers = [];
+    public array $Values = [];
 }

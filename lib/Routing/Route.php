@@ -7,12 +7,12 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Router;
+namespace DevNet\Web\Routing;
 
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Router\IRouter;
-use DevNet\Web\Router\Internal\RouteParser;
-use DevNet\Web\Router\Internal\RouteMatcher;
+use DevNet\Web\Routing\IRouter;
+use DevNet\Web\Routing\Internal\RouteParser;
+use DevNet\Web\Routing\Internal\RouteMatcher;
 
 class Route implements IRouter
 {

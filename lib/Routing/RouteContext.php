@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Router;
+namespace DevNet\Web\Routing;
 
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Http\HttpContext;

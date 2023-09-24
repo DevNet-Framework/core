@@ -14,7 +14,7 @@ use DevNet\Entity\EntityOptions;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Http\Client\HttpClient;
 use DevNet\Web\Http\Client\HttpClientOptions;
-use DevNet\Web\Router\RouteBuilder;
+use DevNet\Web\Routing\RouteBuilder;
 use DevNet\Web\View\ViewManager;
 use DevNet\Web\Action\ControllerOptions;
 use DevNet\Web\Action\ControllerRouteHandler;

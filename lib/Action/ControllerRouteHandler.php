@@ -14,8 +14,8 @@ use DevNet\System\Exceptions\ClassException;
 use DevNet\System\Exceptions\MethodException;
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Action\Binder\Providers\RouteValueProvider;
-use DevNet\Web\Router\IRouteHandler;
-use DevNet\Web\Router\RouteContext;
+use DevNet\Web\Routing\IRouteHandler;
+use DevNet\Web\Routing\RouteContext;
 
 class ControllerRouteHandler implements IRouteHandler
 {

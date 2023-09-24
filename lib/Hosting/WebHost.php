@@ -17,7 +17,7 @@ use DevNet\System\Runtime\LauncherProperties;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Http\HttpContextFactory;
 use DevNet\Web\Middleware\IApplicationBuilder;
-use DevNet\Web\Router\RouteBuilder;
+use DevNet\Web\Routing\RouteBuilder;
 use Closure;
 
 class WebHost

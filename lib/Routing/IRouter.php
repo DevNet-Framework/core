@@ -7,12 +7,12 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Router;
+namespace DevNet\Web\Routing;
 
-/**
- * build a Router instance based on routes maping.
- */
-interface IRouteBuilder
+interface IRouter
 {
-    public function build(): IRouter;
+    /**
+     * match the routes against the the HTTP Request, (url path and http method)
+     */
+    public function match(RouteContext $routeContext): bool;
 }

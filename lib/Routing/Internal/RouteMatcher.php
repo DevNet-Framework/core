@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Router\Internal;
+namespace DevNet\Web\Routing\Internal;
 
 /**
  * This is an internal API that supports the Router system infrastructure, It may be changed or removed without notice in

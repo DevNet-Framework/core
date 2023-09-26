@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Routing;
+namespace DevNet\Web\Endpoint;
 
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;

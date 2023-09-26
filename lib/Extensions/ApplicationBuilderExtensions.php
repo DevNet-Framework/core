@@ -10,10 +10,10 @@
 namespace DevNet\Web\Extensions;
 
 use DevNet\System\Exceptions\ClassException;
+use DevNet\Web\Endpoint\EndpointMiddleware;
 use DevNet\Web\Exception\ExceptionMiddleware;
 use DevNet\Web\Middleware\IApplicationBuilder;
 use DevNet\Web\Middleware\IMiddleware;
-use DevNet\Web\Routing\EndpointMiddleware;
 use DevNet\Web\Routing\RouteBuilder;
 use DevNet\Web\Routing\RouterMiddleware;
 use DevNet\Web\Security\Authentication\AuthenticationMiddleware;

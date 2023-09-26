@@ -13,9 +13,9 @@ use DevNet\System\Async\Task;
 use DevNet\System\Dependency\Activator;
 use DevNet\System\Exceptions\ClassException;
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Action\ActionDelegate;
-use DevNet\Web\Action\ActionFilterDelegate;
-use DevNet\Web\Action\IActionFilter;
+use DevNet\Web\Endpoint\ActionDelegate;
+use DevNet\Web\Endpoint\ActionFilterDelegate;
+use DevNet\Web\Endpoint\IActionFilter;
 use ReflectionClass;
 
 class RouteHandler implements IRouteHandler

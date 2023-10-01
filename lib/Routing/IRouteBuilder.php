@@ -10,9 +10,22 @@
 namespace DevNet\Web\Routing;
 
 /**
- * build a Router instance based on routes maping.
+ * Specifies a collection of routes for an application.
  */
 interface IRouteBuilder
 {
+    /**
+     * Gets the routes added to the builder.
+     */
+    function get_Routes(): array;
+
+    /**
+     * Adds a route that only matches HTTP requests for the given verb, template, and handler
+     */
+    public function map(string $pattern, string|callable|array $handler, ?string $verb = null): IRouteHandler;
+
+    /**
+     * Builds IRouter from the routes specified in the Routes property.
+     */
     public function build(): IRouter;
 }

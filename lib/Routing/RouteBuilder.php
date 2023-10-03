@@ -33,6 +33,18 @@ class RouteBuilder implements IRouteBuilder
     }
 
     /**
+     * mape the route.
+     */
+    public function map(string $pattern, string|callable|array $handler, ?string $verb = null): IRouteHandler
+    {
+        $pattern        = $this->prefix . '/' . trim($pattern, '/');
+        $routeHandler   = new RouteHandler($handler);
+        $this->routes[] = new Route($routeHandler, $pattern, $verb);
+
+        return $routeHandler;
+    }
+
+    /**
      * set the route prefix.
      */
     public function mapGroup(string $prefix, callable $callback): void
@@ -60,6 +72,38 @@ class RouteBuilder implements IRouteBuilder
     }
 
     /**
+     * mape the route using the Http Verb GET.
+     */
+    public function mapGet(string $pattern, string|callable|array $handler): IRouteHandler
+    {
+        return $this->map($pattern, $handler, 'GET');
+    }
+
+    /**
+     * mape the route using the Http Verb POST.
+     */
+    public function mapPost(string $pattern, string|callable|array $handler): IRouteHandler
+    {
+        return $this->map($pattern, $handler, 'POST');
+    }
+
+    /**
+     * mape the route using the Http Verb PUT.
+     */
+    public function mapPut(string $pattern, string|callable|array $handler): IRouteHandler
+    {
+        return $this->map($pattern, $handler, 'PUT');
+    }
+
+    /**
+     * mape the route using the Http Verb DELETE.
+     */
+    public function mapDelete(string $pattern, string|callable|array $handler): IRouteHandler
+    {
+        return $this->map($pattern, $handler, 'DELETE');
+    }
+
+    /**
      * mape the route using Http Verb.
      */
     public function mapVerb(string $verb, string $pattern, string|callable|array $handler): IRouteHandler
@@ -69,38 +113,6 @@ class RouteBuilder implements IRouteBuilder
         $this->routes[] = new Route($routeHandler, $pattern, $verb);
 
         return $routeHandler;
-    }
-
-    /**
-     * mape the route using the Http Verb GET.
-     */
-    public function mapGet(string $pattern, string|callable|array $handler): IRouteHandler
-    {
-        return $this->mapVerb('GET', $pattern, $handler);
-    }
-
-    /**
-     * mape the route using the Http Verb POST.
-     */
-    public function mapPost(string $pattern, string|callable|array $handler): IRouteHandler
-    {
-        return $this->mapVerb('POST', $pattern, $handler);
-    }
-
-    /**
-     * mape the route using the Http Verb PUT.
-     */
-    public function mapPut(string $pattern, string|callable|array $handler): IRouteHandler
-    {
-        return $this->mapVerb('PUT', $pattern, $handler);
-    }
-
-    /**
-     * mape the route using the Http Verb DELETE.
-     */
-    public function mapDelete(string $pattern, string|callable|array $handler): IRouteHandler
-    {
-        return $this->mapVerb('DELETE', $pattern, $handler);
     }
 
     /**

@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Endpoint;
 
-use DevNet\System\Exceptions\ArgumentException;
+use DevNet\System\Exceptions\TypeException;
 use DevNet\System\MethodTrait;
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Endpoint\Results\ContentResult;
@@ -17,8 +17,8 @@ use DevNet\Web\Endpoint\Results\JsonResult;
 use DevNet\Web\Endpoint\Results\RedirectResult;
 use DevNet\Web\Endpoint\Results\StatusCodeResult;
 use DevNet\Web\Endpoint\Results\ViewResult;
-use DevNet\Web\Endpoint\Features\HtmlHelper;
 use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Security\Tokens\Csrf\IAntiforgery;
 use DevNet\Web\View\ViewManager;
 
 abstract class ActionController
@@ -40,7 +40,7 @@ abstract class ActionController
             $viewName = null;
             $model    = $parameter;
         } else {
-            throw new ArgumentException(static::class . "::view(): The argument 1# must be of type string or object", 0, 1);
+            throw new TypeException(static::class . "::view(): The argument 1# must be of type string or object", 0, 1);
         }
 
         if (!$viewName) {
@@ -58,7 +58,11 @@ abstract class ActionController
 
         $view = $this->HttpContext->RequestServices->getService(ViewManager::class);
         $view->setData($this->ViewData);
-        $view->inject('Html', new HtmlHelper($this->HttpContext));
+        $antiforgery = $this->HttpContext->RequestServices->getService(IAntiforgery::class);
+        if ($antiforgery) {
+            $view->inject('Antiforgery', $antiforgery);
+        }
+
         return new ViewResult($view($viewName, $model), 200);
     }
 

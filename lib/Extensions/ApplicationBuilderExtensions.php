@@ -11,10 +11,10 @@ namespace DevNet\Web\Extensions;
 
 use DevNet\System\Exceptions\ClassException;
 use DevNet\Web\Endpoint\EndpointMiddleware;
+use DevNet\Web\Endpoint\EndpointRouteBuilder;
 use DevNet\Web\Exception\ExceptionMiddleware;
 use DevNet\Web\Middleware\IApplicationBuilder;
 use DevNet\Web\Middleware\IMiddleware;
-use DevNet\Web\Routing\RouteBuilder;
 use DevNet\Web\Routing\RouterMiddleware;
 use DevNet\Web\Security\Authentication\AuthenticationMiddleware;
 use ReflectionClass;
@@ -56,7 +56,7 @@ class ApplicationBuilderExtensions
 
     public static function useEndpoint(IApplicationBuilder $app, Closure $configure): void
     {
-        $routeBuilder = $app->Provider->getService(RouteBuilder::class);
+        $routeBuilder = new EndpointRouteBuilder($app->Provider);
         $configure($routeBuilder);
         $app->use(new EndpointMiddleware());
     }

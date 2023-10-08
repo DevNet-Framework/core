@@ -19,6 +19,7 @@ use DevNet\Web\Http\HttpContextFactory;
 use DevNet\Web\Middleware\IApplicationBuilder;
 use DevNet\Web\Routing\RouteBuilder;
 use Closure;
+use DevNet\Web\Routing\IRouteBuilder;
 
 class WebHost
 {
@@ -108,7 +109,7 @@ class WebHost
             return $httpContext;
         });
 
-        $services->addSingleton(RouteBuilder::class, fn (): RouteBuilder => new RouteBuilder());
+        $services->addSingleton(IRouteBuilder::class, fn (): RouteBuilder => new RouteBuilder());
 
         return new WebHostBuilder($configuration->build(), $services);
     }

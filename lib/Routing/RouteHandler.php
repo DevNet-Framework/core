@@ -23,7 +23,7 @@ class RouteHandler implements IRouteHandler
     use PropertyTrait;
 
     private $target;
-    private array $filters;
+    private array $filters = [];
 
     public function __construct($target)
     {

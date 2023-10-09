@@ -15,17 +15,12 @@ namespace DevNet\Web\Routing;
 interface IRouteBuilder
 {
     /**
-     * Gets the routes added to the builder.
+     * Adds a route that only matches HTTP requests for the given pattern and verb.
      */
-    function get_Routes(): array;
+    public function map(string $pattern, IRouteHandler $handler, ?string $verb = null): IRouteHandler;
 
     /**
-     * Adds a route that only matches HTTP requests for the given verb, template, and handler
-     */
-    public function map(string $pattern, string|callable|array $handler, ?string $verb = null): IRouteHandler;
-
-    /**
-     * Builds IRouter from the routes specified in the Routes property.
+     * from the specified routes.
      */
     public function build(): IRouter;
 }

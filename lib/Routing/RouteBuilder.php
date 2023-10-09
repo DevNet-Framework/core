@@ -10,113 +10,65 @@
 namespace DevNet\Web\Routing;
 
 use DevNet\System\MethodTrait;
-use DevNet\System\PropertyTrait;
-use Closure;
 
 class RouteBuilder implements IRouteBuilder
 {
     use MethodTrait;
-    use PropertyTrait;
 
-    private string $prefix = '';
     private array $routes = [];
-    private ?IRouteHandler $routeHandler;
-
-    public function __construct(?IRouteHandler $routeHandler = null)
-    {
-        $this->routeHandler = $routeHandler;
-    }
-
-    function get_Routes(): array
-    {
-        return $this->routes;
-    }
 
     /**
-     * mape the route.
+     * Adds a route that only matches HTTP requests for the given pattern and verb.
      */
-    public function map(string $pattern, string|callable|array $handler, ?string $verb = null): IRouteHandler
+    public function map(string $pattern, IRouteHandler $handler, ?string $verb = null): IRouteHandler
     {
-        $pattern        = $this->prefix . '/' . trim($pattern, '/');
-        $routeHandler   = new RouteHandler($handler);
-        $this->routes[] = new Route($routeHandler, $pattern, $verb);
-
-        return $routeHandler;
+        $this->routes[] = new Route($handler, $pattern, $verb);
+        return $handler;
     }
 
     /**
-     * set the route prefix.
+     * Map the route with any specified Http verb.
      */
-    public function mapGroup(string $prefix, callable $callback): void
+    public function mapRoute(string $pattern, string|callable|array $handler, ?string $verb = null): IRouteHandler
     {
-        $this->prefix = trim($prefix, '/');
-        $callback($this);
-        // clear the prefix for the routes outside the group.
-        $this->prefix = '';
+        $routeHandler = new RouteHandler($handler);
+        return $this->map($pattern, $routeHandler, $verb);
     }
 
     /**
-     * mape the route.
-     */
-    public function mapRoute(string $pattern, string|callable|array $handler = null): void
-    {
-        if ($this->routeHandler && (!$handler instanceof Closure)) {
-            $routeHandler = clone $this->routeHandler;
-            $routeHandler->Target = $handler;
-        } else {
-            $routeHandler = new RouteHandler($handler);
-        }
-
-        $pattern = $this->prefix . '/' . trim($pattern, '/');
-        $this->routes[] = new Route($routeHandler, $pattern);
-    }
-
-    /**
-     * mape the route using the Http Verb GET.
+     * Map the route using the Http Verb GET.
      */
     public function mapGet(string $pattern, string|callable|array $handler): IRouteHandler
     {
-        return $this->map($pattern, $handler, 'GET');
+        return $this->mapRoute($pattern, $handler, 'GET');
     }
 
     /**
-     * mape the route using the Http Verb POST.
+     * Map the route using the Http Verb POST.
      */
     public function mapPost(string $pattern, string|callable|array $handler): IRouteHandler
     {
-        return $this->map($pattern, $handler, 'POST');
+        return $this->mapRoute($pattern, $handler, 'POST');
     }
 
     /**
-     * mape the route using the Http Verb PUT.
+     * Map the route using the Http Verb PUT.
      */
     public function mapPut(string $pattern, string|callable|array $handler): IRouteHandler
     {
-        return $this->map($pattern, $handler, 'PUT');
+        return $this->mapRoute($pattern, $handler, 'PUT');
     }
 
     /**
-     * mape the route using the Http Verb DELETE.
+     * Map the route using the Http Verb DELETE.
      */
     public function mapDelete(string $pattern, string|callable|array $handler): IRouteHandler
     {
-        return $this->map($pattern, $handler, 'DELETE');
+        return $this->mapRoute($pattern, $handler, 'DELETE');
     }
 
     /**
-     * mape the route using Http Verb.
-     */
-    public function mapVerb(string $verb, string $pattern, string|callable|array $handler): IRouteHandler
-    {
-        $pattern        = $this->prefix . '/' . trim($pattern, '/');
-        $routeHandler   = new RouteHandler($handler);
-        $this->routes[] = new Route($routeHandler, $pattern, $verb);
-
-        return $routeHandler;
-    }
-
-    /**
-     * build the router and return RouteCollection instance.
+     * from the specified routes.
      */
     public function build(): IRouter
     {

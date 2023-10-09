@@ -31,7 +31,7 @@ class RouteMatcher
     static function matchMethod(string $httpMethod, ?string $verb): bool
     {
         $httpMethod = strtoupper($httpMethod);
-        $verb = strtoupper($verb);
+        $verb = strtoupper((string) $verb);
 
         if (!$verb || $verb == $httpMethod) {
             return true;

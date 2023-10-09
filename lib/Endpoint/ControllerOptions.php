@@ -16,43 +16,21 @@ use DevNet\Web\Endpoint\Binder\Providers\CompositeValueProvider;
 use DevNet\Web\Endpoint\Binder\Providers\FileValueProvider;
 use DevNet\Web\Endpoint\Binder\Providers\FormValueProvider;
 use DevNet\Web\Endpoint\Binder\Providers\QueryValueProvider;
-use DevNet\Web\Endpoint\Binder\Providers\RouteValueProvider;
 
 class ControllerOptions
 {
-    private string $controllerNamespace = 'Application\\Controllers';
-    private string $viewDirectory = '../Views/';
-    private array $actionFilters = [];
-    private ?IModelBinder $modelBinder = null;
+    public string $ControllerNamespace = 'Application\\Controllers';
+    public string $ViewDirectory = '../Views/';
+    public ?IModelBinder $ModelBinder = null;
     private CompositeValueProvider $valueProviders;
+    private array $actionFilters = [];
 
     public function __construct()
     {
         $this->valueProviders = new CompositeValueProvider();
-        $this->valueProviders->add(new RouteValueProvider());
         $this->valueProviders->add(new QueryValueProvider());
         $this->valueProviders->add(new FormValueProvider());
         $this->valueProviders->add(new FileValueProvider());
-    }
-
-    public function setControllerNamespace(string $namespace)
-    {
-        $this->controllerNamespace = $namespace;
-    }
-
-    public function getControllerNamespace(): string
-    {
-        return $this->controllerNamespace;
-    }
-
-    public function setViewDirectory(string $directory)
-    {
-        $this->viewDirectory = $directory;
-    }
-
-    public function getViewDirectory(): string
-    {
-        return $this->viewDirectory;
     }
 
     public function addFilter(IActionFilter $actionFilter)
@@ -72,12 +50,6 @@ class ControllerOptions
         return $this;
     }
 
-    public function addModelBinder(IModelBinder $modelBinder)
-    {
-        $this->modelBinder = $modelBinder;
-        return $this;
-    }
-
     public function getValueProviders(): CompositeValueProvider
     {
         return $this->valueProviders;
@@ -85,6 +57,6 @@ class ControllerOptions
 
     public function getModelBinderProvider(): ModelBinderProvider
     {
-        return new ModelBinderProvider($this->modelBinder);
+        return new ModelBinderProvider($this->ModelBinder);
     }
 }

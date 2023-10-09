@@ -61,8 +61,7 @@ class ServiceCollectionExtensions
             $configuration($options);
         }
 
-        $viewDirectory = $options->getViewDirectory();
-        $services->addView($viewDirectory);
+        $services->addView($options->ViewDirectory);
         $services->addSingleton(ControllerOptions::class, $options);
         $services->addSingleton(RouteBuilder::class, fn (): RouteBuilder => new RouteBuilder(new ControllerRouteHandler()));
     }

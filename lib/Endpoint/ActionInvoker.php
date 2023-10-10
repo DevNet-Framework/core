@@ -113,6 +113,6 @@ class ActionInvoker implements IRequestHandler
             }
         });
 
-        return $this->action->invoke([$actionContext]);
+        return $this->action->invoke($actionContext);
     }
 }

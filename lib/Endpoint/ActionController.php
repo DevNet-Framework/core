@@ -30,20 +30,9 @@ abstract class ActionController
     public HttpContext $HttpContext;
     public array $ViewData = [];
 
-    public function view($parameter = null, object $model = null): ViewResult
+    public function view(null|object|array $data = null, ?string $name = null): ViewResult
     {
-        if (!$parameter) {
-            $viewName = null;
-        } else if (is_string($parameter)) {
-            $viewName = $parameter;
-        } else if (is_object($parameter)) {
-            $viewName = null;
-            $model    = $parameter;
-        } else {
-            throw new TypeException(static::class . "::view(): The argument 1# must be of type string or object", 0, 1);
-        }
-
-        if (!$viewName) {
+        if (!$name) {
             $prefix         = $this->HttpContext->RouteContext->RouteData->Values['prefix'];
             $controllerName = $this->ActionContext->ActionDescriptor->ClassName;
             $controllerName = str_replace('Controller', '', $this->ActionContext->ActionDescriptor->ClassName);
@@ -53,7 +42,7 @@ abstract class ActionController
                 $actionName = substr(strstr($actionName, "_"), 1);
             }
 
-            $viewName = ucwords($prefix . $controllerName, '/') . '/' . $actionName;
+            $name = ucwords($prefix . $controllerName, '/') . '/' . $actionName;
         }
 
         $view = $this->HttpContext->RequestServices->getService(ViewManager::class);
@@ -63,7 +52,7 @@ abstract class ActionController
             $view->inject('Antiforgery', $antiforgery);
         }
 
-        return new ViewResult($view($viewName, $model), 200);
+        return new ViewResult($view($name, $data), 200);
     }
 
     public function content(string $content, string $contentType = 'text/plain'): ContentResult

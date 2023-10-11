@@ -9,30 +9,31 @@
 
 namespace DevNet\Web\Endpoint;
 
-use DevNet\System\Dependency\IServiceProvider;
+use DevNet\System\MethodTrait;
 use DevNet\System\Runtime\LauncherProperties;
-use DevNet\Web\Endpoint\ControllerRouteHandler;
 use DevNet\Web\Endpoint\Route;
 use DevNet\Web\Routing\IRouteBuilder;
 use DevNet\Web\Routing\IRouteHandler;
 use DevNet\Web\Routing\IRouter;
-use DevNet\Web\Routing\Route as Router;
+use DevNet\Web\Routing\RouteHandler;
 use ReflectionClass;
 
 class EndpointRouteBuilder
 {
+    use MethodTrait;
+
     private string $prefix = '';
     private IRouteBuilder $builder;
-    private IServiceProvider $services;
+    private ControllerOptions $options;
 
-    public function __construct(IServiceProvider $services)
+    public function __construct(IRouteBuilder $builder, ControllerOptions $options)
     {
-        $this->services = $services;
-        $this->builder = $services->getService(IRouteBuilder::class);
+        $this->builder = $builder;
+        $this->options = $options;
     }
 
     /**
-     * Maps a group of routes under the same prefix path.
+     * Adds a group of routes that all prefixed with the specified prefix.
      */
     public function mapGroup(string $prefix, callable $callback): void
     {
@@ -43,75 +44,62 @@ class EndpointRouteBuilder
     }
 
     /**
-     * Maps the route.
+     * Adds a route that matches HTTP requests for the specified path and HTTP method, or any HTTP method if it's not specifed.
      */
-    public function mapRoute(string $path, string|callable|array $handler): IRouteHandler
+    public function mapRoute(string $path, string|callable|array $handler, ?string $method = null): IRouteHandler
     {
-        $pattern = $this->prefix . '/' . trim($path, '/');
-        return $this->builder->map($pattern, $handler);
+        $path = $this->prefix . '/' . trim($path, '/');
+        $routeHandler = new RouteHandler($handler);
+        return $this->builder->map($path, $routeHandler, $method);
     }
 
     /**
-     * Maps the route using the Http Verb GET.
+     * Adds a route that matches HTTP GET requests for the specified path.
      */
     public function mapGet(string $path, string|callable|array $handler): IRouteHandler
     {
-        $pattern = $this->prefix . '/' . trim($path, '/');
-        return $this->builder->map($pattern, $handler, 'GET');
+        return $this->mapRoute($path, $handler, 'GET');
     }
 
     /**
-     * Maps the route using the Http Verb POST.
+     * Adds a route that matches HTTP POST requests for the specified path.
      */
     public function mapPost(string $path, string|callable|array $handler): IRouteHandler
     {
-        $pattern = $this->prefix . '/' . trim($path, '/');
-        return $this->builder->map($pattern, $handler, 'POST');
+        return $this->mapRoute($path, $handler, 'POST');
     }
 
     /**
-     * Maps the route using the Http Verb PUT.
+     * Adds a route that matches HTTP PUT requests for the specified path.
      */
     public function mapPut(string $path, string|callable|array $handler): IRouteHandler
     {
-        $pattern = $this->prefix . '/' . trim($path, '/');
-        return $this->builder->map($pattern, $handler, 'PUT');
+        return $this->mapRoute($path, $handler, 'PUT');
     }
 
     /**
-     * Maps the route using the Http Verb DELETE.
+     * Adds a route that matches HTTP DELETE requests for the specified path.
      */
     public function mapDelete(string $path, string|callable|array $handler): IRouteHandler
     {
-        $pattern = $this->prefix . '/' . trim($path, '/');
-        return $this->builder->map($pattern, $handler, 'DELETE');
+        $path = $this->prefix . '/' . trim($path, '/');
+        return $this->mapRoute($path, $handler, 'DELETE');
     }
 
     /**
-     * Maps the route using the Http Verb PATCH.
+     * Adds a route that matches HTTP PATCH requests for the specified path.
      */
     public function mapPatch(string $path, string|callable|array $handler): IRouteHandler
     {
-        $pattern = $this->prefix . '/' . trim($path, '/');
-        return $this->builder->map($pattern, $handler, 'PATCH');
+        return $this->mapRoute($path, $handler, 'PATCH');
     }
 
     /**
-     * Maps the route using Http Verb.
-     */
-    public function mapVerb(string $verb, string $path, string|callable|array $handler): IRouteHandler
-    {
-        $pattern = $this->prefix . '/' . trim($path, '/');
-        return $this->builder->map($pattern, $handler, $verb);
-    }
-
-    /**
-     * Maps the route using Http Verb.
+     * Maps routes from controllers.
      */
     public function mapControllers()
     {
-        $options = $this->services->getService(ControllerOptions::class);
-        $namespace = $options->ControllerNamespace;
+        $namespace = $this->options->ControllerNamespace;
         $dir = str_replace("\\", "/", $namespace);
         $dir = LauncherProperties::getRootDirectory() . strstr($dir, '/');
 
@@ -125,7 +113,7 @@ class EndpointRouteBuilder
                         $attribute = $method->getAttributes(Route::class);
                         if ($attribute) {
                             $route = $attribute[0]->newInstance();
-                            $this->builder->Routes[] = new Router(new ControllerRouteHandler([$controllerName, $method->getName()]), $route->Path, $route->Method);
+                            $this->builder->map($route->Path, new EndpointRouteHandler([$controllerName, $method->getName()]), $route->Method);
                         }
                     }
                 }
@@ -134,7 +122,7 @@ class EndpointRouteBuilder
     }
 
     /**
-     * Builds IRouter from the routes specified in the Routes property.
+     * Builds IRouter from the specified routes.
      */
     public function build(): IRouter
     {

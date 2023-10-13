@@ -20,11 +20,17 @@ class ViewManager
     private ?IServiceProvider $provider;
     private string $directory;
     private array $viewData = [];
-    private ?object $model = null;
+
+    public function __construct(string $directory, ?IServiceProvider $provider = null)
+    {
+        $this->directory = rtrim($directory, '/');
+        $this->provider  = $provider;
+        $this->container = new ViewContainer();
+    }
 
     public function &__get(string $name)
     {
-        if (in_array($name, ['Container', 'Provider', 'Directory', 'ViewData', 'Model'])) {
+        if (in_array($name, ['Container', 'Provider', 'Directory', 'ViewData'])) {
             $property = lcfirst($name);
             return $this->$property;
         }
@@ -34,18 +40,6 @@ class ViewManager
         }
 
         throw new PropertyException("access to undefined property " . self::class . "::" . $name);
-    }
-
-    public function __construct(string $directory = null, ?IServiceProvider $provider = null)
-    {
-        $this->setDirectory($directory);
-        $this->provider  = $provider;
-        $this->container = new ViewContainer();
-    }
-
-    public function setDirectory(string $directory): void
-    {
-        $this->directory = rtrim($directory, '/');
     }
 
     public function getPath(string $pathName): string
@@ -58,25 +52,20 @@ class ViewManager
         return "";
     }
 
-    public function setData(array $viewData): void
-    {
-        $this->viewData = $viewData;
-    }
-
     public function inject(string $name, $value): void
     {
         $this->container->set($name, $value);
     }
 
-    public function render(string $viewName, ?object $model = null): string
+    public function render(string $viewName, array $viewData = []): string
     {
-        $this->model = $model;
+        $this->viewData = $viewData;
         $engine = new ViewEngine($this);
         return $engine->renderView($viewName);
     }
 
-    public function __invoke(string $viewName, ?object $model = null): string
+    public function __invoke(string $viewName, array $viewData = []): string
     {
-        return $this->render($viewName, $model);
+        return $this->render($viewName, $viewData);
     }
 }

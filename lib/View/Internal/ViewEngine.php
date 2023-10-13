@@ -33,10 +33,6 @@ class ViewEngine
             return $this->manager->ViewData;
         }
 
-        if ($name == 'Model') {
-            return $this->manager->Model;
-        }
-
         $service = $this->manager->Container->get($name);
         if ($service) {
             return $service;
@@ -87,14 +83,15 @@ class ViewEngine
         }
     }
 
-    public function renderPartial(string $partialName): void
+    public function renderPartial(string $templateName): void
     {
-        $partialPath = $this->manager->getPath($partialName);
-        if (!file_exists($partialPath)) {
-            throw new InvalidArgumentException("Could not find the template: {$partialName}");
+        extract($this->ViewData, EXTR_SKIP);
+
+        if (!file_exists($this->manager->getPath($templateName))) {
+            throw new InvalidArgumentException("Could not find the template: {$templateName}");
         }
 
-        include 'php://filter/read=view.opentag/resource=' . $partialPath;
+        include 'php://filter/read=view.opentag/resource=' . $this->manager->getPath($templateName);
     }
 
     public function renderBody(): void

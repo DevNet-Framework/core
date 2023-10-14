@@ -12,7 +12,7 @@ namespace DevNet\Web\Security\Tokens\Csrf;
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Http\HttpContext;
 
-class Antiforgery implements IAntiforgery
+class Antiforgery
 {
     use PropertyTrait;
 
@@ -35,52 +35,38 @@ class Antiforgery implements IAntiforgery
     {
         return $this->options;
     }
-    
-    public function get_Store(): AntiforgeryTokenStore
+
+    public function getToken(): AntiforgeryToken
     {
-        return $this->store;
-    }
-
-    public function storeTokens(HttpContext $httpContext): AntiforgeryTokenSet
-    {
-        $tokens = $this->getTokens($httpContext);
-        $this->store->saveCookieToken($httpContext, $tokens->CookieToken);
-        return $tokens;
-    }
-
-    public function getTokens(HttpContext $httpContext): AntiforgeryTokenSet
-    {
-        $tokens = $httpContext->Features->get(AntiforgeryTokenSet::class);
-        if (!$tokens) {
-            $tokens = new AntiforgeryTokenSet();
-            $token  = $this->store->getCookieToken($httpContext);
-
-            if (!$token) {
-                $tokens->CookieToken = $this->generator->GenerateCookieToken()->Value;
-            } else {
-                $tokens->CookieToken = $token;
-            }
-
-            $tokens->FormFieldName = $this->options->FormFieldName;
-            $httpContext->Features->set($tokens);
+        $token = $this->store->getCookieToken();
+        if (!$token) {
+            return $token;
         }
 
-        if (!$tokens->RequestToken) {
-            $cookieToken = $tokens->CookieToken;
-            $tokens->RequestToken = $this->generator->GenerateRequestToken($cookieToken)->Value;
-        }
-
-        return $tokens;
+        $token = new AntiforgeryToken();
+        $this->store->saveCookieToken($token);
+        return $token;
     }
 
-    public function validateTokens(HttpContext $httpContext): bool
+    public function validateToken(HttpContext $httpContext): bool
     {
         $method = $httpContext->Request->Method;
-        if (!in_array($method, ["POST", "PUT", "UPDATE", "DELETE"])) {
+        if ($method == "GET") {
             return true;
         }
 
-        $tokens = $this->getTokens($httpContext);
-        return $this->generator->matchTokens($httpContext, $tokens);
+        $token = $this->getToken();
+
+        $formToken = $httpContext->Request->Form->getValue($this->options->FieldName);
+        if ($formToken == $token) {
+            return true;
+        }
+
+        $headerToken = $httpContext->Request->Headers->getValues($this->options->FieldName)[0] ?? null;
+        if ($headerToken == $token) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -13,9 +13,7 @@ use DevNet\Web\Http\HttpContext;
 
 interface IAntiforgery
 {
-    public function storeTokens(HttpContext $httpContext): AntiforgeryTokenSet;
+    public function getToken(): AntiforgeryToken;
 
-    public function getTokens(HttpContext $httpContext): AntiforgeryTokenSet;
-
-    public function validateTokens(HttpContext $httpContext): bool;
+    public function validateToken(HttpContext $httpContext): bool;
 }

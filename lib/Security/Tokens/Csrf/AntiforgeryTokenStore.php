@@ -9,24 +9,26 @@
 
 namespace DevNet\Web\Security\Tokens\Csrf;
 
-use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Http\Session;
 
 class AntiforgeryTokenStore
 {
-    private AntiforgeryOptions $options;
+    private Session $session;
 
     public function __construct(AntiforgeryOptions $options)
     {
-        $this->options = $options;
+        $this->session = new Session($options->CookieName);
     }
 
-    public function getCookieToken(HttpContext $httpContext): ?string
+    public function saveCookieToken(AntiforgeryToken $token): void
     {
-        return $httpContext->Request->Cookies->getValue($this->options->CookieName);
+        $this->session->start();
+        $this->session->set(AntiforgeryToken::class, $token);
     }
 
-    public function saveCookieToken(HttpContext $httpContext, string $token): void
+    public function getCookieToken(): ?AntiforgeryToken
     {
-        $httpContext->Response->Cookies->Add($this->options->CookieName, $token, $this->options->Cookie);
+        $this->session->start();
+        return $this->session->get(AntiforgeryToken::class);
     }
 }

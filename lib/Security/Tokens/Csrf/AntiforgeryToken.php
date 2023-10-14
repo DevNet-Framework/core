@@ -16,21 +16,10 @@ class AntiforgeryToken
     use PropertyTrait;
 
     private string $value;
-    private bool $isHashed = false;
 
-    public function __construct(string $token = null, string $key = null)
+    public function __construct()
     {
-        if ($token) {
-            if ($key) {
-                $this->value = hash_hmac('sha256', $this->value, $key);
-            } else {
-                $this->value = hash('sha256', $token);
-            }
-
-            $this->isHashed = true;
-        } else {
-            $this->value = bin2hex(random_bytes(32));
-        }
+        $this->value = bin2hex(random_bytes(32));
     }
 
     public function get_Value(): string
@@ -38,8 +27,8 @@ class AntiforgeryToken
         return $this->value;
     }
 
-    public function get_IsHashed(): bool
+    public function __toString(): string
     {
-        return $this->isHashed;
+        return $this->value;
     }
 }

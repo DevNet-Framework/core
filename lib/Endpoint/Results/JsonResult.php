@@ -16,12 +16,10 @@ use DevNet\Web\Endpoint\IActionResult;
 class JsonResult implements IActionResult
 {
     private string $content;
-    private int $statusCode;
 
-    public function __construct(object|array $data, int $statusCode = 200)
+    public function __construct(object|array $data)
     {
         $this->content = json_encode($data);
-        $this->statusCode = $statusCode;
     }
 
     public function __invoke(ActionContext $actionContext): Task
@@ -29,7 +27,6 @@ class JsonResult implements IActionResult
         $httpContext = $actionContext->HttpContext;
         $httpContext->Response->Headers->add("Content-Type", "application/json");
         $httpContext->Response->Body->write($this->content);
-        $httpContext->Response->setStatusCode($this->statusCode);
         return Task::completedTask();
     }
 }

@@ -16,12 +16,14 @@ use DevNet\Web\Endpoint\IActionResult;
 class ContentResult implements IActionResult
 {
     private string $content;
-    private string $contentType;
+    private string $contentType = "text/plain";
 
-    public function __construct(string $content, string $contentType)
+    public function __construct(string $content, ?string $contentType = null)
     {
         $this->content = $content;
-        $this->contentType = $contentType;
+        if ($contentType) {
+            $this->contentType = $contentType;
+        }
     }
 
     public function __invoke(ActionContext $actionContext): Task

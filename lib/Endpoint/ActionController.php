@@ -9,10 +9,10 @@
 
 namespace DevNet\Web\Endpoint;
 
-use DevNet\System\Exceptions\TypeException;
 use DevNet\System\MethodTrait;
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Endpoint\Results\ContentResult;
+use DevNet\Web\Endpoint\Results\FileResult;
 use DevNet\Web\Endpoint\Results\JsonResult;
 use DevNet\Web\Endpoint\Results\RedirectResult;
 use DevNet\Web\Endpoint\Results\StatusCodeResult;
@@ -30,10 +30,10 @@ abstract class ActionController
     public HttpContext $HttpContext;
     public array $ViewData = [];
 
-    public function view(null|object|array $data = null, ?string $name = null): ViewResult
+    public function view(array $data = [], ?string $name = null): ViewResult
     {
         if (!$name) {
-            $prefix         = $this->HttpContext->RouteContext->RouteData->Values['prefix'];
+            $prefix         = $this->HttpContext->RouteContext->RouteData->Values['prefix'] ?? '';
             $controllerName = $this->ActionContext->ActionDescriptor->ClassName;
             $controllerName = str_replace('Controller', '', $this->ActionContext->ActionDescriptor->ClassName);
             $actionName     = $this->ActionContext->ActionDescriptor->ActionName;
@@ -46,7 +46,6 @@ abstract class ActionController
         }
 
         $view = $this->HttpContext->RequestServices->getService(ViewManager::class);
-        $view->setData($this->ViewData);
         $antiforgery = $this->HttpContext->RequestServices->getService(IAntiforgery::class);
         if ($antiforgery) {
             $view->inject('Antiforgery', $antiforgery);
@@ -55,14 +54,19 @@ abstract class ActionController
         return new ViewResult($view($name, $data), 200);
     }
 
-    public function content(string $content, string $contentType = 'text/plain'): ContentResult
+    public function json(object|array $data): JsonResult
+    {
+        return new JsonResult($data);
+    }
+
+    public function content(string $content, ?string $contentType = null): ContentResult
     {
         return new ContentResult($content, $contentType);
     }
 
-    public function json(object|array $data, $statusCode = 200): JsonResult
+    public function file(string $path, ?string $contentType = null): FileResult
     {
-        return new JsonResult($data, $statusCode);
+        return new FileResult($path, $contentType);
     }
 
     public function redirect(string $path): RedirectResult

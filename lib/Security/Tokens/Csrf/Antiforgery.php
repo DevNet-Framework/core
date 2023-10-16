@@ -12,7 +12,7 @@ namespace DevNet\Web\Security\Tokens\Csrf;
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Http\HttpContext;
 
-class Antiforgery
+class Antiforgery implements IAntiforgery
 {
     use PropertyTrait;
 

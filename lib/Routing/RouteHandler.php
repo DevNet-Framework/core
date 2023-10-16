@@ -65,7 +65,7 @@ class RouteHandler implements IRouteHandler
         if (is_callable($this->target)) {
             $handler = $this->target;
         } else if (is_string($this->target)) {
-            $handler = Activator::CreateInstance($this->target, $routeContext->HttpContext->RequestServices);
+            $handler = Activator::CreateInstance($this->target, $routeContext->HttpContext->Services);
         } else {
             throw new RouterException("Invalid Argument Type, route endpoint must be of type callable|string");
         }

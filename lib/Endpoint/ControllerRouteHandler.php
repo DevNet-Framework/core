@@ -42,7 +42,7 @@ class ControllerRouteHandler implements IRouteHandler
         }
 
         $prefix         = null;
-        $options        = $routeContext->HttpContext->RequestServices->getService(ControllerOptions::class);
+        $options        = $routeContext->HttpContext->Services->getService(ControllerOptions::class);
         $routeData      = $routeContext->RouteData;
         $controllerName = $this->target[0] ?? null;
         $actionName     = $this->target[1] ?? null;

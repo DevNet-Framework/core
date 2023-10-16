@@ -105,7 +105,7 @@ class WebHost
         
         $services->addSingleton(HttpContext::class, function ($provider): HttpContext {
             $httpContext = HttpContextFactory::create();
-            $httpContext->addAttribute('RequestServices', $provider);
+            $httpContext->Services = $provider;
             return $httpContext;
         });
 

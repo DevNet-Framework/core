@@ -18,8 +18,8 @@ class AuthorizationMiddleware implements IMiddleware
 {
     public function __invoke(HttpContext $context, RequestDelegate $next)
     {
-        if ($context->RequestServices->contains(Authorization::class)) {
-            $authorization = $context->RequestServices->getService(Authorization::class);
+        if ($context->Services->contains(Authorization::class)) {
+            $authorization = $context->Services->getService(Authorization::class);
             $context->addAttribute('Authorization', $authorization);
         }
 

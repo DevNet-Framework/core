@@ -26,7 +26,7 @@ class RouterMiddleware implements IMiddleware
             return Task::completedTask();
         }
 
-        $routeBuilder = $context->RequestServices->getService(IRouteBuilder::class);
+        $routeBuilder = $context->Services->getService(IRouteBuilder::class);
         $router       = $routeBuilder->build();
         $routeContext = new RouteContext($context);
 

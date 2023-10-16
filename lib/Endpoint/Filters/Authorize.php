@@ -49,7 +49,7 @@ class Authorize implements IActionFilter
             $user = new ClaimsIdentity();
         }
 
-        $authorization = $context->HttpContext->RequestServices->getService(Authorization::class);
+        $authorization = $context->HttpContext->Services->getService(Authorization::class);
         if (!$authorization) {
             throw new AuthorizationException("Unable to get the Authorization service, make sure if it's already registered!");
         }

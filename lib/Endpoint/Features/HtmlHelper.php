@@ -23,7 +23,7 @@ class HtmlHelper
 
     public function AntiforgeryToken(): ?string
     {
-        $antiforgery = $this->httpContext->RequestServices->getService(IAntiforgery::class);
+        $antiforgery = $this->httpContext->Services->getService(IAntiforgery::class);
         if (!$antiforgery) {
             return null;
         }

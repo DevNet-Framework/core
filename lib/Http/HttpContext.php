@@ -9,14 +9,23 @@
 
 namespace DevNet\Web\Http;
 
+use DevNet\System\Dependency\IServiceProvider;
 use DevNet\System\Exceptions\PropertyException;
 
 class HttpContext
 {
     private HttpRequest $request;
     private HttpResponse $response;
+    public IServiceProvider $Services;
     private FeatureCollection $features;
     private array $attributes = [];
+
+    public function __construct(HttpRequest $request, HttpResponse $response)
+    {
+        $this->request = $request;
+        $this->response = $response;
+        $this->features = new FeatureCollection();
+    }
 
     public function __get(string $name)
     {
@@ -34,13 +43,6 @@ class HttpContext
         }
 
         return null;
-    }
-
-    public function __construct(HttpRequest $request, HttpResponse $response)
-    {
-        $this->request = $request;
-        $this->response = $response;
-        $this->features = new FeatureCollection();
     }
 
     public function addAttribute(string $name, $value): void

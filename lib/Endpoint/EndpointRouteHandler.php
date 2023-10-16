@@ -51,7 +51,7 @@ class EndpointRouteHandler implements IRouteHandler
             }
         }
 
-        $options = $routeContext->HttpContext->RequestServices->getService(ControllerOptions::class);
+        $options = $routeContext->HttpContext->Services->getService(ControllerOptions::class);
         $valueProvider = $options->getValueProviders();
         $valueProvider->add(new RouteValueProvider($routeContext->RouteData->Values));
 

@@ -49,7 +49,7 @@ class ActionInvoker implements IRequestHandler
             return $instance;
         }
 
-        $services   = $actionContext->HttpContext->RequestServices;
+        $services   = $actionContext->HttpContext->Services;
         $parameters = $constructor->getParameters();
         $arguments  = [];
 

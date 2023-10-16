@@ -45,8 +45,8 @@ abstract class ActionController
             $name = ucwords($prefix . $controllerName, '/') . '/' . $actionName;
         }
 
-        $view = $this->HttpContext->RequestServices->getService(ViewManager::class);
-        $antiforgery = $this->HttpContext->RequestServices->getService(IAntiforgery::class);
+        $view = $this->HttpContext->Services->getService(ViewManager::class);
+        $antiforgery = $this->HttpContext->Services->getService(IAntiforgery::class);
         if ($antiforgery) {
             $view->inject('Antiforgery', $antiforgery);
         }

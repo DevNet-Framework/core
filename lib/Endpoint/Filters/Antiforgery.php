@@ -22,9 +22,9 @@ class Antiforgery implements IActionFilter
 {
     public function __invoke(ActionContext $context, ActionDelegate $next): Task
     {
-        $antiforgery = $context->HttpContext->RequestServices->getService(IAntiforgery::class);
+        $antiforgery = $context->HttpContext->Services->getService(IAntiforgery::class);
         if (!$antiforgery) {
-            throw new AntiforgeryException("Unable to get IAntiforger service, make sure to register it as a service!");
+            throw new AntiforgeryException("Unable to get IAntiforgery service, make sure to register it as a service!");
         }
 
         $result = $antiforgery->validateTokens($context->HttpContext);

@@ -38,14 +38,23 @@ class ExceptionMiddleware implements IMiddleware
             if (PHP_SAPI == 'cli') {
                 throw new $error;
             }
+
+            // Need to remove the previous headers and body of the response the send only the error report.
+            $context->Response->Body->truncate(0);
+            $headerNames = array_keys($context->Response->Headers->getAll());
+            foreach ($headerNames as $name) {
+                $context->Response->Headers->remove($name);
+            }
+
+            // Store the error to be handled later by the exception handler or by the custom handler.
             $context->addAttribute('Error', $error);
             if ($this->errorHandlingPath) {
+                // Change the path to the custom handler
                 $context->Request->Uri->Path = $this->errorHandlingPath;
-                $context->Response->Body->truncate(0);
                 await($next($context));
                 return;
             }
-            $context->Response->Body->truncate(0);
+
             await($this->handel($context));
         }
     }
@@ -55,9 +64,7 @@ class ExceptionMiddleware implements IMiddleware
         $error = $context->Error;
         $data  = $this->parse($error);
         $view  = new ViewManager(__DIR__ . '/Views');
-
-        $view->setData($data);
-        $context->Response->Body->write($view->render('ExceptionView'));
+        $context->Response->Body->write($view->render('ExceptionView', $data));
         return Task::completedTask();
     }
 

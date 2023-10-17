@@ -47,7 +47,7 @@ class ExceptionMiddleware implements IMiddleware
             }
 
             // Store the error to be handled later by the exception handler or by the custom handler.
-            $context->addAttribute('Error', $error);
+            $context->Items->add('ErrorException', $error);
             if ($this->errorHandlingPath) {
                 // Change the path to the custom handler
                 $context->Request->Uri->Path = $this->errorHandlingPath;
@@ -61,7 +61,7 @@ class ExceptionMiddleware implements IMiddleware
 
     public function handel(HttpContext $context): Task
     {
-        $error = $context->Error;
+        $error = $context->Items['ErrorException'];
         $data  = $this->parse($error);
         $view  = new ViewManager(__DIR__ . '/Views');
         $context->Response->Body->write($view->render('ExceptionView', $data));

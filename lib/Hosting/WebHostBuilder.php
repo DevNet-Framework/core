@@ -64,7 +64,7 @@ class WebHostBuilder implements IWebHostBuilder
             $register($this->services);
         } catch (\Throwable $error) {
             $context = $this->provider->getService(HttpContext::class);
-            $context->addAttribute('Error', $error);
+            $context->Items->add('ErrorException', $error);
         }
     }
 

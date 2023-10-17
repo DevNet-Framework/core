@@ -17,14 +17,14 @@ use DevNet\System\Runtime\LauncherProperties;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Http\HttpContextFactory;
 use DevNet\Web\Middleware\IApplicationBuilder;
+use DevNet\Web\Routing\IRouteBuilder;
 use DevNet\Web\Routing\RouteBuilder;
 use Closure;
-use DevNet\Web\Routing\IRouteBuilder;
 
 class WebHost
 {
     private IApplicationBuilder $appBuilder;
-    private IserviceProvider $provider;
+    private IServiceProvider $provider;
     private WebServer $server;
 
     public function __construct(IApplicationBuilder $AppBuilder)
@@ -46,7 +46,7 @@ class WebHost
             $configure($this->appBuilder);
         } catch (\Throwable $error) {
             $context = $this->provider->getService(HttpContext::class);
-            $context->addAttribute('Error', $error);
+            $context->Items->add('ErrorException', $error);
         }
         
         $this->run();
@@ -58,14 +58,14 @@ class WebHost
         $args   = $config->Settings['args'] ?? [];
 
         $this->server->start($args);
-        $context    = $this->provider->getService(HttpContext::class);
-        $applicaion = $this->appBuilder->build();
+        $context     = $this->provider->getService(HttpContext::class);
+        $application = $this->appBuilder->build();
         
         if (PHP_SAPI == 'cli') {
             return;
         }
 
-        $applicaion($context)->wait();
+        $application($context)->wait();
         $response = $context->Response;
 
         // Send the "status line".

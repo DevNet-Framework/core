@@ -17,6 +17,7 @@ class HttpRequest extends HttpMessage
     private string $method;
     private Uri $uri;
     private Form $form;
+    public array $RouteValues = [];
 
     public function __construct(
         string $method,

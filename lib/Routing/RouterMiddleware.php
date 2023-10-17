@@ -32,6 +32,7 @@ class RouterMiddleware implements IMiddleware
 
         if ($router->match($routeContext)) {
             $context->Items->add('RouteContext', $routeContext);
+            $context->Request->RouteValues = $routeContext->RouteData->Values;
         } else {
             throw new RouterException("No route matches your request", 404);
         }

@@ -33,8 +33,7 @@ abstract class ActionController
     public function view(array $data = [], ?string $name = null): ViewResult
     {
         if (!$name) {
-            $routeContext  = $this->HttpContext->Items['RouteContext'];
-            $prefix         = $routeContext->RouteData->Values['prefix'] ?? '';
+            $prefix  = $this->HttpContext->Request->RouteValues['prefix'] ?? '';
             $controllerName = $this->ActionContext->ActionDescriptor->ClassName;
             $controllerName = str_replace('Controller', '', $this->ActionContext->ActionDescriptor->ClassName);
             $actionName     = $this->ActionContext->ActionDescriptor->ActionName;

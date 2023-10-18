@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Endpoint\Filters;
+ namespace DevNet\Web\Security\Authorization;
 
 use DevNet\System\Async\Task;
 use DevNet\Web\Endpoint\ActionContext;
@@ -66,9 +66,9 @@ class Authorize implements IActionFilter
 
         if ($this->roles) {
             $requirement = new RolesRequirement($this->roles);
-            $autorizeContext = new AuthorizationContext([$requirement], $user);
-            $requirement->getHandler()->handle($autorizeContext)->wait();
-            $result = $autorizeContext->getResult();
+            $authorizeContext = new AuthorizationContext([$requirement], $user);
+            $requirement->getHandler()->handle($authorizeContext)->wait();
+            $result = $authorizeContext->getResult();
             if (!$result->IsSucceeded) {
                 throw new AuthorizationException("The current user does not meet the required authorization roles!", 403);
             }

@@ -18,7 +18,7 @@ use DevNet\Web\Security\Tokens\Csrf\IAntiforgery;
 use Attribute;
 
 #[Attribute]
-class Antiforgery implements IActionFilter
+class Validate implements IActionFilter
 {
     public function __invoke(ActionContext $context, ActionDelegate $next): Task
     {
@@ -27,7 +27,7 @@ class Antiforgery implements IActionFilter
             throw new AntiforgeryException("Unable to get IAntiforgery service, make sure to register it as a service!");
         }
 
-        $result = $antiforgery->validateTokens($context->HttpContext);
+        $result = $antiforgery->validateToken($context->HttpContext);
 
         if (!$result) {
             throw new AntiforgeryException("Invalid Antiforgery Token!");

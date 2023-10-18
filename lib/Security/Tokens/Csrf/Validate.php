@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Endpoint\Filters;
+ namespace DevNet\Web\Security\Tokens\Csrf;
 
 use DevNet\System\Async\Task;
 use DevNet\Web\Endpoint\ActionContext;

@@ -13,7 +13,7 @@ use DevNet\System\PropertyTrait;
 use DevNet\Web\Security\Claims\ClaimsIdentity;
 use Exception;
 
-class Authentication
+class Authentication implements IAuthentication
 {
     use PropertyTrait;
 
@@ -48,25 +48,45 @@ class Authentication
 
     public function signIn(ClaimsIdentity $user, bool $isPersistent = false, ?string $scheme = null): void
     {
-        // get handler by scheme else get the first handler or return false.
-        $handler = $this->handlers[$scheme] ?? reset($this->handlers);
-
-        if (!$handler instanceof IAuthenticationSigningHandler) {
-            throw new Exception("The authentication signing handler is missing!");
+        $authenticationHandler = $this->handlers[$scheme] ?? null;
+        if ($authenticationHandler) {
+            if (!$authenticationHandler instanceof IAuthenticationSigningHandler) {
+                throw new Exception("The requested authentication handler must be of type IAuthenticationSigningHandler");
+            }
+        } else {
+            foreach ($this->handlers as $handler) {
+                if ($handler instanceof IAuthenticationSigningHandler) {
+                    $authenticationHandler = $handler;
+                    break;
+                }
+            }
+            if (!$authenticationHandler) {
+                throw new Exception("No IAuthenticationSigningHandler is registered!");
+            }
         }
 
-        $handler->signIn($user, $isPersistent);
+        $authenticationHandler->signIn($user, $isPersistent);
     }
 
     public function signOut(?string $scheme = null): void
     {
-        // get handler by scheme else get the first handler or return false.
-        $handler = $this->handlers[$scheme] ?? reset($this->handlers);
-
-        if (!$handler instanceof IAuthenticationSigningHandler) {
-            throw new Exception("The authentication signing handler is missing!");
+        $authenticationHandler = $this->handlers[$scheme] ?? null;
+        if ($authenticationHandler) {
+            if (!$authenticationHandler instanceof IAuthenticationSigningHandler) {
+                throw new Exception("The requested authentication handler must be of type IAuthenticationSigningHandler");
+            }
+        } else {
+            foreach ($this->handlers as $handler) {
+                if ($handler instanceof IAuthenticationSigningHandler) {
+                    $authenticationHandler = $handler;
+                    break;
+                }
+            }
+            if (!$authenticationHandler) {
+                throw new Exception("No IAuthenticationSigningHandler is registered!");
+            }
         }
 
-        $handler->signOut();
+        $authenticationHandler->signOut();
     }
 }

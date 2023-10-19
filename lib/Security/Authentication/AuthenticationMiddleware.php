@@ -12,14 +12,14 @@ namespace DevNet\Web\Security\Authentication;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
-use DevNet\Web\Security\Authentication\Authentication;
+use DevNet\Web\Security\Authentication\IAuthentication;
 
 class AuthenticationMiddleware implements IMiddleware
 {
     public function __invoke(HttpContext $context, RequestDelegate $next)
     {
-        if ($context->Services->contains(Authentication::class)) {
-            $authentication = $context->Services->getService(Authentication::class);
+        if ($context->Services->contains(IAuthentication::class)) {
+            $authentication = $context->Services->getService(IAuthentication::class);
             foreach ($authentication->Schemes as $scheme) {
                 $result = $authentication->authenticate($scheme);
                 if ($result->isSucceeded()) {

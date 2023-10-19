@@ -15,9 +15,9 @@ use DevNet\Web\Endpoint\ActionDelegate;
 use DevNet\Web\Endpoint\IActionFilter;
 use DevNet\Web\Security\Authentication\AuthenticationException;
 use DevNet\Web\Security\Authorization\AuthenticationRequirement;
-use DevNet\Web\Security\Authorization\Authorization;
 use DevNet\Web\Security\Authorization\AuthorizationContext;
 use DevNet\Web\Security\Authorization\AuthorizationException;
+use DevNet\Web\Security\Authorization\IAuthorization;
 use DevNet\Web\Security\Authorization\RolesRequirement;
 use DevNet\Web\Security\Claims\ClaimsIdentity;
 use Attribute;
@@ -45,11 +45,11 @@ class Authorize implements IActionFilter
 
         $user = $context->HttpContext->User;
         if ($this->scheme != $user->AuthenticationType) {
-            // set unauthenticated user for this scheme and only in this filter.
+            // Sets unauthenticated user for unmatched scheme only for this filter.
             $user = new ClaimsIdentity();
         }
 
-        $authorization = $context->HttpContext->Services->getService(Authorization::class);
+        $authorization = $context->HttpContext->Services->getService(IAuthorization::class);
         if (!$authorization) {
             throw new AuthorizationException("Unable to get the Authorization service, make sure if it's already registered!");
         }

@@ -25,6 +25,7 @@ use DevNet\Web\Security\Authentication\Authentication;
 use DevNet\Web\Security\Authentication\AuthenticationBuilder;
 use DevNet\Web\Security\Authorization\Authorization;
 use DevNet\Web\Security\Authorization\AuthorizationOptions;
+use DevNet\Web\Security\Authorization\IAuthorization;
 use DevNet\Web\Identity\IdentityContext;
 use DevNet\Web\Identity\IdentityOptions;
 use DevNet\Web\Identity\IdentityManager;
@@ -97,7 +98,7 @@ class ServiceCollectionExtensions
             $configuration($options);
         }
 
-        $services->addSingleton(Authorization::class, fn (): Authorization => new Authorization($options));
+        $services->addSingleton(IAuthorization::class, fn (): Authorization => new Authorization($options));
     }
 
     public static function addDbConnection(IServiceCollection $services, string $datasource, string $username = "", string $password = "")

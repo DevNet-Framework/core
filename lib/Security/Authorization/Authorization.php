@@ -11,7 +11,7 @@ namespace DevNet\Web\Security\Authorization;
 
 use DevNet\Web\Security\Claims\ClaimsIdentity;
 
-class Authorization
+class Authorization implements IAuthorization
 {
     private AuthorizationOptions $options;
 

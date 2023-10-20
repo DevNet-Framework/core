@@ -68,10 +68,10 @@ class ClaimsIdentity implements IEnumerable
         return false;
     }
 
-    public function findClaim(Closure $predecate): ?Claim
+    public function findClaim(Closure $predicate): ?Claim
     {
         foreach ($this->claims as $claim) {
-            if ($predecate($claim) === true) {
+            if ($predicate($claim) === true) {
                 return $claim;
             }
         }
@@ -79,12 +79,12 @@ class ClaimsIdentity implements IEnumerable
         return null;
     }
 
-    public function findClaims(Closure $predecate): array
+    public function findClaims(Closure $predicate): array
     {
         $claims = [];
 
         foreach ($this->claims as $claim) {
-            if ($predecate($claim) === true) {
+            if ($predicate($claim) === true) {
                 $claims[] = $claim;
             }
         }

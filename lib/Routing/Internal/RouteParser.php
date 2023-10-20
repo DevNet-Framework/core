@@ -13,7 +13,7 @@ class RouteParser
 {
     static function parseUrlPath(string $urlPath): string
     {
-        // remove doublicated slshes
+        // remove duplicate sashes
         $urlPath = preg_replace("%\/+%", '/', $urlPath);
         $urlPath = parse_url($urlPath, PHP_URL_PATH);
 

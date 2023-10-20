@@ -24,7 +24,7 @@ class AuthenticationRequirement implements IAuthorizationRequirement, IAuthoriza
 
         if ($user) {
             if ($user->isAuthenticated()) {
-                $context->success($this);
+                $context->succeed($this);
             }
         }
 

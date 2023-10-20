@@ -49,10 +49,10 @@ class AuthenticationCookieHandler implements IAuthenticationHandler, IAuthentica
     {
         if ($this->session->isSet()) {
             $this->session->start();
-            $indentity = $this->session->get(ClaimsIdentity::class);
+            $identity = $this->session->get(ClaimsIdentity::class);
 
-            if ($indentity) {
-                return new AuthenticationResult($indentity);
+            if ($identity) {
+                return new AuthenticationResult($identity);
             }
         }
 

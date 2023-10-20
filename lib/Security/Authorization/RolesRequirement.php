@@ -9,8 +9,6 @@
 
 namespace DevNet\Web\Security\Authorization;
 
-use DevNet\Web\Security\Claims\ClaimType;
-
 class RolesRequirement extends ClaimsRequirement
 {    
     public function __construct(array $allowedRoles)
@@ -19,6 +17,6 @@ class RolesRequirement extends ClaimsRequirement
             throw new AuthorizationException("Roles requirement must have at least one allowed role value");
         }
 
-        parent::__construct(ClaimType::Role, $allowedRoles);
+        parent::__construct("role", $allowedRoles);
     }
 }

@@ -36,10 +36,10 @@ class ActionContext
         return $this->valueProvider;
     }
 
-    public function __construct(ActionDescriptor $actionDescriptor, HttpContext $httpConext, IValueProvider $provider)
+    public function __construct(ActionDescriptor $actionDescriptor, HttpContext $httpConnext, IValueProvider $provider)
     {
         $this->actionDescriptor = $actionDescriptor;
-        $this->httpContext      = $httpConext;
+        $this->httpContext      = $httpConnext;
         $this->valueProvider    = $provider;
     }
 }

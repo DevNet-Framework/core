@@ -17,12 +17,12 @@ abstract class AuthorizationHandler implements IAuthorizationHandler
     {
         foreach ($context->Requirements as $requirement) {
             if (get_class($this) == $requirement->getHandlerName()) {
-                $this->handlerequirement($context, $requirement)->wait();
+                $this->handleRequirement($context, $requirement)->wait();
             }
         }
 
         return Task::completedTask();
     }
 
-    abstract public function HandleRequirement(AuthorizationContext $context, IAuthorizationRequirement $requirement): Task;
+    abstract public function handleRequirement(AuthorizationContext $context, IAuthorizationRequirement $requirement): Task;
 }

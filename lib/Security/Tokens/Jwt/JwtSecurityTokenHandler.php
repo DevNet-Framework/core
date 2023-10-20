@@ -34,7 +34,7 @@ class JwtSecurityTokenHandler
     }
 
     /**
-     * Serializes nstance of JwtSecurityToken to a signed string token.
+     * Serializes instance of JwtSecurityToken to a signed string token.
      */
     public function writeToken(JwtSecurityToken $token, string $securityKey): string
     {
@@ -49,7 +49,7 @@ class JwtSecurityTokenHandler
                 $signature = hash_hmac('sha512', $token->toString(), $securityKey, true);
                 break;
             default:
-                throw new JwtException("Insupported Encription Algorithm!");
+                throw new JwtException("Unsupported Encryption Algorithm!");
                 break;
         }
 
@@ -95,14 +95,14 @@ class JwtSecurityTokenHandler
                 $signature = hash_hmac('sha512', $segments[0] . "." . $segments[1], $securityKey, true);
                 break;
             default:
-                throw new JwtException("Insupported Encription Algorithm!");
+                throw new JwtException("Unsupported Encryption Algorithm!");
                 break;
         }
 
         $signature = Base64UrlEncoder::encode($signature);
 
         if (!hash_equals($signature, $segments[2])) {
-            throw new JwtException("Invalide JWT signature!", 1);
+            throw new JwtException("Invalid JWT signature!", 1);
         }
 
         $exp = $token->Payload->Claims->findClaim(fn ($claim) => $claim->Type == 'exp');
@@ -113,14 +113,14 @@ class JwtSecurityTokenHandler
         if ($issuer) {
             $iss = $token->Payload->Claims->findClaim(fn ($claim) => $claim->Type == 'iss');
             if ($iss != null && $iss->Value != $issuer) {
-                throw new JwtException("Invalide JWT Issuer!", 3);
+                throw new JwtException("Invalid JWT Issuer!", 3);
             }
         }
 
         if ($audience) {
             $aud = $token->Payload->Claims->findClaim(fn ($claim) => $claim->Type == 'aud');
             if ($aud != null && $aud->Value != $audience) {
-                throw new JwtException("Invalide JWT Audience!", 4);
+                throw new JwtException("Invalid JWT Audience!", 4);
             }
         }
 

@@ -70,11 +70,11 @@ class Route implements IRouter
                 return true;
             }
 
-            $routeContext->RouteData->Routers['unallowed'][] = $this;
+            $routeContext->RouteData->Routers['forbidden'][] = $this;
             return false;
         }
 
-        $routeContext->RouteData->Routers['unmached'][] = $this;
+        $routeContext->RouteData->Routers['unmatched'][] = $this;
         return false;
     }
 }

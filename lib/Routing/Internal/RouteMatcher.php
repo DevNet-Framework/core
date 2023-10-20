@@ -11,7 +11,7 @@ namespace DevNet\Web\Routing\Internal;
 
 /**
  * This is an internal API that supports the Router system infrastructure, It may be changed or removed without notice in
- * any release, Becasue is not subjected to be standard as public APIs.
+ * any release, Because is not subjected to be standard as public APIs.
  */
 class RouteMatcher
 {

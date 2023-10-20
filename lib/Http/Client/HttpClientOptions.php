@@ -12,17 +12,17 @@ namespace DevNet\Web\Http\Client;
 class HttpClientOptions
 {
     /**
-     * The host name of the url agress.
+     * The host name of the url address.
      */
     public string $BaseAddress = '';
 
     /**
-     * the max timespan to wait.
+     * The HTTP version.
      */
     public string $HttpVersion = 'HTTP/1.0';
 
     /**
-     * the max times to wait in seconds.
+     * The max times to wait in seconds.
      */
     public ?float $Timeout = null;
 }

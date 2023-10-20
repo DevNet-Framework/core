@@ -14,8 +14,8 @@ use DevNet\System\Async\Task;
 interface IRouteHandler
 {
     /**
-     * This method must set the value of following properity
-     * @var mixed $Target (represent the endpoit request handler)
+     * This method must set the value of following property
+     * @var mixed $Target (represent the endpoint request handler)
      */
     public function __set(string $name, $value);
 

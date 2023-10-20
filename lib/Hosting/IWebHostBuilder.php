@@ -9,8 +9,6 @@
 
 namespace DevNet\Web\Hosting;
 
-use Closure;
-
 interface IWebHostBuilder
 {
     public function build(): WebHost;

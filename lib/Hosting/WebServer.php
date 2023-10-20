@@ -45,7 +45,7 @@ class WebServer
         if ($host) {
             if (!$host->getValue()) {
                 Console::$ForegroundColor = ConsoleColor::Red;
-                Console::writeline("The option --host is missing a value.");
+                Console::writeLine("The option --host is missing a value.");
                 Console::resetColor();
                 return;
             }
@@ -56,7 +56,7 @@ class WebServer
         if ($port) {
             if (!$port->getValue()) {
                 Console::$ForegroundColor = ConsoleColor::Red;
-                Console::writeline("The option --port is missing a value.");
+                Console::writeLine("The option --port is missing a value.");
                 Console::resetColor();
                 return;
             }
@@ -67,7 +67,7 @@ class WebServer
         if ($root) {
             if (!$root->getValue()) {
                 Console::$ForegroundColor = ConsoleColor::Red;
-                Console::writeline("The option --root is missing a value.");
+                Console::writeLine("The option --root is missing a value.");
                 Console::resetColor();
                 return;
             }

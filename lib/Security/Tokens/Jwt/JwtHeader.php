@@ -17,11 +17,11 @@ class JwtHeader
     public string $Typ;
     public ?string $Cty;
 
-    public function __construct(string $algorithm = 'HS256', string $type = 'JWT', ?string $cententType = null)
+    public function __construct(string $algorithm = 'HS256', string $type = 'JWT', ?string $contentType = null)
     {
         $this->Alg = strtoupper($algorithm);
         $this->Typ = strtoupper($type);
-        $this->Cty = $cententType;
+        $this->Cty = $contentType;
     }
 
     public function toJson(): string

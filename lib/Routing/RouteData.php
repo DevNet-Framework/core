@@ -10,7 +10,7 @@
 namespace DevNet\Web\Routing;
 
 /**
- * Collection of informations about the result of the routing proccess.
+ * Collection of information about the result of the routing process.
  */
 class RouteData
 {

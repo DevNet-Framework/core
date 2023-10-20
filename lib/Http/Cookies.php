@@ -25,8 +25,8 @@ class Cookies
             $cookieString = rtrim($cookieString, ';');
             $cookieFragments = explode(';', $cookieString);
 
-            foreach ($cookieFragments as $fragement) {
-                $cookie = explode('=', $fragement);
+            foreach ($cookieFragments as $fragment) {
+                $cookie = explode('=', $fragment);
                 if (isset($cookie[1])) {
                     $this->Cookies[$cookie[0]] = $cookie[1];
                 }

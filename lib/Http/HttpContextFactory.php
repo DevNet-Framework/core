@@ -9,6 +9,8 @@
 
 namespace DevNet\Web\Http;
 
+use DevNet\System\IO\FileAccess;
+use DevNet\System\IO\FileMode;
 use DevNet\System\IO\FileStream;
 
 class HttpContextFactory
@@ -57,7 +59,7 @@ class HttpContextFactory
         }
 
         $headers = new Headers($headers);
-        $body    = new FileStream('php://input', 'r');
+        $body    = new FileStream('php://input', FileMode::Open, FileAccess::Read);
         $form    = new Form($_POST, $fileCollection);
         $request = new HttpRequest($method, $uri, $headers, $body, $form);
 

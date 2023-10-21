@@ -10,6 +10,8 @@
 namespace DevNet\Web\Http;
 
 use DevNet\System\Async\Task;
+use DevNet\System\IO\FileAccess;
+use DevNet\System\IO\FileMode;
 use DevNet\System\IO\FileStream;
 use DevNet\System\IO\Stream;
 
@@ -98,7 +100,7 @@ class HttpResponse extends HttpMessage
     {
         $this->headers      = $headers ?? new Headers();
         $this->cookies      = new Cookies($this->headers);
-        $this->body         = $body ?? new FileStream('php://temp', 'r+');
+        $this->body         = $body ?? new FileStream('php://temp', FileMode::Open, FileAccess::ReadWrite);
         $this->statusCode   = 200;
         $this->reasonPhrase = 'OK';
     }

@@ -9,7 +9,9 @@
 
 namespace DevNet\Web\Endpoint\Results;
 
+use DevNet\System\IO\FileAccess;
 use DevNet\System\IO\FileException;
+use DevNet\System\IO\FileMode;
 use DevNet\System\IO\FileStream;
 use DevNet\System\MethodTrait;
 use DevNet\Web\Endpoint\ActionContext;
@@ -44,7 +46,7 @@ class FileResult implements IActionResult
         $httpContext->Response->Headers->add("Content-Disposition", "attachment;filename={$filename}");
         $httpContext->Response->Body->truncate(0);
         
-        $file = new FileStream($this->path, 'r');
+        $file = new FileStream($this->path, FileMode::Open, FileAccess::Read);
         while (!$file->EndOfStream) {
             $line = await($file->readLineAsync());
             await($httpContext->Response->writeAsync($line));

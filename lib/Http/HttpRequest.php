@@ -9,6 +9,8 @@
 
 namespace DevNet\Web\Http;
 
+use DevNet\System\IO\FileAccess;
+use DevNet\System\IO\FileMode;
 use DevNet\System\IO\FileStream;
 use DevNet\System\IO\Stream;
 
@@ -30,7 +32,7 @@ class HttpRequest extends HttpMessage
         $this->uri     = new Uri($uri);
         $this->headers = $headers ?? new Headers();
         $this->cookies = new Cookies($this->Headers);
-        $this->body    = $body ?? new FileStream('php://temp', 'r+');
+        $this->body    = $body ?? new FileStream('php://temp', FileMode::Open, FileAccess::ReadWrite);
         $this->form    = $form ?? new Form();
     }
 

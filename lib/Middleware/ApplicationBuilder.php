@@ -47,7 +47,7 @@ class ApplicationBuilder implements IApplicationBuilder
     {
         $app = new RequestDelegate(function (HttpContext $context): Task {
 
-            $RequestHandler = $context->getAttribute('Handler');
+            $RequestHandler = $context->Items['RouteHandler'] ?? null;
             if ($RequestHandler) {
                 throw new \Exception("The request has reached the end of the pipeline without being executed the endpoint");
             }

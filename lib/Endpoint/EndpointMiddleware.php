@@ -17,13 +17,11 @@ class EndpointMiddleware implements IMiddleware
 {
     public function __invoke(HttpContext $context, RequestDelegate $next)
     {
-        $routeContext = $context->Items['RouteContext'] ?? null;
+        $requestHandler = $context->Items['RouteHandler'] ?? null;
 
-        if (!$routeContext) {
+        if (!$requestHandler) {
             return $next($context);
         }
-
-        $requestHandler = $routeContext->Handler;
 
         return $requestHandler($context);
     }

@@ -23,6 +23,7 @@ use DevNet\Web\Security\Tokens\Csrf\Antiforgery;
 use DevNet\Web\Security\Tokens\Csrf\AntiforgeryOptions;
 use DevNet\Web\Security\Authentication\Authentication;
 use DevNet\Web\Security\Authentication\AuthenticationBuilder;
+use DevNet\Web\Security\Authentication\IAuthentication;
 use DevNet\Web\Security\Authorization\Authorization;
 use DevNet\Web\Security\Authorization\AuthorizationOptions;
 use DevNet\Web\Security\Authorization\IAuthorization;

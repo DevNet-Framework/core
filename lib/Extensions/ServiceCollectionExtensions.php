@@ -14,7 +14,6 @@ use DevNet\Entity\EntityOptions;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Http\Client\HttpClient;
 use DevNet\Web\Http\Client\HttpClientOptions;
-use DevNet\Web\View\ViewManager;
 use DevNet\Web\Endpoint\ControllerOptions;
 use DevNet\Web\Security\Tokens\Csrf\IAntiforgery;
 use DevNet\Web\Security\Tokens\Csrf\Antiforgery;
@@ -54,7 +53,7 @@ class ServiceCollectionExtensions
         $services->addSingleton(HttpClient::class, fn (): HttpClient => new HttpClient($options));
     }
 
-    public static function addMvc(IServiceCollection $services, Closure $configuration = null)
+    public static function addController(IServiceCollection $services, Closure $configuration = null)
     {
         $options = new ControllerOptions();
 
@@ -70,14 +69,7 @@ class ServiceCollectionExtensions
             $options->ViewsDirectory = LauncherProperties::getRootDirectory() . '/' . trim($options->ViewsDirectory);
         }
 
-        $services->addView($options->ViewsDirectory);
-
         $services->addSingleton(ControllerOptions::class, $options);
-    }
-
-    public static function addView(IServiceCollection $services, string $directory)
-    {
-        $services->addSingleton(ViewManager::class, fn ($provider): ViewManager => new ViewManager($directory, $provider));
     }
 
     public static function addAntiforgery(IServiceCollection $services, Closure $configuration = null)

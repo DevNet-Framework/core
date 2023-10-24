@@ -14,10 +14,8 @@ use DevNet\Entity\EntityOptions;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Http\Client\HttpClient;
 use DevNet\Web\Http\Client\HttpClientOptions;
-use DevNet\Web\Routing\RouteBuilder;
 use DevNet\Web\View\ViewManager;
 use DevNet\Web\Endpoint\ControllerOptions;
-use DevNet\Web\Endpoint\ControllerRouteHandler;
 use DevNet\Web\Security\Tokens\Csrf\IAntiforgery;
 use DevNet\Web\Security\Tokens\Csrf\Antiforgery;
 use DevNet\Web\Security\Tokens\Csrf\AntiforgeryOptions;
@@ -36,6 +34,7 @@ use DevNet\System\Database\DbConnection;
 use DevNet\System\Dependency\IServiceCollection;
 use DevNet\System\Logging\ILoggerFactory;
 use DevNet\System\Logging\LoggerFactory;
+use DevNet\System\Runtime\LauncherProperties;
 use Closure;
 
 class ServiceCollectionExtensions
@@ -63,9 +62,17 @@ class ServiceCollectionExtensions
             $configuration($options);
         }
 
-        $services->addView($options->ViewDirectory);
+        if (!is_dir($options->ControllersDirectory)) {
+            $options->ControllersDirectory = LauncherProperties::getRootDirectory() . '/' . trim($options->ControllersDirectory);
+        }
+
+        if (!is_dir($options->ViewsDirectory)) {
+            $options->ViewsDirectory = LauncherProperties::getRootDirectory() . '/' . trim($options->ViewsDirectory);
+        }
+
+        $services->addView($options->ViewsDirectory);
+
         $services->addSingleton(ControllerOptions::class, $options);
-        $services->addSingleton(RouteBuilder::class, fn (): RouteBuilder => new RouteBuilder(new ControllerRouteHandler()));
     }
 
     public static function addView(IServiceCollection $services, string $directory)

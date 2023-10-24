@@ -44,7 +44,7 @@ class EndpointRouteBuilder
     }
 
     /**
-     * Adds a route that matches HTTP requests for the specified path and HTTP method, or any HTTP method if it's not specifed.
+     * Adds a route that matches HTTP requests for the specified path and HTTP method, or any HTTP method if it's not specified.
      */
     public function mapRoute(string $path, string|callable|array $handler, ?string $method = null): IRouteHandler
     {
@@ -99,14 +99,12 @@ class EndpointRouteBuilder
      */
     public function mapControllers()
     {
-        $namespace = $this->options->ControllerNamespace;
-        $dir = str_replace("\\", "/", $namespace);
-        $dir = LauncherProperties::getRootDirectory() . strstr($dir, '/');
-
-        $paths = scandir($dir);
-        foreach ($paths as $path) {
-            if (!in_array($path, array(".", ".."))) {
-                $controllerName = $namespace . "\\" . pathinfo($path, PATHINFO_FILENAME);
+        $baseDirectory = trim(substr(strstr($this->options->ControllersDirectory, "/"), 1));
+        $namespace = $this->options->NamespacePrefix . '\\' . $baseDirectory;
+        $files = scandir($this->options->ControllersDirectory);
+        foreach ($files as $file) {
+            if (!in_array($file, array(".", ".."))) {
+                $controllerName = $namespace . "\\" . pathinfo($file, PATHINFO_FILENAME);
                 if (class_exists($controllerName)) {
                     $controller = new ReflectionClass($controllerName);
                     foreach ($controller->getMethods() as $method) {

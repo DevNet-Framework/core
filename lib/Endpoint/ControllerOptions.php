@@ -9,6 +9,7 @@
 
 namespace DevNet\Web\Endpoint;
 
+use DevNet\System\Runtime\LauncherProperties;
 use DevNet\Web\Endpoint\Binder\IModelBinder;
 use DevNet\Web\Endpoint\Binder\IValueProvider;
 use DevNet\Web\Endpoint\Binder\ModelBinderProvider;
@@ -19,8 +20,9 @@ use DevNet\Web\Endpoint\Binder\Providers\QueryValueProvider;
 
 class ControllerOptions
 {
-    public string $ControllerNamespace = 'Application\\Controllers';
-    public string $ViewDirectory = '../Views/';
+    public string $NamespacePrefix = 'Application';
+    public string $ControllersDirectory = 'Controllers';
+    public string $ViewsDirectory = 'Views';
     public ?IModelBinder $ModelBinder = null;
     private CompositeValueProvider $valueProviders;
     private array $actionFilters = [];

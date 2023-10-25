@@ -97,13 +97,18 @@ class EndpointRouteBuilder
     /**
      * Maps routes from controllers.
      */
-    public function mapControllers()
+    public function mapControllers(?string $area = null)
     {
-        $baseDirectory = trim(substr(strstr($this->options->ControllersDirectory, "/"), 1));
-        $namespace = $this->options->NamespacePrefix . '\\' . $baseDirectory;
-        $files = scandir($this->options->ControllersDirectory);
+        $namespace = $this->options->NamespacePrefix . '\\Controllers';
+        $path = LauncherProperties::getRootDirectory() . '/Controllers';
+        if ($area) {
+            $namespace = $this->options->NamespacePrefix .'\\'. $area .'\\Controllers';
+            $path = LauncherProperties::getRootDirectory() .'/'. $area . '/Controllers';
+        }
+
+        $files = scandir($path);
         foreach ($files as $file) {
-            if (!in_array($file, array(".", ".."))) {
+            if (!in_array($file, array('.', '..'))) {
                 $controllerName = $namespace . "\\" . pathinfo($file, PATHINFO_FILENAME);
                 if (class_exists($controllerName)) {
                     $controller = new ReflectionClass($controllerName);

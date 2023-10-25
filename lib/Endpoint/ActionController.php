@@ -33,7 +33,6 @@ abstract class ActionController
     public function view(array $data = [], ?string $name = null): ViewResult
     {
         if (!$name) {
-            $prefix = $this->HttpContext->Request->RouteValues['prefix'] ?? '';
             $controllerName = $this->ActionContext->ActionDescriptor->ClassName;
             $controllerName = str_replace('Controller', '', $this->ActionContext->ActionDescriptor->ClassName);
             $actionName     = $this->ActionContext->ActionDescriptor->ActionName;
@@ -42,11 +41,11 @@ abstract class ActionController
                 $actionName = substr(strstr($actionName, "_"), 1);
             }
 
-            $name = ucwords($prefix . $controllerName, '/') . '/' . $actionName;
+            $name = $controllerName . '/' . $actionName;
         }
 
-        $options = $this->HttpContext->Services->getService(ControllerOptions::class);
-        $view = new ViewManager($options->ViewsDirectory, $this->HttpContext->Services);
+        $directory = dirname($this->ActionContext->ActionDescriptor->ClassInfo->getFileName(), 2) . '/Views';
+        $view = new ViewManager($directory, $this->HttpContext->Services);
         $antiforgery = $this->HttpContext->Services->getService(IAntiforgery::class);
         if ($antiforgery) {
             $view->inject('Antiforgery', $antiforgery);

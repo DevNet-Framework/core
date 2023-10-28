@@ -17,6 +17,8 @@ class RouteMatcher
 {
     static function matchUrl(string $pattern, string $urlPath): ?array
     {
+        $pattern = strtolower($pattern);
+        $urlPath = strtolower($urlPath);
         $segments = substr_count($pattern, '/') - substr_count($urlPath, '/');
         if ($segments >= 0) {
             $urlPath = $urlPath . str_repeat('/', $segments);

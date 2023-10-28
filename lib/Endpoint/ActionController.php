@@ -44,7 +44,15 @@ abstract class ActionController
             $name = $controllerName . '/' . $actionName;
         }
 
-        $directory = dirname($this->ActionContext->ActionDescriptor->ClassInfo->getFileName(), 2) . '/Views';
+        $options = $this->HttpContext->Services->getService(ControllerOptions::class);
+        $namespace = $this->ActionContext->ActionDescriptor->ClassInfo->getNamespaceName();
+        $segments = explode('\\', $namespace);
+        $area = $segments[1] ?? '';
+        $viewLocation = $options->ViewLocation[$area] ?? null;
+        if (!$viewLocation) {
+            $viewLocation = $options->ViewLocation[''] ?? '/Views';
+        }
+        $directory = dirname($this->ActionContext->ActionDescriptor->ClassInfo->getFileName(), 2) . $viewLocation;
         $view = new ViewManager($directory, $this->HttpContext->Services);
         $antiforgery = $this->HttpContext->Services->getService(IAntiforgery::class);
         if ($antiforgery) {

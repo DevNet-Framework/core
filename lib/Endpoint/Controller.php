@@ -21,7 +21,7 @@ use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Security\Tokens\Csrf\IAntiforgery;
 use DevNet\Web\View\ViewManager;
 
-abstract class ActionController
+abstract class Controller
 {
     use MethodTrait;
     use PropertyTrait;

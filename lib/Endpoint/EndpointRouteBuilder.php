@@ -114,7 +114,7 @@ class EndpointRouteBuilder
                         $className = $namespace . '\\' . $dir->getFilename() . '\\' . pathinfo($file->getFilename(), PATHINFO_FILENAME);
                         if (class_exists($className)) {
                             $parents = class_parents($className);
-                            if (in_array(ActionController::class, $parents)) {
+                            if (in_array(Controller::class, $parents)) {
                                 $controller = new ReflectionClass($className);
                                 foreach ($controller->getMethods() as $method) {
                                     $attribute = $method->getAttributes(Route::class);

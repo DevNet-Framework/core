@@ -58,9 +58,8 @@ class ApplicationBuilderExtensions
 
     public static function useEndpoint(IApplicationBuilder $app, Closure $configure): void
     {
-        $builder = $app->Provider->getService(IRouteBuilder::class);
-        $options = $app->Provider->getService(ControllerOptions::class);
-        $endpointBuilder = new EndpointRouteBuilder($builder, $options);
+        $routeBuilder = $app->Provider->getService(IRouteBuilder::class);
+        $endpointBuilder = new EndpointRouteBuilder($routeBuilder);
         $configure($endpointBuilder);
         $app->use(new EndpointMiddleware());
     }

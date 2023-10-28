@@ -16,6 +16,7 @@ use DevNet\Web\Routing\IRouteBuilder;
 use DevNet\Web\Routing\IRouteHandler;
 use DevNet\Web\Routing\IRouter;
 use DevNet\Web\Routing\RouteHandler;
+use DirectoryIterator;
 use ReflectionClass;
 
 class EndpointRouteBuilder
@@ -24,12 +25,10 @@ class EndpointRouteBuilder
 
     private string $prefix = '';
     private IRouteBuilder $builder;
-    private ControllerOptions $options;
 
-    public function __construct(IRouteBuilder $builder, ControllerOptions $options)
+    public function __construct(IRouteBuilder $builder)
     {
         $this->builder = $builder;
-        $this->options = $options;
     }
 
     /**
@@ -99,24 +98,36 @@ class EndpointRouteBuilder
      */
     public function mapControllers(?string $area = null)
     {
-        $namespace = $this->options->NamespacePrefix . '\\Controllers';
-        $path = LauncherProperties::getRootDirectory() . '/Controllers';
+        $namespace = LauncherProperties::getRootNamespace();
+        $sourceRoot = dirname(LauncherProperties::getEntryPoint()->getFileName());
+
         if ($area) {
-            $namespace = $this->options->NamespacePrefix .'\\'. $area .'\\Controllers';
-            $path = LauncherProperties::getRootDirectory() .'/'. $area . '/Controllers';
+            $area = ucfirst($area);
+            $namespace = $namespace . '\\' . $area;
+            $sourceRoot = $sourceRoot . '/' . $area;
         }
 
-        $files = scandir($path);
-        foreach ($files as $file) {
-            if (!in_array($file, array('.', '..'))) {
-                $controllerName = $namespace . "\\" . pathinfo($file, PATHINFO_FILENAME);
-                if (class_exists($controllerName)) {
-                    $controller = new ReflectionClass($controllerName);
-                    foreach ($controller->getMethods() as $method) {
-                        $attribute = $method->getAttributes(Route::class);
-                        if ($attribute) {
-                            $route = $attribute[0]->newInstance();
-                            $this->builder->map($route->Path, new EndpointRouteHandler([$controllerName, $method->getName()]), $route->Method);
+        foreach (new DirectoryIterator($sourceRoot) as $dir) {
+            if ($dir->isDir() && !$dir->isDot()) {
+                foreach (new DirectoryIterator($dir->getRealPath()) as $file) {
+                    if ($file->isFile()) {
+                        $className = $namespace . '\\' . $dir->getFilename() . '\\' . pathinfo($file->getFilename(), PATHINFO_FILENAME);
+                        if (class_exists($className)) {
+                            $parents = class_parents($className);
+                            if (in_array(ActionController::class, $parents)) {
+                                $controller = new ReflectionClass($className);
+                                foreach ($controller->getMethods() as $method) {
+                                    $attribute = $method->getAttributes(Route::class);
+                                    if ($attribute) {
+                                        $route = $attribute[0]->newInstance();
+                                        $path = $route->Path;
+                                        if ($area) {
+                                            $path = '/' . $area . $route->Path;
+                                        }
+                                        $this->builder->map($path, new EndpointRouteHandler([$className, $method->getName()]), $route->Method);
+                                    }
+                                }
+                            }
                         }
                     }
                 }

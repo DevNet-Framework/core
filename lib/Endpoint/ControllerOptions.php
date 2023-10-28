@@ -9,7 +9,7 @@
 
 namespace DevNet\Web\Endpoint;
 
-use DevNet\System\Runtime\LauncherProperties;
+use DevNet\System\Collections\Dictionary;
 use DevNet\Web\Endpoint\Binder\IModelBinder;
 use DevNet\Web\Endpoint\Binder\IValueProvider;
 use DevNet\Web\Endpoint\Binder\ModelBinderProvider;
@@ -20,16 +20,17 @@ use DevNet\Web\Endpoint\Binder\Providers\QueryValueProvider;
 
 class ControllerOptions
 {
-    public string $NamespacePrefix = 'Application';
-    public string $ControllersDirectory = 'Controllers';
-    public string $ViewsDirectory = 'Views';
+    public Dictionary $ViewLocation;
     public ?IModelBinder $ModelBinder = null;
     private CompositeValueProvider $valueProviders;
     private array $actionFilters = [];
 
     public function __construct()
     {
+        $this->ViewLocation   = new Dictionary('string', 'string');
         $this->valueProviders = new CompositeValueProvider();
+
+        $this->ViewLocation->add('', '/Views');
         $this->valueProviders->add(new QueryValueProvider());
         $this->valueProviders->add(new FormValueProvider());
         $this->valueProviders->add(new FileValueProvider());

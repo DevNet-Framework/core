@@ -61,14 +61,6 @@ class ServiceCollectionExtensions
             $configuration($options);
         }
 
-        if (!is_dir($options->ControllersDirectory)) {
-            $options->ControllersDirectory = LauncherProperties::getRootDirectory() . '/' . trim($options->ControllersDirectory);
-        }
-
-        if (!is_dir($options->ViewsDirectory)) {
-            $options->ViewsDirectory = LauncherProperties::getRootDirectory() . '/' . trim($options->ViewsDirectory);
-        }
-
         $services->addSingleton(ControllerOptions::class, $options);
     }
 

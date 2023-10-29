@@ -24,14 +24,11 @@ class ControllerGenerator implements ICodeGenerator
 
     public function generate(array $parameters): array
     {
+        $name      = $parameters['--name'] ?? 'MyController';
         $output    = $parameters['--output'] ?? 'Controllers';
-        $namespace = str_replace('/', '\\', $output);
-        $namespace = 'Application\\' . $namespace;
+        $namespace = $parameters['--prefix'] ?? 'Application';
+        $namespace = $namespace .'\\' . str_replace('/', '\\', $output);
         $namespace = trim($namespace, '\\');
-        $namespace = ucwords($namespace, '\\');
-        $name      = $parameters['--name'] ?? 'My';
-        $name      = ucfirst($name);
-        $name      = $name . "Controller";
 
         $this->content->clear();
         $this->content->appendLine('<?php');
@@ -40,12 +37,14 @@ class ControllerGenerator implements ICodeGenerator
         $this->content->appendLine();
         $this->content->appendLine('use DevNet\Web\Endpoint\Controller;');
         $this->content->appendLine('use DevNet\Web\Endpoint\IActionResult;');
+        $this->content->appendLine('use DevNet\Web\Endpoint\Route;');
         $this->content->appendLine();
         $this->content->appendLine("class {$name} extends Controller");
         $this->content->appendLine('{');
+        $this->content->appendLine("    #[Route('/')]");
         $this->content->appendLine('    public function index(): IActionResult');
         $this->content->appendLine('    {');
-        $this->content->appendLine('        return $this->view();');
+        $this->content->appendLine('        return $this->content("Hello World!");');
         $this->content->appendLine('    }');
         $this->content->appendLine('}');
 

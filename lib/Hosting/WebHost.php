@@ -48,7 +48,7 @@ class WebHost
             $context = $this->provider->getService(HttpContext::class);
             $context->Items->add('ErrorException', $error);
         }
-        
+
         $this->run();
     }
 
@@ -60,7 +60,7 @@ class WebHost
         $this->server->start($args);
         $context     = $this->provider->getService(HttpContext::class);
         $application = $this->appBuilder->build();
-        
+
         if (PHP_SAPI == 'cli') {
             return;
         }
@@ -93,16 +93,19 @@ class WebHost
     {
         $basePath = LauncherProperties::getRootDirectory();
         $configuration = new ConfigurationBuilder();
-        $configuration->setBasePath($basePath);
-        $configuration->addJsonFile("/settings.json");
+
+        if (is_file($basePath . "/settings.json")) {
+            $configuration->setBasePath($basePath);
+            $configuration->addJsonFile("/settings.json");
+        }
+
         $configuration->addSetting('args', $args);
 
         $services = new ServiceCollection();
-
         $services->addSingleton(IConfiguration::class, function () use ($configuration): IConfiguration {
             return $configuration->build();
         });
-        
+
         $services->addSingleton(HttpContext::class, function ($provider): HttpContext {
             $httpContext = HttpContextFactory::create();
             $httpContext->Services = $provider;

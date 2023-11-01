@@ -33,7 +33,7 @@ abstract class HttpClientHandler
     public function sendAsync(HttpRequest $request): Task
     {
         $sendAsync = async(function ($request) {
-            $socket = new Socket($request->Uri->Host, $request->Uri->Port, $this->Options->Timeout);
+            $socket = new Socket($request->Uri->Host->Name, $request->Uri->Host->Port, $this->Options->Timeout);
             $socket->write(HttpRequestRawBuilder::build($request));
             $responseHeaderRaw = '';
             do {

@@ -27,14 +27,12 @@ class RedirectResult implements IActionResult
         $httpContext = $actionContext->HttpContext;
         $scheme      = $httpContext->Request->Uri->Scheme;
         $host        = $httpContext->Request->Uri->Host;
-        $port        = $httpContext->Request->Uri->Port;
-        $port        = $port != 80 && $port != '' ? ":" . $port : '';
 
         if (strpos($this->path, "/") !== 0) {
             $this->path = "/{$this->path}";
         }
 
-        $url = $scheme . '://' . $host . $port . $this->path;
+        $url = $scheme . '://' . $host . $this->path;
         $httpContext->Response->Headers->add("Location", $url);
         return Task::completedTask();
     }

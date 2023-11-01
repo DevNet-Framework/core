@@ -42,7 +42,7 @@ class HttpClient extends HttpClientHandler
         }
 
         $uri     = new Uri($url);
-        $headers = new Headers(['host' => $uri->Host]);
+        $headers = new Headers(['host' => $uri->Host->Name]);
         $request = new HttpRequest($method, $uri, $headers);
 
         $request->setProtocol($this->Options->HttpVersion);

@@ -15,18 +15,19 @@ class Uri
     public ?string $Host   = null;
     public ?int    $Port   = null;
     public ?string $Path   = null;
-    public ?string $Query  = null;
+    public Query $Query;
 
-    public function __construct(?string $url = null)
+    public function __construct(?string $uri = null)
     {
-        if (!empty($url)) {
-            $this->Scheme = parse_url($url, PHP_URL_SCHEME);
+        $this->Query = new Query();
+        if (!empty($uri)) {
+            $this->Scheme = parse_url($uri, PHP_URL_SCHEME);
             if (!$this->Scheme) {
                 $this->Scheme = 'http';
-                $url = $this->Scheme . '://' . $url;
+                $uri = $this->Scheme . '://' . $uri;
             }
-            $this->Host = parse_url($url, PHP_URL_HOST);
-            $this->Port = parse_url($url, PHP_URL_PORT);
+            $this->Host = parse_url($uri, PHP_URL_HOST);
+            $this->Port = parse_url($uri, PHP_URL_PORT);
             if (!$this->Port) {
                 if ($this->Scheme == 'https') {
                     $this->Port = 443;
@@ -34,19 +35,20 @@ class Uri
                     $this->Port = 80;
                 }
             }
-            $this->Path  = parse_url($url, PHP_URL_PATH);
-            $this->Query = parse_url($url, PHP_URL_QUERY);
+            $this->Path = parse_url($uri, PHP_URL_PATH);
+            $query = parse_url($uri, PHP_URL_QUERY);
+            $this->Query = new Query($query);
         }
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         $uri = '';
         $uri .= !empty($this->Scheme) ? $this->Scheme . "://" : null;
         $uri .= $this->Host;
         $uri .= ($this->Port != 80 && $this->Port != 443) ? ':' . $this->Port : null;
         $uri .= !empty($this->Path) ? $this->Path : '/';
-        $uri .= !empty($this->Query) ? '?' . $this->Query : null;
+        $uri .= !empty($this->Query->__toString()) ? '?' . $this->Query : null;
 
         return $uri;
     }

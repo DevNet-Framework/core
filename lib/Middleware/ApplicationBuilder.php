@@ -13,6 +13,7 @@ use DevNet\System\Async\Task;
 use DevNet\System\Dependency\IServiceProvider;
 use DevNet\System\MethodTrait;
 use DevNet\System\PropertyTrait;
+use DevNet\Web\Hosting\WebHostEnvironment;
 use DevNet\Web\Http\HttpContext;
 
 class ApplicationBuilder implements IApplicationBuilder
@@ -20,12 +21,19 @@ class ApplicationBuilder implements IApplicationBuilder
     use MethodTrait;
     use PropertyTrait;
 
+    private WebHostEnvironment $environment;
     private IServiceProvider $provider;
     private array $middlewares = [];
 
-    public function __construct(IServiceProvider $provider)
+    public function __construct(WebHostEnvironment $environment, IServiceProvider $provider)
     {
+        $this->environment = $environment;
         $this->provider = $provider;
+    }
+
+    public function get_Environment(): WebHostEnvironment
+    {
+        return $this->environment;
     }
 
     public function get_Provider(): IServiceProvider

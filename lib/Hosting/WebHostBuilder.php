@@ -26,12 +26,14 @@ class WebHostBuilder implements IWebHostBuilder
     private IConfiguration $configuration;
     private IServiceCollection $services;
     private ServiceProvider $provider;
+    private WebHostEnvironment $environment;
 
     public function __construct(IConfiguration $configuration, IServiceCollection $services)
     {
         $this->configuration = $configuration;
         $this->services      = $services;
         $this->provider      = new ServiceProvider($services);
+        $this->environment   = new WebHostEnvironment();
     }
 
     public function get_Configuration(): IConfiguration
@@ -70,6 +72,6 @@ class WebHostBuilder implements IWebHostBuilder
 
     public function build(): WebHost
     {
-        return new WebHost(new ApplicationBuilder($this->provider));
+        return new WebHost(new ApplicationBuilder($this->environment, $this->provider));
     }
 }

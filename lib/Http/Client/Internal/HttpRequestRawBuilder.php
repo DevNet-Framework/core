@@ -19,7 +19,7 @@ class HttpRequestRawBuilder
         $requestRaw = new StringBuilder();
         $requestRaw->append($request->Method);
         $requestRaw->append(' ');
-        $requestRaw->append($request->Uri->Path);
+        $requestRaw->append($request->Path);
         $requestRaw->append(' ');
         $requestRaw->append($request->Protocol);
         $requestRaw->append("\r\n");

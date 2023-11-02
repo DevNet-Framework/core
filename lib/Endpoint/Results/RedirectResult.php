@@ -25,8 +25,8 @@ class RedirectResult implements IActionResult
     public function __invoke(ActionContext $actionContext): Task
     {
         $httpContext = $actionContext->HttpContext;
-        $scheme      = $httpContext->Request->Uri->Scheme;
-        $host        = $httpContext->Request->Uri->Host;
+        $scheme      = $httpContext->Request->Scheme;
+        $host        = $httpContext->Request->Host;
 
         if (strpos($this->path, "/") !== 0) {
             $this->path = "/{$this->path}";

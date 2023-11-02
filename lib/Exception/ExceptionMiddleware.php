@@ -50,7 +50,7 @@ class ExceptionMiddleware implements IMiddleware
             $context->Items->add('ErrorException', $error);
             if ($this->errorHandlingPath) {
                 // Change the path to the custom handler
-                $context->Request->Uri->Path = $this->errorHandlingPath;
+                $context->Request->Path = $this->errorHandlingPath;
                 await($next($context));
                 return;
             }

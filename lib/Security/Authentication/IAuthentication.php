@@ -13,9 +13,9 @@ use DevNet\Web\Security\Claims\ClaimsIdentity;
 
 interface IAuthentication
 {
-    public function authenticate(?string $scheme): AuthenticationResult;
+    public function authenticate(?string $scheme = null): AuthenticationResult;
 
-    public function signIn(ClaimsIdentity $user, bool $isPersistent, ?string $scheme): void;
+    public function signIn(ClaimsIdentity $user, bool $isPersistent = false, ?string $scheme = null): void;
 
-    public function signOut(?string $scheme): void;
+    public function signOut(?string $scheme = null): void;
 }

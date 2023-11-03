@@ -1,25 +1,24 @@
 # DevNet Web
 This dependency is a part of **DevNet Framework**, which includes the following web components:
 
-- Middleware dispatcher
-- HTTP Messages
+- HTTP Context
 - HTTP Client
+- Middleware Dispatcher
 - Routing System
 - MVC Controller
-- Template engine
+- Action Filter
+- Template Engine
 - Error Handler
-- Antiforgery
 - Authentication
 - Authorization
-- Identity Manager
+- Antiforgery
 
 ## Requirements
 - [DevNet Core](https://github.com/DevNet-Framework/core/) version 1.0
 - [Composer](https://getcomposer.org/) version 2.0 or higher
 
 ## Installation
-
-You can install DevNet Web to your project or integrate it as a third-party library in your existing framework, using composer by running the following command in your terminal:
+You can install DevNet Web as a third-party library to work with any PHP project, by running the following command in the terminal:
 ```
 composer require devnet/web
 ```

@@ -12,7 +12,7 @@ namespace DevNet\Web\Http;
 use DevNet\System\Collections\Enumerator;
 use DevNet\System\Collections\IEnumerable;
 
-class FileCollection implements IEnumerable
+class FormFileCollection implements IEnumerable
 {
     private array $files = [];
 

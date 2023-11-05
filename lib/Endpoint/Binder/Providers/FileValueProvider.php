@@ -10,19 +10,19 @@
 namespace DevNet\Web\Endpoint\Binder\Providers;
 
 use DevNet\Web\Endpoint\Binder\IValueProvider;
-use DevNet\Web\Http\FileCollection;
+use DevNet\Web\Http\FormFileCollection;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.
  */
 class FileValueProvider implements IValueProvider
 {
-    private FileCollection $files;
+    private FormFileCollection $files;
 
-    public function __construct(FileCollection $files = null)
+    public function __construct(FormFileCollection $files = null)
     {
         if (!$files) {
-            $files = new FileCollection();
+            $files = new FormFileCollection();
         }
         $this->files = $files;
     }

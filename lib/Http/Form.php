@@ -16,16 +16,16 @@ class Form
     use PropertyTrait;
 
     private array $fields;
-    private FileCollection $files;
+    private FormFileCollection $files;
 
-    public function __construct(array $fields = null, FileCollection $files = null)
+    public function __construct(array $fields = null, FormFileCollection $files = null)
     {
         if (!$fields) {
             $fields = $_POST;
         }
 
         if (!$files) {
-            $files = new FileCollection();
+            $files = new FormFileCollection();
         }
 
         $this->fields = $fields;
@@ -37,7 +37,7 @@ class Form
         return $this->fields;
     }
 
-    public function get_Files(): FileCollection
+    public function get_Files(): FormFileCollection
     {
         return $this->files;
     }

@@ -50,7 +50,7 @@ class HttpContextFactory
             }
         }
 
-        $fileCollection = new FileCollection();
+        $fileCollection = new FormFileCollection();
         foreach ($files as $name => $upload) {
             foreach ($upload as $file) {
                 $formFile = new FormFile($file['name'], $file['type'], $file['tmp_name'], $file['size'], $file['error']);

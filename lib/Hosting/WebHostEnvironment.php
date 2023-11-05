@@ -29,7 +29,7 @@ class WebHostEnvironment
 
     public function isProduction(): bool
     {
-        if ($this->EnvironmentName == 'Production') {
+        if (strtolower($this->EnvironmentName) == 'production') {
             return true;
         }
 
@@ -38,7 +38,7 @@ class WebHostEnvironment
 
     public function IsDevelopment(): bool
     {
-        if ($this->EnvironmentName == 'Development') {
+        if (strtolower($this->EnvironmentName) == 'development') {
             return true;
         }
 

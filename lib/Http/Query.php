@@ -18,33 +18,33 @@ class Query implements IEnumerable
     use PropertyTrait;
 
     private string $queryString;
-    private array $items;
+    private array $values;
 
     public function __construct(?string $queryString = null)
     {
         $this->queryString = (string) $queryString;
         parse_str($this->queryString, $output);
-        $this->items = $output;
+        $this->values = $output;
     }
 
-    public function get_Items(): array
+    public function get_Values(): array
     {
-        return $this->items;
+        return $this->values;
     }
 
     public function Contains(string $key): bool
     {
-        return isset($this->items[$key]) ? true : false;
+        return isset($this->values[$key]) ? true : false;
     }
 
     public function getValue(string $key): ?string
     {
-        return $this->items[$key] ?? null;
+        return $this->values[$key] ?? null;
     }
 
     public function getIterator(): Enumerator
     {
-        return new Enumerator($this->items);
+        return new Enumerator($this->values);
     }
 
     public function __toString(): string

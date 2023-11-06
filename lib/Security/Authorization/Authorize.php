@@ -56,7 +56,7 @@ class Authorize implements IActionFilter
 
         $result = $authorization->authorize($user, $this->policy);
         if (!$result->IsSucceeded) {
-            $requirement = $result->failedRequirements[0] ?? null;
+            $requirement = $result->FailedRequirements[0] ?? null;
             if ($requirement instanceof AuthenticationRequirement) {
                 throw new AuthenticationException("The current user is not authenticated!", 401);
             }

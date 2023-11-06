@@ -24,7 +24,7 @@ class AuthorizationResult
     public function __construct(array $failedRequirements = [])
     {
         if ($failedRequirements) {
-            $this->succeeded = false;
+            $this->isSucceeded = false;
             $this->failedRequirements = $failedRequirements;
         }
     }

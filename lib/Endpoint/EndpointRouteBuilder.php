@@ -18,6 +18,7 @@ use DevNet\Web\Routing\IRouter;
 use DevNet\Web\Routing\RouteHandler;
 use DirectoryIterator;
 use ReflectionClass;
+use Closure;
 
 class EndpointRouteBuilder
 {
@@ -96,8 +97,13 @@ class EndpointRouteBuilder
     /**
      * Maps routes from controllers.
      */
-    public function mapControllers(?string $area = null)
+    public function mapControllers(?string $area = null, Closure $configure = null)
     {
+        $options = new ControllerOptions();
+        if ($configure) {
+            $configure($options);
+        }
+
         $namespace = LauncherProperties::getRootNamespace();
         $sourceRoot = dirname(LauncherProperties::getEntryPoint()->getFileName());
 
@@ -124,7 +130,7 @@ class EndpointRouteBuilder
                                         if ($area) {
                                             $path = '/' . $area . $route->Path;
                                         }
-                                        $this->builder->map($path, new EndpointRouteHandler([$className, $method->getName()]), $route->Method);
+                                        $this->builder->map($path, new EndpointRouteHandler([$className, $method->getName()], $options), $route->Method);
                                     }
                                 }
                             }

@@ -44,14 +44,11 @@ abstract class Controller
             $name = $controllerName . '/' . $actionName;
         }
 
-        $options = $this->HttpContext->Services->getService(ControllerOptions::class);
-        $namespace = $this->ActionContext->ActionDescriptor->ClassInfo->getNamespaceName();
-        $segments = explode('\\', $namespace);
-        $area = $segments[1] ?? '';
-        $viewLocation = $options->ViewLocation[$area] ?? null;
+        $viewLocation = $this->ActionContext->ValueProvider->getValue('ViewLocation');
         if (!$viewLocation) {
-            $viewLocation = $options->ViewLocation[''] ?? '/Views';
+            $viewLocation = '/Views';
         }
+
         $directory = dirname($this->ActionContext->ActionDescriptor->ClassInfo->getFileName(), 2) . $viewLocation;
         $view = new ViewManager($directory, $this->HttpContext->Services);
         $antiforgery = $this->HttpContext->Services->getService(IAntiforgery::class);

@@ -20,17 +20,14 @@ use DevNet\Web\Endpoint\Binder\Providers\QueryValueProvider;
 
 class ControllerOptions
 {
-    public Dictionary $ViewLocation;
+    public string $ViewLocation = '/Views';
     public ?IModelBinder $ModelBinder = null;
     private CompositeValueProvider $valueProviders;
     private array $actionFilters = [];
 
     public function __construct()
     {
-        $this->ViewLocation   = new Dictionary('string', 'string');
         $this->valueProviders = new CompositeValueProvider();
-
-        $this->ViewLocation->add('', '/Views');
         $this->valueProviders->add(new QueryValueProvider());
         $this->valueProviders->add(new FormValueProvider());
         $this->valueProviders->add(new FileValueProvider());

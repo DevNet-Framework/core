@@ -15,6 +15,7 @@ use DevNet\System\Exceptions\MethodException;
 use DevNet\System\Exceptions\TypeException;
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Endpoint\Binder\Providers\RouteValueProvider;
+use DevNet\Web\Endpoint\Binder\Providers\ValueProvider;
 use DevNet\Web\Routing\IRouteHandler;
 use DevNet\Web\Routing\RouteContext;
 
@@ -23,8 +24,9 @@ class EndpointRouteHandler implements IRouteHandler
     use PropertyTrait;
 
     private array $target;
+    private ControllerOptions $options;
 
-    public function __construct(array $target)
+    public function __construct(array $target, ControllerOptions $options)
     {
         if (is_array($target)) {
             if (!is_string($target[0]) || !is_string($target[1])) {
@@ -33,6 +35,7 @@ class EndpointRouteHandler implements IRouteHandler
         }
 
         $this->target = $target;
+        $this->options = $options;
     }
 
     public function handle(RouteContext $routeContext): Task
@@ -51,12 +54,12 @@ class EndpointRouteHandler implements IRouteHandler
             }
         }
 
-        $options = $routeContext->HttpContext->Services->getService(ControllerOptions::class);
-        $valueProvider = $options->getValueProviders();
-        $valueProvider->add(new RouteValueProvider($routeContext->RouteData->Values));
+        $valueProviders = $this->options->getValueProviders();
+        $valueProviders->add(new RouteValueProvider($routeContext->RouteData->Values));
+        $valueProviders->add(new ValueProvider(['ViewLocation' => $this->options->ViewLocation]));
 
         $actionDescriptor = new ActionDescriptor($controllerName, $actionName);
-        $invoker = new ActionInvoker($actionDescriptor, $valueProvider);
+        $invoker = new ActionInvoker($actionDescriptor, $valueProviders);
         $routeContext->Handler = $invoker;
 
         return Task::completedTask();

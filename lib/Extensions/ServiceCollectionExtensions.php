@@ -32,71 +32,60 @@ use Closure;
 
 class ServiceCollectionExtensions
 {
-    public static function addLogging(IServiceCollection $services, Closure $configuration = null)
+    public static function addLogging(IServiceCollection $services, Closure $configure = null)
     {
-        $services->addSingleton(ILoggerFactory::class, fn (): ILoggerFactory => LoggerFactory::Create($configuration));
+        $services->addSingleton(ILoggerFactory::class, fn (): ILoggerFactory => LoggerFactory::Create($configure));
     }
 
-    public static function addHttpClient(IServiceCollection $services, Closure $configuration = null)
+    public static function addHttpClient(IServiceCollection $services, Closure $configure = null)
     {
         $options = new HttpClientOptions();
-        if ($configuration) {
-            $configuration($options);
+        if ($configure) {
+            $configure($options);
         }
 
         $services->addSingleton(HttpClient::class, fn (): HttpClient => new HttpClient($options));
     }
 
-    public static function addController(IServiceCollection $services, Closure $configuration = null)
-    {
-        $options = new ControllerOptions();
-
-        if ($configuration) {
-            $configuration($options);
-        }
-
-        $services->addSingleton(ControllerOptions::class, $options);
-    }
-
-    public static function addAntiforgery(IServiceCollection $services, Closure $configuration = null)
+    public static function addAntiforgery(IServiceCollection $services, Closure $configure = null)
     {
         $options = new AntiforgeryOptions();
-        if ($configuration) {
-            $configuration($options);
+        if ($configure) {
+            $configure($options);
         }
 
         $services->addSingleton(IAntiforgery::class, fn (): IAntiforgery => new Antiforgery($options));
     }
 
-    public static function addAuthentication(IServiceCollection $services, Closure $configuration)
+    public static function addAuthentication(IServiceCollection $services, Closure $configure)
     {
-        $services->addSingleton(IAuthentication::class, function ($provider) use ($configuration): Authentication {
+        $services->addSingleton(IAuthentication::class, function ($provider) use ($configure): Authentication {
             $builder = new AuthenticationBuilder($provider->getService(HttpContext::class));
-            $configuration($builder);
+            $configure($builder);
             return $builder->build();
         });
     }
 
-    public static function addAuthorization(IServiceCollection $services, Closure $configuration = null)
+    public static function addAuthorization(IServiceCollection $services, Closure $configure = null)
     {
         $options = new AuthorizationOptions();
-        if ($configuration) {
-            $configuration($options);
+        if ($configure) {
+            $configure($options);
         }
 
         $services->addSingleton(IAuthorization::class, fn (): Authorization => new Authorization($options));
     }
 
-    public static function addDbConnection(IServiceCollection $services, string $datasource, string $username = "", string $password = "")
+    public static function addDbConnection(IServiceCollection $services, string $dataSource, string $username = "", string $password = "")
     {
-        $services->addSingleton(DbConnection::class, fn (): DbConnection => new DbConnection($datasource, $username, $password));
+        $services->addSingleton(DbConnection::class, fn (): DbConnection => new DbConnection($dataSource, $username, $password));
     }
 
-    public static function addEntityContext(IServiceCollection $services, string $contextType, Closure $configuration = null)
+    public static function addEntityContext(IServiceCollection $services, string $contextType, Closure $configure = null)
     {
         $options = new EntityOptions();
-        if ($configuration) {
-            $configuration($options);
+        if ($configure) {
+            $configure($options);
         }
 
         $services->addSingleton($contextType, fn (): EntityContext => new $contextType($options));

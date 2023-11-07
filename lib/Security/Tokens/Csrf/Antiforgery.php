@@ -39,7 +39,7 @@ class Antiforgery implements IAntiforgery
     public function getToken(): AntiforgeryToken
     {
         $token = $this->store->getCookieToken();
-        if (!$token) {
+        if ($token) {
             return $token;
         }
 

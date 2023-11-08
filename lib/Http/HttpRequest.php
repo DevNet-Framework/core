@@ -36,9 +36,9 @@ class HttpRequest extends HttpMessage
         $this->cookies = new Cookies($this->Headers);
         $this->body    = $body ?? new FileStream('php://temp', FileMode::Open, FileAccess::ReadWrite);
         $this->form    = $form ?? new Form();
+        $this->scheme  = (string) parse_url($url, PHP_URL_SCHEME);
 
-        $scheme = parse_url($url, PHP_URL_SCHEME);
-        if (!$scheme) {
+        if (!$this->scheme) {
             $this->scheme = 'http';
             $url = $this->scheme . '://' . $url;
         }

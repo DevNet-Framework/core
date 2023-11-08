@@ -10,6 +10,7 @@
 namespace DevNet\Web\Endpoint\Binder;
 
 use ReflectionMethod;
+use ReflectionProperty;
 
 class ModelBinder implements IModelBinder
 {
@@ -22,7 +23,7 @@ class ModelBinder implements IModelBinder
             $query  = $bindingContext->ActionContext->HttpContext->Request->Query;
             foreach ($query as $name => $value) {
                 if (property_exists($model, $name)) {
-                    $method = new ReflectionMethod($model, $name);
+                    $method = new ReflectionProperty($model, $name);
                     if ($method->isPublic()) {
                         $model->$name = $value;
                     }
@@ -32,7 +33,7 @@ class ModelBinder implements IModelBinder
             $form  = $bindingContext->ActionContext->HttpContext->Request->Form;
             foreach ($form->Fields as $name => $value) {
                 if (property_exists($model, $name)) {
-                    $method = new ReflectionMethod($model, $name);
+                    $method = new ReflectionProperty($model, $name);
                     if ($method->isPublic()) {
                         $model->$name = $value;
                     }

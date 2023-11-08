@@ -51,7 +51,9 @@ abstract class Controller
 
         $directory = dirname($this->ActionContext->ActionDescriptor->ClassInfo->getFileName(), 2) . $viewLocation;
         $view = new ViewManager($directory, $this->HttpContext->Services);
-        $antiforgery = $this->HttpContext->Services->getService(IAntiforgery::class);
+        $view->inject('User', $this->ActionContext->HttpContext->User);
+
+        $antiforgery = $this->ActionContext->HttpContext->Services->getService(IAntiforgery::class);
         if ($antiforgery) {
             $view->inject('Antiforgery', $antiforgery);
         }

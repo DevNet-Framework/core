@@ -36,7 +36,7 @@ class Host
 
     public function __toString(): string
     {
-        $host = $this->port ? $this->host . ':' . $this->port : $this->host;
+        $host = $this->port ? $this->name . ':' . $this->port : $this->host;
         return $host;
     }
 }

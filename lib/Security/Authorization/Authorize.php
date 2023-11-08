@@ -44,7 +44,7 @@ class Authorize implements IActionFilter
         }
 
         $user = $context->HttpContext->User;
-        if ($this->scheme != $user->AuthenticationType) {
+        if ($this->scheme && $this->scheme != $user->AuthenticationType) {
             // Sets unauthenticated user for unmatched scheme only for this filter.
             $user = new ClaimsIdentity();
         }

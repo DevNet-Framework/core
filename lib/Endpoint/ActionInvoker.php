@@ -107,8 +107,8 @@ class ActionInvoker implements IRequestHandler
                     return $task->Result;
                 });
             } else {
-                $action = new Action([$instance, $context->ActionDescriptor->ActionName]);
-                $actionResult = $action->invoke($arguments);
+                $action = $context->ActionDescriptor->ActionName;
+                $actionResult = $instance->$action(...$arguments);
                 return $actionResult($context);
             }
         });

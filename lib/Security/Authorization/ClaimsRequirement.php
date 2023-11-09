@@ -45,10 +45,10 @@ class ClaimsRequirement implements IAuthorizationRequirement, IAuthorizationHand
         $user = $context->User;
         if ($user) {
             if ($this->allowedValues) {
-                $found = $user->findClaims(fn ($claim) => $claim->Type == $this->claimType
-                    && in_array($claim->Value, $this->allowedValues));
+                $found = $user->findClaims(fn ($claim) =>(strtolower($claim->Type) == strtolower($this->claimType)
+                && in_array($claim->Value, $this->allowedValues)));
             } else {
-                $found = $user->findClaims(fn ($claim) => $claim->Type == $this->claimType);
+                $found = $user->findClaims(fn ($claim) => strtolower($claim->Type) == strtolower($this->claimType));
             }
 
             if ($found) {

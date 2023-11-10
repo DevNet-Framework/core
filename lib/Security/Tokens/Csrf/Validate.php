@@ -30,7 +30,7 @@ class Validate implements IActionFilter
         $result = $antiforgery->validateToken($context->HttpContext);
 
         if (!$result) {
-            throw new AntiforgeryException("Invalid Antiforgery Token!");
+            throw new AntiforgeryException("Invalid Antiforgery Token!", 403);
         }
 
         return $next($context);

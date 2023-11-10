@@ -10,10 +10,9 @@
 namespace DevNet\Web\Extensions;
 
 use DevNet\System\Exceptions\ClassException;
-use DevNet\Web\Endpoint\ControllerOptions;
 use DevNet\Web\Endpoint\EndpointMiddleware;
 use DevNet\Web\Endpoint\EndpointRouteBuilder;
-use DevNet\Web\Exception\ExceptionMiddleware;
+use DevNet\Web\Exception\ExceptionHandlerMiddleware;
 use DevNet\Web\Middleware\IApplicationBuilder;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Routing\RouterMiddleware;
@@ -41,9 +40,9 @@ class ApplicationBuilderExtensions
         $app->use($middleware);
     }
 
-    public static function UseExceptionHandler(IApplicationBuilder $app, ?string $errorHandlingPath = ''): void
+    public static function UseExceptionHandler(IApplicationBuilder $app, ?string $errorHandlingPath = null): void
     {
-        $app->use(new ExceptionMiddleware($errorHandlingPath));
+        $app->use(new ExceptionHandlerMiddleware($errorHandlingPath));
     }
 
     public static function useRouter(IApplicationBuilder $app): void

@@ -9,7 +9,6 @@
 
 namespace DevNet\Web\Exception;
 
-use DevNet\System\Async\Task;
 use DevNet\System\MethodTrait;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;
@@ -19,16 +18,9 @@ use Throwable;
 
 use function Devnet\System\await;
 
-class ExceptionMiddleware implements IMiddleware
+class ExceptionPageMiddleware implements IMiddleware
 {
     use MethodTrait;
-
-    private ?string $errorHandlingPath;
-
-    public function __construct(?string $errorHandlingPath = null)
-    {
-        $this->errorHandlingPath = $errorHandlingPath;
-    }
 
     public function async_invoke(HttpContext $context, RequestDelegate $next): void
     {
@@ -39,33 +31,18 @@ class ExceptionMiddleware implements IMiddleware
                 throw new $error;
             }
 
-            // Need to remove the previous headers and body of the response the send only the error report.
+            // Need to remove the previous headers and body of the response to send only the error report.
             $context->Response->Body->truncate(0);
             $headerNames = array_keys($context->Response->Headers->getAll());
             foreach ($headerNames as $name) {
                 $context->Response->Headers->remove($name);
             }
 
-            // Store the error to be handled later by the exception handler or by the custom handler.
-            $context->Items->add('ErrorException', $error);
-            if ($this->errorHandlingPath) {
-                // Change the path to the custom handler
-                $context->Request->Path = $this->errorHandlingPath;
-                await($next($context));
-                return;
-            }
-
-            await($this->handel($context));
+            // Display the error exception page report.
+            $data = $this->parse($error);
+            $view = new ViewManager(__DIR__ . '/Views');
+            await($context->Response->writeAsync($view->render('ExceptionView', $data)));
         }
-    }
-
-    public function handel(HttpContext $context): Task
-    {
-        $error = $context->Items['ErrorException'];
-        $data  = $this->parse($error);
-        $view  = new ViewManager(__DIR__ . '/Views');
-        $context->Response->Body->write($view->render('ExceptionView', $data));
-        return Task::completedTask();
     }
 
     public function parse(Throwable $error): array
@@ -95,9 +72,9 @@ class ExceptionMiddleware implements IMiddleware
             $severity = $severities[E_ERROR];
         }
 
-        $firstfile = $trace[0]['file'] ?? null;
+        $firstFile = $trace[0]['file'] ?? null;
 
-        if ($error->getFile() == $firstfile) {
+        if ($error->getFile() == $firstFile) {
             array_shift($trace);
         }
 

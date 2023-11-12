@@ -30,8 +30,6 @@ class AuthenticationBuilder
     public function addCookie(string $authenticationScheme = AuthenticationScheme::CookieSession, Closure $configuration = null): void
     {
         $options = new AuthenticationCookieOptions();
-        $options->CookieName .= "-" . md5(LauncherProperties::getRootDirectory());
-
         if ($configuration) {
             $configuration($options);
         }

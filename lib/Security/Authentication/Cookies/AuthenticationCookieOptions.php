@@ -9,6 +9,7 @@
 
 namespace DevNet\Web\Security\Authentication\Cookies;
 
+use DevNet\System\Runtime\LauncherProperties;
 use DevNet\System\TimeSpan;
 
 class AuthenticationCookieOptions
@@ -21,6 +22,10 @@ class AuthenticationCookieOptions
     {
         $this->CookieName = $cookieName;
         $this->CookiePath = $cookiePath;
+
+        if ($this->CookieName == 'Identity') {
+            $this->CookieName .= "-" . md5(LauncherProperties::getRootDirectory());
+        }
 
         if (!$expireTime) {
             $this->ExpireTime = TimeSpan::fromDays(7);

@@ -25,14 +25,11 @@ class ValueProvider implements IValueProvider
 
     /**
      * @return mixed Finds an entry of the container by its identifier and returns it.
+     * Return null if the entry does not exist.
      */
     public function getValue(string $key)
     {
-        if (isset($this->values[$key])) {
-            return $this->values[$key];
-        }
-
-        throw new \Exception("No entry was found");
+        return $this->values[$key] ?? null;
     }
 
     /**

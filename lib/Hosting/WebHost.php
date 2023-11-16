@@ -45,10 +45,15 @@ class WebHost
             return;
         }
 
+        $context = $this->provider->getService(HttpContext::class);
         try {
+            // Must throw the previous error exception if it exists, before catching the next one.
+            $error = $context->Items['ErrorException'] ?? null;
+            if ($error) {
+                throw $error;
+            }
             $configure($this->appBuilder);
         } catch (\Throwable $error) {
-            $context = $this->provider->getService(HttpContext::class);
             $context->Items->add('ErrorException', $error);
         }
 

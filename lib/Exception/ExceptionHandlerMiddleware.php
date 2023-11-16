@@ -31,6 +31,11 @@ class ExceptionHandlerMiddleware implements IMiddleware
     public function async_invoke(HttpContext $context, RequestDelegate $next): void
     {
         try {
+            // Must throw the previous error exception if it exists, before catching the next one.
+            $error = $context->Items['ErrorException'] ?? null;
+            if ($error) {
+                throw $error;
+            }
             await($next($context));
         } catch (Throwable $error) {
             if (PHP_SAPI == 'cli') {

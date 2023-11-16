@@ -25,13 +25,18 @@ class ExceptionPageMiddleware implements IMiddleware
     public function async_invoke(HttpContext $context, RequestDelegate $next): void
     {
         try {
+            // Must throw the previous error exception if it exists, before catching the next one.
+            $error = $context->Items['ErrorException'] ?? null;
+            if ($error) {
+                throw $error;
+            }
             await($next($context));
         } catch (Throwable $error) {
             if (PHP_SAPI == 'cli') {
                 throw new $error;
             }
 
-            // Need to remove the previous headers and body of the response to send only the error report.
+            // Must remove the previous headers and body of the response to send only the error report.
             $context->Response->Body->truncate(0);
             $headerNames = array_keys($context->Response->Headers->getAll());
             foreach ($headerNames as $name) {

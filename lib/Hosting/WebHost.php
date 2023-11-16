@@ -91,9 +91,7 @@ class WebHost
         // Output the message body.
         if ($context->Response->Body->Length > 0) {
             $response->Body->seek(0);
-            while (!$response->Body->EndOfStream) {
-                echo $response->Body->read(1024 * 4);
-            }
+            echo $response->Body->read($response->Body->Length);
         }
     }
 

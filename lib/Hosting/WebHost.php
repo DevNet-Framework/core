@@ -14,7 +14,7 @@ use DevNet\System\Configuration\IConfiguration;
 use DevNet\System\Dependency\IServiceProvider;
 use DevNet\System\Dependency\ServiceCollection;
 use DevNet\System\Runtime\LauncherProperties;
-use DevNet\Web\Exception\ExceptionPageMiddleware;
+use DevNet\Web\Exception\ExceptionHandlerMiddleware;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Http\HttpContextFactory;
 use DevNet\Web\Middleware\IApplicationBuilder;
@@ -37,7 +37,9 @@ class WebHost
 
     public function start(Closure $configure): void
     {
-        $this->appBuilder->use(new ExceptionPageMiddleware());
+        if ($this->appBuilder->Environment->isDevelopment()) {
+            $this->appBuilder->use(new ExceptionHandlerMiddleware());
+        }
 
         if (PHP_SAPI == 'cli') {
             $configure($this->appBuilder);

@@ -19,7 +19,7 @@ use DevNet\Web\Endpoint\Binder\Providers\ValueProvider;
 use DevNet\Web\Routing\IRouteHandler;
 use DevNet\Web\Routing\RouteContext;
 
-class EndpointRouteHandler implements IRouteHandler
+class ControllerRouteHandler implements IRouteHandler
 {
     use PropertyTrait;
 
@@ -43,12 +43,12 @@ class EndpointRouteHandler implements IRouteHandler
         $controllerName = $this->target[0];
         $actionName = $this->target[1];
         if (!class_exists($controllerName)) {
-            throw new ClassException("Could not find the class {$controllerName}", 404);
+            throw new ClassException("Could not find the class {$controllerName}");
         }
 
         if (!method_exists($controllerName, $actionName)) {
             if (!method_exists($controllerName, "async_" . $actionName)) {
-                throw new MethodException("Call to undefined method {$controllerName}::{$actionName}()", 404);
+                throw new MethodException("Call to undefined method {$controllerName}::{$actionName}()");
             } else {
                 $actionName = "async_" . $actionName;
             }

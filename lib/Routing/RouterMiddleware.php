@@ -35,7 +35,10 @@ class RouterMiddleware implements IMiddleware
             $context->Items->add('RouteHandler', $routeContext->Handler);
             $context->Request->RouteValues = $routeContext->RouteData->Values;
         } else {
-            throw new RouterException("No route matches your request", 404);
+            if (isset($routeContext->RouteData->Routers['forbidden'])) {
+                throw new RouterException("The request method '{$context->Request->Method}' not allowed for the matched route!", 405);
+            }
+            throw new RouterException("No route matches your request!", 404);
         }
 
         return $next($context);

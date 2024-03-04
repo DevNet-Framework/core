@@ -9,9 +9,9 @@
 namespace DevNet\Web\Extensions;
 
 use DevNet\System\Exceptions\ClassException;
+use DevNet\Web\Diagnostics\ExceptionHandlerMiddleware;
 use DevNet\Web\Endpoint\EndpointMiddleware;
 use DevNet\Web\Endpoint\EndpointRouteBuilder;
-use DevNet\Web\Exception\ExceptionHandlerMiddleware;
 use DevNet\Web\Middleware\IApplicationBuilder;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Routing\RouterMiddleware;

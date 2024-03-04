@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Exception;
+namespace DevNet\Web\Diagnostics;
 
 use DevNet\System\MethodTrait;
 use DevNet\Web\Http\HttpContext;

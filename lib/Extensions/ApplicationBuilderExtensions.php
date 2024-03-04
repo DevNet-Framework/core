@@ -12,7 +12,7 @@ use DevNet\System\Exceptions\ClassException;
 use DevNet\Web\Diagnostics\ExceptionHandlerMiddleware;
 use DevNet\Web\Endpoint\EndpointMiddleware;
 use DevNet\Web\Endpoint\EndpointRouteBuilder;
-use DevNet\Web\Middleware\IApplicationBuilder;
+use DevNet\Web\Hosting\IApplicationBuilder;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Routing\RouterMiddleware;
 use DevNet\Web\Routing\IRouteBuilder;

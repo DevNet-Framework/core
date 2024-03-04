@@ -16,7 +16,6 @@ use DevNet\System\Runtime\LauncherProperties;
 use DevNet\Web\Diagnostics\ExceptionHandlerMiddleware;
 use DevNet\Web\Http\HttpContext;
 use DevNet\Web\Http\HttpContextFactory;
-use DevNet\Web\Middleware\IApplicationBuilder;
 use DevNet\Web\Routing\IRouteBuilder;
 use DevNet\Web\Routing\RouteBuilder;
 use Closure;

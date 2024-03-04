@@ -8,10 +8,10 @@
 
 namespace DevNet\Web\Hosting;
 
-use DevNet\System\Configuration\IConfiguration;
-use DevNet\System\Configuration\ConfigurationBuilder;
-use DevNet\System\Dependency\IServiceCollection;
-use DevNet\System\Dependency\ServiceProvider;
+use DevNet\Common\Configuration\IConfiguration;
+use DevNet\Common\Configuration\ConfigurationBuilder;
+use DevNet\Common\Dependency\IServiceCollection;
+use DevNet\Common\Dependency\ServiceProvider;
 use DevNet\System\Runtime\LauncherProperties;
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Http\HttpContext;

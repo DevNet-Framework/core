@@ -9,7 +9,7 @@
 namespace DevNet\Web\Middleware;
 
 use DevNet\System\Async\Task;
-use DevNet\System\Dependency\IServiceProvider;
+use DevNet\Common\Dependency\IServiceProvider;
 use DevNet\System\MethodTrait;
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Hosting\WebHostEnvironment;

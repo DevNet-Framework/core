@@ -9,7 +9,7 @@
 namespace DevNet\Web\Routing;
 
 use DevNet\System\Async\Task;
-use DevNet\System\Dependency\Activator;
+use DevNet\Common\Dependency\Activator;
 use DevNet\System\Exceptions\ClassException;
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Endpoint\ActionDelegate;

@@ -9,7 +9,7 @@
 namespace DevNet\Web\Http;
 
 use DevNet\System\Collections\Dictionary;
-use DevNet\System\Dependency\IServiceProvider;
+use DevNet\Common\Dependency\IServiceProvider;
 use DevNet\Web\Security\Claims\ClaimsIdentity;
 
 class HttpContext

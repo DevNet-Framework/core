@@ -8,10 +8,10 @@
 
 namespace DevNet\Web\Hosting;
 
-use DevNet\System\Configuration\ConfigurationBuilder;
-use DevNet\System\Configuration\IConfiguration;
-use DevNet\System\Dependency\IServiceProvider;
-use DevNet\System\Dependency\ServiceCollection;
+use DevNet\Common\Configuration\ConfigurationBuilder;
+use DevNet\Common\Configuration\IConfiguration;
+use DevNet\Common\Dependency\IServiceProvider;
+use DevNet\Common\Dependency\ServiceCollection;
 use DevNet\System\Runtime\LauncherProperties;
 use DevNet\Web\Diagnostics\ExceptionHandlerMiddleware;
 use DevNet\Web\Http\HttpContext;

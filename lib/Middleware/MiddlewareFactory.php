@@ -8,7 +8,7 @@
 
 namespace DevNet\Web\Middleware;
 
-use DevNet\System\Dependency\IServiceProvider;
+use DevNet\Common\Dependency\IServiceProvider;
 use DevNet\System\Exceptions\ClassException;
 use DevNet\System\Exceptions\TypeException;
 use DevNet\Web\Middleware\IMiddleware;

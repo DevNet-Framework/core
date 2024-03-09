@@ -16,7 +16,7 @@ use DevNet\System\MethodTrait;
 use DevNet\Web\Endpoint\ActionContext;
 use DevNet\Web\Endpoint\IActionResult;
 
-use function Devnet\System\await;
+use function DevNet\System\await;
 
 class FileResult implements IActionResult
 {

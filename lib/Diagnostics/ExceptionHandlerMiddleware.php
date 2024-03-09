@@ -15,7 +15,7 @@ use DevNet\Web\Middleware\RequestDelegate;
 use DevNet\Web\View\ViewManager;
 use Throwable;
 
-use function Devnet\System\await;
+use function DevNet\System\await;
 
 class ExceptionHandlerMiddleware implements IMiddleware
 {

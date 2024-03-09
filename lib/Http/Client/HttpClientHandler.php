@@ -15,8 +15,8 @@ use DevNet\Web\Http\HttpRequest;
 use DevNet\Web\Http\HttpResponse;
 use DevNet\System\Net\Socket;
 
-use function Devnet\System\async;
-use function Devnet\System\await;
+use function DevNet\System\async;
+use function DevNet\System\await;
 
 abstract class HttpClientHandler
 {

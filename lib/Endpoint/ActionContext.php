@@ -9,7 +9,6 @@
 namespace DevNet\Web\Endpoint;
 
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Endpoint\Binder\IValueProvider;
 use DevNet\Web\Http\HttpContext;
 
 class ActionContext
@@ -18,7 +17,6 @@ class ActionContext
 
     private ActionDescriptor $actionDescriptor;
     private HttpContext $httpContext;
-    private IValueProvider $valueProvider;
 
     public function get_ActionDescriptor(): ActionDescriptor
     {
@@ -30,15 +28,9 @@ class ActionContext
         return $this->httpContext;
     }
 
-    public function get_ValueProvider(): IValueProvider
-    {
-        return $this->valueProvider;
-    }
-
-    public function __construct(ActionDescriptor $actionDescriptor, HttpContext $httpConnext, IValueProvider $provider)
+    public function __construct(ActionDescriptor $actionDescriptor, HttpContext $httpConnext)
     {
         $this->actionDescriptor = $actionDescriptor;
-        $this->httpContext      = $httpConnext;
-        $this->valueProvider    = $provider;
+        $this->httpContext = $httpConnext;
     }
 }

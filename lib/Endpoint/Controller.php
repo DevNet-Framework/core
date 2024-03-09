@@ -43,7 +43,7 @@ abstract class Controller
             $name = $controllerName . '/' . $actionName;
         }
 
-        $viewLocation = $this->ActionContext->ValueProvider->getValue('ViewLocation');
+        $viewLocation = $this->ActionContext->HttpContext->Items->getValue('ViewLocation');
         if (!$viewLocation) {
             $viewLocation = '/Views';
         }

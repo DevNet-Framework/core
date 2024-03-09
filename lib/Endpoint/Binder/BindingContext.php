@@ -21,15 +21,12 @@ class BindingContext
     private IValueProvider $valueProvider;
     private $result = null;
 
-    public function __construct(
-        string $name,
-        string $type,
-        ActionContext $actionContext
-    ) {
+    public function __construct(string $name, string $type, ActionContext $actionContext, IValueProvider $valueProvider)
+    {
         $this->name = $name;
         $this->type = $type;
         $this->actionContext = $actionContext;
-        $this->valueProvider = $actionContext->ValueProvider;
+        $this->valueProvider = $valueProvider;
     }
 
     public function get_Name(): string

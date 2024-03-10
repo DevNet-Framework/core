@@ -12,6 +12,7 @@ use DevNet\Common\Configuration\ConfigurationBuilder;
 use DevNet\Common\Configuration\IConfiguration;
 use DevNet\Common\Dependency\IServiceProvider;
 use DevNet\Common\Dependency\ServiceCollection;
+use DevNet\System\Async\Task;
 use DevNet\System\Runtime\LauncherProperties;
 use DevNet\Web\Diagnostics\ExceptionHandlerMiddleware;
 use DevNet\Web\Http\HttpContext;
@@ -73,15 +74,17 @@ class WebHost
             return;
         }
 
-        $application($context)->wait();
-        $response = $context->Response;
+        $result = $application($context);
+        if ($result instanceof Task) {
+            $result->wait();
+        }
 
         // Send the "status line".
-        $statusLine = $response->getStatusLine();
+        $statusLine = $context->Response->getStatusLine();
         header($statusLine, true);
 
         // Send the response headers from the headers list.
-        foreach ($response->Headers->getAll() as $name => $values) {
+        foreach ($context->Response->Headers->getAll() as $name => $values) {
             foreach ($values as $value) {
                 // keep a previous similar header.
                 header("$name: $value", false);
@@ -90,8 +93,8 @@ class WebHost
 
         // Output the message body.
         if ($context->Response->Body->Length > 0) {
-            $response->Body->seek(0);
-            echo $response->Body->read($response->Body->Length);
+            $context->Response->Body->seek(0);
+            echo $context->Response->Body->read($context->Response->Body->Length);
         }
     }
 

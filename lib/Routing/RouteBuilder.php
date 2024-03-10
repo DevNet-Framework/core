@@ -8,7 +8,10 @@
 
 namespace DevNet\Web\Routing;
 
+use DevNet\System\Exceptions\TypeException;
 use DevNet\System\MethodTrait;
+use DevNet\Web\Middleware\IRequestHandler;
+use DevNet\Web\Middleware\RequestDelegate;
 
 class RouteBuilder implements IRouteBuilder
 {
@@ -30,6 +33,10 @@ class RouteBuilder implements IRouteBuilder
      */
     public function mapRoute(string $pattern, callable $handler, ?string $verb = null): IRouteHandler
     {
+        if (!$handler instanceof IRequestHandler and !$handler instanceof RequestDelegate) {
+            $handler = new RequestDelegate($handler);
+        }
+
         $routeHandler = new RouteHandler($handler);
         return $this->map($pattern, $routeHandler, $verb);
     }

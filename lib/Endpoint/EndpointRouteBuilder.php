@@ -11,13 +11,13 @@ namespace DevNet\Web\Endpoint;
 use DevNet\System\MethodTrait;
 use DevNet\System\Runtime\LauncherProperties;
 use DevNet\Web\Endpoint\Route;
+use DevNet\Web\Middleware\RequestDelegate;
 use DevNet\Web\Routing\IRouteBuilder;
-use DevNet\Web\Routing\IRouteHandler;
 use DevNet\Web\Routing\IRouter;
-use DevNet\Web\Routing\RouteHandler;
 use DirectoryIterator;
 use ReflectionClass;
 use Closure;
+use DevNet\Web\Middleware\IRequestHandler;
 
 class EndpointRouteBuilder
 {
@@ -45,17 +45,23 @@ class EndpointRouteBuilder
     /**
      * Adds a route that matches HTTP requests for the specified path and HTTP method, or any HTTP method if it's not specified.
      */
-    public function mapRoute(string $path, callable $handler, ?string $method = null): IRouteHandler
+    public function mapRoute(string $path, callable $handler, ?string $method = null): RouteHandlerBuilder
     {
         $path = $this->prefix . '/' . trim($path, '/');
-        $routeHandler = new RouteHandler($handler);
-        return $this->builder->map($path, $routeHandler, $method);
+
+        if (!$handler instanceof IRequestHandler and !$handler instanceof RequestDelegate) {
+            $handler = new RequestDelegate($handler);
+        }
+
+        $builder = new RouteHandlerBuilder($handler);
+        $this->builder->map($path, $builder->build(), $method);
+        return $builder;
     }
 
     /**
      * Adds a route that matches HTTP GET requests for the specified path.
      */
-    public function mapGet(string $path, callable $handler): IRouteHandler
+    public function mapGet(string $path, callable $handler): RouteHandlerBuilder
     {
         return $this->mapRoute($path, $handler, 'GET');
     }
@@ -63,7 +69,7 @@ class EndpointRouteBuilder
     /**
      * Adds a route that matches HTTP POST requests for the specified path.
      */
-    public function mapPost(string $path, callable $handler): IRouteHandler
+    public function mapPost(string $path, callable $handler): RouteHandlerBuilder
     {
         return $this->mapRoute($path, $handler, 'POST');
     }
@@ -71,7 +77,7 @@ class EndpointRouteBuilder
     /**
      * Adds a route that matches HTTP PUT requests for the specified path.
      */
-    public function mapPut(string $path, callable $handler): IRouteHandler
+    public function mapPut(string $path, callable $handler): RouteHandlerBuilder
     {
         return $this->mapRoute($path, $handler, 'PUT');
     }
@@ -79,7 +85,7 @@ class EndpointRouteBuilder
     /**
      * Adds a route that matches HTTP DELETE requests for the specified path.
      */
-    public function mapDelete(string $path, callable $handler): IRouteHandler
+    public function mapDelete(string $path, callable $handler): RouteHandlerBuilder
     {
         $path = $this->prefix . '/' . trim($path, '/');
         return $this->mapRoute($path, $handler, 'DELETE');
@@ -88,7 +94,7 @@ class EndpointRouteBuilder
     /**
      * Adds a route that matches HTTP PATCH requests for the specified path.
      */
-    public function mapPatch(string $path, callable $handler): IRouteHandler
+    public function mapPatch(string $path, callable $handler): RouteHandlerBuilder
     {
         return $this->mapRoute($path, $handler, 'PATCH');
     }

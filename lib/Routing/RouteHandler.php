@@ -10,6 +10,7 @@ namespace DevNet\Web\Routing;
 
 use DevNet\System\Async\Task;
 use DevNet\System\PropertyTrait;
+use DevNet\Web\Middleware\IRequestHandler;
 use DevNet\Web\Middleware\RequestDelegate;
 
 
@@ -17,12 +18,12 @@ class RouteHandler implements IRouteHandler
 {
     use PropertyTrait;
 
-    private RequestDelegate $target;
+    private IRequestHandler|RequestDelegate $target;
     private array $filters = [];
 
-    public function __construct(callable $target)
+    public function __construct(IRequestHandler|RequestDelegate $target)
     {
-        $this->target = new RequestDelegate($target);
+        $this->target = $target;
     }
 
     public function get_Target()
@@ -38,7 +39,7 @@ class RouteHandler implements IRouteHandler
     public function handle(RouteContext $routeContext): Task
     {
         $handler = $this->target;
-        $handler = function ($context) use ($handler) {
+        $handler = new RequestDelegate(function ($context) use ($handler) {
             $result = $handler($context);
             if ($result instanceof Task) {
                 return $result->then(function ($previous) use ($context) {
@@ -62,7 +63,7 @@ class RouteHandler implements IRouteHandler
             }
 
             return Task::completedTask();
-        };
+        });
 
         $routeContext->Handler = $handler;
 

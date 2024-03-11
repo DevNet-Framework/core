@@ -10,7 +10,7 @@ namespace DevNet\Web\Security\Tokens\Csrf;
 
 use DevNet\System\PropertyTrait;
 
-class AntiforgeryToken
+class AntiForgeryToken
 {
     use PropertyTrait;
 

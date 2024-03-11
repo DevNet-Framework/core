@@ -17,7 +17,7 @@ use DevNet\Web\Endpoint\Results\RedirectResult;
 use DevNet\Web\Endpoint\Results\StatusCodeResult;
 use DevNet\Web\Endpoint\Results\ViewResult;
 use DevNet\Web\Http\Message\HttpContext;
-use DevNet\Web\Security\Tokens\Csrf\IAntiforgery;
+use DevNet\Web\Security\Tokens\Csrf\IAntiForgery;
 use DevNet\Web\View\ViewManager;
 
 abstract class Controller
@@ -52,9 +52,9 @@ abstract class Controller
         $view = new ViewManager($directory, $this->HttpContext->Services);
         $view->inject('User', $this->ActionContext->HttpContext->User);
 
-        $antiforgery = $this->ActionContext->HttpContext->Services->getService(IAntiforgery::class);
+        $antiforgery = $this->ActionContext->HttpContext->Services->getService(IAntiForgery::class);
         if ($antiforgery) {
-            $view->inject('Antiforgery', $antiforgery);
+            $view->inject('AntiForgery', $antiforgery);
         }
 
         return new ViewResult($view($name, $data), 200);

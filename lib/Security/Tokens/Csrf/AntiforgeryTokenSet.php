@@ -8,7 +8,7 @@
 
 namespace DevNet\Web\Security\Tokens\Csrf;
 
-class AntiforgeryTokenSet
+class AntiForgeryTokenSet
 {
     public ?string $CookieToken;
     public ?string $RequestToken;

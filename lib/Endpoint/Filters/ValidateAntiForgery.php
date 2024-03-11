@@ -12,8 +12,8 @@ use DevNet\System\Async\Task;
 use DevNet\Web\Endpoint\ActionContext;
 use DevNet\Web\Endpoint\ActionDelegate;
 use DevNet\Web\Endpoint\IActionFilter;
-use DevNet\Web\Security\Tokens\Csrf\AntiforgeryException;
-use DevNet\Web\Security\Tokens\Csrf\IAntiforgery;
+use DevNet\Web\Security\Tokens\Csrf\AntiForgeryException;
+use DevNet\Web\Security\Tokens\Csrf\IAntiForgery;
 use Attribute;
 
 #[Attribute]
@@ -21,15 +21,15 @@ class ValidateAntiForgery implements IActionFilter
 {
     public function __invoke(ActionContext $context, ActionDelegate $next): Task
     {
-        $antiforgery = $context->HttpContext->Services->getService(IAntiforgery::class);
+        $antiforgery = $context->HttpContext->Services->getService(IAntiForgery::class);
         if (!$antiforgery) {
-            throw new AntiforgeryException("Unable to get IAntiforgery service, make sure to register it as a service!");
+            throw new AntiForgeryException("Unable to get IAntiForgery service, make sure to register it as a service!");
         }
 
         $result = $antiforgery->validateToken($context->HttpContext);
 
         if (!$result) {
-            throw new AntiforgeryException("Invalid Antiforgery Token!", 403);
+            throw new AntiForgeryException("Invalid AntiForgery Token!", 403);
         }
 
         return $next($context);

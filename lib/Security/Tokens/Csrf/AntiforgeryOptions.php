@@ -11,10 +11,10 @@ namespace DevNet\Web\Security\Tokens\Csrf;
 use DevNet\System\Runtime\LauncherProperties;
 use DevNet\Web\Http\Message\CookieOptions;
 
-class AntiforgeryOptions
+class AntiForgeryOptions
 {
     public CookieOptions $Cookie;
-    public string $CookieName = "Antiforgery";
+    public string $CookieName = "AntiForgery";
     public string $FieldName  = "X-CSRF-TOKEN";
     public string $HeaderName = "X-XSRF-TOKEN";
 

@@ -11,7 +11,7 @@ This dependency is a part of **DevNet Framework**, which includes the following 
 - Error Handler
 - Authentication
 - Authorization
-- Antiforgery
+- CSRF Prevention
 
 ## Requirements
 - [DevNet Core](https://github.com/DevNet-Framework/core/) version 1.0

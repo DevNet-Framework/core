@@ -10,9 +10,9 @@ namespace DevNet\Web\Security\Tokens\Csrf;
 
 use DevNet\Web\Http\Message\HttpContext;
 
-interface IAntiforgery
+interface IAntiForgery
 {
-    public function getToken(): AntiforgeryToken;
+    public function getToken(): AntiForgeryToken;
 
     public function validateToken(HttpContext $httpContext): bool;
 }

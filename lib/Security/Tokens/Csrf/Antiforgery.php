@@ -11,38 +11,38 @@ namespace DevNet\Web\Security\Tokens\Csrf;
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Http\Message\HttpContext;
 
-class Antiforgery implements IAntiforgery
+class AntiForgery implements IAntiForgery
 {
     use PropertyTrait;
 
-    private AntiforgeryOptions $options;
-    private AntiforgeryTokenGenerator $generator;
-    private AntiforgeryTokenStore $store;
+    private AntiForgeryOptions $options;
+    private AntiForgeryTokenGenerator $generator;
+    private AntiForgeryTokenStore $store;
 
-    public function __construct(AntiforgeryOptions $options)
+    public function __construct(AntiForgeryOptions $options)
     {
         if ($options->Cookie->HttpOnly === null) {
             $options->Cookie->HttpOnly = true;
         }
 
         $this->options   = $options;
-        $this->generator = new AntiforgeryTokenGenerator();
-        $this->store     = new AntiforgeryTokenStore($options);
+        $this->generator = new AntiForgeryTokenGenerator();
+        $this->store     = new AntiForgeryTokenStore($options);
     }
 
-    public function get_Options(): AntiforgeryOptions
+    public function get_Options(): AntiForgeryOptions
     {
         return $this->options;
     }
 
-    public function getToken(): AntiforgeryToken
+    public function getToken(): AntiForgeryToken
     {
         $token = $this->store->getCookieToken();
         if ($token) {
             return $token;
         }
 
-        $token = new AntiforgeryToken();
+        $token = new AntiForgeryToken();
         $this->store->saveCookieToken($token);
         return $token;
     }

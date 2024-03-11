@@ -10,24 +10,24 @@ namespace DevNet\Web\Security\Tokens\Csrf;
 
 use DevNet\Web\Security\Session;
 
-class AntiforgeryTokenStore
+class AntiForgeryTokenStore
 {
     private Session $session;
 
-    public function __construct(AntiforgeryOptions $options)
+    public function __construct(AntiForgeryOptions $options)
     {
         $this->session = new Session($options->CookieName);
     }
 
-    public function saveCookieToken(AntiforgeryToken $token): void
+    public function saveCookieToken(AntiForgeryToken $token): void
     {
         $this->session->start();
-        $this->session->set(AntiforgeryToken::class, $token);
+        $this->session->set(AntiForgeryToken::class, $token);
     }
 
-    public function getCookieToken(): ?AntiforgeryToken
+    public function getCookieToken(): ?AntiForgeryToken
     {
         $this->session->start();
-        return $this->session->get(AntiforgeryToken::class);
+        return $this->session->get(AntiForgeryToken::class);
     }
 }

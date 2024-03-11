@@ -10,6 +10,6 @@ namespace DevNet\Web\Security\Tokens\Csrf;
 
 use Exception;
 
-class AntiforgeryException extends Exception
+class AntiForgeryException extends Exception
 {
 }

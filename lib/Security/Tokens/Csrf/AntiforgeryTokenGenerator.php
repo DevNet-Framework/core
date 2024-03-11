@@ -10,16 +10,16 @@ namespace DevNet\Web\Security\Tokens\Csrf;
 
 use DevNet\Web\Http\Message\HttpContext;
 
-class AntiforgeryTokenGenerator
+class AntiForgeryTokenGenerator
 {
-    public function generateCookieToken(): AntiforgeryToken
+    public function generateCookieToken(): AntiForgeryToken
     {
-        return new AntiforgeryToken();
+        return new AntiForgeryToken();
     }
 
-    public function generateRequestToken(string $cookieToken): AntiforgeryToken
+    public function generateRequestToken(string $cookieToken): AntiForgeryToken
     {
-        return new AntiforgeryToken($cookieToken);
+        return new AntiForgeryToken($cookieToken);
     }
 
     public function matchTokens(HttpContext $httpContext, $tokens): bool

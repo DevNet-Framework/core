@@ -17,9 +17,9 @@ use DevNet\Entity\EntityOptions;
 use DevNet\Web\Http\Message\HttpContext;
 use DevNet\Web\Http\Client\HttpClient;
 use DevNet\Web\Http\Client\HttpClientOptions;
-use DevNet\Web\Security\Tokens\Csrf\IAntiforgery;
-use DevNet\Web\Security\Tokens\Csrf\Antiforgery;
-use DevNet\Web\Security\Tokens\Csrf\AntiforgeryOptions;
+use DevNet\Web\Security\Tokens\Csrf\IAntiForgery;
+use DevNet\Web\Security\Tokens\Csrf\AntiForgery;
+use DevNet\Web\Security\Tokens\Csrf\AntiForgeryOptions;
 use DevNet\Web\Security\Authentication\Authentication;
 use DevNet\Web\Security\Authentication\AuthenticationBuilder;
 use DevNet\Web\Security\Authentication\IAuthentication;
@@ -45,14 +45,14 @@ class ServiceCollectionExtensions
         $services->addSingleton(HttpClient::class, fn (): HttpClient => new HttpClient($options));
     }
 
-    public static function addAntiforgery(IServiceCollection $services, Closure $configure = null)
+    public static function addAntiForgery(IServiceCollection $services, Closure $configure = null)
     {
-        $options = new AntiforgeryOptions();
+        $options = new AntiForgeryOptions();
         if ($configure) {
             $configure($options);
         }
 
-        $services->addSingleton(IAntiforgery::class, fn (): IAntiforgery => new Antiforgery($options));
+        $services->addSingleton(IAntiForgery::class, fn (): IAntiForgery => new AntiForgery($options));
     }
 
     public static function addAuthentication(IServiceCollection $services, Closure $configure)

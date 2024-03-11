@@ -8,7 +8,7 @@
 
 namespace DevNet\Web\Hosting;
 
-use DevNet\Web\Middleware\RequestDelegate;
+use DevNet\Web\Http\Middleware\RequestDelegate;
 
 interface IApplicationBuilder
 {

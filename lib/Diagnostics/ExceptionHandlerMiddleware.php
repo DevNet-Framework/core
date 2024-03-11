@@ -10,8 +10,8 @@ namespace DevNet\Web\Diagnostics;
 
 use DevNet\System\MethodTrait;
 use DevNet\Web\Http\Message\HttpContext;
-use DevNet\Web\Middleware\IMiddleware;
-use DevNet\Web\Middleware\RequestDelegate;
+use DevNet\Web\Http\Middleware\IMiddleware;
+use DevNet\Web\Http\Middleware\RequestDelegate;
 use DevNet\Web\View\ViewManager;
 use Throwable;
 

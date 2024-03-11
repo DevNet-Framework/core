@@ -14,9 +14,9 @@ use DevNet\System\MethodTrait;
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Hosting\WebHostEnvironment;
 use DevNet\Web\Http\Message\HttpContext;
-use DevNet\Web\Middleware\IMiddleware;
-use DevNet\Web\Middleware\MiddlewareDelegate;
-use DevNet\Web\Middleware\RequestDelegate;
+use DevNet\Web\Http\Middleware\IMiddleware;
+use DevNet\Web\Http\Middleware\MiddlewareDelegate;
+use DevNet\Web\Http\Middleware\RequestDelegate;
 
 class ApplicationBuilder implements IApplicationBuilder
 {

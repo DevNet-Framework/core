@@ -6,12 +6,12 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Middleware;
+namespace DevNet\Web\Http\Middleware;
 
 use DevNet\Common\Dependency\IServiceProvider;
 use DevNet\System\Exceptions\ClassException;
 use DevNet\System\Exceptions\TypeException;
-use DevNet\Web\Middleware\IMiddleware;
+use DevNet\Web\Http\Middleware\IMiddleware;
 
 class MiddlewareFactory
 {

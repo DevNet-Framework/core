@@ -13,7 +13,7 @@ use DevNet\Web\Endpoint\ActionContext;
 use DevNet\Web\Endpoint\Binder\IValueProvider;
 use DevNet\Web\Endpoint\Binder\ParameterBinder;
 use DevNet\Web\Http\Message\HttpContext;
-use DevNet\Web\Middleware\IRequestHandler;
+use DevNet\Web\Http\Middleware\IRequestHandler;
 
 class ActionInvoker implements IRequestHandler
 {

@@ -6,15 +6,11 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Middleware;
+namespace DevNet\Web\Http\Middleware;
 
-use DevNet\System\Delegate;
 use DevNet\Web\Http\Message\HttpContext;
 
-class MiddlewareDelegate extends Delegate
+interface IMiddleware
 {
-    /** RequestDelegate signature */
-    public function middlewareDelegate(HttpContext $context, RequestDelegate $next)
-    {
-    }
+    public function __invoke(HttpContext $context, RequestDelegate $next);
 }

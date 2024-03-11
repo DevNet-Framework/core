@@ -6,15 +6,11 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Middleware;
+namespace DevNet\Web\Http\Middleware;
 
-use DevNet\System\Delegate;
 use DevNet\Web\Http\Message\HttpContext;
 
-class RequestDelegate extends Delegate
+interface IRequestHandler
 {
-    /** RequestDelegate signature */
-    public function requestDelegate(HttpContext $context)
-    {
-    }
+    public function __invoke(HttpContext $context);
 }

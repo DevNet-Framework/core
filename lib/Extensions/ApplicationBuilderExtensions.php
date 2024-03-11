@@ -13,7 +13,7 @@ use DevNet\Web\Diagnostics\ExceptionHandlerMiddleware;
 use DevNet\Web\Endpoint\EndpointMiddleware;
 use DevNet\Web\Endpoint\EndpointRouteBuilder;
 use DevNet\Web\Hosting\IApplicationBuilder;
-use DevNet\Web\Middleware\IMiddleware;
+use DevNet\Web\Http\Middleware\IMiddleware;
 use DevNet\Web\Routing\RouterMiddleware;
 use DevNet\Web\Routing\IRouteBuilder;
 use DevNet\Web\Security\Authentication\AuthenticationMiddleware;

@@ -10,8 +10,8 @@ namespace DevNet\Web\Routing;
 
 use DevNet\System\Async\Task;
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Middleware\IRequestHandler;
-use DevNet\Web\Middleware\RequestDelegate;
+use DevNet\Web\Http\Middleware\IRequestHandler;
+use DevNet\Web\Http\Middleware\RequestDelegate;
 
 
 class RouteHandler implements IRouteHandler

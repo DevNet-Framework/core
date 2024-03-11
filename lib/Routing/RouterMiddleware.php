@@ -10,8 +10,8 @@ namespace DevNet\Web\Routing;
 
 use DevNet\System\Async\Task;
 use DevNet\Web\Http\Message\HttpContext;
-use DevNet\Web\Middleware\IMiddleware;
-use DevNet\Web\Middleware\RequestDelegate;
+use DevNet\Web\Http\Middleware\IMiddleware;
+use DevNet\Web\Http\Middleware\RequestDelegate;
 
 class RouterMiddleware implements IMiddleware
 {

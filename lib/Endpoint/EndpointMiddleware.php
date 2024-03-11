@@ -9,8 +9,8 @@
 namespace DevNet\Web\Endpoint;
 
 use DevNet\Web\Http\Message\HttpContext;
-use DevNet\Web\Middleware\IMiddleware;
-use DevNet\Web\Middleware\RequestDelegate;
+use DevNet\Web\Http\Middleware\IMiddleware;
+use DevNet\Web\Http\Middleware\RequestDelegate;
 
 class EndpointMiddleware implements IMiddleware
 {

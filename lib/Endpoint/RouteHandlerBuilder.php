@@ -9,8 +9,8 @@
 namespace DevNet\Web\Endpoint;
 
 use DevNet\System\Exceptions\ClassException;
-use DevNet\Web\Middleware\IRequestHandler;
-use DevNet\Web\Middleware\RequestDelegate;
+use DevNet\Web\Http\Middleware\IRequestHandler;
+use DevNet\Web\Http\Middleware\RequestDelegate;
 use DevNet\Web\Routing\IRouteHandler;
 use DevNet\Web\Routing\RouteHandler;
 use ReflectionClass;

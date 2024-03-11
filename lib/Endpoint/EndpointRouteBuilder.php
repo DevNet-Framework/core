@@ -11,13 +11,13 @@ namespace DevNet\Web\Endpoint;
 use DevNet\System\MethodTrait;
 use DevNet\System\Runtime\LauncherProperties;
 use DevNet\Web\Endpoint\Route;
-use DevNet\Web\Middleware\RequestDelegate;
+use DevNet\Web\Http\Middleware\RequestDelegate;
 use DevNet\Web\Routing\IRouteBuilder;
 use DevNet\Web\Routing\IRouter;
 use DirectoryIterator;
 use ReflectionClass;
 use Closure;
-use DevNet\Web\Middleware\IRequestHandler;
+use DevNet\Web\Http\Middleware\IRequestHandler;
 
 class EndpointRouteBuilder
 {

@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
- namespace DevNet\Web\Security\Tokens\Csrf;
+ namespace DevNet\Web\Endpoint\Filters;
 
 use DevNet\System\Async\Task;
 use DevNet\Web\Endpoint\ActionContext;
@@ -21,12 +21,12 @@ class ValidateAntiForgery implements IActionFilter
 {
     public function __invoke(ActionContext $context, ActionDelegate $next): Task
     {
-        $antiforgery = $context->HttpContext->Services->getService(IAntiForgery::class);
-        if (!$antiforgery) {
+        $antiForgery = $context->HttpContext->Services->getService(IAntiForgery::class);
+        if (!$antiForgery) {
             throw new AntiForgeryException("Unable to get IAntiForgery service, make sure to register it as a service!");
         }
 
-        $result = $antiforgery->validateToken($context->HttpContext);
+        $result = $antiForgery->validateToken($context->HttpContext);
 
         if (!$result) {
             throw new AntiForgeryException("Invalid AntiForgery Token!", 403);

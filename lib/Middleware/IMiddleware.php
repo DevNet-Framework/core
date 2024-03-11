@@ -8,7 +8,7 @@
 
 namespace DevNet\Web\Middleware;
 
-use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Http\Message\HttpContext;
 
 interface IMiddleware
 {

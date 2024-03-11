@@ -9,7 +9,7 @@
 namespace DevNet\Web\Security\Authentication\JwtBearer;
 
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Http\Message\HttpContext;
 use DevNet\Web\Security\Authentication\AuthenticationResult;
 use DevNet\Web\Security\Authentication\IAuthenticationHandler;
 use DevNet\Web\Security\Tokens\Jwt\JwtSecurityTokenHandler;

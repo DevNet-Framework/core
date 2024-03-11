@@ -16,7 +16,7 @@ use DevNet\Web\Endpoint\Results\JsonResult;
 use DevNet\Web\Endpoint\Results\RedirectResult;
 use DevNet\Web\Endpoint\Results\StatusCodeResult;
 use DevNet\Web\Endpoint\Results\ViewResult;
-use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Http\Message\HttpContext;
 use DevNet\Web\Security\Tokens\Csrf\IAntiforgery;
 use DevNet\Web\View\ViewManager;
 

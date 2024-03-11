@@ -8,8 +8,8 @@
 
 namespace DevNet\Web\Http\Client\Internal;
 
-use DevNet\Web\Http\Headers;
-use DevNet\Web\Http\HttpResponse;
+use DevNet\Web\Http\Message\Headers;
+use DevNet\Web\Http\Message\HttpResponse;
 
 class HttpResponseParser
 {

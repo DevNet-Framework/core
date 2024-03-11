@@ -9,7 +9,7 @@
 namespace DevNet\Web\Http\Client\Internal;
 
 use DevNet\System\Text\StringBuilder;
-use DevNet\Web\Http\HttpRequest;
+use DevNet\Web\Http\Message\HttpRequest;
 
 class HttpRequestRawBuilder
 {

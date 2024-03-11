@@ -14,7 +14,7 @@ use DevNet\Common\Dependency\IServiceCollection;
 use DevNet\Common\Dependency\ServiceProvider;
 use DevNet\System\Runtime\LauncherProperties;
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Http\Message\HttpContext;
 use Closure;
 
 class WebHostBuilder implements IWebHostBuilder

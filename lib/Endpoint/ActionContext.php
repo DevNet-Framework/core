@@ -9,7 +9,7 @@
 namespace DevNet\Web\Endpoint;
 
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Http\Message\HttpContext;
 
 class ActionContext
 {

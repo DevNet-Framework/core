@@ -8,7 +8,7 @@
 
 namespace DevNet\Web\Security\Authentication;
 
-use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Http\Message\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
 use DevNet\Web\Security\Authentication\IAuthentication;

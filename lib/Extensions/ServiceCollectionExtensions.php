@@ -14,7 +14,7 @@ use DevNet\Common\Logging\LoggerFactory;
 use DevNet\System\Database\DbConnection;
 use DevNet\Entity\EntityContext;
 use DevNet\Entity\EntityOptions;
-use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Http\Message\HttpContext;
 use DevNet\Web\Http\Client\HttpClient;
 use DevNet\Web\Http\Client\HttpClientOptions;
 use DevNet\Web\Security\Tokens\Csrf\IAntiforgery;

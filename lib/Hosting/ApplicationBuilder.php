@@ -13,7 +13,7 @@ use DevNet\Common\Dependency\IServiceProvider;
 use DevNet\System\MethodTrait;
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Hosting\WebHostEnvironment;
-use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Http\Message\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\MiddlewareDelegate;
 use DevNet\Web\Middleware\RequestDelegate;

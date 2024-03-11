@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Http;
+namespace DevNet\Web\Http\Message;
 
 use DevNet\System\IO\FileAccess;
 use DevNet\System\IO\FileMode;

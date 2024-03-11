@@ -9,7 +9,7 @@
 namespace DevNet\Web\Routing;
 
 use DevNet\System\Async\Task;
-use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Http\Message\HttpContext;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Middleware\RequestDelegate;
 

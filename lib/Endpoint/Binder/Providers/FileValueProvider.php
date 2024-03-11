@@ -9,7 +9,7 @@
 namespace DevNet\Web\Endpoint\Binder\Providers;
 
 use DevNet\Web\Endpoint\Binder\IValueProvider;
-use DevNet\Web\Http\FormFileCollection;
+use DevNet\Web\Http\Message\FormFileCollection;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.

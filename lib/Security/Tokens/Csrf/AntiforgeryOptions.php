@@ -9,7 +9,7 @@
 namespace DevNet\Web\Security\Tokens\Csrf;
 
 use DevNet\System\Runtime\LauncherProperties;
-use DevNet\Web\Http\CookieOptions;
+use DevNet\Web\Http\Message\CookieOptions;
 
 class AntiforgeryOptions
 {

@@ -9,7 +9,7 @@
 namespace DevNet\Web\Routing;
 
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Http\Message\HttpContext;
 
 class RouteContext
 {

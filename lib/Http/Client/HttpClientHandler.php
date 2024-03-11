@@ -11,8 +11,8 @@ namespace DevNet\Web\Http\Client;
 use DevNet\System\Async\Task;
 use DevNet\Web\Http\Client\Internal\HttpRequestRawBuilder;
 use DevNet\Web\Http\Client\Internal\HttpResponseParser;
-use DevNet\Web\Http\HttpRequest;
-use DevNet\Web\Http\HttpResponse;
+use DevNet\Web\Http\Message\HttpRequest;
+use DevNet\Web\Http\Message\HttpResponse;
 use DevNet\System\Net\Socket;
 
 use function DevNet\System\async;

@@ -9,7 +9,6 @@
 namespace DevNet\Web\Security\Tokens\Csrf;
 
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Http\Message\HttpContext;
 
 class AntiForgery implements IAntiForgery
 {
@@ -21,10 +20,6 @@ class AntiForgery implements IAntiForgery
 
     public function __construct(AntiForgeryOptions $options)
     {
-        if ($options->Cookie->HttpOnly === null) {
-            $options->Cookie->HttpOnly = true;
-        }
-
         $this->options   = $options;
         $this->generator = new AntiForgeryTokenGenerator();
         $this->store     = new AntiForgeryTokenStore($options);
@@ -47,22 +42,9 @@ class AntiForgery implements IAntiForgery
         return $token;
     }
 
-    public function validateToken(HttpContext $httpContext): bool
+    public function validateToken(string $token): bool
     {
-        $method = $httpContext->Request->Method;
-        if ($method == "GET") {
-            return true;
-        }
-
-        $token = $this->getToken();
-
-        $formToken = $httpContext->Request->Form->getValue($this->options->FieldName);
-        if ($formToken == $token) {
-            return true;
-        }
-
-        $headerToken = $httpContext->Request->Headers->getValues($this->options->FieldName)[0] ?? null;
-        if ($headerToken == $token) {
+        if ($this->getToken() == $token) {
             return true;
         }
 

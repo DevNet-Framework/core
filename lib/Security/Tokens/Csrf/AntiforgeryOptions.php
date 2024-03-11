@@ -8,19 +8,15 @@
 
 namespace DevNet\Web\Security\Tokens\Csrf;
 
-use DevNet\System\Runtime\LauncherProperties;
-use DevNet\Web\Http\Message\CookieOptions;
-
 class AntiForgeryOptions
 {
-    public CookieOptions $Cookie;
     public string $CookieName = "AntiForgery";
+    public string $CookiePath = "/";
     public string $FieldName  = "X-CSRF-TOKEN";
     public string $HeaderName = "X-XSRF-TOKEN";
 
     public function __construct()
     {
-        $this->Cookie     = new CookieOptions();
-        $this->CookieName = $this->CookieName . "-" . md5($this->CookieName . LauncherProperties::getRootDirectory());;
+        $this->CookieName = $this->CookieName . "-" . md5($this->CookieName . $_SERVER['DOCUMENT_ROOT']);;
     }
 }

@@ -14,17 +14,17 @@ class Session
     private string $name;
     private array $options = [];
 
-    public function __construct(string $name, ?int $lifetime = null, ?string $path = null)
+    public function __construct(string $name, string $path = '/', ?int $lifetime = null)
     {
         $this->name = $name;
         $this->options['name'] = $name;
 
-        if (isset($lifetime)) {
-            $this->options['cookie_lifetime'] = $lifetime;
+        if (!empty($path)) {
+            $this->options['cookie_path'] = $path;
         }
 
-        if (isset($path)) {
-            $this->options['cookie_path'] = $path;
+        if (isset($lifetime)) {
+            $this->options['cookie_lifetime'] = $lifetime;
         }
 
         if (isset($_COOKIE[$name])) {

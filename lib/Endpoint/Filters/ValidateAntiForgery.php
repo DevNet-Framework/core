@@ -26,9 +26,17 @@ class ValidateAntiForgery implements IActionFilter
             throw new AntiForgeryException("Unable to get IAntiForgery service, make sure to register it as a service!");
         }
 
-        $result = $antiForgery->validateToken($context->HttpContext);
+        $method = $context->HttpContext->Request->Method;
+        if ($method == 'GET') {
+            return next($context);
+        }
 
-        if (!$result) {
+        $formToken = $context->HttpContext->Request->Form->getValue($antiForgery->options->FieldName);
+        $headerToken = $context->HttpContext->Request->Headers->getValues($antiForgery->options->FieldName)[0] ?? null;
+        $formResult = $antiForgery->validateToken($formToken);
+        $headerResult = $antiForgery->validateToken($headerToken);
+
+        if (!$formResult && !$headerResult) {
             throw new AntiForgeryException("Invalid AntiForgery Token!", 403);
         }
 

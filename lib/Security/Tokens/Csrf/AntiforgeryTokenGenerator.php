@@ -8,8 +8,6 @@
 
 namespace DevNet\Web\Security\Tokens\Csrf;
 
-use DevNet\Web\Http\Message\HttpContext;
-
 class AntiForgeryTokenGenerator
 {
     public function generateCookieToken(): AntiForgeryToken
@@ -20,16 +18,5 @@ class AntiForgeryTokenGenerator
     public function generateRequestToken(string $cookieToken): AntiForgeryToken
     {
         return new AntiForgeryToken($cookieToken);
-    }
-
-    public function matchTokens(HttpContext $httpContext, $tokens): bool
-    {
-        $formToken = $httpContext->Request->Form->getValue($tokens->FormFieldName);
-
-        if ($tokens->RequestToken == $formToken) {
-            return true;
-        }
-
-        return false;
     }
 }

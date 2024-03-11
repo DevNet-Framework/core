@@ -16,7 +16,7 @@ class AntiForgeryTokenStore
 
     public function __construct(AntiForgeryOptions $options)
     {
-        $this->session = new Session($options->CookieName);
+        $this->session = new Session($options->CookieName, $options->CookieName);
     }
 
     public function saveCookieToken(AntiForgeryToken $token): void

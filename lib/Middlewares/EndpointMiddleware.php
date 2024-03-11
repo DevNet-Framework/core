@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Endpoint;
+namespace DevNet\Web\Middlewares;
 
 use DevNet\Web\Http\Message\HttpContext;
 use DevNet\Web\Http\Middleware\IMiddleware;

@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Diagnostics;
+namespace DevNet\Web\Middlewares\Diagnostics;
 
 use DevNet\System\MethodTrait;
 use DevNet\Web\Http\Message\HttpContext;
@@ -42,7 +42,7 @@ class ExceptionHandlerMiddleware implements IMiddleware
                 throw new $error;
             }
 
-            // must remove the previous headers and body of the response the send only the error report.
+            // Must clear the previous response body and headers before sending the error report.
             $context->Response->Body->truncate(0);
             $headerNames = array_keys($context->Response->Headers->getAll());
             foreach ($headerNames as $name) {
@@ -60,7 +60,7 @@ class ExceptionHandlerMiddleware implements IMiddleware
 
             // Display the error exception page report.
             $data = $this->parse($error);
-            $view = new ViewManager(__DIR__ . '/Views');
+            $view = new ViewManager(__DIR__);
             await($context->Response->writeAsync($view->render('ExceptionView', $data)));
         }
     }

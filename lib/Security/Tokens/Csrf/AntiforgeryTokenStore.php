@@ -8,7 +8,7 @@
 
 namespace DevNet\Web\Security\Tokens\Csrf;
 
-use DevNet\Web\Http\Session;
+use DevNet\Web\Security\Session;
 
 class AntiforgeryTokenStore
 {

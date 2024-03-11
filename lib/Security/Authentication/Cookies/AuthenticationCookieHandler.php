@@ -10,7 +10,7 @@ namespace DevNet\Web\Security\Authentication\Cookies;
 
 use DevNet\System\TimeSpan;
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Http\Session;
+use DevNet\Web\Security\Session;
 use DevNet\Web\Security\Authentication\AuthenticationResult;
 use DevNet\Web\Security\Authentication\IAuthenticationHandler;
 use DevNet\Web\Security\Authentication\IAuthenticationSigningHandler;

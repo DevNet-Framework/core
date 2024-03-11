@@ -9,7 +9,6 @@
 namespace DevNet\Web\Security\Authentication\JwtBearer;
 
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Http\Message\HttpContext;
 use DevNet\Web\Security\Authentication\AuthenticationResult;
 use DevNet\Web\Security\Authentication\IAuthenticationHandler;
 use DevNet\Web\Security\Tokens\Jwt\JwtSecurityTokenHandler;
@@ -19,13 +18,11 @@ class JwtBearerHandler implements IAuthenticationHandler
 {
     use PropertyTrait;
 
-    private HttpContext $HttpContext;
     private JwtBearerOptions $options;
     private JwtSecurityTokenHandler $handler;
 
-    public function __construct(HttpContext $httpContext, JwtBearerOptions $options)
+    public function __construct(JwtBearerOptions $options)
     {
-        $this->httpContext = $httpContext;
         $this->options = $options;
         $this->handler = new JwtSecurityTokenHandler();
     }
@@ -37,12 +34,13 @@ class JwtBearerHandler implements IAuthenticationHandler
 
     public function readToken(): string
     {
-        $headers = $this->httpContext->Request->Headers->getValues('Authorization');
-        if (!$headers) {
+        $headers = getallheaders();;
+        $bearerToken = $headers['Authorization'];
+        if (!$bearerToken) {
             throw new Exception("The request is missing the authorization header!");
         }
 
-        if (!preg_match("/^Bearer\s+(.*)$/", $headers[0], $matches)) {
+        if (!preg_match("/^Bearer\s+(.*)$/", $bearerToken[0], $matches)) {
             throw new Exception("Incorrect authentication header scheme!");
         }
 

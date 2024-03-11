@@ -17,6 +17,6 @@ class AntiForgeryOptions
 
     public function __construct()
     {
-        $this->CookieName = $this->CookieName . "-" . md5($this->CookieName . $_SERVER['DOCUMENT_ROOT']);;
+        $this->CookieName = $this->CookieName . "-" . md5($this->CookieName . $_SERVER['DOCUMENT_ROOT']);
     }
 }

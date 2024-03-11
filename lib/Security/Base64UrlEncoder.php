@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Security\Tokens;
+namespace DevNet\Web\Security;
 
 class Base64UrlEncoder
 {

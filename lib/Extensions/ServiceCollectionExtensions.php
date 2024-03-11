@@ -57,8 +57,8 @@ class ServiceCollectionExtensions
 
     public static function addAuthentication(IServiceCollection $services, Closure $configure)
     {
-        $services->addSingleton(IAuthentication::class, function ($provider) use ($configure): Authentication {
-            $builder = new AuthenticationBuilder($provider->getService(HttpContext::class));
+        $services->addSingleton(IAuthentication::class, function () use ($configure): Authentication {
+            $builder = new AuthenticationBuilder();
             $configure($builder);
             return $builder->build();
         });

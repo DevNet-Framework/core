@@ -27,7 +27,7 @@ class AuthenticationCookieHandler implements IAuthenticationHandler, IAuthentica
     public function __construct(AuthenticationCookieOptions $options)
     {
         $this->options = $options;
-        $this->session = new Session($options->CookieName);
+        $this->session = new Session($options->CookieName, $options->CookiePath);
 
         if (!$this->options->ExpireTime) {
             $this->options->ExpireTime = new TimeSpan();

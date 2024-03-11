@@ -8,7 +8,7 @@
 
 namespace DevNet\Web\Security\Tokens\Jwt;
 
-use DevNet\Web\Security\Tokens\Base64UrlEncoder;
+use DevNet\Web\Security\Base64UrlEncoder;
 
 class JwtHeader
 {

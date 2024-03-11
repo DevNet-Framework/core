@@ -17,7 +17,7 @@ use DevNet\Web\Security\Tokens\Csrf\IAntiforgery;
 use Attribute;
 
 #[Attribute]
-class Validate implements IActionFilter
+class ValidateAntiForgery implements IActionFilter
 {
     public function __invoke(ActionContext $context, ActionDelegate $next): Task
     {

@@ -1,6 +1,6 @@
 {
-    "name": "devnet/web",
-    "description": "The DevNet Web Components",
+    "name": "devnet/framework",
+    "description": "The DevNet Web Framework",
     "type": "library",
     "license": "MIT",
     "authors": [

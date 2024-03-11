@@ -2,14 +2,12 @@
 
 /**
  * @author      Mohammed Moussaoui
- * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
- * @license     MIT License. For full license information see LICENSE file in the project root.
+ * @license     MIT license. For more license information, see the LICENSE file in the root directory.
  * @link        https://github.com/DevNet-Framework
  */
 
 namespace DevNet\Web\Endpoint;
 
-use DevNet\System\Action;
 use DevNet\System\Async\AsyncFunction;
 use DevNet\Web\Endpoint\ActionContext;
 use DevNet\Web\Endpoint\Binder\IValueProvider;
@@ -20,15 +18,15 @@ use DevNet\Web\Middleware\IRequestHandler;
 class ActionInvoker implements IRequestHandler
 {
     private ActionDescriptor $actionDescriptor;
-    private IValueProvider $provider;
     private ActionDelegate $action;
+    private ParameterBinder $binder;
     private array $filters = [];
 
     public function __construct(ActionDescriptor $actionDescriptor, IValueProvider $provider)
     {
         $this->actionDescriptor = $actionDescriptor;
-        $this->provider = $provider;
         $this->filters = $actionDescriptor->FilterAttributes;
+        $this->binder = new ParameterBinder($provider);
     }
 
     public function createInstance(ActionContext $actionContext): object
@@ -83,16 +81,15 @@ class ActionInvoker implements IRequestHandler
 
     public function __invoke(HttpContext $httpContext)
     {
-        $actionContext = new ActionContext($this->actionDescriptor, $httpContext, $this->provider);
+        $actionContext = new ActionContext($this->actionDescriptor, $httpContext);
         $instance = $this->createInstance($actionContext);
-        $this->action = new ActionDelegate(function (ActionContext $context) use ($instance) {
+        $arguments = $this->binder->resolveArguments($actionContext);
+
+        $this->action = new ActionDelegate(function (ActionContext $context) use ($instance, $arguments) {
             $actionFilter = $this->getNextFilter();
             if ($actionFilter) {
                 return $actionFilter($context, $this->action);
             }
-
-            $parameterBinder = new ParameterBinder();
-            $arguments = $parameterBinder->resolveArguments($context);
 
             if ((strtolower(strstr($context->ActionDescriptor->ActionName, "_", true)) == "async")) {
                 $action = new AsyncFunction([$instance, $context->ActionDescriptor->ActionName]);

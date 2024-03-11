@@ -2,21 +2,19 @@
 
 /**
  * @author      Mohammed Moussaoui
- * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
- * @license     MIT License. For full license information see LICENSE file in the project root.
+ * @license     MIT license. For more license information, see the LICENSE file in the root directory.
  * @link        https://github.com/DevNet-Framework
  */
 
 namespace DevNet\Web\Hosting;
 
-use DevNet\System\Configuration\IConfiguration;
-use DevNet\System\Configuration\ConfigurationBuilder;
-use DevNet\System\Dependency\IServiceCollection;
-use DevNet\System\Dependency\ServiceProvider;
+use DevNet\Common\Configuration\IConfiguration;
+use DevNet\Common\Configuration\ConfigurationBuilder;
+use DevNet\Common\Dependency\IServiceCollection;
+use DevNet\Common\Dependency\ServiceProvider;
 use DevNet\System\Runtime\LauncherProperties;
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Http\HttpContext;
-use DevNet\Web\Middleware\ApplicationBuilder;
 use Closure;
 
 class WebHostBuilder implements IWebHostBuilder

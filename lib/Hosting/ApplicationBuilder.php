@@ -2,19 +2,21 @@
 
 /**
  * @author      Mohammed Moussaoui
- * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
- * @license     MIT License. For full license information see LICENSE file in the project root.
+ * @license     MIT license. For more license information, see the LICENSE file in the root directory.
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Middleware;
+namespace DevNet\Web\Hosting;
 
 use DevNet\System\Async\Task;
-use DevNet\System\Dependency\IServiceProvider;
+use DevNet\Common\Dependency\IServiceProvider;
 use DevNet\System\MethodTrait;
 use DevNet\System\PropertyTrait;
 use DevNet\Web\Hosting\WebHostEnvironment;
 use DevNet\Web\Http\HttpContext;
+use DevNet\Web\Middleware\IMiddleware;
+use DevNet\Web\Middleware\MiddlewareDelegate;
+use DevNet\Web\Middleware\RequestDelegate;
 
 class ApplicationBuilder implements IApplicationBuilder
 {

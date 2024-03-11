@@ -2,8 +2,7 @@
 
 /**
  * @author      Mohammed Moussaoui
- * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
- * @license     MIT License. For full license information see LICENSE file in the project root.
+ * @license     MIT license. For more license information, see the LICENSE file in the root directory.
  * @link        https://github.com/DevNet-Framework
  */
 
@@ -17,7 +16,7 @@ use DevNet\System\MethodTrait;
 use DevNet\Web\Endpoint\ActionContext;
 use DevNet\Web\Endpoint\IActionResult;
 
-use function Devnet\System\await;
+use function DevNet\System\await;
 
 class FileResult implements IActionResult
 {

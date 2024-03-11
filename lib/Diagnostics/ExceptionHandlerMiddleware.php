@@ -2,12 +2,11 @@
 
 /**
  * @author      Mohammed Moussaoui
- * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
- * @license     MIT License. For full license information see LICENSE file in the project root.
+ * @license     MIT license. For more license information, see the LICENSE file in the root directory.
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Exception;
+namespace DevNet\Web\Diagnostics;
 
 use DevNet\System\MethodTrait;
 use DevNet\Web\Http\HttpContext;
@@ -16,7 +15,7 @@ use DevNet\Web\Middleware\RequestDelegate;
 use DevNet\Web\View\ViewManager;
 use Throwable;
 
-use function Devnet\System\await;
+use function DevNet\System\await;
 
 class ExceptionHandlerMiddleware implements IMiddleware
 {

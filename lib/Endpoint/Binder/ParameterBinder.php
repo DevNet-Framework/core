@@ -2,8 +2,7 @@
 
 /**
  * @author      Mohammed Moussaoui
- * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
- * @license     MIT License. For full license information see LICENSE file in the project root.
+ * @license     MIT license. For more license information, see the LICENSE file in the root directory.
  * @link        https://github.com/DevNet-Framework
  */
 
@@ -13,15 +12,17 @@ use DevNet\Web\Endpoint\ActionContext;
 
 class ParameterBinder
 {
+    private IValueProvider $valueProvider;
     private ModelBinderProvider $modelBinderProvider;
 
-    public function __construct(ModelBinderProvider $modelBinderProvider = null)
+    public function __construct(IValueProvider $valueProvider, ModelBinderProvider $modelBinderProvider = null)
     {
         if (!$modelBinderProvider) {
             $modelBinderProvider = new ModelBinderProvider(new ModelBinder());
         }
 
         $this->modelBinderProvider = $modelBinderProvider;
+        $this->valueProvider = $valueProvider;
     }
 
     public function resolveArguments(ActionContext $actionContext)
@@ -37,12 +38,7 @@ class ParameterBinder
             }
 
             foreach ($this->modelBinderProvider as $modelBinder) {
-                $bindingContext = new BindingContext(
-                    $modelName,
-                    $modelType,
-                    $actionContext
-                );
-
+                $bindingContext = new BindingContext($modelName, $modelType, $actionContext, $this->valueProvider);
                 $modelBinder->bind($bindingContext);
                 if ($bindingContext->Result == true) {
                     break;

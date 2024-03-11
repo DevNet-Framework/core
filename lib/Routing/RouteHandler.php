@@ -2,30 +2,26 @@
 
 /**
  * @author      Mohammed Moussaoui
- * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
- * @license     MIT License. For full license information see LICENSE file in the project root.
+ * @license     MIT license. For more license information, see the LICENSE file in the root directory.
  * @link        https://github.com/DevNet-Framework
  */
 
 namespace DevNet\Web\Routing;
 
 use DevNet\System\Async\Task;
-use DevNet\System\Dependency\Activator;
-use DevNet\System\Exceptions\ClassException;
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Endpoint\ActionDelegate;
-use DevNet\Web\Endpoint\ActionFilterDelegate;
-use DevNet\Web\Endpoint\IActionFilter;
-use ReflectionClass;
+use DevNet\Web\Middleware\IRequestHandler;
+use DevNet\Web\Middleware\RequestDelegate;
+
 
 class RouteHandler implements IRouteHandler
 {
     use PropertyTrait;
 
-    private $target;
+    private IRequestHandler|RequestDelegate $target;
     private array $filters = [];
 
-    public function __construct($target)
+    public function __construct(IRequestHandler|RequestDelegate $target)
     {
         $this->target = $target;
     }
@@ -40,37 +36,10 @@ class RouteHandler implements IRouteHandler
         $this->target = $value;
     }
 
-    public function addFilter(callable|string $filter, ...$args): static
-    {
-        if (is_string($filter)) {
-            if (!class_exists($filter)) {
-                throw new ClassException("Could not find the class {$filter}", 0, 1);
-            }
-
-            $reflection = new ReflectionClass($filter);
-            $filter = $reflection->newInstanceArgs($args);
-        }
-
-        if (is_object($filter instanceof IActionFilter)) {
-            $this->filters[] = $filter;
-            return $this;
-        }
-
-        $this->filters[] = new ActionFilterDelegate($filter);
-        return $this;
-    }
-
     public function handle(RouteContext $routeContext): Task
     {
-        if (is_callable($this->target)) {
-            $handler = $this->target;
-        } else if (is_string($this->target)) {
-            $handler = Activator::CreateInstance($this->target, $routeContext->HttpContext->Services);
-        } else {
-            throw new RouterException("Invalid Argument Type, route endpoint must be of type callable|string");
-        }
-
-        $handler = new ActionDelegate(function ($context) use ($handler) {
+        $handler = $this->target;
+        $handler = new RequestDelegate(function ($context) use ($handler) {
             $result = $handler($context);
             if ($result instanceof Task) {
                 return $result->then(function ($previous) use ($context) {
@@ -95,12 +64,6 @@ class RouteHandler implements IRouteHandler
 
             return Task::completedTask();
         });
-
-        foreach (array_reverse($this->filters) as $filter) {
-            $handler = new ActionDelegate(function ($context) use ($filter, $handler) {
-                return $filter($context, $handler);
-            });
-        }
 
         $routeContext->Handler = $handler;
 

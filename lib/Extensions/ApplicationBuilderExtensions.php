@@ -2,18 +2,17 @@
 
 /**
  * @author      Mohammed Moussaoui
- * @copyright   Copyright (c) Mohammed Moussaoui. All rights reserved.
- * @license     MIT License. For full license information see LICENSE file in the project root.
+ * @license     MIT license. For more license information, see the LICENSE file in the root directory.
  * @link        https://github.com/DevNet-Framework
  */
 
 namespace DevNet\Web\Extensions;
 
 use DevNet\System\Exceptions\ClassException;
+use DevNet\Web\Diagnostics\ExceptionHandlerMiddleware;
 use DevNet\Web\Endpoint\EndpointMiddleware;
 use DevNet\Web\Endpoint\EndpointRouteBuilder;
-use DevNet\Web\Exception\ExceptionHandlerMiddleware;
-use DevNet\Web\Middleware\IApplicationBuilder;
+use DevNet\Web\Hosting\IApplicationBuilder;
 use DevNet\Web\Middleware\IMiddleware;
 use DevNet\Web\Routing\RouterMiddleware;
 use DevNet\Web\Routing\IRouteBuilder;

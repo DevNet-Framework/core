@@ -8,8 +8,8 @@
 
 namespace DevNet\Core\Tools;
 
-use DevNet\Cli\Templating\CodeModel;
-use DevNet\Cli\Templating\ICodeGenerator;
+use DevNet\CLI\Plugin\CodeModel;
+use DevNet\CLI\Plugin\ICodeGenerator;
 use DevNet\System\Text\StringBuilder;
 
 class ControllerGenerator implements ICodeGenerator

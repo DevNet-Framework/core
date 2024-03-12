@@ -8,7 +8,7 @@
 
 namespace DevNet\Core\Tools;
 
-use DevNet\Cli\Templating\CodeGeneratorProvider;
+use DevNet\CLI\Plugin\CodeGeneratorProvider;
 
 class ControllerGeneratorProvider extends CodeGeneratorProvider
 {

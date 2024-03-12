@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-use DevNet\Cli\Templating\CodeGeneratorRegistry;
+use DevNet\CLI\Plugin\CodeGeneratorRegistry;
 use DevNet\Core\Tools\ControllerGeneratorProvider;
 
 /**

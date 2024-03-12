@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Hosting;
+namespace DevNet\Core\Hosting;
 
 use DevNet\Common\Configuration\IConfiguration;
 use DevNet\Common\Configuration\ConfigurationBuilder;
@@ -14,7 +14,7 @@ use DevNet\Common\Dependency\IServiceCollection;
 use DevNet\Common\Dependency\ServiceProvider;
 use DevNet\System\Runtime\LauncherProperties;
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Http\Message\HttpContext;
+use DevNet\Http\Message\HttpContext;
 use Closure;
 
 class WebHostBuilder implements IWebHostBuilder

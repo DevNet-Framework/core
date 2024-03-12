@@ -6,14 +6,14 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Endpoint;
+namespace DevNet\Core\Endpoint;
 
 use DevNet\System\Async\AsyncFunction;
-use DevNet\Web\Endpoint\ActionContext;
-use DevNet\Web\Endpoint\Binder\IValueProvider;
-use DevNet\Web\Endpoint\Binder\ParameterBinder;
-use DevNet\Web\Http\Message\HttpContext;
-use DevNet\Web\Http\Middleware\IRequestHandler;
+use DevNet\Core\Endpoint\ActionContext;
+use DevNet\Core\Endpoint\Binder\IValueProvider;
+use DevNet\Core\Endpoint\Binder\ParameterBinder;
+use DevNet\Http\Message\HttpContext;
+use DevNet\Http\Middleware\IRequestHandler;
 
 class ActionInvoker implements IRequestHandler
 {

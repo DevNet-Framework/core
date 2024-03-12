@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Hosting;
+namespace DevNet\Core\Hosting;
 
 use DevNet\Common\Configuration\ConfigurationBuilder;
 use DevNet\Common\Configuration\IConfiguration;
@@ -14,11 +14,11 @@ use DevNet\Common\Dependency\IServiceProvider;
 use DevNet\Common\Dependency\ServiceCollection;
 use DevNet\System\Async\Task;
 use DevNet\System\Runtime\LauncherProperties;
-use DevNet\Web\Diagnostics\ExceptionHandlerMiddleware;
-use DevNet\Web\Http\Message\HttpContext;
-use DevNet\Web\Http\Message\HttpContextFactory;
-use DevNet\Web\Routing\IRouteBuilder;
-use DevNet\Web\Routing\RouteBuilder;
+use DevNet\Core\Diagnostics\ExceptionHandlerMiddleware;
+use DevNet\Http\Message\HttpContext;
+use DevNet\Http\Message\HttpContextFactory;
+use DevNet\Core\Routing\IRouteBuilder;
+use DevNet\Core\Routing\RouteBuilder;
 use Closure;
 
 class WebHost

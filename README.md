@@ -1,5 +1,5 @@
-# DevNet Web
-This dependency is a part of **DevNet Framework**, which includes the following web components:
+# DevNet Core
+This dependency is the core library of **DevNet Framework**, which includes the following web components:
 
 - Web Host
 - Routing System
@@ -15,9 +15,9 @@ This dependency is a part of **DevNet Framework**, which includes the following 
 - [Composer](https://getcomposer.org/) version 2.0 or higher
 
 ## Installation
-You can install DevNet Web as a third-party library to work with any PHP project, by running the following command in the terminal:
+You can install DevNet Core to your project, by running the following command in the terminal:
 ```
-composer require devnet/web
+composer require devnet/core
 ```
 
 ## Documentation

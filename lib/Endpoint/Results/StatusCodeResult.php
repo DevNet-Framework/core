@@ -6,11 +6,11 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Endpoint\Results;
+namespace DevNet\Core\Endpoint\Results;
 
 use DevNet\System\Async\Task;
-use DevNet\Web\Endpoint\ActionContext;
-use DevNet\Web\Endpoint\IActionResult;
+use DevNet\Core\Endpoint\ActionContext;
+use DevNet\Core\Endpoint\IActionResult;
 
 class StatusCodeResult implements IActionResult
 {

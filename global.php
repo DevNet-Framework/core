@@ -7,9 +7,7 @@
  */
 
 use DevNet\Cli\Templating\CodeGeneratorRegistry;
-use DevNet\Cli\Templating\TemplateRegistry;
-use DevNet\Web\Tools\ControllerGeneratorProvider;
-use DevNet\Web\Tools\WebTemplateProvider;
+use DevNet\Core\Tools\ControllerGeneratorProvider;
 
 /**
  * DevNet CLI package is not mandatory required by DevNet Web package,

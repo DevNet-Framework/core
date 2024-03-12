@@ -6,19 +6,19 @@
  * @link        https://github.com/DevNet-Framework
  */
 
- namespace DevNet\Web\Endpoint\Filters;
+ namespace DevNet\Core\Endpoint\Filters;
 
 use DevNet\System\Async\Task;
-use DevNet\Web\Endpoint\ActionContext;
-use DevNet\Web\Endpoint\ActionDelegate;
-use DevNet\Web\Endpoint\IActionFilter;
-use DevNet\Web\Security\Authentication\AuthenticationException;
-use DevNet\Web\Security\Authorization\AuthenticationRequirement;
-use DevNet\Web\Security\Authorization\AuthorizationContext;
-use DevNet\Web\Security\Authorization\AuthorizationException;
-use DevNet\Web\Security\Authorization\IAuthorization;
-use DevNet\Web\Security\Authorization\RolesRequirement;
-use DevNet\Web\Security\Claims\ClaimsIdentity;
+use DevNet\Core\Endpoint\ActionContext;
+use DevNet\Core\Endpoint\ActionDelegate;
+use DevNet\Core\Endpoint\IActionFilter;
+use DevNet\Security\Authentication\AuthenticationException;
+use DevNet\Security\Authorization\AuthenticationRequirement;
+use DevNet\Security\Authorization\AuthorizationContext;
+use DevNet\Security\Authorization\AuthorizationException;
+use DevNet\Security\Authorization\IAuthorization;
+use DevNet\Security\Authorization\RolesRequirement;
+use DevNet\Security\Claims\ClaimsIdentity;
 use Attribute;
 
 #[Attribute]

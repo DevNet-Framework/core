@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Tools;
+namespace DevNet\Core\Tools;
 
 use DevNet\Cli\Templating\CodeModel;
 use DevNet\Cli\Templating\ICodeGenerator;
@@ -34,9 +34,9 @@ class ControllerGenerator implements ICodeGenerator
         $this->content->appendLine();
         $this->content->appendLine("namespace {$namespace};");
         $this->content->appendLine();
-        $this->content->appendLine('use DevNet\Web\Endpoint\Controller;');
-        $this->content->appendLine('use DevNet\Web\Endpoint\IActionResult;');
-        $this->content->appendLine('use DevNet\Web\Endpoint\Route;');
+        $this->content->appendLine('use DevNet\Core\Endpoint\Controller;');
+        $this->content->appendLine('use DevNet\Core\Endpoint\IActionResult;');
+        $this->content->appendLine('use DevNet\Core\Endpoint\Route;');
         $this->content->appendLine();
         $this->content->appendLine("class {$name} extends Controller");
         $this->content->appendLine('{');

@@ -6,18 +6,18 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Endpoint;
+namespace DevNet\Core\Endpoint;
 
 use DevNet\System\MethodTrait;
 use DevNet\System\Runtime\LauncherProperties;
-use DevNet\Web\Endpoint\Route;
-use DevNet\Web\Http\Middleware\RequestDelegate;
-use DevNet\Web\Routing\IRouteBuilder;
-use DevNet\Web\Routing\IRouter;
+use DevNet\Core\Endpoint\Route;
+use DevNet\Http\Middleware\RequestDelegate;
+use DevNet\Core\Routing\IRouteBuilder;
+use DevNet\Core\Routing\IRouter;
 use DirectoryIterator;
 use ReflectionClass;
 use Closure;
-use DevNet\Web\Http\Middleware\IRequestHandler;
+use DevNet\Http\Middleware\IRequestHandler;
 
 class EndpointRouteBuilder
 {

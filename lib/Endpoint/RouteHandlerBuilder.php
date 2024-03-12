@@ -6,13 +6,13 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Endpoint;
+namespace DevNet\Core\Endpoint;
 
 use DevNet\System\Exceptions\ClassException;
-use DevNet\Web\Http\Middleware\IRequestHandler;
-use DevNet\Web\Http\Middleware\RequestDelegate;
-use DevNet\Web\Routing\IRouteHandler;
-use DevNet\Web\Routing\RouteHandler;
+use DevNet\Http\Middleware\IRequestHandler;
+use DevNet\Http\Middleware\RequestDelegate;
+use DevNet\Core\Routing\IRouteHandler;
+use DevNet\Core\Routing\RouteHandler;
 use ReflectionClass;
 
 class RouteHandlerBuilder

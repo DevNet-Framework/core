@@ -6,10 +6,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Endpoint;
+namespace DevNet\Core\Endpoint;
 
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Http\Message\HttpContext;
+use DevNet\Http\Message\HttpContext;
 
 class ActionContext
 {

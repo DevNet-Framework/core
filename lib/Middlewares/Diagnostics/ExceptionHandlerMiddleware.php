@@ -6,13 +6,13 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Middlewares\Diagnostics;
+namespace DevNet\Core\Middlewares\Diagnostics;
 
 use DevNet\System\MethodTrait;
-use DevNet\Web\Http\Message\HttpContext;
-use DevNet\Web\Http\Middleware\IMiddleware;
-use DevNet\Web\Http\Middleware\RequestDelegate;
-use DevNet\Web\View\ViewManager;
+use DevNet\Http\Message\HttpContext;
+use DevNet\Http\Middleware\IMiddleware;
+use DevNet\Http\Middleware\RequestDelegate;
+use DevNet\Core\View\ViewManager;
 use Throwable;
 
 use function DevNet\System\await;

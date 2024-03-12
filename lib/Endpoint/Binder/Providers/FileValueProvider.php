@@ -6,10 +6,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Endpoint\Binder\Providers;
+namespace DevNet\Core\Endpoint\Binder\Providers;
 
-use DevNet\Web\Endpoint\Binder\IValueProvider;
-use DevNet\Web\Http\Message\FormFileCollection;
+use DevNet\Core\Endpoint\Binder\IValueProvider;
+use DevNet\Http\Message\FormFileCollection;
 
 /**
  * Describes the interface of a container that exposes methods to read its entries.

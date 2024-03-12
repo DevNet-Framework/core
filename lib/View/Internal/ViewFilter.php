@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\View\Internal;
+namespace DevNet\Core\View\Internal;
 
 use php_user_filter;
 

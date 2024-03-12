@@ -6,16 +6,16 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Endpoint;
+namespace DevNet\Core\Endpoint;
 
 use DevNet\System\Collections\Dictionary;
-use DevNet\Web\Endpoint\Binder\IModelBinder;
-use DevNet\Web\Endpoint\Binder\IValueProvider;
-use DevNet\Web\Endpoint\Binder\ModelBinderProvider;
-use DevNet\Web\Endpoint\Binder\Providers\CompositeValueProvider;
-use DevNet\Web\Endpoint\Binder\Providers\FileValueProvider;
-use DevNet\Web\Endpoint\Binder\Providers\FormValueProvider;
-use DevNet\Web\Endpoint\Binder\Providers\QueryValueProvider;
+use DevNet\Core\Endpoint\Binder\IModelBinder;
+use DevNet\Core\Endpoint\Binder\IValueProvider;
+use DevNet\Core\Endpoint\Binder\ModelBinderProvider;
+use DevNet\Core\Endpoint\Binder\Providers\CompositeValueProvider;
+use DevNet\Core\Endpoint\Binder\Providers\FileValueProvider;
+use DevNet\Core\Endpoint\Binder\Providers\FormValueProvider;
+use DevNet\Core\Endpoint\Binder\Providers\QueryValueProvider;
 
 class ControllerOptions
 {

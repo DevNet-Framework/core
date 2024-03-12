@@ -6,9 +6,9 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Endpoint\Binder\Providers;
+namespace DevNet\Core\Endpoint\Binder\Providers;
 
-use DevNet\Web\Endpoint\Binder\IValueProvider;
+use DevNet\Core\Endpoint\Binder\IValueProvider;
 
 class CompositeValueProvider implements IValueProvider
 {

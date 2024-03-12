@@ -6,26 +6,25 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Extensions;
+namespace DevNet\Core\Extensions;
 
 use DevNet\Common\Dependency\IServiceCollection;
 use DevNet\Common\Logging\ILoggerFactory;
 use DevNet\Common\Logging\LoggerFactory;
-use DevNet\System\Database\DbConnection;
 use DevNet\Entity\EntityContext;
 use DevNet\Entity\EntityOptions;
-use DevNet\Web\Http\Message\HttpContext;
-use DevNet\Web\Http\Client\HttpClient;
-use DevNet\Web\Http\Client\HttpClientOptions;
-use DevNet\Web\Security\Tokens\Csrf\IAntiForgery;
-use DevNet\Web\Security\Tokens\Csrf\AntiForgery;
-use DevNet\Web\Security\Tokens\Csrf\AntiForgeryOptions;
-use DevNet\Web\Security\Authentication\Authentication;
-use DevNet\Web\Security\Authentication\AuthenticationBuilder;
-use DevNet\Web\Security\Authentication\IAuthentication;
-use DevNet\Web\Security\Authorization\Authorization;
-use DevNet\Web\Security\Authorization\AuthorizationOptions;
-use DevNet\Web\Security\Authorization\IAuthorization;
+use DevNet\Http\Client\HttpClient;
+use DevNet\Http\Client\HttpClientOptions;
+use DevNet\Security\Authentication\Authentication;
+use DevNet\Security\Authentication\AuthenticationBuilder;
+use DevNet\Security\Authentication\IAuthentication;
+use DevNet\Security\Authorization\Authorization;
+use DevNet\Security\Authorization\AuthorizationOptions;
+use DevNet\Security\Authorization\IAuthorization;
+use DevNet\Security\Tokens\Csrf\IAntiForgery;
+use DevNet\Security\Tokens\Csrf\AntiForgery;
+use DevNet\Security\Tokens\Csrf\AntiForgeryOptions;
+use DevNet\System\Database\DbConnection;
 use Closure;
 
 class ServiceCollectionExtensions

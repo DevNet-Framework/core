@@ -7,7 +7,7 @@
  * @link        https://github.com/DevNet
  */
 
-namespace DevNet\Web\Hosting;
+namespace DevNet\Core\Hosting;
 
 use DevNet\System\Command\CommandEventArgs;
 use DevNet\System\Command\CommandLine;

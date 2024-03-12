@@ -6,17 +6,17 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Endpoint;
+namespace DevNet\Core\Endpoint;
 
 use DevNet\System\Async\Task;
 use DevNet\System\Exceptions\ClassException;
 use DevNet\System\Exceptions\MethodException;
 use DevNet\System\Exceptions\TypeException;
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Endpoint\Binder\Providers\RouteValueProvider;
-use DevNet\Web\Endpoint\Binder\Providers\ValueProvider;
-use DevNet\Web\Routing\IRouteHandler;
-use DevNet\Web\Routing\RouteContext;
+use DevNet\Core\Endpoint\Binder\Providers\RouteValueProvider;
+use DevNet\Core\Endpoint\Binder\Providers\ValueProvider;
+use DevNet\Core\Routing\IRouteHandler;
+use DevNet\Core\Routing\RouteContext;
 
 class ControllerRouteHandler implements IRouteHandler
 {

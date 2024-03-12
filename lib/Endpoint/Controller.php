@@ -6,19 +6,19 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Endpoint;
+namespace DevNet\Core\Endpoint;
 
 use DevNet\System\MethodTrait;
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Endpoint\Results\ContentResult;
-use DevNet\Web\Endpoint\Results\FileResult;
-use DevNet\Web\Endpoint\Results\JsonResult;
-use DevNet\Web\Endpoint\Results\RedirectResult;
-use DevNet\Web\Endpoint\Results\StatusCodeResult;
-use DevNet\Web\Endpoint\Results\ViewResult;
-use DevNet\Web\Http\Message\HttpContext;
-use DevNet\Web\Security\Tokens\Csrf\IAntiForgery;
-use DevNet\Web\View\ViewManager;
+use DevNet\Core\Endpoint\Results\ContentResult;
+use DevNet\Core\Endpoint\Results\FileResult;
+use DevNet\Core\Endpoint\Results\JsonResult;
+use DevNet\Core\Endpoint\Results\RedirectResult;
+use DevNet\Core\Endpoint\Results\StatusCodeResult;
+use DevNet\Core\Endpoint\Results\ViewResult;
+use DevNet\Http\Message\HttpContext;
+use DevNet\Security\Tokens\Csrf\IAntiForgery;
+use DevNet\Core\View\ViewManager;
 
 abstract class Controller
 {

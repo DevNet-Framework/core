@@ -6,10 +6,10 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Routing;
+namespace DevNet\Core\Routing;
 
 use DevNet\System\PropertyTrait;
-use DevNet\Web\Http\Message\HttpContext;
+use DevNet\Http\Message\HttpContext;
 
 class RouteContext
 {

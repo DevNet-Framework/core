@@ -6,17 +6,17 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Extensions;
+namespace DevNet\Core\Extensions;
 
 use DevNet\System\Exceptions\ClassException;
-use DevNet\Web\Endpoint\EndpointRouteBuilder;
-use DevNet\Web\Hosting\IApplicationBuilder;
-use DevNet\Web\Http\Middleware\IMiddleware;
-use DevNet\Web\Middlewares\AuthenticationMiddleware;
-use DevNet\Web\Middlewares\Diagnostics\ExceptionHandlerMiddleware;
-use DevNet\Web\Middlewares\EndpointMiddleware;
-use DevNet\Web\Middlewares\RouterMiddleware;
-use DevNet\Web\Routing\IRouteBuilder;
+use DevNet\Core\Endpoint\EndpointRouteBuilder;
+use DevNet\Core\Hosting\IApplicationBuilder;
+use DevNet\Core\Middlewares\AuthenticationMiddleware;
+use DevNet\Core\Middlewares\Diagnostics\ExceptionHandlerMiddleware;
+use DevNet\Core\Middlewares\EndpointMiddleware;
+use DevNet\Core\Middlewares\RouterMiddleware;
+use DevNet\Core\Routing\IRouteBuilder;
+use DevNet\Http\Middleware\IMiddleware;
 use ReflectionClass;
 use Closure;
 

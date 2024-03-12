@@ -6,14 +6,14 @@
  * @link        https://github.com/DevNet-Framework
  */
 
- namespace DevNet\Web\Endpoint\Filters;
+ namespace DevNet\Core\Endpoint\Filters;
 
 use DevNet\System\Async\Task;
-use DevNet\Web\Endpoint\ActionContext;
-use DevNet\Web\Endpoint\ActionDelegate;
-use DevNet\Web\Endpoint\IActionFilter;
-use DevNet\Web\Security\Tokens\Csrf\AntiForgeryException;
-use DevNet\Web\Security\Tokens\Csrf\IAntiForgery;
+use DevNet\Core\Endpoint\ActionContext;
+use DevNet\Core\Endpoint\ActionDelegate;
+use DevNet\Core\Endpoint\IActionFilter;
+use DevNet\Security\Tokens\Csrf\AntiForgeryException;
+use DevNet\Security\Tokens\Csrf\IAntiForgery;
 use Attribute;
 
 #[Attribute]

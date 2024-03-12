@@ -6,12 +6,12 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Routing;
+namespace DevNet\Core\Routing;
 
 use DevNet\System\Exceptions\TypeException;
 use DevNet\System\MethodTrait;
-use DevNet\Web\Http\Middleware\IRequestHandler;
-use DevNet\Web\Http\Middleware\RequestDelegate;
+use DevNet\Http\Middleware\IRequestHandler;
+use DevNet\Http\Middleware\RequestDelegate;
 
 class RouteBuilder implements IRouteBuilder
 {

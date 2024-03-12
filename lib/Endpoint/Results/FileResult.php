@@ -6,15 +6,15 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\Endpoint\Results;
+namespace DevNet\Core\Endpoint\Results;
 
 use DevNet\System\IO\FileAccess;
 use DevNet\System\IO\FileException;
 use DevNet\System\IO\FileMode;
 use DevNet\System\IO\FileStream;
 use DevNet\System\MethodTrait;
-use DevNet\Web\Endpoint\ActionContext;
-use DevNet\Web\Endpoint\IActionResult;
+use DevNet\Core\Endpoint\ActionContext;
+use DevNet\Core\Endpoint\IActionResult;
 
 use function DevNet\System\await;
 

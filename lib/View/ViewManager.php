@@ -6,12 +6,12 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Web\View;
+namespace DevNet\Core\View;
 
 use DevNet\Common\Dependency\IServiceProvider;
 use DevNet\System\Exceptions\PropertyException;
-use DevNet\Web\View\Internal\ViewEngine;
-use DevNet\Web\View\Internal\ViewContainer;
+use DevNet\Core\View\Internal\ViewEngine;
+use DevNet\Core\View\Internal\ViewContainer;
 
 class ViewManager
 {

@@ -10,7 +10,9 @@
         }
     ],
     "require": {
-        "devnet/core": "1.0.*"
+        "devnet/common": "1.1.*",
+        "devnet/http": "1.1.*",
+        "devnet/security": "1.1.*"
     },
     "autoload": {
         "psr-4": {

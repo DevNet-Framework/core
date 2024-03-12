@@ -8,8 +8,8 @@
 
 namespace DevNet\Web\Routing;
 
-use DevNet\Web\Http\Message\HttpException;
+use Exception;
 
-class RouterException extends HttpException
+class RouterException extends Exception
 {
 }

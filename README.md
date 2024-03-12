@@ -1,17 +1,14 @@
 # DevNet Web
 This dependency is a part of **DevNet Framework**, which includes the following web components:
 
-- HTTP Context
-- HTTP Client
-- Middleware Dispatcher
+- Web Host
 - Routing System
+- Middleware Pipeline
+- Action Invoker
 - MVC Controller
 - Action Filter
 - Template Engine
 - Error Handler
-- Authentication
-- Authorization
-- CSRF Prevention
 
 ## Requirements
 - [DevNet Core](https://github.com/DevNet-Framework/core/) version 1.0

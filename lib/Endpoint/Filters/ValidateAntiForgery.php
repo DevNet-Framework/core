@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
- namespace DevNet\Core\Endpoint\Filters;
+namespace DevNet\Core\Endpoint\Filters;
 
 use DevNet\System\Async\Task;
 use DevNet\Core\Endpoint\ActionContext;
@@ -31,10 +31,10 @@ class ValidateAntiForgery implements IActionFilter
             return next($context);
         }
 
-        $formToken = $context->HttpContext->Request->Form->getValue($antiForgery->options->FieldName);
-        $headerToken = $context->HttpContext->Request->Headers->getValues($antiForgery->options->FieldName)[0] ?? null;
-        $formResult = $antiForgery->validateToken($formToken);
-        $headerResult = $antiForgery->validateToken($headerToken);
+        $formToken = $context->HttpContext->Request->Form->getValue($antiForgery->Options->FieldName);
+        $headerToken = $context->HttpContext->Request->Headers->getValues($antiForgery->Options->FieldName)[0] ?? null;
+        $formResult = $antiForgery->validateToken((string)$formToken);
+        $headerResult = $antiForgery->validateToken((string)$headerToken);
 
         if (!$formResult && !$headerResult) {
             throw new AntiForgeryException("Invalid AntiForgery Token!", 403);

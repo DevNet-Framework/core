@@ -1,6 +1,6 @@
 {
     "name": "devnet/core",
-    "description": "The DevNet Core Library",
+    "description": "The DevNet Core Framework",
     "type": "library",
     "license": "MIT",
     "authors": [

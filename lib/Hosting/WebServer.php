@@ -43,36 +43,36 @@ class WebServer
         $root = $args->getParameter('--root');
 
         if ($host) {
-            if (!$host->getValue()) {
+            if (!$host->Value) {
                 Console::$ForegroundColor = ConsoleColor::Red;
                 Console::writeLine("The option --host is missing a value.");
                 Console::resetColor();
                 return;
             }
 
-            $this->host = $host->getValue();
+            $this->host = $host->Value;
         }
 
         if ($port) {
-            if (!$port->getValue()) {
+            if (!$port->Value) {
                 Console::$ForegroundColor = ConsoleColor::Red;
                 Console::writeLine("The option --port is missing a value.");
                 Console::resetColor();
                 return;
             }
 
-            $this->port = $port->getValue();
+            $this->port = $port->Value;
         }
 
         if ($root) {
-            if (!$root->getValue()) {
+            if (!$root->Value) {
                 Console::$ForegroundColor = ConsoleColor::Red;
                 Console::writeLine("The option --root is missing a value.");
                 Console::resetColor();
                 return;
             }
 
-            $this->root = $root->getValue();
+            $this->root = $root->Value;
         }
 
         shell_exec("php -S {$this->host}:{$this->port} -t {$this->root}");

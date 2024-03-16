@@ -12,13 +12,13 @@ use DevNet\Common\Configuration\ConfigurationBuilder;
 use DevNet\Common\Configuration\IConfiguration;
 use DevNet\Common\Dependency\IServiceProvider;
 use DevNet\Common\Dependency\ServiceCollection;
-use DevNet\System\Async\Task;
-use DevNet\System\Runtime\LauncherProperties;
-use DevNet\Core\Diagnostics\ExceptionHandlerMiddleware;
-use DevNet\Http\Message\HttpContext;
-use DevNet\Http\Message\HttpContextFactory;
+use DevNet\Core\Middlewares\ExceptionHandlerMiddleware;
 use DevNet\Core\Routing\IRouteBuilder;
 use DevNet\Core\Routing\RouteBuilder;
+use DevNet\Http\Message\HttpContext;
+use DevNet\Http\Message\HttpContextFactory;
+use DevNet\System\Async\Task;
+use DevNet\System\Runtime\LauncherProperties;
 use Closure;
 
 class WebHost

@@ -6,7 +6,7 @@
  * @link        https://github.com/DevNet-Framework
  */
 
-namespace DevNet\Core\Middlewares\Diagnostics;
+namespace DevNet\Core\Middlewares;
 
 use DevNet\System\MethodTrait;
 use DevNet\Http\Message\HttpContext;
@@ -60,7 +60,7 @@ class ExceptionHandlerMiddleware implements IMiddleware
 
             // Display the error exception page report.
             $data = $this->parse($error);
-            $view = new ViewManager(__DIR__);
+            $view = new ViewManager(__DIR__ . '/Diagnostics');
             await($context->Response->writeAsync($view->render('ExceptionView', $data)));
         }
     }

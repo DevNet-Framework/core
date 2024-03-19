@@ -20,7 +20,7 @@ class RouterMiddleware implements IMiddleware
 {
     public function __invoke(HttpContext $context, RequestDelegate $next)
     {
-        $urlPath     = $context->Request->Path;
+        $urlPath     = $context->Request->Url->path;
         $trimmedPath = $this->trimDuplicateSlashes($urlPath);
 
         if ($trimmedPath) {

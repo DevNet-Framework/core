@@ -19,7 +19,7 @@ class ModelBinder implements IModelBinder
 
         if (class_exists($type)) {
             $model = new $type();
-            $query  = $bindingContext->ActionContext->HttpContext->Request->Query;
+            $query  = $bindingContext->ActionContext->HttpContext->Request->Url->Query;
             foreach ($query as $name => $value) {
                 if (property_exists($model, $name)) {
                     $method = new ReflectionProperty($model, $name);

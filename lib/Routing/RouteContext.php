@@ -25,7 +25,7 @@ class RouteContext
     {
         $this->httpContext = $httpContext;
         $this->httpMethod  = $httpContext->Request->Method;
-        $this->urlPath     = $httpContext->Request->Path;
+        $this->urlPath     = $httpContext->Request->Url->Path;
         $this->routeData   = new RouteData();
         $this->Handler     = null;
     }

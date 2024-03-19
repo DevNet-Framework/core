@@ -8,11 +8,11 @@
 
 namespace DevNet\Core\Middlewares;
 
-use DevNet\System\MethodTrait;
+use DevNet\Core\Diagnostics\ExceptionHandler;
 use DevNet\Http\Message\HttpContext;
 use DevNet\Http\Middleware\IMiddleware;
 use DevNet\Http\Middleware\RequestDelegate;
-use DevNet\Core\View\ViewManager;
+use DevNet\System\MethodTrait;
 use Throwable;
 
 use function DevNet\System\await;
@@ -22,10 +22,12 @@ class ExceptionHandlerMiddleware implements IMiddleware
     use MethodTrait;
 
     private ?string $errorHandlingPath;
+    private ExceptionHandler $handler;
 
     public function __construct(?string $errorHandlingPath = null)
     {
         $this->errorHandlingPath = $errorHandlingPath;
+        $this->handler = new ExceptionHandler();
     }
 
     public function async_invoke(HttpContext $context, RequestDelegate $next): void
@@ -59,59 +61,8 @@ class ExceptionHandlerMiddleware implements IMiddleware
             }
 
             // Display the error exception page report.
-            $data = $this->parse($error);
-            $view = new ViewManager(__DIR__ . '/Diagnostics');
-            await($context->Response->writeAsync($view->render('ExceptionView', $data)));
+            $report = $this->handler->handle($error);
+            await($context->Response->writeAsync($report));
         }
-    }
-
-    public function parse(Throwable $error): array
-    {
-        $severities = [
-            E_ERROR             => 'Fatal Error',
-            E_WARNING           => 'Warning',
-            E_PARSE             => 'Parse Error',
-            E_NOTICE            => 'Notice',
-            E_CORE_ERROR        => 'Core Error',
-            E_CORE_WARNING      => 'Core Warning',
-            E_COMPILE_ERROR     => 'Compile Error',
-            E_COMPILE_WARNING   => 'Compile Warning',
-            E_USER_ERROR        => 'User Error',
-            E_USER_WARNING      => 'User Warning',
-            E_USER_NOTICE       => 'User Notice',
-            E_STRICT            => 'Strict Error',
-            E_RECOVERABLE_ERROR => 'Recoverable Error',
-            E_DEPRECATED        => 'Deprecated',
-            E_USER_DEPRECATED   => 'User Deprecated'
-        ];
-
-        $trace = $error->getTrace();
-        if ($error instanceof \ErrorException) {
-            $severity = $severities[$error->getSeverity()];
-        } else {
-            $severity = $severities[E_ERROR];
-        }
-
-        $firstFile = $trace[0]['file'] ?? null;
-
-        if ($error->getFile() == $firstFile) {
-            array_shift($trace);
-        }
-
-        if ($error->getCode() == 0) {
-            $code = '';
-        } else {
-            $code = $error->getCode();
-        }
-
-        $data['error']   = $severity;
-        $data['message'] = $error->getMessage();
-        $data['class']   = get_class($error);
-        $data['code']    = $code;
-        $data['file']    = $error->getFile();
-        $data['line']    = $error->getLine();
-        $data['trace']   = $trace;
-
-        return $data;
     }
 }

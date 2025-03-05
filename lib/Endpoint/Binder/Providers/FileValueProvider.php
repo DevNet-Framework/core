@@ -18,7 +18,7 @@ class FileValueProvider implements IValueProvider
 {
     private FormFileCollection $files;
 
-    public function __construct(FormFileCollection $files = null)
+    public function __construct(?FormFileCollection $files = null)
     {
         if (!$files) {
             $files = new FormFileCollection();

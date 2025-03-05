@@ -15,7 +15,7 @@ class ParameterBinder
     private IValueProvider $valueProvider;
     private ModelBinderProvider $modelBinderProvider;
 
-    public function __construct(IValueProvider $valueProvider, ModelBinderProvider $modelBinderProvider = null)
+    public function __construct(IValueProvider $valueProvider, ?ModelBinderProvider $modelBinderProvider = null)
     {
         if (!$modelBinderProvider) {
             $modelBinderProvider = new ModelBinderProvider(new ModelBinder());

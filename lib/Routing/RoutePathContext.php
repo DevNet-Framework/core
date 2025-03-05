@@ -13,7 +13,7 @@ class RoutePathContext
     private ?string $routeName;
     private array $parameters;
 
-    public function __construct(string $routeName = null, array $parameters = [])
+    public function __construct(?string $routeName = null, array $parameters = [])
     {
         $this->routeName = $routeName;
         $this->parameters = $parameters;

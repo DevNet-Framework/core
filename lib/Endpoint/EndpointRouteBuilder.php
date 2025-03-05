@@ -102,7 +102,7 @@ class EndpointRouteBuilder
     /**
      * Maps routes from controllers.
      */
-    public function mapControllers(?string $area = null, Closure $configure = null)
+    public function mapControllers(?string $area = null, ?Closure $configure = null)
     {
         $options = new ControllerOptions();
         if ($configure) {

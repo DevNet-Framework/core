@@ -29,12 +29,12 @@ use Closure;
 
 class ServiceCollectionExtensions
 {
-    public static function addLogging(IServiceCollection $services, Closure $configure = null)
+    public static function addLogging(IServiceCollection $services, ?Closure $configure = null)
     {
         $services->addSingleton(ILoggerFactory::class, fn (): ILoggerFactory => LoggerFactory::Create($configure));
     }
 
-    public static function addHttpClient(IServiceCollection $services, Closure $configure = null)
+    public static function addHttpClient(IServiceCollection $services, ?Closure $configure = null)
     {
         $options = new HttpClientOptions();
         if ($configure) {
@@ -44,7 +44,7 @@ class ServiceCollectionExtensions
         $services->addSingleton(HttpClient::class, fn (): HttpClient => new HttpClient($options));
     }
 
-    public static function addAntiForgery(IServiceCollection $services, Closure $configure = null)
+    public static function addAntiForgery(IServiceCollection $services, ?Closure $configure = null)
     {
         $options = new AntiForgeryOptions();
         if ($configure) {
@@ -63,7 +63,7 @@ class ServiceCollectionExtensions
         });
     }
 
-    public static function addAuthorization(IServiceCollection $services, Closure $configure = null)
+    public static function addAuthorization(IServiceCollection $services, ?Closure $configure = null)
     {
         $options = new AuthorizationOptions();
         if ($configure) {
@@ -78,7 +78,7 @@ class ServiceCollectionExtensions
         $services->addSingleton(DbConnection::class, fn (): DbConnection => new DbConnection($dataSource, $username, $password));
     }
 
-    public static function addEntityContext(IServiceCollection $services, string $contextType, Closure $configure = null)
+    public static function addEntityContext(IServiceCollection $services, string $contextType, ?Closure $configure = null)
     {
         $options = new EntityOptions();
         if ($configure) {

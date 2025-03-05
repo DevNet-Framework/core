@@ -30,7 +30,7 @@ class ApplicationBuilderExtensions
 
         $interfaces = class_implements($middlewareName);
         if (!in_array(IMiddleware::class, $interfaces)) {
-            throw new ClassException("{$middlewareName} must implements IMiddleware inteface", 0, 1);
+            throw new ClassException("{$middlewareName} must implements IMiddleware interface", 0, 1);
         }
 
         $reflection = new ReflectionClass($middlewareName);

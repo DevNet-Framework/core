@@ -13,9 +13,9 @@ namespace DevNet\Core\Endpoint\Binder\Providers;
  */
 class QueryValueProvider extends ValueProvider
 {
-    public function __construct(array $values = null)
+    public function __construct(array $values = [])
     {
-        if (!$values) {
+        if ($values == []) {
             $this->values = $_GET;
         }
     }

@@ -16,7 +16,7 @@ class ModelBinderProvider implements IteratorAggregate
 {
     private array $modelBinders = [];
 
-    public function __construct(IModelBinder $modelBinder = null)
+    public function __construct(?IModelBinder $modelBinder = null)
     {
         if ($modelBinder) {
             $this->modelBinders[] = $modelBinder;

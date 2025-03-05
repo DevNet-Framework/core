@@ -132,9 +132,6 @@ class EndpointRouteBuilder
                                     if ($attribute) {
                                         $route = $attribute[0]->newInstance();
                                         $path = $route->Path;
-                                        if ($area) {
-                                            $path = '/' . $area . $route->Path;
-                                        }
                                         $this->builder->map($path, new ControllerRouteHandler([$className, $method->getName()], $options), $route->Method);
                                     }
                                 }

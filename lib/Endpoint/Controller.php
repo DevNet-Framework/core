@@ -9,7 +9,6 @@
 namespace DevNet\Core\Endpoint;
 
 use DevNet\System\MethodTrait;
-use DevNet\System\PropertyTrait;
 use DevNet\Core\Endpoint\Results\ContentResult;
 use DevNet\Core\Endpoint\Results\FileResult;
 use DevNet\Core\Endpoint\Results\JsonResult;
@@ -23,7 +22,6 @@ use DevNet\Core\View\ViewManager;
 abstract class Controller
 {
     use MethodTrait;
-    use PropertyTrait;
 
     public ActionContext $ActionContext;
     public HttpContext $HttpContext;
@@ -52,9 +50,9 @@ abstract class Controller
         $view = new ViewManager($directory, $this->HttpContext->Services);
         $view->inject('User', $this->ActionContext->HttpContext->User);
 
-        $antiforgery = $this->ActionContext->HttpContext->Services->getService(IAntiForgery::class);
-        if ($antiforgery) {
-            $view->inject('AntiForgery', $antiforgery);
+        $antiForgery = $this->ActionContext->HttpContext->Services->getService(IAntiForgery::class);
+        if ($antiForgery) {
+            $view->inject('AntiForgery', $antiForgery);
         }
 
         return new ViewResult($view($name, $data), 200);

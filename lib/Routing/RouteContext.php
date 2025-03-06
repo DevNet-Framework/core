@@ -8,18 +8,20 @@
 
 namespace DevNet\Core\Routing;
 
-use DevNet\System\PropertyTrait;
 use DevNet\Http\Message\HttpContext;
 
 class RouteContext
 {
-    use PropertyTrait;
-
     private HttpContext $httpContext;
     private RouteData $routeData;
     private string $httpMethod;
     private string $urlPath;
     public ?object $Handler;
+
+    public HttpContext $HttpContext { get => $this->httpContext; }
+    public RouteData $RouteData { get => $this->routeData; }
+    public string $HttpMethod { get => $this->httpMethod; }
+    public string $UrlPath { get => $this->urlPath; }
 
     public function __construct(HttpContext $httpContext)
     {
@@ -28,25 +30,5 @@ class RouteContext
         $this->urlPath     = $httpContext->Request->Url->Path;
         $this->routeData   = new RouteData();
         $this->Handler     = null;
-    }
-
-    public function get_HttpContext(): HttpContext
-    {
-        return $this->httpContext;
-    }
-
-    public function get_RouteData(): RouteData
-    {
-        return $this->routeData;
-    }
-
-    public function get_HttpMethod(): string
-    {
-        return $this->httpMethod;
-    }
-
-    public function get_UrlPath(): string
-    {
-        return $this->urlPath;
     }
 }

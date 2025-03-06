@@ -11,7 +11,6 @@ namespace DevNet\Core\Hosting;
 use DevNet\System\Async\Task;
 use DevNet\Common\Dependency\IServiceProvider;
 use DevNet\System\MethodTrait;
-use DevNet\System\PropertyTrait;
 use DevNet\Core\Hosting\WebHostEnvironment;
 use DevNet\Http\Message\HttpContext;
 use DevNet\Http\Middleware\IMiddleware;
@@ -21,26 +20,18 @@ use DevNet\Http\Middleware\RequestDelegate;
 class ApplicationBuilder implements IApplicationBuilder
 {
     use MethodTrait;
-    use PropertyTrait;
 
     private WebHostEnvironment $environment;
     private IServiceProvider $provider;
     private array $middlewares = [];
 
+    public WebHostEnvironment $Environment { get => $this->environment; }
+    public IServiceProvider $Provider { get => $this->provider; }
+
     public function __construct(WebHostEnvironment $environment, IServiceProvider $provider)
     {
         $this->environment = $environment;
         $this->provider = $provider;
-    }
-
-    public function get_Environment(): WebHostEnvironment
-    {
-        return $this->environment;
-    }
-
-    public function get_Provider(): IServiceProvider
-    {
-        return $this->provider;
     }
 
     public function use(callable $middleware): void

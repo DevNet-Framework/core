@@ -8,12 +8,8 @@
 
 namespace DevNet\Core\Hosting;
 
-use DevNet\System\PropertyTrait;
-
 class WebHostEnvironment
 {
-    use PropertyTrait;
-
     public string $ApplicationName = 'Application';
     public string $EnvironmentName = 'Production';
     public string $WebRootPath = '/webroot';

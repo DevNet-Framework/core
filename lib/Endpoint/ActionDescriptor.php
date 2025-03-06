@@ -8,19 +8,22 @@
 
 namespace DevNet\Core\Endpoint;
 
-use DevNet\System\PropertyTrait;
 use ReflectionClass;
 use ReflectionMethod;
 
 class ActionDescriptor
 {
-    use PropertyTrait;
-
     private ReflectionClass $classInfo;
     private ReflectionMethod $methodInfo;
     private string $className;
     private string $actionName;
     private array $filterAttributes = [];
+
+    public ReflectionClass $ClassInfo { get => $this->classInfo; }
+    public ReflectionMethod $MethodInfo { get => $this->methodInfo; }
+    public string $ClassName { get => $this->className; }
+    public string $ActionName { get => $this->actionName; }
+    public array $FilterAttributes { get => $this->filterAttributes; }
 
     public function __construct($target, string $actionName)
     {
@@ -43,30 +46,5 @@ class ActionDescriptor
                 $this->filterAttributes[$attribute->getName()] = $attribute;
             }
         }
-    }
-
-    public function get_ClassInfo(): ReflectionClass
-    {
-        return $this->classInfo;
-    }
-
-    public function get_MethodInfo(): ReflectionMethod
-    {
-        return $this->methodInfo;
-    }
-
-    public function get_ClassName(): string
-    {
-        return $this->className;
-    }
-
-    public function get_ActionName(): string
-    {
-        return $this->actionName;
-    }
-
-    public function get_FilterAttributes(): array
-    {
-        return $this->filterAttributes;
     }
 }

@@ -9,31 +9,19 @@
 namespace DevNet\Core\Routing;
 
 use DevNet\System\Async\Task;
-use DevNet\System\PropertyTrait;
 use DevNet\Http\Middleware\IRequestHandler;
 use DevNet\Http\Middleware\RequestDelegate;
 
 
 class RouteHandler implements IRouteHandler
 {
-    use PropertyTrait;
-
     private IRequestHandler|RequestDelegate $target;
-    private array $filters = [];
+
+    public mixed $Target { get => $this->target; set => $this->target = $value; }
 
     public function __construct(IRequestHandler|RequestDelegate $target)
     {
         $this->target = $target;
-    }
-
-    public function get_Target()
-    {
-        return $this->target;
-    }
-
-    public function set_Target($value)
-    {
-        $this->target = $value;
     }
 
     public function handle(RouteContext $routeContext): Task

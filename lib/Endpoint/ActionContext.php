@@ -8,25 +8,15 @@
 
 namespace DevNet\Core\Endpoint;
 
-use DevNet\System\PropertyTrait;
 use DevNet\Http\Message\HttpContext;
 
 class ActionContext
 {
-    use PropertyTrait;
-
     private ActionDescriptor $actionDescriptor;
     private HttpContext $httpContext;
 
-    public function get_ActionDescriptor(): ActionDescriptor
-    {
-        return $this->actionDescriptor;
-    }
-
-    public function get_HttpContext(): HttpContext
-    {
-        return $this->httpContext;
-    }
+    public ActionDescriptor $ActionDescriptor { get => $this->actionDescriptor; }
+    public HttpContext $HttpContext { get => $this->httpContext; }
 
     public function __construct(ActionDescriptor $actionDescriptor, HttpContext $httpConnext)
     {

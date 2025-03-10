@@ -8,7 +8,6 @@
 
 namespace DevNet\Core\Endpoint;
 
-use DevNet\System\Collections\Dictionary;
 use DevNet\Core\Endpoint\Binder\IModelBinder;
 use DevNet\Core\Endpoint\Binder\IValueProvider;
 use DevNet\Core\Endpoint\Binder\ModelBinderProvider;
